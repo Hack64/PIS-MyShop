@@ -1,9 +1,12 @@
 package Model;
 
-public class Prodotto extends Articolo {
+import java.util.ArrayList;
+import java.util.List;
+
+public class Prodotto extends Articolo implements IProdotto {
 
     private int idProdotto;
-    private Categoria categoria;
+    private List<CategoriaProdotto> categorie = new ArrayList<>();
     private Posizione posizione;
     private Produttore produttore;
 
@@ -11,12 +14,16 @@ public class Prodotto extends Articolo {
         return idProdotto;
     }
 
-    public Categoria getCategoria() {
-        return categoria;
+    public List<CategoriaProdotto> getCategorie() {
+        return categorie;
     }
 
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
+    public void setCategorie(List<CategoriaProdotto> categorie) {
+        this.categorie = categorie;
+    }
+
+    public void addCategoria(CategoriaProdotto categoria){
+        categorie.add(categoria);
     }
 
     public Posizione getPosizione() {
@@ -33,5 +40,10 @@ public class Prodotto extends Articolo {
 
     public void setProduttore(Produttore produttore) {
         this.produttore = produttore;
+    }
+
+    @Override
+    public float getCosto() {
+        return this.costo;
     }
 }

@@ -8,11 +8,11 @@ public class Lista {
 
     private String nomeLista; //da aggiungere al db
     private final LocalDate dataCreazione;
-    private List<Prodotto> prodotti = new ArrayList<>();
+    private List<IProdotto> prodotti = new ArrayList<>();
     private enum Stato {PAGATA, NON_PAGATA}
     private Stato stato = Stato.NON_PAGATA;
 
-    public Lista(String nomeLista, LocalDate dataCreazione, List<Prodotto> prodotti) {
+    public Lista(String nomeLista, LocalDate dataCreazione, List<IProdotto> prodotti) {
         this.nomeLista = nomeLista;
         this.dataCreazione = dataCreazione;
         this.prodotti = prodotti;
@@ -40,7 +40,7 @@ public class Lista {
         return dataCreazione;
     }
 
-    public List<Prodotto> getProdotti() {
+    public List<IProdotto> getProdotti() {
         return prodotti;
     }
 

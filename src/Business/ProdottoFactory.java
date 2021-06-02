@@ -1,7 +1,7 @@
 package Business;
 
 import Model.Articolo;
-import Model.Categoria;
+import Model.CategoriaProdotto;
 import Model.ICategoria;
 import Model.Prodotto;
 
@@ -14,6 +14,6 @@ public class ProdottoFactory implements ArticoloFactory {
 
     @Override
     public ICategoria creaCategoria() {
-        return new Categoria();
+        return new CategoriaProdotto();
     }
 }

@@ -8,7 +8,7 @@ public abstract class Articolo {
     private String nome;
     private Image immagine;
     private String descrizione;
-    private float costo;
+    protected float costo;
     private int numeroCommenti;
     private float mediaValutazione;
 
@@ -40,10 +40,6 @@ public abstract class Articolo {
 
     public String getDescrizione() {
         return descrizione;
-    }
-
-    public float getCosto() {
-        return costo;
     }
 
     public int getNumeroCommenti() {

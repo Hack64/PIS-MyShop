@@ -3,19 +3,30 @@ package Model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Produttore {
+public class Produttore extends Imprenditore  {
 
-    private List<Prodotto> prodottiProduttore = new ArrayList<>();
+    private List<IProdotto> prodottiProduttore;
 
-    public List<Prodotto> getProdottiProduttore() {
-        return prodottiProduttore;
-    }
-
-    public void setProdottiProduttore(List<Prodotto> prodottiProduttore) {
+    public Produttore(String nome, String sito, String citta, String nazione, ArrayList<IProdotto> prodottiProduttore) {
+        super(nome, sito, citta, nazione);
         this.prodottiProduttore = prodottiProduttore;
     }
 
-    public void addProdottoProduttore(Prodotto prodotto){
-        prodottiProduttore.add(prodotto);
+    public Produttore() {
+        super();
     }
+
+    @Override
+    public void addArticoloLista(Articolo art) {
+        prodottiProduttore.add((Prodotto) art);
+    }
+
+    public List<IProdotto> getProdottiProduttore() {
+        return prodottiProduttore;
+    }
+
+    public void setProdottiProduttore(List<IProdotto> prodottiProduttore) {
+        this.prodottiProduttore = prodottiProduttore;
+    }
+
 }
