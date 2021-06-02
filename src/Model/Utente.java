@@ -12,11 +12,13 @@ public class Utente {
     private String professione;
     private int eta;
 
-    private enum ruoli {
+    private enum Ruoli {
         AMMINISTRATORE,
         MANAGER,
         UTENTE
     }
+
+    private Ruoli ruolo;
 
 
     public Utente(int idUtente, String email, String nome, String cognome, String passwordHash, String residenza, String telefono, String professione, int eta, String ruolo) {
@@ -29,7 +31,17 @@ public class Utente {
         this.telefono = telefono;
         this.professione = professione;
         this.eta = eta;
-
+        switch (ruolo){
+            case "amm":
+                this.ruolo=Ruoli.AMMINISTRATORE;
+                break;
+            case "man":
+                this.ruolo=Ruoli.MANAGER;
+                break;
+            case "ute":
+                this.ruolo=Ruoli.UTENTE;
+                break;
+        }
     }
 
     public Utente() {
@@ -42,6 +54,7 @@ public class Utente {
         this.telefono = "";
         this.professione = "";
         this.eta = -1;
+        this.ruolo = null;
     }
 
     public int getIdUtente() {
@@ -114,6 +127,14 @@ public class Utente {
 
     public void setEta(int eta) {
         this.eta = eta;
+    }
+
+    public Ruoli getRuolo() {
+        return ruolo;
+    }
+
+    public void setRuolo(Ruoli ruolo) {
+        this.ruolo = ruolo;
     }
 
     public String toString() {

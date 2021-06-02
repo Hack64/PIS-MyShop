@@ -1,10 +1,10 @@
 package Model;
 
-import java.awt.*;
+import java.awt.Image;
+import java.util.List;
 
-public class Articolo {
+public abstract class Articolo {
 
-    private int idArticolo;
     private String nome;
     private Image immagine;
     private String descrizione;
@@ -14,8 +14,20 @@ public class Articolo {
 
     private List<Feedback> listaFeedback;
 
-    public int getIdArticolo() {
-        return idArticolo;
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setImmagine(Image immagine) {
+        this.immagine = immagine;
+    }
+
+    public void setDescrizione(String descrizione) {
+        this.descrizione = descrizione;
+    }
+
+    public void setCosto(float costo) {
+        this.costo = costo;
     }
 
     public String getNome() {
@@ -43,6 +55,6 @@ public class Articolo {
     }
 
     public List<Feedback> getListaFeedback() {
-
+        return this.listaFeedback;
     }
 }

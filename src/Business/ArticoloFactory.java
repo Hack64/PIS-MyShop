@@ -6,7 +6,7 @@ import Model.Prodotto;
 
 public interface ArticoloFactory {
 
-    public Articolo crea();
+    Articolo crea();
     ICategoria creaCategoria();
 
 }
