@@ -7,7 +7,6 @@ public class Prodotto extends Articolo implements IProdotto {
 
     private int idProdotto;
     private List<CategoriaProdotto> categorie = new ArrayList<>();
-    private Posizione posizione;
     private Produttore produttore;
 
     public int getIdProdotto() {
@@ -24,14 +23,6 @@ public class Prodotto extends Articolo implements IProdotto {
 
     public void addCategoria(CategoriaProdotto categoria){
         categorie.add(categoria);
-    }
-
-    public Posizione getPosizione() {
-        return posizione;
-    }
-
-    public void setPosizione(Posizione posizione) {
-        this.posizione = posizione;
     }
 
     public Produttore getProduttore() {

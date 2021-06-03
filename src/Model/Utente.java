@@ -1,5 +1,6 @@
 package Model;
 
+
 public class Utente {
 
     private int idUtente;
@@ -12,10 +13,10 @@ public class Utente {
     private String professione;
     private int eta;
 
-    private enum Ruoli {
-        AMMINISTRATORE,
-        MANAGER,
-        UTENTE
+    public enum Ruoli {
+        amm,
+        man,
+        ute
     }
 
     private Ruoli ruolo;
@@ -31,17 +32,7 @@ public class Utente {
         this.telefono = telefono;
         this.professione = professione;
         this.eta = eta;
-        switch (ruolo){
-            case "amm":
-                this.ruolo=Ruoli.AMMINISTRATORE;
-                break;
-            case "man":
-                this.ruolo=Ruoli.MANAGER;
-                break;
-            case "ute":
-                this.ruolo=Ruoli.UTENTE;
-                break;
-        }
+        this.ruolo = Ruoli.valueOf(ruolo);
     }
 
     public Utente() {

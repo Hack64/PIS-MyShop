@@ -20,4 +20,12 @@ public class Fornitore extends Imprenditore{
     public void addArticoloLista(Articolo art) {
         serviziFornitore.add((Servizio)art);
     }
+
+    public List<Servizio> getServiziFornitore() {
+        return serviziFornitore;
+    }
+
+    public void setServiziFornitore(List<Servizio> serviziFornitore) {
+        this.serviziFornitore = serviziFornitore;
+    }
 }
