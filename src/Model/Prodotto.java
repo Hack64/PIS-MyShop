@@ -7,7 +7,11 @@ public class Prodotto extends Articolo implements IProdotto {
 
     private int idProdotto;
     private List<CategoriaProdotto> categorie = new ArrayList<>();
-    private Produttore produttore;
+    private int idProduttore;
+
+    public void setIdProdotto(int idProdotto) {
+        this.idProdotto = idProdotto;
+    }
 
     public int getIdProdotto() {
         return idProdotto;
@@ -25,12 +29,12 @@ public class Prodotto extends Articolo implements IProdotto {
         categorie.add(categoria);
     }
 
-    public Produttore getProduttore() {
-        return produttore;
+    public int getIdProduttore() {
+        return idProduttore;
     }
 
-    public void setProduttore(Produttore produttore) {
-        this.produttore = produttore;
+    public void setIdProduttore(int idProduttore) {
+        this.idProduttore = idProduttore;
     }
 
     @Override

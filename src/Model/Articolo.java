@@ -1,12 +1,12 @@
 package Model;
 
-import java.awt.Image;
+import java.io.File;
 import java.util.List;
 
 public abstract class Articolo {
 
     private String nome;
-    private Image immagine;
+    private File immagine;
     private String descrizione;
     protected float costo;
     private int numeroCommenti;
@@ -18,7 +18,7 @@ public abstract class Articolo {
         this.nome = nome;
     }
 
-    public void setImmagine(Image immagine) {
+    public void setImmagine(File immagine) {
         this.immagine = immagine;
     }
 
@@ -34,12 +34,24 @@ public abstract class Articolo {
         return nome;
     }
 
-    public Image getImmagine() {
+    public File getImmagine() {
         return immagine;
     }
 
     public String getDescrizione() {
         return descrizione;
+    }
+
+    public void setNumeroCommenti(int numeroCommenti) {
+        this.numeroCommenti = numeroCommenti;
+    }
+
+    public void setMediaValutazione(float mediaValutazione) {
+        this.mediaValutazione = mediaValutazione;
+    }
+
+    public void setListaFeedback(List<Feedback> listaFeedback) {
+        this.listaFeedback = listaFeedback;
     }
 
     public int getNumeroCommenti() {
