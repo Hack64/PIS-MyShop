@@ -4,14 +4,14 @@ public class Servizio extends Articolo {
 
     private int idServizio;
     private CategoriaServizio categoria;
-    private Fornitore fornitore;
+    private int idFornitore;
 
-    public Fornitore getFornitore() {
-        return fornitore;
+    public int getIdFornitore() {
+        return idFornitore;
     }
 
-    public void setFornitore(Fornitore fornitore) {
-        this.fornitore = fornitore;
+    public void setIdFornitore(int idFornitore) {
+        this.idFornitore = idFornitore;
     }
 
     public int getIdServizio() {

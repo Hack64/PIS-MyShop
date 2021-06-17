@@ -9,6 +9,7 @@ public abstract class Articolo {
     private File immagine;
     private String descrizione;
     protected float costo;
+
     private int numeroCommenti;
     private float mediaValutazione;
 
@@ -28,6 +29,10 @@ public abstract class Articolo {
 
     public void setCosto(float costo) {
         this.costo = costo;
+    }
+
+    public float getCosto() {
+        return costo;
     }
 
     public String getNome() {
