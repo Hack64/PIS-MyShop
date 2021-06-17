@@ -5,6 +5,8 @@ import java.util.List;
 
 public class Fornitore extends Imprenditore{
 
+    private int idFornitore;
+
     private List<Servizio> serviziFornitore = new ArrayList<>();
 
     public Fornitore(String nome, String sito, String citta, String nazione, ArrayList<Servizio> serviziFornitore) {
@@ -27,5 +29,13 @@ public class Fornitore extends Imprenditore{
 
     public void setServiziFornitore(List<Servizio> serviziFornitore) {
         this.serviziFornitore = serviziFornitore;
+    }
+
+    public int getIdFornitore() {
+        return idFornitore;
+    }
+
+    public void setIdFornitore(int idFornitore) {
+        this.idFornitore = idFornitore;
     }
 }

@@ -157,8 +157,7 @@ public class ServizioDAO implements IServizioDAO {
         rs = conn.executeQuery("SELECT idServizio, nome, immagine, descrizione, numeroCommenti, costo, mediaValutazioni, idProduttore FROM myshopdb.Servizio;");
         ArrayList<Servizio> servizi = new ArrayList<>();
         try {
-            rs.next();
-            if (rs.getRow()==1) {
+            while(rs.next()) {
                 servizio = new Servizio();
                 servizio.setIdServizio(rs.getInt("idServizio"));
                 servizio.setNome(rs.getString("nome"));
