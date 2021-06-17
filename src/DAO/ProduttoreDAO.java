@@ -2,6 +2,7 @@ package DAO;
 
 import DbInterface.DbConnection;
 import DbInterface.IDbConnection;
+import Model.ProdottoComposito;
 import Model.Produttore;
 
 import java.sql.ResultSet;
@@ -12,6 +13,8 @@ public class ProduttoreDAO implements IProduttoreDAO{
 
     private final static ProduttoreDAO instance = new ProduttoreDAO();
 
+    private ProdottoDAO pDAO = ProdottoDAO.getInstance();
+    private ProdottoCompositoDAO pCompDAO = ProdottoCompositoDAO.getInstance();
     private IDbConnection conn;
     private ResultSet rs;
     private Produttore produttore;
@@ -40,6 +43,8 @@ public class ProduttoreDAO implements IProduttoreDAO{
                 produttore.setSito(rs.getString("sito"));
                 produttore.setCitta(rs.getString("citta"));
                 produttore.setNazione(rs.getString("nazione"));
+                produttore.setProdottiProduttore(pDAO.findAllByProducer(produttore));
+
                 return produttore;
             }
         } catch (SQLException e) {
@@ -69,6 +74,8 @@ public class ProduttoreDAO implements IProduttoreDAO{
                 produttore.setSito(rs.getString("sito"));
                 produttore.setCitta(rs.getString("citta"));
                 produttore.setNazione(rs.getString("nazione"));
+                produttore.setProdottiProduttore(pDAO.findAllByProducer(produttore));
+
                 return produttore;
             }
         } catch (SQLException e) {
@@ -121,6 +128,7 @@ public class ProduttoreDAO implements IProduttoreDAO{
                 produttore.setSito(rs.getString("sito"));
                 produttore.setCitta(rs.getString("citta"));
                 produttore.setNazione(rs.getString("nazione"));
+                produttore.setProdottiProduttore(pDAO.findAllByProducer(produttore));
 
                 produttori.add(produttore);
             }
@@ -162,4 +170,5 @@ public class ProduttoreDAO implements IProduttoreDAO{
         conn.close();
         return rowCount;
     }
+
 }

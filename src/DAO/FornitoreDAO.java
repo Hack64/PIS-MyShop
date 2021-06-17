@@ -12,6 +12,7 @@ public class FornitoreDAO implements IFornitoreDAO{
 
     private final static FornitoreDAO instance = new FornitoreDAO();
 
+    private ServizioDAO sDAO = ServizioDAO.getInstance();
     private IDbConnection conn;
     private ResultSet rs;
     private Fornitore fornitore;
@@ -40,6 +41,7 @@ public class FornitoreDAO implements IFornitoreDAO{
                 fornitore.setSito(rs.getString("sito"));
                 fornitore.setCitta(rs.getString("citta"));
                 fornitore.setNazione(rs.getString("nazione"));
+                fornitore.setServiziFornitore(sDAO.findAllBySupplier(fornitore));
                 return fornitore;
             }
         } catch (SQLException e) {
@@ -69,6 +71,7 @@ public class FornitoreDAO implements IFornitoreDAO{
                 fornitore.setSito(rs.getString("sito"));
                 fornitore.setCitta(rs.getString("citta"));
                 fornitore.setNazione(rs.getString("nazione"));
+                fornitore.setServiziFornitore(sDAO.findAllBySupplier(fornitore));
                 return fornitore;
             }
         } catch (SQLException e) {
@@ -121,6 +124,7 @@ public class FornitoreDAO implements IFornitoreDAO{
                 fornitore.setSito(rs.getString("sito"));
                 fornitore.setCitta(rs.getString("citta"));
                 fornitore.setNazione(rs.getString("nazione"));
+                fornitore.setServiziFornitore(sDAO.findAllBySupplier(fornitore));
 
                 produttori.add(fornitore);
             }

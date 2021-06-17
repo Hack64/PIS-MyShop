@@ -2,6 +2,7 @@ package DAO;
 
 import DbInterface.DbConnection;
 import DbInterface.IDbConnection;
+import Model.Fornitore;
 import Model.Servizio;
 
 import java.io.File;
@@ -180,6 +181,53 @@ public class ServizioDAO implements IServizioDAO {
                 servizio.setCosto(rs.getFloat("costo"));
                 servizio.setMediaValutazione(rs.getFloat("mediaValutazioni"));
                 servizio.setIdFornitore(rs.getInt("idProduttore"));
+
+                servizi.add(servizio);
+            }
+            return servizi;
+        } catch (SQLException e) {
+            // handle any errors
+            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("VendorError: " + e.getErrorCode());
+        } catch (NullPointerException e) {
+            // handle any errors
+            System.out.println("Resultset: " + e.getMessage());
+        } finally {
+            conn.close();
+        }
+        return null;
+    }
+
+    @Override
+    public ArrayList<Servizio> findAllBySupplier(Fornitore fornitore) {
+        conn = DbConnection.getInstance();
+        rs = conn.executeQuery("SELECT idProdotto, nome, immagine, descrizione, numeroCommenti, costo, mediaValutazioni, idProduttore FROM myshopdb.Prodotto WHERE Prodotto.idProduttore = '"+ fornitore.getIdFornitore() + "';");
+        ArrayList<Servizio> servizi = new ArrayList<>();
+        try {
+            while(rs.next()) {
+                servizio = new Servizio();
+                servizio.setIdServizio(rs.getInt("idProdotto"));
+                servizio.setNome(rs.getString("nome"));
+                blob = rs.getBlob("immagine");
+                try {
+                    file = new File("./img/" + servizio.getNome() + ".png");
+                    fileOutputStream = new FileOutputStream(file);
+                    bytes = blob.getBytes(1, (int) blob.length());
+                    fileOutputStream.write(bytes);
+                    servizio.setImmagine(file);
+                } catch (FileNotFoundException e){
+                    System.out.println("Errore file");
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    System.out.println("Errore di scrittura");
+                    e.printStackTrace();
+                }
+                servizio.setDescrizione(rs.getString("descrizione"));
+                servizio.setNumeroCommenti(rs.getInt("numeroCommenti"));
+                servizio.setCosto(rs.getFloat("costo"));
+                servizio.setMediaValutazione(rs.getFloat("mediaValutazioni"));
+                servizio.setIdServizio(rs.getInt("idProduttore"));
 
                 servizi.add(servizio);
             }

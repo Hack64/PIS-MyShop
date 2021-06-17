@@ -3,6 +3,8 @@ package DAO;
 import DbInterface.DbConnection;
 import DbInterface.IDbConnection;
 import Model.Prodotto;
+import Model.IProdotto;
+import Model.Produttore;
 
 import java.io.*;
 import java.sql.Blob;
@@ -155,8 +157,54 @@ public class ProdottoDAO implements IProdottoDAO {
         rs = conn.executeQuery("SELECT idProdotto, nome, immagine, descrizione, numeroCommenti, costo, mediaValutazioni, idProduttore FROM myshopdb.Prodotto;");
         ArrayList<Prodotto> prodotti = new ArrayList<>();
         try {
-            rs.next();
-            if (rs.getRow()==1) {
+            while(rs.next()) {
+                prodotto = new Prodotto();
+                prodotto.setIdProdotto(rs.getInt("idProdotto"));
+                prodotto.setNome(rs.getString("nome"));
+                blob = rs.getBlob("immagine");
+                try {
+                    file = new File("./img/" + prodotto.getNome() + ".png");
+                    fileOutputStream = new FileOutputStream(file);
+                    bytes = blob.getBytes(1, (int) blob.length());
+                    fileOutputStream.write(bytes);
+                    prodotto.setImmagine(file);
+                } catch (FileNotFoundException e){
+                    System.out.println("Errore file");
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    System.out.println("Errore di scrittura");
+                    e.printStackTrace();
+                }
+                prodotto.setDescrizione(rs.getString("descrizione"));
+                prodotto.setNumeroCommenti(rs.getInt("numeroCommenti"));
+                prodotto.setCosto(rs.getFloat("costo"));
+                prodotto.setMediaValutazione(rs.getFloat("mediaValutazioni"));
+                prodotto.setIdProduttore(rs.getInt("idProduttore"));
+
+                prodotti.add(prodotto);
+            }
+            return prodotti;
+        } catch (SQLException e) {
+            // handle any errors
+            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("VendorError: " + e.getErrorCode());
+        } catch (NullPointerException e) {
+            // handle any errors
+            System.out.println("Resultset: " + e.getMessage());
+        } finally {
+            conn.close();
+        }
+        return null;
+    }
+
+    @Override
+    public ArrayList<IProdotto> findAllByProducer(Produttore produttore) {
+        conn = DbConnection.getInstance();
+        rs = conn.executeQuery("SELECT idProdotto, nome, immagine, descrizione, numeroCommenti, costo, mediaValutazioni, idProduttore FROM myshopdb.Prodotto WHERE Prodotto.idProduttore = '"+ produttore.getIdProduttore() + "';");
+        ArrayList<IProdotto> prodotti = new ArrayList<>();
+        try {
+            while(rs.next()) {
                 prodotto = new Prodotto();
                 prodotto.setIdProdotto(rs.getInt("idProdotto"));
                 prodotto.setNome(rs.getString("nome"));

@@ -1,13 +1,12 @@
 package Model;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Fornitore extends Imprenditore{
 
     private int idFornitore;
 
-    private List<Servizio> serviziFornitore = new ArrayList<>();
+    private ArrayList<Servizio> serviziFornitore = new ArrayList<>();
 
     public Fornitore(String nome, String sito, String citta, String nazione, ArrayList<Servizio> serviziFornitore) {
         super(nome, sito, citta, nazione);
@@ -23,11 +22,11 @@ public class Fornitore extends Imprenditore{
         serviziFornitore.add((Servizio)art);
     }
 
-    public List<Servizio> getServiziFornitore() {
+    public ArrayList<Servizio> getServiziFornitore() {
         return serviziFornitore;
     }
 
-    public void setServiziFornitore(List<Servizio> serviziFornitore) {
+    public void setServiziFornitore(ArrayList<Servizio> serviziFornitore) {
         this.serviziFornitore = serviziFornitore;
     }
 

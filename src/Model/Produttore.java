@@ -1,12 +1,12 @@
 package Model;
 
 import java.util.ArrayList;
-import java.util.List;
+
 
 public class Produttore extends Imprenditore  {
 
     private int idProduttore;
-    private List<IProdotto> prodottiProduttore;
+    private ArrayList<IProdotto> prodottiProduttore = new ArrayList<>();
 
     public Produttore(String nome, String sito, String citta, String nazione, ArrayList<IProdotto> prodottiProduttore) {
         super(nome, sito, citta, nazione);
@@ -22,12 +22,16 @@ public class Produttore extends Imprenditore  {
         prodottiProduttore.add((Prodotto) art);
     }
 
-    public List<IProdotto> getProdottiProduttore() {
+    public ArrayList<IProdotto> getProdottiProduttore() {
         return prodottiProduttore;
     }
 
-    public void setProdottiProduttore(List<IProdotto> prodottiProduttore) {
+    public void setProdottiProduttore(ArrayList<IProdotto> prodottiProduttore) {
         this.prodottiProduttore = prodottiProduttore;
+    }
+
+    public void addListToProdottiProduttore(ArrayList<IProdotto> prodottiProduttore){
+        this.prodottiProduttore.addAll(prodottiProduttore);
     }
 
     public int getIdProduttore() {

@@ -5,7 +5,8 @@ import java.util.List;
 
 public class ProdottoComposito extends Articolo implements IProdotto {
 
-    private List<IProdotto> sottoprodotti = new ArrayList<>();
+    private ArrayList<IProdotto> sottoprodotti = new ArrayList<>();
+    private ArrayList<IProdotto> sovraprodotti = new ArrayList<>();
 
     public void addSottoprodotto(IProdotto prodotto){
         if (prodotto == this) return;
