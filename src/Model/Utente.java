@@ -1,6 +1,8 @@
 package Model;
 
 
+import java.util.List;
+
 public class Utente {
 
     private int idUtente;
@@ -11,6 +13,7 @@ public class Utente {
     private String residenza;
     private String telefono;
     private String professione;
+    private List<Lista> liste;
     private int eta;
 
     public enum Ruoli {

@@ -14,7 +14,7 @@ public class ProduttoreDAO implements IProduttoreDAO{
     private final static ProduttoreDAO instance = new ProduttoreDAO();
 
     private ProdottoDAO pDAO = ProdottoDAO.getInstance();
-    private ProdottoCompositoDAO pCompDAO = ProdottoCompositoDAO.getInstance();
+    //private ProdottoCompositoDAO pCompDAO = ProdottoCompositoDAO.getInstance();
     private IDbConnection conn;
     private ResultSet rs;
     private Produttore produttore;

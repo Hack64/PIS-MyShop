@@ -24,7 +24,6 @@ public class ProdottoDAO implements IProdottoDAO {
     byte bytes[];
     Blob blob;
 
-
     private ProdottoDAO(){
         prodotto = null;
         conn = null;

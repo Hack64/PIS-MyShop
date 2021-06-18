@@ -25,6 +25,40 @@ public class UtenteDAO implements IUtenteDAO {
     }
 
     @Override
+    public Utente findByID(int idUtente) {
+        conn = DbConnection.getInstance();
+        rs = conn.executeQuery("SELECT * FROM myshopdb.Utente WHERE myshopdb.Utente.idUtente = '" + idUtente + "';");
+        try {
+            rs.next();
+            if (rs.getRow()==1) {
+                utente = new Utente();
+                utente.setIdUtente(rs.getInt("idUtente"));
+                utente.setNome(rs.getString("nome"));
+                utente.setCognome(rs.getString("cognome"));
+                utente.setEmail(rs.getString("email"));
+                utente.setPasswordHash(rs.getString("passwordHash"));
+                utente.setResidenza(rs.getString("residenza"));
+                utente.setTelefono(rs.getString("telefono"));
+                utente.setProfessione(rs.getString("professione"));
+                utente.setEta(rs.getInt("eta"));
+                utente.setRuolo(Utente.Ruoli.valueOf(rs.getString("tipo")));
+                return utente;
+            }
+        } catch (SQLException e) {
+            // handle any errors
+            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("VendorError: " + e.getErrorCode());
+        } catch (NullPointerException e) {
+            // handle any errors
+            System.out.println("Resultset: " + e.getMessage());
+        } finally {
+            conn.close();
+        }
+        return null;
+    }
+
+    @Override
     public Utente findByEmail(String email) {
         conn = DbConnection.getInstance();
         rs = conn.executeQuery("SELECT * FROM myshopdb.Utente WHERE myshopdb.Utente.Email = '" + email + "';");
