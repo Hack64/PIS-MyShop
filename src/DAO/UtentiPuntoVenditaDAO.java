@@ -5,6 +5,7 @@ import DbInterface.IDbConnection;
 import Model.PuntoVendita;
 import Model.Utente;
 
+import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -54,7 +55,27 @@ public class UtentiPuntoVenditaDAO implements IUtentiPuntoVenditaDAO {
 
     @Override
     public ArrayList<PuntoVendita> findShopsByUserID(int idUtente) {
-        sdfghn<sdiogfsdhn
+        conn = DbConnection.getInstance();
+        rs = conn.executeQuery("SELECT idPuntoVendita FROM myshopdb.UtentePuntoVendita WHERE idUtente = '" + idUtente + "';");
+        ArrayList<PuntoVendita> puntiVenditaUtente = new ArrayList<>();
+        PuntoVenditaDAO pvDAO = PuntoVenditaDAO.getInstance();
+        try {
+            while (rs.next()){
+                puntiVenditaUtente.add(pvDAO.findByID(rs.getInt("idPuntoVendita")));
+            }
+            return puntiVenditaUtente;
+        } catch (SQLException e) {
+            // handle any errors
+            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("VendorError: " + e.getErrorCode());
+        } catch (NullPointerException e) {
+            // handle any errors
+            System.out.println("Resultset: " + e.getMessage());
+        }
+        finally {
+            conn.close();
+        }
         return null;
     }
 

@@ -13,13 +13,14 @@ public class ProduttoreDAO implements IProduttoreDAO{
 
     private final static ProduttoreDAO instance = new ProduttoreDAO();
 
-    private ProdottoDAO pDAO = ProdottoDAO.getInstance();
+    private ProdottoDAO pDAO;
     //private ProdottoCompositoDAO pCompDAO = ProdottoCompositoDAO.getInstance();
     private IDbConnection conn;
     private ResultSet rs;
     private Produttore produttore;
 
     private ProduttoreDAO(){
+        pDAO=null;
         conn=null;
         rs=null;
         produttore=null;
@@ -33,6 +34,7 @@ public class ProduttoreDAO implements IProduttoreDAO{
     @Override
     public Produttore findByID(int idProduttore) {
         conn = DbConnection.getInstance();
+        pDAO = ProdottoDAO.getInstance();
         rs = conn.executeQuery("SELECT idProduttore, nome, sito, citta, nazione FROM myshopdb.Produttore WHERE myshopdb.Produttore.idProduttore = '" + idProduttore + "';");
         try {
             rs.next();
@@ -64,6 +66,7 @@ public class ProduttoreDAO implements IProduttoreDAO{
     @Override
     public Produttore getByName(String nomeProduttore) {
         conn = DbConnection.getInstance();
+        pDAO = ProdottoDAO.getInstance();
         rs = conn.executeQuery("SELECT idProduttore, nome, sito, citta, nazione FROM myshopdb.Produttore WHERE myshopdb.Produttore.nome = '" + nomeProduttore + "';");
         try {
             rs.next();
@@ -118,6 +121,7 @@ public class ProduttoreDAO implements IProduttoreDAO{
     @Override
     public ArrayList<Produttore> findAll() {
         conn = DbConnection.getInstance();
+        pDAO = ProdottoDAO.getInstance();
         rs = conn.executeQuery("SELECT idProduttore, nome, sito, citta, nazione FROM myshopdb.Produttore;");
         ArrayList<Produttore> produttori = new ArrayList<>();
         try {

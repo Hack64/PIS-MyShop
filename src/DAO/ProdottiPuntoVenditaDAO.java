@@ -52,6 +52,26 @@ public class ProdottiPuntoVenditaDAO implements IProdottiPuntoVenditaDAO {
 
     @Override
     public ArrayList<PuntoVendita> findShopsByProductID(int idProdotto) {
-        return null;EDFIKHBNAEI
+        conn = DbConnection.getInstance();
+        rs = conn.executeQuery("SELECT idPuntoVendita FROM myshopdb.ProdottiPuntoVendita WHERE idProdotto = '" + idProdotto + "';");
+        ArrayList<PuntoVendita> puntiVenditaProdotto = new ArrayList<>();
+        PuntoVenditaDAO pvDAO = PuntoVenditaDAO.getInstance();
+        try {
+            while (rs.next()){
+                puntiVenditaProdotto.add(pvDAO.findByID(rs.getInt("idPuntoVendita")));
+            }
+            return puntiVenditaProdotto;
+        } catch (SQLException e) {
+            // handle any errors
+            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("VendorError: " + e.getErrorCode());
+        } catch (NullPointerException e) {
+            // handle any errors
+            System.out.println("Resultset: " + e.getMessage());
+        } finally {
+            conn.close();
+        }
+        return null;
     }
 }

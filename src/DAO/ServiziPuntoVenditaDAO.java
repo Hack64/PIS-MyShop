@@ -51,6 +51,26 @@ public class ServiziPuntoVenditaDAO implements IServiziPuntoVenditaDAO {
 
     @Override
     public ArrayList<PuntoVendita> findShopsByServiceID(int idServizio) {
-        return nulasdfjnASIKFBN
+        conn = DbConnection.getInstance();
+        rs = conn.executeQuery("SELECT idPuntoVendita FROM myshopdb.ServiziPuntoVendita WHERE idServizio = '" + idServizio + "';");
+        ArrayList<PuntoVendita> puntiVenditaServizio = new ArrayList<>();
+        PuntoVenditaDAO pvDAO = PuntoVenditaDAO.getInstance();
+        try {
+            while (rs.next()){
+                puntiVenditaServizio.add(pvDAO.findByID(rs.getInt("idPuntoVendita")));
+            }
+            return puntiVenditaServizio;
+        } catch (SQLException e) {
+            // handle any errors
+            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("VendorError: " + e.getErrorCode());
+        } catch (NullPointerException e) {
+            // handle any errors
+            System.out.println("Resultset: " + e.getMessage());
+        } finally {
+            conn.close();
+        }
+        return null;
     }
 }

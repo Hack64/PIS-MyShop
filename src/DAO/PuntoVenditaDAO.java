@@ -27,7 +27,7 @@ public class PuntoVenditaDAO implements IPuntoVenditaDAO {
     }
 
     @Override
-    public PuntoVendita getByID(int idPuntoVendita) {
+    public PuntoVendita findByID(int idPuntoVendita) {
         conn = DbConnection.getInstance();
         rs = conn.executeQuery("SELECT idPuntoVendita, via, CAP, citta, idMagazzino FROM myshopdb.PuntoVendita WHERE myshopdb.PuntoVendita.idPuntoVendita = '" + idPuntoVendita + "';");
         ProdottiPuntoVenditaDAO ppvDAO = ProdottiPuntoVenditaDAO.getInstance();
