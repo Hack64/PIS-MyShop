@@ -2,12 +2,10 @@ package DAO;
 
 import DbInterface.DbConnection;
 import DbInterface.IDbConnection;
-import Model.Lista;
 import Model.Magazzino;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class MagazzinoDAO implements IMagazzinoDAO {
@@ -16,11 +14,13 @@ public class MagazzinoDAO implements IMagazzinoDAO {
     private IDbConnection conn;
     private ResultSet rs;
     private Magazzino magazzino;
+    private ProdottiMagazzinoDAO pmDAO;
 
     private MagazzinoDAO(){
         conn = null;
         rs = null;
         magazzino = null;
+        pmDAO = null;
     }
 
     public static MagazzinoDAO getInstance(){
@@ -32,6 +32,7 @@ public class MagazzinoDAO implements IMagazzinoDAO {
     public Magazzino findByID(int idMagazzino) {
         conn = DbConnection.getInstance();
         rs = conn.executeQuery("SELECT idMagazzino, via, CAP, citta, numeroScaffali, numeroCorsie FROM myshopdb.Magazzino WHERE myshopdb.Magazzino.idMagazzino = '" + idMagazzino + "';");
+        pmDAO = ProdottiMagazzinoDAO.getInstance();
         try {
             rs.next();
             if (rs.getRow()==1) {
@@ -42,6 +43,8 @@ public class MagazzinoDAO implements IMagazzinoDAO {
                 magazzino.setCitta(rs.getString("citta"));
                 magazzino.setNumeroScaffali(rs.getInt("numeroScaffali"));
                 magazzino.setNumeroCorsie(rs.getInt("numeroCorsie"));
+                magazzino.setProdottiDisponibili(pmDAO.findAllProductsByWarehouseID(magazzino.getIdMagazzino()));
+
                 return magazzino;
             }
         } catch (SQLException e) {
@@ -63,7 +66,7 @@ public class MagazzinoDAO implements IMagazzinoDAO {
         conn = DbConnection.getInstance();
         rs = conn.executeQuery("SELECT idMagazzino, via, CAP, citta, numeroScaffali, numeroCorsie FROM myshopdb.Magazzino WHERE myshopdb.Magazzino.idMagazzino = '" + idMagazzino + "';");
         ArrayList<Magazzino> magazzini = new ArrayList<>();
-        ProdottoMagazzinoDAO pmDAO = new ProdottoMagazzinoDAO();aaa
+        pmDAO = ProdottiMagazzinoDAO.getInstance();
         try {
             while(rs.next()){
                 magazzino = new Magazzino();
@@ -73,10 +76,9 @@ public class MagazzinoDAO implements IMagazzinoDAO {
                 magazzino.setCitta(rs.getString("citta"));
                 magazzino.setNumeroScaffali(rs.getInt("numeroScaffali"));
                 magazzino.setNumeroCorsie(rs.getInt("numeroCorsie"));
-                magazzino.setProdottiDisponibili();
+                magazzino.setProdottiDisponibili(pmDAO.findAllProductsByWarehouseID(magazzino.getIdMagazzino()));
 
                 magazzini.add(magazzino);
-
             }
             return magazzini;
         } catch (SQLException e) {

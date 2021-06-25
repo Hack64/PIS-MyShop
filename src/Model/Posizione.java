@@ -2,19 +2,19 @@ package Model;
 
 public class Posizione {
 
-    private Corsia corsia;
-    private Scaffale scaffale;
+    private int corsia;
+    private int scaffale;
 
-    public Posizione(Corsia corsia, Scaffale scaffale){
+    public Posizione(int corsia, int scaffale){
         this.corsia=corsia;
         this.scaffale=scaffale;
     }
 
-    public Corsia getCorsia(){
+    public int getCorsia(){
         return this.corsia;
     }
 
-    public Scaffale getScaffale(){
+    public int getScaffale(){
         return this.scaffale;
     }
 }
