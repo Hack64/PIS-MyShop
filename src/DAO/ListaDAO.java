@@ -31,7 +31,7 @@ public class ListaDAO implements IListaDAO {
     @Override
     public Lista findByID(int idLista) {
         conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT idLista, nome, dataCreazione, stato, prezzoTotale, idUtente FROM myshopdb.Lista WHERE myshopdb.Utente.idUtente = '" + idLista + "';");
+        rs = conn.executeQuery("SELECT idLista, nome, dataCreazione, stato, prezzoTotale, idUtente FROM myshopdb.Lista WHERE myshopdb.Lista.idLista = '" + idLista + "';");
         try {
             rs.next();
             if (rs.getRow()==1) {
