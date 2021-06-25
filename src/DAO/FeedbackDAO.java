@@ -193,7 +193,10 @@ public class FeedbackDAO implements IFeedbackDAO {
 
     @Override
     public int add(Feedback feedback) {
-        return 0;sds
+        conn = DbConnection.getInstance();
+        int rowCount = conn.executeUpdate("INSERT INTO Feedback VALUES ('" + feedback.getIdFeedback() + "','" + feedback.getDataCreazione().toString() + "','" + feedback.getCommento() + "','" + feedback.getValutazione() + "','" + feedback.getIdUtente() + "','" + feedback.getIdServizio() + "','" + feedback.getIdProdotto() + "');");
+        conn.close();
+        return rowCount;
     }
 
     @Override
@@ -206,6 +209,9 @@ public class FeedbackDAO implements IFeedbackDAO {
 
     @Override
     public int update(Feedback feedback) {
-        return 0;sds
+        conn = DbConnection.getInstance();
+        int rowCount = conn.executeUpdate("UPDATE Feedback SET idFeedback = '" + feedback.getIdFeedback() + "', dataCreazione = '" + feedback.getDataCreazione().toString() + "', commento = '" + feedback.getCommento() + "', valutazione = '" + feedback.getValutazione() + "', idUtente = '" + feedback.getIdUtente() + "', idServizio = '" + feedback.getIdServizio() + "', idProdotto = '" + feedback.getIdProdotto() + "';" );
+        conn.close();
+        return rowCount;
     }
 }

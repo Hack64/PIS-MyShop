@@ -65,21 +65,64 @@ public class PuntoVenditaDAO implements IPuntoVenditaDAO {
 
     @Override
     public ArrayList<PuntoVendita> findAll() {
+        conn = DbConnection.getInstance();
+        rs = conn.executeQuery("SELECT idPuntoVendita, via, CAP, citta, idMagazzino FROM myshopdb.PuntoVendita;");
+        ProdottiPuntoVenditaDAO ppvDAO = ProdottiPuntoVenditaDAO.getInstance();
+        ServiziPuntoVenditaDAO spvDAO = ServiziPuntoVenditaDAO.getInstance();
+        UtentiPuntoVenditaDAO upvDAO = UtentiPuntoVenditaDAO.getInstance();
+        ArrayList<PuntoVendita> puntiVendita = new ArrayList<>();
+        try {
+            while (rs.next()) {
+                puntoVendita = new PuntoVendita();
+                puntoVendita.setIdPuntoVendita(rs.getInt("idPuntoVendita"));
+                puntoVendita.setVia(rs.getString("via"));
+                puntoVendita.setCap(rs.getString("CAP"));
+                puntoVendita.setCitta(rs.getString("citta"));
+                puntoVendita.setIdMagazzino(rs.getInt("idMagazzino"));
+                puntoVendita.setIdManager(upvDAO.findShopManager(puntoVendita.getIdPuntoVendita()).getIdUtente());
+                puntoVendita.setCatalogoProdottiPuntoVendita(ppvDAO.findProductsByShopID(puntoVendita.getIdPuntoVendita()));
+                puntoVendita.setCatalogoServiziPuntoVendita(spvDAO.findServicesByShopID(puntoVendita.getIdPuntoVendita()));
+                puntoVendita.setClienti(upvDAO.findUsersByShopID(puntoVendita.getIdPuntoVendita()));
+
+                puntiVendita.add(puntoVendita);
+            }
+            return puntiVendita;
+        } catch (SQLException e) {
+            // handle any errors
+            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("VendorError: " + e.getErrorCode());
+        } catch (NullPointerException e) {
+            // handle any errors
+            System.out.println("Resultset: " + e.getMessage());
+        } finally {
+            conn.close();
+        }
         return null;
+
     }
 
     @Override
     public int add(PuntoVendita puntoVendita) {
-        return 0;
+        conn = DbConnection.getInstance();
+        int rowCount = conn.executeUpdate("INSERT INTO PuntoVendita VALUES ('" + puntoVendita.getIdPuntoVendita() + "','" + puntoVendita.getVia() + "','" + puntoVendita.getCap() + "','" + puntoVendita.getCitta() + "','" + puntoVendita.getIdMagazzino() + "');");
+        conn.close();
+        return rowCount;
     }
 
     @Override
     public int removeById(int idPuntoVendita) {
-        return 0;
+        conn = DbConnection.getInstance();
+        int rowCount = conn.executeUpdate("DELETE FROM PuntoVendita WHERE PuntoVendita.idPuntoVendita = '" + idPuntoVendita + "';");
+        conn.close();
+        return rowCount;
     }
 
     @Override
     public int update(PuntoVendita puntoVendita) {
-        return 0;
+        conn = DbConnection.getInstance();
+        int rowCount = conn.executeUpdate("UPDATE PuntoVendita SET idPuntoVendita = '" + puntoVendita.getIdPuntoVendita() + "', via = '" + puntoVendita.getVia() + "', CAP = '" + puntoVendita.getCitta() + "', idMagazzino = '" + puntoVendita.getIdMagazzino() + "';");
+        conn.close();
+        return rowCount;
     }
 }
