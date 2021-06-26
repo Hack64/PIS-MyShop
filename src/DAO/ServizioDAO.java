@@ -249,9 +249,9 @@ public class ServizioDAO implements IServizioDAO {
     @Override
     public int add(Servizio utente) {
         conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("INSERT INTO Servizio VALUES ('"+ servizio.getIdServizio() + "','" + servizio.getNome() + "','" + servizio.getImmdfagine() /* controlla i blob */+ "','" + servizio.getDescrizione() + "','" + servizio.getNumeroCommenti() + "','" + servizio.getCosto() + "','" + servizio.getMediaValutazione() + ",'" + servizio.getIdFornitore() + "');");
+        //int rowCount = conn.executeUpdate("INSERT INTO Servizio VALUES ('"+ servizio.getIdServizio() + "','" + servizio.getNome() + "','" + servizio.getImmdfagine() /* controlla i blob */+ "','" + servizio.getDescrizione() + "','" + servizio.getNumeroCommenti() + "','" + servizio.getCosto() + "','" + servizio.getMediaValutazione() + ",'" + servizio.getIdFornitore() + "');");
         conn.close();
-        return rowCount;
+        return 0;
     }
 
     @Override
@@ -265,8 +265,8 @@ public class ServizioDAO implements IServizioDAO {
     @Override
     public int update(Servizio servizio) {
         conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("UPDATE Servizio SET nome = '" + servizio.getNome() + "', immagine = '" + servizio.getCosdsds() /* vedi i blob */ + "', descrizione = '" + servizio.getDescrizione() + "', numeroCommenti = '" + servizio.getNumeroCommenti() + "', costo = '" + servizio.getCosto() + "', mediaValutazioni = '" + servizio.getMediaValutazione() + "';");
+        //int rowCount = conn.executeUpdate("UPDATE Servizio SET nome = '" + servizio.getNome() + "', immagine = '" + servizio.getCosdsds() /* vedi i blob */ + "', descrizione = '" + servizio.getDescrizione() + "', numeroCommenti = '" + servizio.getNumeroCommenti() + "', costo = '" + servizio.getCosto() + "', mediaValutazioni = '" + servizio.getMediaValutazione() + "';");
         conn.close();
-        return rowCount;
+        return 0;
     }
 }

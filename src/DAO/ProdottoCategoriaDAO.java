@@ -2,10 +2,9 @@ package DAO;
 
 import DbInterface.DbConnection;
 import DbInterface.IDbConnection;
+import Model.Categoria;
 import Model.CategoriaProdotto;
-import Model.Feedback;
 import Model.IProdotto;
-import Model.PuntoVendita;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,7 +22,7 @@ public class ProdottoCategoriaDAO implements IProdottoCategoriaDAO {
         rs=null;
     }
 
-    public ProdottoCategoriaDAO getInstance(){
+    public static ProdottoCategoriaDAO getInstance(){
         return instance;
     }
 
@@ -52,15 +51,21 @@ public class ProdottoCategoriaDAO implements IProdottoCategoriaDAO {
         return null;
     }
 
+
+    /* ? super Categoria = qualsiasi oggetto la cui superclasse è Categoria */
     @Override
-    public ArrayList<CategoriaProdotto> getCategoriesByProductID(int idProdotto) {
+    public ArrayList<? super Categoria> getCategoriesByProductID(int idProdotto) {
         conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT idPuntoVendita FROM myshopdb.ProdottiPuntoVendita WHERE idProdotto = '" + idProdotto + "';");
-        ArrayList<CategoriaProdotto> categorieProdotto = new ArrayList<>();
-        CategoriaProdottoDAO cpDAO = CategoriaProdottoDAO.getInstance();
+        rs = conn.executeQuery("SELECT Categoria.idCategoria, Categoria.idCategoriaPadre FROM myshopdb.Categoria INNER JOIN myshopdb.ProdottoCategoria ON Categoria.idCategoria = ProdottoCategoria.idCategoria WHERE ProdottoCategoria.idProdotto = '" + idProdotto + "';");
+        ArrayList<? super Categoria> categorieProdotto = new ArrayList<>();
+        CategoriaDAO cDAO = CategoriaDAO.getInstance();
         try {
             while (rs.next()){
-                categorieProdotto.add(cpDAO.findByID(rs.getInt("idPuntoVendita")));
+                Categoria categoria = (Categoria) new CategoriaProdotto();
+                categoria = cDAO.findByID(rs.getInt("idCategoria"));
+                CategoriaProdotto categoriaProdotto = (CategoriaProdotto)categoria;
+                categoriaProdotto.setSottoCategorie(cDAO.findAllSubcategoriesByCategoryID(rs.getInt("idCategoria")));
+                categorieProdotto.add(categoriaProdotto);
             }
             return categorieProdotto;
         } catch (SQLException e) {

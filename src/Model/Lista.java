@@ -7,7 +7,7 @@ import java.util.HashMap;
 public class Lista {
 
     private int idLista;
-    private String nomeLista; //da aggiungere al db
+    private String nomeLista;
     private LocalDate dataCreazione;
     private HashMap<IProdotto, String> prodotti = new HashMap<>();
     private ArrayList<Servizio> servizi = new ArrayList<>();

@@ -64,7 +64,7 @@ public class MagazzinoDAO implements IMagazzinoDAO {
     @Override
     public ArrayList<Magazzino> findAll() {
         conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT idMagazzino, via, CAP, citta, numeroScaffali, numeroCorsie FROM myshopdb.Magazzino WHERE myshopdb.Magazzino.idMagazzino = '" + idMagazzino + "';");
+        rs = conn.executeQuery("SELECT idMagazzino, via, CAP, citta, numeroScaffali, numeroCorsie FROM myshopdb.Magazzino;");
         ArrayList<Magazzino> magazzini = new ArrayList<>();
         pmDAO = ProdottiMagazzinoDAO.getInstance();
         try {

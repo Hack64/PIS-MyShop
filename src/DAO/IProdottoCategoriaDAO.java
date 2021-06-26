@@ -1,13 +1,13 @@
 package DAO;
 
-import Model.CategoriaProdotto;
+import Model.Categoria;
 import Model.IProdotto;
 
 import java.util.ArrayList;
 
 public interface IProdottoCategoriaDAO {
     ArrayList<IProdotto> getProductsByCategoryID(int idCategoria);
-    ArrayList<CategoriaProdotto> getCategoriesByProductID(int idProdotto);
+    ArrayList<? super Categoria> getCategoriesByProductID(int idProdotto);
     int add();
     int remove();
 }

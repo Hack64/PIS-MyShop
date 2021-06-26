@@ -35,7 +35,6 @@ public class ProdottiMagazzinoDAO implements IProdottiMagazzinoDAO {
         Posizione posizione;
         try {
             while(rs.next()){
-                prodotto = new Prodotto();
                 prodotto = pDAO.findByID(rs.getInt("idProdotto"));
                 posizione = new Posizione(rs.getInt("corsia") , rs.getInt("scaffale"));
                 disponibilita.setQta(rs.getInt("quantita"));
@@ -88,7 +87,7 @@ public class ProdottiMagazzinoDAO implements IProdottiMagazzinoDAO {
 
     @Override
     public int add(Disponibilita disponibilita) {
-        return 0;a
+        return 0;
     }
 
     @Override

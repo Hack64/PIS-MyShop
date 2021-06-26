@@ -1,18 +1,30 @@
 package Model;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class CategoriaProdotto implements ICategoria{
+public class CategoriaProdotto extends Categoria {
 
-    private String nome;
-    private List<CategoriaProdotto> sottoCategorie = new ArrayList<>();
+    private ArrayList<? super Categoria> sottoCategorie;
 
-    public List<CategoriaProdotto> getSottoCategorie() {
+    public CategoriaProdotto(int idCategoria, String nome, int idCategoriaPadre, ArrayList<? super Categoria> sottoCategorie) {
+        super(idCategoria, nome, idCategoriaPadre);
+        this.sottoCategorie = sottoCategorie;
+    }
+
+    public CategoriaProdotto(){
+        super();
+        this.sottoCategorie = null;
+    }
+
+    public CategoriaProdotto(ArrayList<? super Categoria> sottoCategorie) {
+        this.sottoCategorie = sottoCategorie;
+    }
+
+    public ArrayList<? super Categoria> getSottoCategorie() {
         return sottoCategorie;
     }
 
-    public void setSottoCategorie(List<CategoriaProdotto> sottoCategorie) {
+    public void setSottoCategorie(ArrayList<? super Categoria> sottoCategorie) {
         this.sottoCategorie = sottoCategorie;
     }
 
@@ -21,12 +33,6 @@ public class CategoriaProdotto implements ICategoria{
         sottoCategorie.add(cp);
     }
 
-    @Override
-    public String getNome() {
-        return this.nome;
-    }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+
 }

@@ -14,6 +14,7 @@ public class ProdottoFactory implements ArticoloFactory {
 
     @Override
     public ICategoria creaCategoria() {
-        return new CategoriaProdotto();
+        //return new CategoriaProdotto();
+        return null;
     }
 }

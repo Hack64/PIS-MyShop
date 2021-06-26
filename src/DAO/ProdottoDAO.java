@@ -247,9 +247,9 @@ public class ProdottoDAO implements IProdottoDAO {
     @Override
     public int add(Prodotto utente) {
         conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("INSERT INTO Prodotto VALUES ('"+ prodotto.getIdProdotto() + "','" + prodotto.getNome() + "','" + prodotto.getImmdfagine() /* controlla i blob */+ "','" + prodotto.getDescrizione() + "','" + prodotto.getNumeroCommenti() + "','" + prodotto.getCosto() + "','" + prodotto.getMediaValutazione() + ",'" + prodotto.getIdProduttore() + "');");
+        //int rowCount = conn.executeUpdate("INSERT INTO Prodotto VALUES ('"+ prodotto.getIdProdotto() + "','" + prodotto.getNome() + "','" + prodotto.getImmdfagine() /* controlla i blob */+ "','" + prodotto.getDescrizione() + "','" + prodotto.getNumeroCommenti() + "','" + prodotto.getCosto() + "','" + prodotto.getMediaValutazione() + ",'" + prodotto.getIdProduttore() + "');");
         conn.close();
-        return rowCount;
+        return 0;
     }
 
     @Override
@@ -263,9 +263,9 @@ public class ProdottoDAO implements IProdottoDAO {
     @Override
     public int update(Prodotto prodotto) {
         conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("UPDATE Prodotto SET nome = '" + prodotto.getNome() + "', immagine = '" + prodotto.getCosdsds() /* vedi i blob */ + "', descrizione = '" + prodotto.getDescrizione() + "', numeroCommenti = '" + prodotto.getNumeroCommenti() + "', costo = '" + prodotto.getCosto() + "', mediaValutazioni = '" + prodotto.getMediaValutazione() + "';");
+        //int rowCount = conn.executeUpdate("UPDATE Prodotto SET nome = '" + prodotto.getNome() + "', immagine = '" + prodotto.getCosdsds() /* vedi i blob */ + "', descrizione = '" + prodotto.getDescrizione() + "', numeroCommenti = '" + prodotto.getNumeroCommenti() + "', costo = '" + prodotto.getCosto() + "', mediaValutazioni = '" + prodotto.getMediaValutazione() + "';");
         conn.close();
-        return rowCount;
+        return 0;
     }
 
 }
