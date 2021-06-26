@@ -2,21 +2,21 @@ package Model;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 public class Lista {
 
     private int idLista;
     private String nomeLista; //da aggiungere al db
     private LocalDate dataCreazione;
-    private List<IProdotto> prodotti = new ArrayList<>();
-    private List<Servizio> servizi = new ArrayList<>();
+    private HashMap<IProdotto, String> prodotti = new HashMap<>();
+    private ArrayList<Servizio> servizi = new ArrayList<>();
     public enum Stato {PAGATA, NON_PAGATA}
     private Stato stato;
     private float prezzoTotale;
     private int idUtente;
 
-    public Lista(int idLista, String nomeLista, LocalDate dataCreazione, List<IProdotto> prodotti, List<Servizio> servizi, Stato stato, float prezzoTotale, int idUtente) {
+    public Lista(int idLista, String nomeLista, LocalDate dataCreazione, HashMap<IProdotto, String> prodotti, ArrayList<Servizio> servizi, Stato stato, float prezzoTotale, int idUtente) {
         this.idLista = idLista;
         this.nomeLista = nomeLista;
         this.dataCreazione = dataCreazione;
@@ -59,20 +59,20 @@ public class Lista {
         this.idUtente = idUtente;
     }
 
-    public void setProdotti(List<IProdotto> prodotti) {
+    public void setProdotti(HashMap<IProdotto, String> prodotti) {
         this.prodotti = prodotti;
     }
 
-    public List<Servizio> getServizi() {
+    public ArrayList<Servizio> getServizi() {
         return servizi;
     }
 
-    public void setServizi(List<Servizio> servizi) {
+    public void setServizi(ArrayList<Servizio> servizi) {
         this.servizi = servizi;
     }
 
-    public void aggiungiProdotto (Prodotto prodotto){
-        this.prodotti.add(prodotto);
+    public void aggiungiProdotto (IProdotto prodotto, String prenotato){
+        this.prodotti.put(prodotto, prenotato);
     }
 
     public String getNomeLista() {
@@ -87,7 +87,7 @@ public class Lista {
         this.dataCreazione = dataCreazione;
     }
 
-    public List<IProdotto> getProdotti() {
+    public HashMap<IProdotto, String> getProdotti() {
         return prodotti;
     }
 
