@@ -16,6 +16,8 @@ public class ListaDAO implements IListaDAO {
     private Lista lista;
     private IDbConnection conn;
     private static ResultSet rs;
+    private ProdottiListaDAO plDAO;
+    private ServiziListaDAO slDAO;
 
     private ListaDAO(){
         lista = null;
@@ -32,6 +34,8 @@ public class ListaDAO implements IListaDAO {
     public Lista findByID(int idLista) {
         conn = DbConnection.getInstance();
         rs = conn.executeQuery("SELECT idLista, nome, dataCreazione, stato, prezzoTotale, idUtente FROM myshopdb.Lista WHERE myshopdb.Lista.idLista = '" + idLista + "';");
+        plDAO = ProdottiListaDAO.getInstance();
+        slDAO = ServiziListaDAO.getInstance();
         try {
             rs.next();
             if (rs.getRow()==1) {
@@ -42,6 +46,8 @@ public class ListaDAO implements IListaDAO {
                 lista.setStato(Lista.Stato.valueOf(rs.getString("stato")));
                 lista.setPrezzoTotale(rs.getFloat("prezzoTotale"));
                 lista.setIdUtente(rs.getInt("idUtente"));
+                lista.setProdotti(plDAO.findAllProductsByListID(rs.getInt("idLista")));
+                lista.setServizi(slDAO.findAllServicesByListID(rs.getInt("idLista")));
                 return lista;
             }
         } catch (SQLException e) {
@@ -62,6 +68,8 @@ public class ListaDAO implements IListaDAO {
     public ArrayList<Lista> findAll() {
         conn = DbConnection.getInstance();
         rs = conn.executeQuery("SELECT idLista, nome, dataCreazione, stato, prezzoTotale, idUtente FROM myshopdb.Lista;");
+        plDAO = ProdottiListaDAO.getInstance();
+        slDAO = ServiziListaDAO.getInstance();
         ArrayList<Lista> liste = new ArrayList<>();
         try {
             while(rs.next()){
@@ -72,6 +80,8 @@ public class ListaDAO implements IListaDAO {
                 lista.setStato(Lista.Stato.valueOf(rs.getString("stato")));
                 lista.setPrezzoTotale(rs.getFloat("prezzoTotale"));
                 lista.setIdUtente(rs.getInt("idUtente"));
+                lista.setProdotti(plDAO.findAllProductsByListID(rs.getInt("idLista")));
+                lista.setServizi(slDAO.findAllServicesByListID(rs.getInt("idLista")));
                 liste.add(lista);
             }
             return liste;
@@ -93,6 +103,8 @@ public class ListaDAO implements IListaDAO {
     public ArrayList<Lista> findAllByUserID(int idUtente) {
         conn = DbConnection.getInstance();
         rs = conn.executeQuery("SELECT idLista, nome, dataCreazione, stato, prezzoTotale, idUtente FROM myshopdb.Lista WHERE myshopdb.Lista.idUtente = '" + idUtente +"';");
+        plDAO = ProdottiListaDAO.getInstance();
+        slDAO = ServiziListaDAO.getInstance();
         ArrayList<Lista> liste = new ArrayList<>();
         try {
             while(rs.next()){
@@ -103,6 +115,8 @@ public class ListaDAO implements IListaDAO {
                 lista.setStato(Lista.Stato.valueOf(rs.getString("stato")));
                 lista.setPrezzoTotale(rs.getFloat("prezzoTotale"));
                 lista.setIdUtente(rs.getInt("idUtente"));
+                lista.setProdotti(plDAO.findAllProductsByListID(rs.getInt("idLista")));
+                lista.setServizi(slDAO.findAllServicesByListID(rs.getInt("idLista")));
                 liste.add(lista);
             }
             return liste;
@@ -124,6 +138,8 @@ public class ListaDAO implements IListaDAO {
     public ArrayList<Lista> findAllByState(Lista.Stato stato) {
         conn = DbConnection.getInstance();
         rs = conn.executeQuery("SELECT idLista, nome, dataCreazione, stato, prezzoTotale, idUtente FROM myshopdb.Lista WHERE myshopdb.Lista.stato = '" + stato.toString() +"';");
+        plDAO = ProdottiListaDAO.getInstance();
+        slDAO = ServiziListaDAO.getInstance();
         ArrayList<Lista> liste = new ArrayList<>();
         try {
             while(rs.next()){
@@ -134,6 +150,8 @@ public class ListaDAO implements IListaDAO {
                 lista.setStato(Lista.Stato.valueOf(rs.getString("stato")));
                 lista.setPrezzoTotale(rs.getFloat("prezzoTotale"));
                 lista.setIdUtente(rs.getInt("idUtente"));
+                lista.setProdotti(plDAO.findAllProductsByListID(rs.getInt("idLista")));
+                lista.setServizi(slDAO.findAllServicesByListID(rs.getInt("idLista")));
                 liste.add(lista);
             }
             return liste;
@@ -155,6 +173,8 @@ public class ListaDAO implements IListaDAO {
     public ArrayList<Lista> findAllByUserAndState(int idUtente, Lista.Stato stato) {
         conn = DbConnection.getInstance();
         rs = conn.executeQuery("SELECT idLista, nome, dataCreazione, stato, prezzoTotale, idUtente FROM myshopdb.Lista WHERE myshopdb.Lista.stato = '" + stato.toString() + "' AND myshopdb.Lista.idUtente = '"+ idUtente + "';");
+        plDAO = ProdottiListaDAO.getInstance();
+        slDAO = ServiziListaDAO.getInstance();
         ArrayList<Lista> liste = new ArrayList<>();
         try {
             while(rs.next()){
@@ -165,6 +185,8 @@ public class ListaDAO implements IListaDAO {
                 lista.setStato(Lista.Stato.valueOf(rs.getString("stato")));
                 lista.setPrezzoTotale(rs.getFloat("prezzoTotale"));
                 lista.setIdUtente(rs.getInt("idUtente"));
+                lista.setProdotti(plDAO.findAllProductsByListID(rs.getInt("idLista")));
+                lista.setServizi(slDAO.findAllServicesByListID(rs.getInt("idLista")));
                 liste.add(lista);
             }
             return liste;
