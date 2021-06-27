@@ -61,10 +61,12 @@ public class ProdottoCategoriaDAO implements IProdottoCategoriaDAO {
         CategoriaDAO cDAO = CategoriaDAO.getInstance();
         try {
             while (rs.next()){
-                Categoria categoria = (Categoria) new CategoriaProdotto();
-                categoria = cDAO.findByID(rs.getInt("idCategoria"));
-                CategoriaProdotto categoriaProdotto = (CategoriaProdotto)categoria;
-                categoriaProdotto.setSottoCategorie(cDAO.findAllSubcategoriesByCategoryID(rs.getInt("idCategoria")));
+                Categoria categoria = cDAO.findByID(rs.getInt("idCategoria"));
+                CategoriaProdotto categoriaProdotto = new CategoriaProdotto();
+                categoriaProdotto.setNome(categoria.getNome());
+                categoriaProdotto.setIdCategoria(categoria.getIdCategoria());
+                categoriaProdotto.setIdCategoriaPadre(categoria.getIdCategoriaPadre());
+                categoriaProdotto.setSottoCategorie(cDAO.findAllSubcategoriesByCategoryID(categoriaProdotto.getIdCategoria()));
                 categorieProdotto.add(categoriaProdotto);
             }
             return categorieProdotto;

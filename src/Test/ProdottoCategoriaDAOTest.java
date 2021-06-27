@@ -33,10 +33,11 @@ public class ProdottoCategoriaDAOTest {
         System.out.println(c.getNome());
         System.out.println(c.getIdCategoria());
         System.out.println(c.getIdCategoriaPadre());
-        c = (CategoriaProdotto) categorieProdotto.get(1);
+
+        /*c = (CategoriaProdotto) categorieProdotto.get(1);
         System.out.println(c.getNome());
         System.out.println(c.getIdCategoria());
-        System.out.println(c.getIdCategoriaPadre());
+        System.out.println(c.getIdCategoriaPadre());*/
     }
 
     @Test
