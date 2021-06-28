@@ -17,11 +17,10 @@ public class ProdottoCompositoDAO implements IProdottoCompositoDAO {
     private final static ProdottoCompositoDAO instance = new ProdottoCompositoDAO();
 
     private IDbConnection conn;
-    private ResultSet rs;
+
 
     private ProdottoCompositoDAO (){
         this.conn = null;
-        this.rs = null;
     }
 
     public static ProdottoCompositoDAO getInstance() {
@@ -31,30 +30,28 @@ public class ProdottoCompositoDAO implements IProdottoCompositoDAO {
     @Override
     public ProdottoComposito findByID(int idProdotto) {
         conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT componente FROM ComposizioneProdotto WHERE composto = '" + idProdotto + "';");
+        ResultSet rs = conn.executeQuery("SELECT componente FROM ComposizioneProdotto WHERE composto = '" + idProdotto + "';");
         Prodotto prodotto;
         ProdottoComposito prodottoComposito = new ProdottoComposito();
         ProdottoDAO pDAO = ProdottoDAO.getInstance();
         ProdottoCategoriaDAO pcDAO = ProdottoCategoriaDAO.getInstance();
         FeedbackDAO fDAO = FeedbackDAO.getInstance();
         try {
-            if (rs.next()){
-                prodotto = pDAO.findByID(idProdotto);
-                prodottoComposito.setIdProdotto(prodotto.getIdProdotto());
-                prodottoComposito.setIdProduttore(prodotto.getIdProduttore());
-                prodottoComposito.setCategorie(pcDAO.getCategoriesByProductID(prodotto.getIdProdotto()));
-                prodottoComposito.setNome(prodotto.getNome());
-                prodottoComposito.setImmagine(prodotto.getImmagine());
-                prodottoComposito.setDescrizione(prodotto.getDescrizione());
-                prodottoComposito.setCosto(prodotto.getCosto());
-                prodottoComposito.setNumeroCommenti(prodotto.getNumeroCommenti());
-                prodottoComposito.setMediaValutazione(prodotto.getMediaValutazione());
-                prodottoComposito.setListaFeedback(fDAO.findAllByProductID(prodotto.getIdProdotto()));
-            }
             while(rs.next()){
                 prodotto = pDAO.findByID(rs.getInt("componente"));
                 prodottoComposito.addSottoprodotto(prodotto);
             }
+            prodotto = pDAO.findByID(idProdotto);
+            prodottoComposito.setIdProdotto(prodotto.getIdProdotto());
+            prodottoComposito.setIdProduttore(prodotto.getIdProduttore());
+            prodottoComposito.setCategorie(pcDAO.getCategoriesByProductID(prodotto.getIdProdotto()));
+            prodottoComposito.setNome(prodotto.getNome());
+            prodottoComposito.setImmagine(prodotto.getImmagine());
+            prodottoComposito.setDescrizione(prodotto.getDescrizione());
+            prodottoComposito.setCosto(prodotto.getCosto());
+            prodottoComposito.setNumeroCommenti(prodotto.getNumeroCommenti());
+            prodottoComposito.setMediaValutazione(prodotto.getMediaValutazione());
+            prodottoComposito.setListaFeedback(fDAO.findAllByProductID(prodotto.getIdProdotto()));
             return prodottoComposito;
         } catch (SQLException e) {
             // handle any errors
@@ -68,21 +65,67 @@ public class ProdottoCompositoDAO implements IProdottoCompositoDAO {
             conn.close();
         }
         return null;
-
-    }
-
-    @Override
-    public ProdottoComposito getByName(String nomeProdotto) {
-        return null;
     }
 
     @Override
     public ArrayList<ProdottoComposito> findAll() {
+        conn = DbConnection.getInstance();
+        ResultSet rs = conn.executeQuery("SELECT DISTINCT composto FROM ComposizioneProdotto;");
+        ProdottoComposito pc;
+        ArrayList<Integer> ids = new ArrayList<>();
+        ArrayList<ProdottoComposito> prodottiCompositi = new ArrayList<>();
+        try {
+            while(rs.next()){
+                pc = this.findByID(rs.getInt("composto"));
+                prodottiCompositi.add(pc);
+            }
+            System.out.println(ids);
+            for (Integer id:ids){
+
+            } /* PERCHÈ QUESTO FUNZIONA???????*/
+            return prodottiCompositi;
+        } catch (SQLException e) {
+            // handle any errors
+            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("VendorError: " + e.getErrorCode());
+        } catch (NullPointerException e) {
+            // handle any errors
+            System.out.println("Resultset: " + e.getMessage());
+        } finally {
+            conn.close();
+        }
         return null;
     }
 
     @Override
-    public ArrayList<IProdotto> findAllByProducer(Produttore produttore) {
+    public ArrayList<ProdottoComposito> findAllByProducerID(int idProduttore) {
+        conn = DbConnection.getInstance();
+        ResultSet rs = conn.executeQuery("SELECT DISTINCT ComposizioneProdotto.composto FROM ComposizioneProdotto INNER JOIN Prodotto ON ComposizioneProdotto.composto = Prodotto.idProdotto WHERE Prodotto.idProduttore = '" + idProduttore +"';");
+        ProdottoComposito pc;
+        ArrayList<Integer> ids = new ArrayList<>();
+        ArrayList<ProdottoComposito> prodottiCompositi = new ArrayList<>();
+        try {
+            while(rs.next()){
+                pc = this.findByID(rs.getInt("composto"));
+                prodottiCompositi.add(pc);
+            }
+            System.out.println(ids);
+            for (Integer id:ids){
+
+            } /* PERCHÈ QUESTO FUNZIONA???????*/
+            return prodottiCompositi;
+        } catch (SQLException e) {
+            // handle any errors
+            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("VendorError: " + e.getErrorCode());
+        } catch (NullPointerException e) {
+            // handle any errors
+            System.out.println("Resultset: " + e.getMessage());
+        } finally {
+            conn.close();
+        }
         return null;
     }
 

@@ -26,9 +26,23 @@ public class ProdottoCompositoDAOTest {
     }
 
     @Test
-    public void getCategoriesByProductIDTest() {
+    public void findByIDTest() {
         ProdottoCompositoDAO pcDAO = ProdottoCompositoDAO.getInstance();
         ProdottoComposito prodottoComposito = pcDAO.findByID(7);
+    }
+
+    @Test
+    public void findAllTest() {
+        ProdottoCompositoDAO pcDAO = ProdottoCompositoDAO.getInstance();
+        ArrayList<ProdottoComposito> prodottoCompositos = new ArrayList<>();
+        prodottoCompositos = pcDAO.findAll();
+    }
+
+    @Test
+    public void findAllByProducerTest() {
+        ProdottoCompositoDAO pcDAO = ProdottoCompositoDAO.getInstance();
+        ArrayList<ProdottoComposito> prodottoCompositos = new ArrayList<>();
+        prodottoCompositos = pcDAO.findAllByProducerID(1);
     }
 
     @Test

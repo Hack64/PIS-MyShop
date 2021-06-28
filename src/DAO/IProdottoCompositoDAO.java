@@ -8,9 +8,8 @@ import java.util.ArrayList;
 
 public interface IProdottoCompositoDAO {
     ProdottoComposito findByID(int idProdotto);
-    ProdottoComposito getByName(String nomeProdotto);
     ArrayList<ProdottoComposito> findAll();
-    ArrayList<IProdotto> findAllByProducer(Produttore produttore);
+    ArrayList<ProdottoComposito> findAllByProducerID(int idProduttore);
     int add(ProdottoComposito prodotto);
     int removeById(int idProdotto);
     int update(ProdottoComposito prodotto);
