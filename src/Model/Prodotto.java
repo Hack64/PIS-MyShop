@@ -6,7 +6,7 @@ import java.util.List;
 public class Prodotto extends Articolo implements IProdotto {
 
     private int idProdotto;
-    private List<CategoriaProdotto> categorie = new ArrayList<>();
+    private ArrayList<? super Categoria> categorie = new ArrayList<>();
     private int idProduttore;
 
     public void setIdProdotto(int idProdotto) {
@@ -17,11 +17,11 @@ public class Prodotto extends Articolo implements IProdotto {
         return idProdotto;
     }
 
-    public List<CategoriaProdotto> getCategorie() {
+    public ArrayList<? super Categoria> getCategorie() {
         return categorie;
     }
 
-    public void setCategorie(List<CategoriaProdotto> categorie) {
+    public void setCategorie(ArrayList<? super Categoria> categorie) {
         this.categorie = categorie;
     }
 

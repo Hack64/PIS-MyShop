@@ -4,6 +4,7 @@ import DAO.CategoriaDAO;
 import Model.Categoria;
 import Model.Utente;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class MainClass {
@@ -19,5 +20,7 @@ public class MainClass {
 
         u.setRuolo(Utente.Ruoli.valueOf("man"));
         System.out.println(u.getRuolo());*/
+
+        System.out.println(LocalDate.now());
     }
 }

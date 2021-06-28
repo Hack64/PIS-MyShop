@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class CategoriaDAO implements ICategoriaDAO {
 
-    private static CategoriaDAO instance = new CategoriaDAO();
+    private final static CategoriaDAO instance = new CategoriaDAO();
 
     private IDbConnection conn;
     private ResultSet rs;
@@ -93,16 +93,25 @@ public class CategoriaDAO implements ICategoriaDAO {
 
     @Override
     public int add(Categoria categoria) {
-        return 0;
+        conn = DbConnection.getInstance();
+        int rowCount = conn.executeUpdate("INSERT INTO Categoria  VALUES ('" + categoria.getIdCategoria() + "','" + categoria.getNome() + "','" + categoria.getIdCategoriaPadre() + "');");
+        conn.close();
+        return rowCount;
     }
 
     @Override
     public int removeByID(int idCategoria) {
-        return 0;
+        conn = DbConnection.getInstance();
+        int rowCount = conn.executeUpdate("DELETE FROM Categoria WHERE idCategoria = '"+ idCategoria + "';");
+        conn.close();
+        return rowCount;
     }
 
     @Override
     public int update(Categoria categoria) {
-        return 0;
+        conn = DbConnection.getInstance();
+        int rowCount = conn.executeUpdate("UPDATE Categoria SET idCategoria = '" + categoria.getIdCategoria() + "', nome = '" + categoria.getNome() + "', idCategoriaPadre = '" + categoria.getIdCategoriaPadre() + "';" );
+        conn.close();
+        return rowCount;
     }
 }

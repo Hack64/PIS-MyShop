@@ -3,10 +3,17 @@ package Model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProdottoComposito extends Articolo implements IProdotto {
+public class ProdottoComposito extends Prodotto {
 
     private ArrayList<IProdotto> sottoprodotti = new ArrayList<>();
-    private ArrayList<IProdotto> sovraprodotti = new ArrayList<>();
+
+    public ArrayList<IProdotto> getSottoprodotti() {
+        return sottoprodotti;
+    }
+
+    public void setSottoprodotti(ArrayList<IProdotto> sottoprodotti) {
+        this.sottoprodotti = sottoprodotti;
+    }
 
     public void addSottoprodotto(IProdotto prodotto){
         if (prodotto == this) return;

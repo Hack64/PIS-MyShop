@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class ServiziListaDAO implements IServiziListaDAO {
 
-    private static ServiziListaDAO instance = new ServiziListaDAO();
+    private final static ServiziListaDAO instance = new ServiziListaDAO();
 
     private IDbConnection conn;
     private ResultSet rs;

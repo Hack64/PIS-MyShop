@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class MagazzinoDAO implements IMagazzinoDAO {
+
     private final static MagazzinoDAO instance = new MagazzinoDAO();
 
     private IDbConnection conn;
@@ -93,5 +94,29 @@ public class MagazzinoDAO implements IMagazzinoDAO {
             conn.close();
         }
         return null;
+    }
+
+    @Override
+    public int add(Magazzino magazzino) {
+        conn = DbConnection.getInstance();
+        int rowCount = conn.executeUpdate("INSERT INTO Magazzino VALUES ('" + magazzino.getIdMagazzino() + "','" + magazzino.getVia() + "','" + magazzino.getCap() + "','" + magazzino.getCitta() + "','" + magazzino.getNumeroScaffali() + "','" + magazzino.getNumeroCorsie() + "');");
+        conn.close();
+        return rowCount;
+    }
+
+    @Override
+    public int removeByID(int idMagazzino) {
+        conn = DbConnection.getInstance();
+        int rowCount = conn.executeUpdate("DELETE FROM Magazzino WHERE idMagazzino = '"+ idMagazzino + "';");
+        conn.close();
+        return rowCount;
+    }
+
+    @Override
+    public int update(Magazzino magazzino) {
+        conn = DbConnection.getInstance();
+        int rowCount = conn.executeUpdate("UPDATE Magazzino SET idMagazzino = '" + magazzino.getIdMagazzino() + "', via = '" + magazzino.getVia() + "', CAP = '" + magazzino.getCap() + "', citta = '" + magazzino.getCitta() + "', numeroScaffali = '" + magazzino.getNumeroScaffali() + "', numeroCorsie = '" + magazzino.getNumeroCorsie() + "';" );
+        conn.close();
+        return rowCount;
     }
 }

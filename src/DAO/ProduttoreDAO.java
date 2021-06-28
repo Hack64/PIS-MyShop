@@ -26,7 +26,7 @@ public class ProduttoreDAO implements IProduttoreDAO{
         produttore=null;
     }
 
-    public ProduttoreDAO getInstance(){
+    public static ProduttoreDAO getInstance(){
         return instance;
     }
 

@@ -44,8 +44,8 @@ public class ProdottoDAO implements IProdottoDAO {
                 prodotto = new Prodotto();
                 prodotto.setIdProdotto(rs.getInt("idProdotto"));
                 prodotto.setNome(rs.getString("nome"));
-                blob = rs.getBlob("immagine");
-                /* creo un nuovo file vuoto, estraggo il blob dal db e ne memorizzo lo stream di byte in un array di byte. infine salvo l'array di byte nel file via l'output stream */
+                /*blob = rs.getBlob("immagine");
+                creo un nuovo file vuoto, estraggo il blob dal db e ne memorizzo lo stream di byte in un array di byte. infine salvo l'array di byte nel file via l'output stream
                 try {
                     file = new File("./img/" + prodotto.getNome() + ".png");
                     fileOutputStream = new FileOutputStream(file);
@@ -58,12 +58,13 @@ public class ProdottoDAO implements IProdottoDAO {
                 } catch (IOException e) {
                     System.out.println("Errore di scrittura");
                     e.printStackTrace();
-                }
+                }*/
                 prodotto.setDescrizione(rs.getString("descrizione"));
                 prodotto.setNumeroCommenti(rs.getInt("numeroCommenti"));
                 prodotto.setCosto(rs.getFloat("costo"));
                 prodotto.setMediaValutazione(rs.getFloat("mediaValutazioni"));
                 prodotto.setIdProduttore(rs.getInt("idProduttore"));
+                //prodotto.set
 
                 return prodotto;
             }
@@ -160,7 +161,7 @@ public class ProdottoDAO implements IProdottoDAO {
                 prodotto = new Prodotto();
                 prodotto.setIdProdotto(rs.getInt("idProdotto"));
                 prodotto.setNome(rs.getString("nome"));
-                blob = rs.getBlob("immagine");
+                /*blob = rs.getBlob("immagine");
                 try {
                     file = new File("./img/" + prodotto.getNome() + ".png");
                     fileOutputStream = new FileOutputStream(file);
@@ -173,7 +174,7 @@ public class ProdottoDAO implements IProdottoDAO {
                 } catch (IOException e) {
                     System.out.println("Errore di scrittura");
                     e.printStackTrace();
-                }
+                }*/
                 prodotto.setDescrizione(rs.getString("descrizione"));
                 prodotto.setNumeroCommenti(rs.getInt("numeroCommenti"));
                 prodotto.setCosto(rs.getFloat("costo"));

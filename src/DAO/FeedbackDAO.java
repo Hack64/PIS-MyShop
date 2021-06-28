@@ -23,7 +23,7 @@ public class FeedbackDAO implements IFeedbackDAO {
         feedback=null;
     }
 
-    public FeedbackDAO getInstance(){
+    public static FeedbackDAO getInstance(){
         return instance;
     }
 

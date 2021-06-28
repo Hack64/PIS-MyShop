@@ -9,14 +9,14 @@ public class Lista {
     private int idLista;
     private String nomeLista;
     private LocalDate dataCreazione;
-    private HashMap<IProdotto, String> prodotti = new HashMap<>();
+    private HashMap<Prodotto, String> prodotti = new HashMap<>();
     private ArrayList<Servizio> servizi = new ArrayList<>();
     public enum Stato {PAGATA, NON_PAGATA}
     private Stato stato;
     private float prezzoTotale;
     private int idUtente;
 
-    public Lista(int idLista, String nomeLista, LocalDate dataCreazione, HashMap<IProdotto, String> prodotti, ArrayList<Servizio> servizi, Stato stato, float prezzoTotale, int idUtente) {
+    public Lista(int idLista, String nomeLista, LocalDate dataCreazione, HashMap<Prodotto, String> prodotti, ArrayList<Servizio> servizi, Stato stato, float prezzoTotale, int idUtente) {
         this.idLista = idLista;
         this.nomeLista = nomeLista;
         this.dataCreazione = dataCreazione;
@@ -59,7 +59,7 @@ public class Lista {
         this.idUtente = idUtente;
     }
 
-    public void setProdotti(HashMap<IProdotto, String> prodotti) {
+    public void setProdotti(HashMap<Prodotto, String> prodotti) {
         this.prodotti = prodotti;
     }
 
@@ -71,7 +71,7 @@ public class Lista {
         this.servizi = servizi;
     }
 
-    public void aggiungiProdotto (IProdotto prodotto, String prenotato){
+    public void aggiungiProdotto (Prodotto prodotto, String prenotato){
         this.prodotti.put(prodotto, prenotato);
     }
 
@@ -87,7 +87,7 @@ public class Lista {
         this.dataCreazione = dataCreazione;
     }
 
-    public HashMap<IProdotto, String> getProdotti() {
+    public HashMap<Prodotto, String> getProdotti() {
         return prodotti;
     }
 
