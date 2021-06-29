@@ -125,7 +125,10 @@ public class ProdottiListaDAO implements IProdottiListaDAO {
 
     @Override
     public int removeByID(int idProdottoLista) {
-        return 0;
+        conn = DbConnection.getInstance();
+        int rowCount = conn.executeUpdate("DELETE FROM ProdottoLista WHERE idProdottoLista = '" + idProdottoLista + "';");
+        conn.close();
+        return rowCount;
     }
 
     @Override

@@ -4,10 +4,6 @@ import DbInterface.DbConnection;
 import DbInterface.IDbConnection;
 import Model.*;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -17,7 +13,6 @@ public class ProdottoCompositoDAO implements IProdottoCompositoDAO {
     private final static ProdottoCompositoDAO instance = new ProdottoCompositoDAO();
 
     private IDbConnection conn;
-
 
     private ProdottoCompositoDAO (){
         this.conn = null;
