@@ -3,6 +3,7 @@ package DAO;
 import DbInterface.DbConnection;
 import DbInterface.IDbConnection;
 import Model.IProdotto;
+import Model.Prodotto;
 import Model.PuntoVendita;
 
 import java.sql.ResultSet;
@@ -73,5 +74,29 @@ public class ProdottiPuntoVenditaDAO implements IProdottiPuntoVenditaDAO {
             conn.close();
         }
         return null;
+    }
+
+    @Override
+    public int add(PuntoVendita puntoVendita, Prodotto prodotto) {
+        conn = DbConnection.getInstance();
+        int rowCount = conn.executeUpdate("INSERT INTO ProdottiPuntoVendita (idPuntoVendita, idProdotto) VALUES ('" + puntoVendita.getIdPuntoVendita() + "','" + prodotto.getIdProdotto() + "');");
+        conn.close();
+        return rowCount;
+    }
+
+    @Override
+    public int removeByID(int idProdottiPuntoVendita) {
+        conn = DbConnection.getInstance();
+        int rowCount = conn.executeUpdate("DELETE FROM ProdottiPuntoVendita WHERE idProdottiPuntoVendita = '" + idProdottiPuntoVendita + "';");
+        conn.close();
+        return rowCount;
+    }
+
+    @Override
+    public int update(PuntoVendita puntoVendita, Prodotto prodotto) {
+        conn = DbConnection.getInstance();
+        int rowCount = conn.executeUpdate("UPDATE ProdottiPuntoVendita SET (idPuntoVendita = '" + puntoVendita.getIdPuntoVendita() + "', idProdotto = '" + prodotto.getIdProdotto() + "');");
+        conn.close();
+        return rowCount;
     }
 }

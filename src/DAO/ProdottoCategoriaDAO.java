@@ -5,6 +5,7 @@ import DbInterface.IDbConnection;
 import Model.Categoria;
 import Model.CategoriaProdotto;
 import Model.IProdotto;
+import Model.Prodotto;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -85,12 +86,24 @@ public class ProdottoCategoriaDAO implements IProdottoCategoriaDAO {
     }
 
     @Override
-    public int add() {
-        return 0;
+    public int add(CategoriaProdotto categoriaProdotto, Prodotto prodotto) {
+        conn = DbConnection.getInstance();
+        int rowCount = conn.executeUpdate("INSERT INTO ProdottoCategoria (idProdotto, idCategoria) VALUES ('" + prodotto.getIdProdotto() + "','" + categoriaProdotto.getIdCategoria() + "');");
+        conn.close();
+        return rowCount;
     }
 
     @Override
-    public int remove() {
+    public int removeByID(int idProdottoCategoria) {
+        conn = DbConnection.getInstance();
+        int rowCount = conn.executeUpdate("DELETE FROM ProdottoCategoria WHERE idProdottiCategoria = '" + idProdottoCategoria + "';");
+        conn.close();
+        return rowCount;
+    }
+
+    @Override
+    public int update(CategoriaProdotto categoriaProdotto, Prodotto prodotto) {
         return 0;
     }
+
 }

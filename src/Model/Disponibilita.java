@@ -6,9 +6,9 @@ public class Disponibilita /*Questa classe sarebbe prodottiMagazzino nel db*/ {
     private int idMagazzino;
     private int qta;
     private Posizione posizione;
-    private IProdotto prodotto;
+    private Prodotto prodotto;
 
-    public Disponibilita(int idProdottoMagazzino, int idMagazzino, int qta, Posizione posizione, IProdotto prodotto) {
+    public Disponibilita(int idProdottoMagazzino, int idMagazzino, int qta, Posizione posizione, Prodotto prodotto) {
         this.idProdottoMagazzino = idProdottoMagazzino;
         this.idMagazzino = idMagazzino;
         this.qta = qta;
@@ -40,11 +40,11 @@ public class Disponibilita /*Questa classe sarebbe prodottiMagazzino nel db*/ {
         this.posizione = posizione;
     }
 
-    public IProdotto getProdotto() {
+    public Prodotto getProdotto() {
         return prodotto;
     }
 
-    public void setProdotto(IProdotto prodotto) {
+    public void setProdotto(Prodotto prodotto) {
         this.prodotto = prodotto;
     }
 

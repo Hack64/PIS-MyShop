@@ -31,7 +31,7 @@ public class ProdottiMagazzinoDAO implements IProdottiMagazzinoDAO {
         ArrayList<Disponibilita> prodottiMagazzino = new ArrayList<>();
         ProdottoDAO pDAO = ProdottoDAO.getInstance();
         Disponibilita disponibilita = new Disponibilita();
-        IProdotto prodotto; // come gestisco i prodotti compositi?? (forse non c'è bisogno ma bisogna creare un ProdottoComposito)
+        Prodotto prodotto; // come gestisco i prodotti compositi?? (forse non c'è bisogno ma bisogna creare un ProdottoComposito)
         Posizione posizione;
         try {
             while(rs.next()){
@@ -87,17 +87,26 @@ public class ProdottiMagazzinoDAO implements IProdottiMagazzinoDAO {
 
     @Override
     public int add(Disponibilita disponibilita) {
-        return 0;
+        conn = DbConnection.getInstance();
+        int rowCount = conn.executeUpdate("INSERT INTO ProdottiMagazzino (idMagazzino, idProdotto, scaffale, corsia, quantita) VALUES ('" + disponibilita.getIdMagazzino() + "','" + disponibilita.getProdotto().getIdProdotto()+ "','" + disponibilita.getPosizione().getCorsia() + "','" + disponibilita.getPosizione().getScaffale() + "','" + disponibilita.getQta() + "');");
+        conn.close();
+        return rowCount;
     }
 
     @Override
     public int remove(Disponibilita disponibilita) {
-        return 0;
+        conn = DbConnection.getInstance();
+        int rowCount = conn.executeUpdate("DELETE FROM ProdottiMagazzino WHERE idProdottiMagazzino = '" + disponibilita.getIdProdottoMagazzino() +"';");
+        conn.close();
+        return rowCount;
     }
 
     @Override
     public int update(Disponibilita disponibilita) {
-        return 0;
+        conn = DbConnection.getInstance();
+        int rowCount = conn.executeUpdate("UPDATE ProdottiMagazzino SET ( idMagazzino = '" + disponibilita.getIdMagazzino() + "', idProdotto = '" + disponibilita.getProdotto().getIdProdotto() + "', scaffale = '" + disponibilita.getPosizione().getScaffale() + "', corsia = '" + disponibilita.getPosizione().getCorsia() + "', quantita = '" + disponibilita.getQta() + "');");
+        conn.close();
+        return rowCount;
     }
 
 }
