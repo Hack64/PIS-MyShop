@@ -8,17 +8,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class ProdottoCompositoDAO implements IProdottoCompositoDAO {
+public class ComposizioneProdottoDAO implements IComposizioneProdottoDAO {
 
-    private final static ProdottoCompositoDAO instance = new ProdottoCompositoDAO();
+    private final static ComposizioneProdottoDAO instance = new ComposizioneProdottoDAO();
 
     private IDbConnection conn;
 
-    private ProdottoCompositoDAO (){
+    private ComposizioneProdottoDAO(){
         this.conn = null;
     }
 
-    public static ProdottoCompositoDAO getInstance() {
+    public static ComposizioneProdottoDAO getInstance() {
         return instance;
     }
 
@@ -122,6 +122,32 @@ public class ProdottoCompositoDAO implements IProdottoCompositoDAO {
             conn.close();
         }
         return null;
+    }
+
+    @Override
+    public boolean isCompositeProduct(int idProdotto) {
+        conn = DbConnection.getInstance();
+        ResultSet rs = conn.executeQuery("SELECT DISTINCT composto FROM ComposizioneProdotto;");
+        boolean isComposite = false;
+        try {
+            while(rs.next()){
+                if (idProdotto == rs.getInt("composto")){
+                    isComposite = true;
+                }
+            }
+            return isComposite;
+        } catch (SQLException e) {
+            // handle any errors
+            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("VendorError: " + e.getErrorCode());
+        } catch (NullPointerException e) {
+            // handle any errors
+            System.out.println("Resultset: " + e.getMessage());
+        } finally {
+            conn.close();
+        }
+        return false;
     }
 
     @Override
