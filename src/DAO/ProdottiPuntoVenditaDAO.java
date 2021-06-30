@@ -85,9 +85,9 @@ public class ProdottiPuntoVenditaDAO implements IProdottiPuntoVenditaDAO {
     }
 
     @Override
-    public int removeByID(int idProdottiPuntoVendita) {
+    public int removeByID(int idProdotto, int idPuntoVendita) {
         conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("DELETE FROM ProdottiPuntoVendita WHERE idProdottiPuntoVendita = '" + idProdottiPuntoVendita + "';");
+        int rowCount = conn.executeUpdate("DELETE FROM ProdottiPuntoVendita WHERE idProdotto = '" + idProdotto + "' AND idPuntoVendita = '" + idPuntoVendita + "';");
         conn.close();
         return rowCount;
     }

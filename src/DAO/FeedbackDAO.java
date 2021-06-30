@@ -210,7 +210,7 @@ public class FeedbackDAO implements IFeedbackDAO {
     @Override
     public int update(Feedback feedback) {
         conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("UPDATE Feedback SET idFeedback = '" + feedback.getIdFeedback() + "', dataCreazione = '" + feedback.getDataCreazione().toString() + "', commento = '" + feedback.getCommento() + "', valutazione = '" + feedback.getValutazione() + "', idUtente = '" + feedback.getIdUtente() + "', idServizio = '" + feedback.getIdServizio() + "', idProdotto = '" + feedback.getIdProdotto() + "';" );
+        int rowCount = conn.executeUpdate("UPDATE Feedback SET dataCreazione = '" + feedback.getDataCreazione().toString() + "', commento = '" + feedback.getCommento() + "', valutazione = '" + feedback.getValutazione() + "' WHERE idFeedback = '" + feedback.getIdFeedback() + "';" );
         conn.close();
         return rowCount;
     }

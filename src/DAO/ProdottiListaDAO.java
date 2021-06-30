@@ -2,12 +2,12 @@ package DAO;
 
 import DbInterface.DbConnection;
 import DbInterface.IDbConnection;
-import Model.IProdotto;
 import Model.Lista;
 import Model.Prodotto;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,16 +31,16 @@ public class ProdottiListaDAO implements IProdottiListaDAO {
     }
 
     @Override
-    public HashMap<Prodotto, String> findAllProductsByListID(int idLista) {
+    public HashMap<Prodotto, Map.Entry<String, Integer>> findAllProductsByListID(int idLista) {
         conn = DbConnection.getInstance();
         rs = conn.executeQuery("SELECT idProdottoLista, idProdotto, idLista, prenotato FROM ProdottoLista WHERE idLista = '" + idLista + "';");
-        HashMap<Prodotto, String> prodottiLista = new HashMap<>();
+        HashMap<Prodotto, Map.Entry<String, Integer>> prodottiLista = new HashMap<>();
         Prodotto prodotto;
         pDAO = ProdottoDAO.getInstance();
         try {
             while (rs.next()) {
                 prodotto = pDAO.findByID(rs.getInt("idProdotto"));
-                prodottiLista.put(prodotto, rs.getString("prenotato"));
+                prodottiLista.put(prodotto, new AbstractMap.SimpleEntry<String, Integer>(rs.getString("prenotato"), rs.getInt("quantita")));
             }
             return prodottiLista;
         } catch (SQLException e) {
@@ -112,10 +112,10 @@ public class ProdottiListaDAO implements IProdottiListaDAO {
     }
 
     @Override
-    public ArrayList<Integer> add(Lista lista, HashMap<Prodotto, String> prodotti) {
+    public ArrayList<Integer> add(Lista lista, HashMap<Prodotto, Map.Entry<String, Integer>> prodotti) {
         conn = DbConnection.getInstance();
         ArrayList<Integer> rowsCount = new ArrayList<>();
-        for (Map.Entry<Prodotto, String> entry:prodotti.entrySet()){
+        for (Map.Entry<Prodotto, Map.Entry<String, Integer>> entry:prodotti.entrySet()){
             int rowCount = conn.executeUpdate("INSERT INTO ProdottoLista (idProdotto, idLista, prenotato) VALUES ('" + entry.getKey().getIdProdotto() + "','" + lista.getIdLista() + "','" + entry.getValue() + "');");
             rowsCount.add(rowCount);
         }
@@ -124,15 +124,22 @@ public class ProdottiListaDAO implements IProdottiListaDAO {
     }
 
     @Override
-    public int removeByID(int idProdottoLista) {
+    public int removeByID(int idProdotto, int idLista) {
         conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("DELETE FROM ProdottoLista WHERE idProdottoLista = '" + idProdottoLista + "';");
+        int rowCount = conn.executeUpdate("DELETE FROM ProdottoLista WHERE idProdotto = '" + idProdotto + "' AND idLista = '" + idLista + "';");
         conn.close();
         return rowCount;
     }
 
     @Override
-    public int update(Lista lista, HashMap<Prodotto, String> prodotti) {
-        return 0;
+    public ArrayList<Integer> update(Lista lista, HashMap<Prodotto, Map.Entry<String, Integer>> prodotti) {
+        conn = DbConnection.getInstance();
+        ArrayList<Integer> rowsCount = new ArrayList<>();
+        for (Map.Entry<Prodotto, Map.Entry<String, Integer>> entry:prodotti.entrySet()){
+            int rowCount = conn.executeUpdate("UPDATE ProdottoLista SET prenotato = '" + entry.getValue().getKey() + "', quantita = '" + entry.getValue().getValue() + "' WHERE idProdotto = '" + entry.getKey().getIdProdotto() + "' AND idLista = '" + lista.getIdLista() + "';");
+            rowsCount.add(rowCount);
+        }
+        conn.close();
+        return rowsCount;
     }
 }

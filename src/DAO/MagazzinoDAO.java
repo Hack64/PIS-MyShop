@@ -115,7 +115,7 @@ public class MagazzinoDAO implements IMagazzinoDAO {
     @Override
     public int update(Magazzino magazzino) {
         conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("UPDATE Magazzino SET idMagazzino = '" + magazzino.getIdMagazzino() + "', via = '" + magazzino.getVia() + "', CAP = '" + magazzino.getCap() + "', citta = '" + magazzino.getCitta() + "', numeroScaffali = '" + magazzino.getNumeroScaffali() + "', numeroCorsie = '" + magazzino.getNumeroCorsie() + "';" );
+        int rowCount = conn.executeUpdate("UPDATE Magazzino SET via = '" + magazzino.getVia() + "', CAP = '" + magazzino.getCap() + "', citta = '" + magazzino.getCitta() + "', numeroScaffali = '" + magazzino.getNumeroScaffali() + "', numeroCorsie = '" + magazzino.getNumeroCorsie() + "' WHERE idMagazzino = '" + magazzino.getIdMagazzino() + "';");
         conn.close();
         return rowCount;
     }

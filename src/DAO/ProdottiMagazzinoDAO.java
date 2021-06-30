@@ -29,17 +29,14 @@ public class ProdottiMagazzinoDAO implements IProdottiMagazzinoDAO {
         conn = DbConnection.getInstance();
         rs = conn.executeQuery("SELECT idProdottiMagazzino, idMagazzino, idProdotto, scaffale, corsia, quantita FROM ProdottiMagazzino WHERE ProdottiMagazzino.idMagazzino = '" + idMagazzino + "';");
         ArrayList<Disponibilita> prodottiMagazzino = new ArrayList<>();
-        ProdottoDAO pDAO = ProdottoDAO.getInstance();
         Disponibilita disponibilita = new Disponibilita();
-        Prodotto prodotto; // come gestisco i prodotti compositi?? (forse non c'è bisogno ma bisogna creare un ProdottoComposito)
         Posizione posizione;
         try {
             while(rs.next()){
-                prodotto = pDAO.findByID(rs.getInt("idProdotto"));
                 posizione = new Posizione(rs.getInt("corsia") , rs.getInt("scaffale"));
                 disponibilita.setQta(rs.getInt("quantita"));
                 disponibilita.setPosizione(posizione);
-                disponibilita.setProdotto(prodotto);
+                disponibilita.setIdProdotto(rs.getInt("idProdotto"));
 
                 prodottiMagazzino.add(disponibilita);
             }
@@ -88,7 +85,7 @@ public class ProdottiMagazzinoDAO implements IProdottiMagazzinoDAO {
     @Override
     public int add(Disponibilita disponibilita) {
         conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("INSERT INTO ProdottiMagazzino (idMagazzino, idProdotto, scaffale, corsia, quantita) VALUES ('" + disponibilita.getIdMagazzino() + "','" + disponibilita.getProdotto().getIdProdotto()+ "','" + disponibilita.getPosizione().getCorsia() + "','" + disponibilita.getPosizione().getScaffale() + "','" + disponibilita.getQta() + "');");
+        int rowCount = conn.executeUpdate("INSERT INTO ProdottiMagazzino (idMagazzino, idProdotto, scaffale, corsia, quantita) VALUES ('" + disponibilita.getIdMagazzino() + "','" + disponibilita.getIdProdotto() + "','" + disponibilita.getPosizione().getCorsia() + "','" + disponibilita.getPosizione().getScaffale() + "','" + disponibilita.getQta() + "');");
         conn.close();
         return rowCount;
     }
@@ -96,7 +93,7 @@ public class ProdottiMagazzinoDAO implements IProdottiMagazzinoDAO {
     @Override
     public int remove(Disponibilita disponibilita) {
         conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("DELETE FROM ProdottiMagazzino WHERE idProdottiMagazzino = '" + disponibilita.getIdProdottoMagazzino() +"';");
+        int rowCount = conn.executeUpdate("DELETE FROM ProdottiMagazzino WHERE idMagazzino = '" + disponibilita.getIdMagazzino() +"', idProdotto = '" + disponibilita.getIdProdotto() +"';");
         conn.close();
         return rowCount;
     }
@@ -104,7 +101,7 @@ public class ProdottiMagazzinoDAO implements IProdottiMagazzinoDAO {
     @Override
     public int update(Disponibilita disponibilita) {
         conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("UPDATE ProdottiMagazzino SET ( idMagazzino = '" + disponibilita.getIdMagazzino() + "', idProdotto = '" + disponibilita.getProdotto().getIdProdotto() + "', scaffale = '" + disponibilita.getPosizione().getScaffale() + "', corsia = '" + disponibilita.getPosizione().getCorsia() + "', quantita = '" + disponibilita.getQta() + "');");
+        int rowCount = conn.executeUpdate("UPDATE ProdottiMagazzino SET scaffale = '" + disponibilita.getPosizione().getScaffale() + "', corsia = '" + disponibilita.getPosizione().getCorsia() + "', quantita = '" + disponibilita.getQta() + "' WHERE idMagazzino = '" + disponibilita.getIdMagazzino() + "' AND idProdotto = '" + disponibilita.getIdProdotto() + "';");
         conn.close();
         return rowCount;
     }

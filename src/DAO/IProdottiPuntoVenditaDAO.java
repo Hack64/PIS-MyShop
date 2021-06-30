@@ -10,6 +10,6 @@ public interface IProdottiPuntoVenditaDAO {
     ArrayList<IProdotto> findProductsByShopID(int idPuntoVendita);
     ArrayList<PuntoVendita> findShopsByProductID(int idProdotto);
     int add(PuntoVendita puntoVendita, Prodotto prodotto);
-    int removeByID(int idProdottiPuntoVendita);
+    int removeByID(int idProdotto, int idPuntoVendita);
     int update(PuntoVendita puntoVendita, Prodotto prodotto);
 }

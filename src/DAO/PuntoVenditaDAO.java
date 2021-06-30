@@ -121,7 +121,7 @@ public class PuntoVenditaDAO implements IPuntoVenditaDAO {
     @Override
     public int update(PuntoVendita puntoVendita) {
         conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("UPDATE PuntoVendita SET idPuntoVendita = '" + puntoVendita.getIdPuntoVendita() + "', via = '" + puntoVendita.getVia() + "', CAP = '" + puntoVendita.getCitta() + "', idMagazzino = '" + puntoVendita.getIdMagazzino() + "';");
+        int rowCount = conn.executeUpdate("UPDATE PuntoVendita SET via = '" + puntoVendita.getVia() + "', CAP = '" + puntoVendita.getCitta() + "' WHERE idPuntoVendita = '" + puntoVendita.getIdPuntoVendita() + "';");
         conn.close();
         return rowCount;
     }

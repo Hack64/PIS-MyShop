@@ -223,7 +223,7 @@ public class ListaDAO implements IListaDAO {
     @Override
     public int update(Lista lista) {
         conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("UPDATE Lista SET idLista = '" + lista.getIdLista() + "', nome = '" + lista.getNomeLista() + "', dataCreazione = '" + lista.getDataCreazione().toString() + "', stato = '" + lista.getStato().toString() + "', prezzoTotale = '" + lista.getPrezzoTotale() + "', idUtente = '" + lista.getIdUtente() + "';");
+        int rowCount = conn.executeUpdate("UPDATE Lista SET nome = '" + lista.getNomeLista() + "', dataCreazione = '" + lista.getDataCreazione().toString() + "', stato = '" + lista.getStato().toString() + "', prezzoTotale = '" + lista.getPrezzoTotale() + "' WHERE idLista = '" + lista.getIdLista() + "';");
         conn.close();
         return rowCount;
     }

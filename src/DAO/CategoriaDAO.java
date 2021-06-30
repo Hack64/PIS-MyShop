@@ -110,7 +110,7 @@ public class CategoriaDAO implements ICategoriaDAO {
     @Override
     public int update(Categoria categoria) {
         conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("UPDATE Categoria SET idCategoria = '" + categoria.getIdCategoria() + "', nome = '" + categoria.getNome() + "', idCategoriaPadre = '" + categoria.getIdCategoriaPadre() + "';" );
+        int rowCount = conn.executeUpdate("UPDATE Categoria SET nome = '" + categoria.getNome() + "' WHERE idCategoria = '" + categoria.getIdCategoria() + "';" );
         conn.close();
         return rowCount;
     }

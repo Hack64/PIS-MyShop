@@ -162,7 +162,7 @@ public class FornitoreDAO implements IFornitoreDAO{
     @Override
     public int update(Fornitore fornitore) {
         conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("UPDATE Fornitore SET nome = '" + fornitore.getNome() + "', sito = '" + fornitore.getSito() + "', citta = '" + fornitore.getCitta() + "', nazione = '" + fornitore.getNazione() + "';");
+        int rowCount = conn.executeUpdate("UPDATE Fornitore SET nome = '" + fornitore.getNome() + "', sito = '" + fornitore.getSito() + "', citta = '" + fornitore.getCitta() + "', nazione = '" + fornitore.getNazione() + "' WHERE idFornitore = '" + fornitore.getIdFornitore() + "';");
         conn.close();
         return rowCount;
     }

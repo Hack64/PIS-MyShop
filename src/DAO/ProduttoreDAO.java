@@ -170,7 +170,7 @@ public class ProduttoreDAO implements IProduttoreDAO{
     @Override
     public int update(Produttore produttore) {
         conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("UPDATE Produttore SET nome = '" + produttore.getNome() + "', sito = '" + produttore.getSito() + "', citta = '" + produttore.getCitta() + "', nazione = '" + produttore.getNazione() + "';");
+        int rowCount = conn.executeUpdate("UPDATE Produttore SET nome = '" + produttore.getNome() + "', sito = '" + produttore.getSito() + "', citta = '" + produttore.getCitta() + "', nazione = '" + produttore.getNazione() + "' WHERE idProduttore = '" + produttore.getIdProduttore() + "';'");
         conn.close();
         return rowCount;
     }

@@ -175,7 +175,7 @@ public class RispostaDAO implements IRispostaDAO {
     @Override
     public int update(Risposta risposta) {
         conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("UPDATE Risposta SET idRisposta = '" + risposta.getIdRisposta() + "', idFeedback = '" + risposta.getIdFeedback() + "', testo = '" + risposta.getTesto() + "', dataCreazione = '" + risposta.getDataCreazione().toString() + "', idUtente = '" + risposta.getIdUtente() + "');");
+        int rowCount = conn.executeUpdate("UPDATE Risposta SET testo = '" + risposta.getTesto() + "', dataCreazione = '" + risposta.getDataCreazione().toString() + "' WHERE idRisposta = '" + risposta.getIdRisposta() + "';");
         conn.close();
         return rowCount;
     }
