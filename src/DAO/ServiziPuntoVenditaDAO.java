@@ -73,4 +73,21 @@ public class ServiziPuntoVenditaDAO implements IServiziPuntoVenditaDAO {
         }
         return null;
     }
+
+    @Override
+    public int add(Servizio servizio, PuntoVendita puntoVendita) {
+        conn = DbConnection.getInstance();
+        int rowCount = conn.executeUpdate("INSERT INTO ServiziPuntoVendita VALUES ('" + servizio.getIdServizio() + "','" + puntoVendita.getIdPuntoVendita() + "');");
+        conn.close();
+        return rowCount;
+    }
+
+    @Override
+    public int removeByID(int idServizio, int idPuntoVendita) {
+        conn = DbConnection.getInstance();
+        int rowCount = conn.executeUpdate("DELETE FROM ServiziPuntoVendita WHERE idServizio = '" + idServizio + "' AND idPuntoVendita = '" + idPuntoVendita + "';");
+        conn.close();
+        return rowCount;
+    }
+
 }

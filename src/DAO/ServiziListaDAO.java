@@ -78,4 +78,21 @@ public class ServiziListaDAO implements IServiziListaDAO {
         }
         return null;
     }
+
+    @Override
+    public int add(Lista lista, Servizio servizio) {
+        conn = DbConnection.getInstance();
+        int rowCount = conn.executeUpdate("INSERT INTO ServizioLista (idServizio, idLista) VALUES ('" + servizio.getIdServizio() + "','" + lista.getIdLista() + "';");
+        conn.close();
+        return rowCount;
+    }
+
+    @Override
+    public int removeByID(int idLista, int idServizio) {
+        conn = DbConnection.getInstance();
+        int rowCount = conn.executeUpdate("DELETE FROM ServizioLista WHERE idServizio = '" + idServizio + "' AND idLista = '" + idLista + "';");
+        conn.close();
+        return rowCount;
+    }
+
 }

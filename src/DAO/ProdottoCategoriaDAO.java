@@ -101,9 +101,4 @@ public class ProdottoCategoriaDAO implements IProdottoCategoriaDAO {
         return rowCount;
     }
 
-    @Override
-    public int update(CategoriaProdotto categoriaProdotto, Prodotto prodotto) {
-        return 0;
-    }
-
 }

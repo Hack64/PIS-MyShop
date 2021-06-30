@@ -157,7 +157,10 @@ public class ComposizioneProdottoDAO implements IComposizioneProdottoDAO {
 
     @Override
     public int removeById(int idProdotto) {
-        return 0;
+        conn = DbConnection.getInstance();
+        int rowCount = conn.executeUpdate("DELETE FROM ComposizioneProdotto WHERE idProdottoComposito = '" + idProdotto + "';");
+        conn.close();
+        return rowCount;
     }
 
     @Override

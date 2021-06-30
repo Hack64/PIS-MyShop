@@ -8,6 +8,6 @@ import java.util.ArrayList;
 public interface IServizioCategoriaDAO {
     ArrayList<Servizio> getServicesByCategoryID(int idCategoria);
     ArrayList<? super Categoria> getCategoriesByServiceID(int idServizio);
-    int add();
-    int remove();
+    int add(Categoria categoria, Servizio servizio);
+    int removeByID(int idCategoria, int idServizio);
 }

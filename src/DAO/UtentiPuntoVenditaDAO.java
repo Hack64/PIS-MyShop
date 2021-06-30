@@ -5,7 +5,6 @@ import DbInterface.IDbConnection;
 import Model.PuntoVendita;
 import Model.Utente;
 
-import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -104,5 +103,29 @@ public class UtentiPuntoVenditaDAO implements IUtentiPuntoVenditaDAO {
             conn.close();
         }
         return null;
+    }
+
+    @Override
+    public int add(Utente utente, PuntoVendita puntoVendita, String disattivato, String isManager) {
+        conn = DbConnection.getInstance();
+        int rowCount = conn.executeUpdate("INSERT INTO UtentePuntoVendita VALUES ('" + puntoVendita.getIdPuntoVendita() + "','" + utente.getIdUtente() + "','" + disattivato + "','" + isManager + "');");
+        conn.close();
+        return rowCount;
+    }
+
+    @Override
+    public int removeByID(int idUtente, int idPuntoVendita) {
+        conn = DbConnection.getInstance();
+        int rowCount = conn.executeUpdate("DELETE FROM UtentePuntoVendita WHERE idPuntoVendita = '" + idPuntoVendita + "' AND idUtente = '" + idUtente + "';");
+        conn.close();
+        return rowCount;
+    }
+
+    @Override
+    public int update(Utente utente, PuntoVendita puntoVendita, String disattivato, String isManager) {
+        conn = DbConnection.getInstance();
+        int rowCount = conn.executeUpdate("UPDATE UtentePuntoVendita SET disattivato = '" + disattivato + "', isManager = '" + isManager + "' WHERE idPuntoVendita = '" + puntoVendita.getIdPuntoVendita() + "' AND idUtente = '" + utente.getIdUtente() +"';");
+        conn.close();
+        return rowCount;
     }
 }

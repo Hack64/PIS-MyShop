@@ -12,6 +12,4 @@ public interface IProdottoCategoriaDAO {
     ArrayList<? super Categoria> getCategoriesByProductID(int idProdotto);
     int add(CategoriaProdotto categoriaProdotto, Prodotto prodotto);
     int removeByID(int idProdottoCategoria);
-    int update(CategoriaProdotto categoriaProdotto, Prodotto prodotto);
-
 }

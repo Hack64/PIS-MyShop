@@ -80,12 +80,19 @@ public class ServizioCategoriaDAO implements IServizioCategoriaDAO {
     }
 
     @Override
-    public int add() {
-        return 0;
+    public int add(Categoria categoria, Servizio servizio) {
+        conn = DbConnection.getInstance();
+        int rowCount = conn.executeUpdate("INSERT INTO ServizioCategoria VALUES('" + servizio.getIdServizio() + "','" + categoria.getIdCategoria() + "');");
+        conn.close();
+        return rowCount;
     }
 
     @Override
-    public int remove() {
-        return 0;
+    public int removeByID(int idCategoria, int idServizio) {
+        conn = DbConnection.getInstance();
+        int rowCount = conn.executeUpdate("DELETE FROM ServizioCategoria WHERE idServizio = '" + idServizio + "'AND idCategoria = '" + idCategoria + "';");
+        conn.close();
+        return rowCount;
     }
+
 }
