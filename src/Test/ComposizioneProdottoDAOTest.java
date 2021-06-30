@@ -1,6 +1,6 @@
 package Test;
 
-import DAO.ComposizioneProdottoDAO;
+import DAO.ComposizioneProdotto.ComposizioneProdottoDAO;
 import DbInterface.DbUser;
 import Model.ProdottoComposito;
 import org.junit.After;

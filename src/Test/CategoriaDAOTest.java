@@ -1,10 +1,9 @@
 package Test;
 
-import DAO.CategoriaDAO;
+import DAO.Categoria.CategoriaDAO;
 import DbInterface.DbUser;
 import Model.Categoria;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 

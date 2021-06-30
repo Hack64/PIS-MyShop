@@ -1,11 +1,6 @@
 package View;
 
-import DAO.CategoriaDAO;
-import Model.Categoria;
-import Model.Utente;
-
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 public class MainClass {
 

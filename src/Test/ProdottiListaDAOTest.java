@@ -1,10 +1,8 @@
 package Test;
 
-import DAO.CategoriaDAO;
-import DAO.ProdottiListaDAO;
-import DAO.ProdottoDAO;
+import DAO.ProdottiLista.ProdottiListaDAO;
+import DAO.Prodotto.ProdottoDAO;
 import DbInterface.DbUser;
-import Model.Categoria;
 import Model.Lista;
 import Model.Prodotto;
 import org.junit.After;

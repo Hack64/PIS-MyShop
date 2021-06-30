@@ -1,7 +1,6 @@
 package Test;
 
-import DAO.CategoriaDAO;
-import DAO.ProdottoCategoriaDAO;
+import DAO.ProdottoCategoria.ProdottoCategoriaDAO;
 import DbInterface.DbUser;
 import Model.Categoria;
 import Model.CategoriaProdotto;
