@@ -154,8 +154,15 @@ public class ComposizioneProdottoDAO implements IComposizioneProdottoDAO {
     }
 
     @Override
-    public int add(ProdottoComposito prodotto) {
-        return 0;
+    public ArrayList<Integer> add(ProdottoComposito prodotto) {
+        conn = DbConnection.getInstance();
+        ArrayList<Prodotto> sottoprodotti = prodotto.getSottoprodotti();
+        ArrayList<Integer> rowsCount = new ArrayList<>();
+        for (Prodotto p:sottoprodotti){
+            int rowCount = conn.executeUpdate("INSERT INTO ComposizioneProdotto (composto, componente) VALUES ('" +  prodotto.getIdProdotto() + "','" + p.getIdProdotto() + "');");
+            rowsCount.add(rowCount);
+        }
+        return rowsCount;
     }
 
     @Override
@@ -166,8 +173,4 @@ public class ComposizioneProdottoDAO implements IComposizioneProdottoDAO {
         return rowCount;
     }
 
-    @Override
-    public int update(ProdottoComposito prodotto) {
-        return 0;
-    }
 }

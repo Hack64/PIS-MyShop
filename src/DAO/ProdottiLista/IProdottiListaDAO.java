@@ -11,8 +11,7 @@ public interface IProdottiListaDAO {
     HashMap<Prodotto, Map.Entry<String, Integer>> findAllProductsByListID(int idLista);
     HashMap<Prodotto, String> findAllProductsByListIDAndState(int idLista, String prenotato);
     ArrayList<Lista> findAllListsByProductID(int idProdotto);
-    //come lo faccio l'add e il resto????
-    ArrayList<Integer> add(Lista lista, HashMap<Prodotto, Map.Entry<String, Integer>> prodotti);
+    int add(Lista lista, Prodotto prodotto, String prenotato, int quantita);
     int removeByID(int idProdotto, int idLista);
-    ArrayList<Integer> update(Lista lista, HashMap<Prodotto, Map.Entry<String, Integer>> prodotti);
+    int update(Lista lista, Prodotto prodotto, String prenotato, int quantita);
 }

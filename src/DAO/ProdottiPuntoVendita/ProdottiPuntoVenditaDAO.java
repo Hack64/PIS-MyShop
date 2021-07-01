@@ -93,12 +93,4 @@ public class ProdottiPuntoVenditaDAO implements IProdottiPuntoVenditaDAO {
         conn.close();
         return rowCount;
     }
-
-    @Override
-    public int update(PuntoVendita puntoVendita, Prodotto prodotto) {
-        conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("UPDATE ProdottiPuntoVendita SET (idPuntoVendita = '" + puntoVendita.getIdPuntoVendita() + "', idProdotto = '" + prodotto.getIdProdotto() + "');");
-        conn.close();
-        return rowCount;
-    }
 }

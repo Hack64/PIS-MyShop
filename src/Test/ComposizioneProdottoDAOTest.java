@@ -1,7 +1,9 @@
 package Test;
 
 import DAO.ComposizioneProdotto.ComposizioneProdottoDAO;
+import DAO.Prodotto.ProdottoDAO;
 import DbInterface.DbUser;
+import Model.Prodotto;
 import Model.ProdottoComposito;
 import org.junit.After;
 import org.junit.Before;
@@ -49,7 +51,20 @@ public class ComposizioneProdottoDAOTest {
     }
 
     @Test
-    public void updateTest() {
+    public void addTest() {
+        ProdottoDAO pDAO = ProdottoDAO.getInstance();
+        ArrayList<Prodotto> sottoprodotti = new ArrayList<>();
+        Prodotto p1 = pDAO.findByID(2);
+        Prodotto p2 = pDAO.findByID(5);
+        Prodotto p3 = pDAO.findByID(1);
+
+        sottoprodotti.add(p1);
+        sottoprodotti.add(p2);
+        sottoprodotti.add(p3);
+
+        ProdottoComposito prodottoComposito = new ProdottoComposito();
+        prodottoComposito.setIdProdotto(10);
+        prodottoComposito.setSottoprodotti(sottoprodotti);
 
     }
 }

@@ -5,7 +5,7 @@ import java.util.List;
 
 public class ProdottoComposito extends Articolo implements IProdotto {
 
-    private ArrayList<IProdotto> sottoprodotti = new ArrayList<>();
+    private ArrayList<Prodotto> sottoprodotti = new ArrayList<>();
     private ArrayList<? super Categoria> categorie = new ArrayList<>();
     private int idProdotto;
     private int idProduttore;
@@ -38,16 +38,16 @@ public class ProdottoComposito extends Articolo implements IProdotto {
         this.idProduttore = idProduttore;
     }
 
-    public ArrayList<IProdotto> getSottoprodotti() {
+    public ArrayList<Prodotto> getSottoprodotti() {
         return sottoprodotti;
     }
 
-    public void setSottoprodotti(ArrayList<IProdotto> sottoprodotti) {
+    public void setSottoprodotti(ArrayList<Prodotto> sottoprodotti) {
         this.sottoprodotti = sottoprodotti;
     }
 
-    public void addSottoprodotto(IProdotto prodotto){
-        if (prodotto == this) return;
+    public void addSottoprodotto(Prodotto prodotto){
+        //if (prodotto == this) return;
         sottoprodotti.add(prodotto);
     }
 

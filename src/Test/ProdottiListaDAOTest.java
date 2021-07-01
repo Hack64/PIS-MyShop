@@ -67,7 +67,7 @@ public class ProdottiListaDAOTest {
         prodotti.put(p2, new AbstractMap.SimpleEntry<String,Integer>("SI", 2));
         prodotti.put(p3, new AbstractMap.SimpleEntry<String,Integer>("SI", 1));
 
-        plDAO.update(lista, prodotti);
+        //plDAO.update(lista, prodotti);
 
     }
 }

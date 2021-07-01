@@ -21,10 +21,6 @@ public class ServizioDAO implements IServizioDAO {
     private IDbConnection conn;
     private static ResultSet rs;
     private File file;
-    private FileOutputStream fileOutputStream;
-    byte bytes[];
-    Blob blob;
-
 
     private ServizioDAO(){
         servizio = null;
@@ -46,21 +42,9 @@ public class ServizioDAO implements IServizioDAO {
                 servizio = new Servizio();
                 servizio.setIdServizio(rs.getInt("idServizio"));
                 servizio.setNome(rs.getString("nome"));
-                blob = rs.getBlob("immagine");
-                /* creo un nuovo file vuoto, estraggo il blob dal db e ne memorizzo lo stream di byte in un array di byte. infine salvo l'array di byte nel file via l'output stream */
-                try {
-                    file = new File("./img/" + servizio.getNome() + ".png");
-                    fileOutputStream = new FileOutputStream(file);
-                    bytes = blob.getBytes(1, (int) blob.length());
-                    fileOutputStream.write(bytes);
-                    servizio.setImmagine(file);
-                } catch (FileNotFoundException e){
-                    System.out.println("Errore file");
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    System.out.println("Errore di scrittura");
-                    e.printStackTrace();
-                }
+                String imgName = rs.getString("immagine");
+                file = new File("./img/" + imgName);
+                servizio.setImmagine(file);
                 servizio.setDescrizione(rs.getString("descrizione"));
                 servizio.setNumeroCommenti(rs.getInt("numeroCommenti"));
                 servizio.setCosto(rs.getFloat("costo"));
@@ -93,20 +77,9 @@ public class ServizioDAO implements IServizioDAO {
                 servizio = new Servizio();
                 servizio.setIdServizio(rs.getInt("idServizio"));
                 servizio.setNome(rs.getString("nome"));
-                blob = rs.getBlob("immagine");
-                try {
-                    file = new File("./img/" + servizio.getNome() + ".png");
-                    fileOutputStream = new FileOutputStream(file);
-                    bytes = blob.getBytes(1, (int) blob.length());
-                    fileOutputStream.write(bytes);
-                    servizio.setImmagine(file);
-                } catch (FileNotFoundException e){
-                    System.out.println("Errore file");
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    System.out.println("Errore di scrittura");
-                    e.printStackTrace();
-                }
+                String imgName = rs.getString("immagine");
+                file = new File("./img/" + imgName);
+                servizio.setImmagine(file);
                 servizio.setDescrizione(rs.getString("descrizione"));
                 servizio.setNumeroCommenti(rs.getInt("numeroCommenti"));
                 servizio.setCosto(rs.getFloat("costo"));
@@ -162,20 +135,9 @@ public class ServizioDAO implements IServizioDAO {
                 servizio = new Servizio();
                 servizio.setIdServizio(rs.getInt("idServizio"));
                 servizio.setNome(rs.getString("nome"));
-                blob = rs.getBlob("immagine");
-                try {
-                    file = new File("./img/" + servizio.getNome() + ".png");
-                    fileOutputStream = new FileOutputStream(file);
-                    bytes = blob.getBytes(1, (int) blob.length());
-                    fileOutputStream.write(bytes);
-                    servizio.setImmagine(file);
-                } catch (FileNotFoundException e){
-                    System.out.println("Errore file");
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    System.out.println("Errore di scrittura");
-                    e.printStackTrace();
-                }
+                String imgName = rs.getString("immagine");
+                file = new File("./img/" + imgName);
+                servizio.setImmagine(file);
                 servizio.setDescrizione(rs.getString("descrizione"));
                 servizio.setNumeroCommenti(rs.getInt("numeroCommenti"));
                 servizio.setCosto(rs.getFloat("costo"));
@@ -209,20 +171,9 @@ public class ServizioDAO implements IServizioDAO {
                 servizio = new Servizio();
                 servizio.setIdServizio(rs.getInt("idProdotto"));
                 servizio.setNome(rs.getString("nome"));
-                blob = rs.getBlob("immagine");
-                try {
-                    file = new File("./img/" + servizio.getNome() + ".png");
-                    fileOutputStream = new FileOutputStream(file);
-                    bytes = blob.getBytes(1, (int) blob.length());
-                    fileOutputStream.write(bytes);
-                    servizio.setImmagine(file);
-                } catch (FileNotFoundException e){
-                    System.out.println("Errore file");
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    System.out.println("Errore di scrittura");
-                    e.printStackTrace();
-                }
+                String imgName = rs.getString("immagine");
+                file = new File("./img/" + imgName);
+                servizio.setImmagine(file);
                 servizio.setDescrizione(rs.getString("descrizione"));
                 servizio.setNumeroCommenti(rs.getInt("numeroCommenti"));
                 servizio.setCosto(rs.getFloat("costo"));
@@ -249,9 +200,9 @@ public class ServizioDAO implements IServizioDAO {
     @Override
     public int add(Servizio utente) {
         conn = DbConnection.getInstance();
-        //int rowCount = conn.executeUpdate("INSERT INTO Servizio VALUES ('"+ servizio.getIdServizio() + "','" + servizio.getNome() + "','" + servizio.getImmdfagine() /* controlla i blob */+ "','" + servizio.getDescrizione() + "','" + servizio.getNumeroCommenti() + "','" + servizio.getCosto() + "','" + servizio.getMediaValutazione() + ",'" + servizio.getIdFornitore() + "');");
+        int rowCount = conn.executeUpdate("INSERT INTO Servizio (nome, immagine, descrizione, numeroCommenti, costo, mediaValutazioni, idFornitore) VALUES ('" + servizio.getNome() + "','" + servizio.getImmagine().getName() + "','" + servizio.getDescrizione() + "','" + servizio.getNumeroCommenti() + "','" + servizio.getCosto() + "','" + servizio.getMediaValutazione() + ",'" + servizio.getIdFornitore() + "');");
         conn.close();
-        return 0;
+        return rowCount;
     }
 
     @Override
@@ -265,8 +216,8 @@ public class ServizioDAO implements IServizioDAO {
     @Override
     public int update(Servizio servizio) {
         conn = DbConnection.getInstance();
-        //int rowCount = conn.executeUpdate("UPDATE Servizio SET nome = '" + servizio.getNome() + "', immagine = '" + servizio.getCosdsds() /* vedi i blob */ + "', descrizione = '" + servizio.getDescrizione() + "', numeroCommenti = '" + servizio.getNumeroCommenti() + "', costo = '" + servizio.getCosto() + "', mediaValutazioni = '" + servizio.getMediaValutazione() + "';");
+        int rowCount = conn.executeUpdate("UPDATE Servizio SET nome = '" + servizio.getNome() + "', immagine = '" + servizio.getImmagine().getName() + "', descrizione = '" + servizio.getDescrizione() + "', numeroCommenti = '" + servizio.getNumeroCommenti() + "', costo = '" + servizio.getCosto() + "', mediaValutazioni = '" + servizio.getMediaValutazione() + "' WHERE idServizio = '" + servizio.getIdServizio() + "'; ");
         conn.close();
-        return 0;
+        return rowCount;
     }
 }

@@ -114,15 +114,11 @@ public class ProdottiListaDAO implements IProdottiListaDAO {
     }
 
     @Override
-    public ArrayList<Integer> add(Lista lista, HashMap<Prodotto, Map.Entry<String, Integer>> prodotti) {
+    public int add(Lista lista, Prodotto prodotto, String prenotato, int quantita) {
         conn = DbConnection.getInstance();
-        ArrayList<Integer> rowsCount = new ArrayList<>();
-        for (Map.Entry<Prodotto, Map.Entry<String, Integer>> entry:prodotti.entrySet()){
-            int rowCount = conn.executeUpdate("INSERT INTO ProdottoLista (idProdotto, idLista, prenotato) VALUES ('" + entry.getKey().getIdProdotto() + "','" + lista.getIdLista() + "','" + entry.getValue() + "');");
-            rowsCount.add(rowCount);
-        }
+        int rowCount = conn.executeUpdate("INSERT INTO ProdottoLista (idProdotto, idLista, prenotato, quantita) VALUES ('" + prodotto.getIdProdotto() + "','" + lista.getIdLista() + "','" + prenotato + "','" + quantita +"');");
         conn.close();
-        return rowsCount;
+        return rowCount;
     }
 
     @Override
@@ -134,14 +130,10 @@ public class ProdottiListaDAO implements IProdottiListaDAO {
     }
 
     @Override
-    public ArrayList<Integer> update(Lista lista, HashMap<Prodotto, Map.Entry<String, Integer>> prodotti) {
+    public int update(Lista lista, Prodotto prodotto, String prenotato, int quantita) {
         conn = DbConnection.getInstance();
-        ArrayList<Integer> rowsCount = new ArrayList<>();
-        for (Map.Entry<Prodotto, Map.Entry<String, Integer>> entry:prodotti.entrySet()){
-            int rowCount = conn.executeUpdate("UPDATE ProdottoLista SET prenotato = '" + entry.getValue().getKey() + "', quantita = '" + entry.getValue().getValue() + "' WHERE idProdotto = '" + entry.getKey().getIdProdotto() + "' AND idLista = '" + lista.getIdLista() + "';");
-            rowsCount.add(rowCount);
-        }
+        int rowCount = conn.executeUpdate("UPDATE ProdottoLista SET prenotato = '" + prenotato + "', quantita = '" + quantita + "' WHERE idProdotto = '" + prodotto.getIdProdotto() + "' AND idLista = '" + lista.getIdLista() + "';");
         conn.close();
-        return rowsCount;
+        return rowCount;
     }
 }

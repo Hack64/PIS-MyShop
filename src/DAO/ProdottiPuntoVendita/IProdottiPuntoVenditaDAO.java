@@ -11,5 +11,4 @@ public interface IProdottiPuntoVenditaDAO {
     ArrayList<PuntoVendita> findShopsByProductID(int idProdotto);
     int add(PuntoVendita puntoVendita, Prodotto prodotto);
     int removeByID(int idProdotto, int idPuntoVendita);
-    int update(PuntoVendita puntoVendita, Prodotto prodotto);
 }
