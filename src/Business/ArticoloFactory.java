@@ -1,12 +1,11 @@
 package Business;
 
 import Model.Articolo;
-import Model.ICategoria;
-import Model.Prodotto;
+import Model.Categoria;
 
 public interface ArticoloFactory {
 
     Articolo crea();
-    ICategoria creaCategoria();
+    Categoria creaCategoria();
 
 }
