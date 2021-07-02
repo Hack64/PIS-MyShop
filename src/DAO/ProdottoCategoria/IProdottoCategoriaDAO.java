@@ -1,6 +1,7 @@
 package DAO.ProdottoCategoria;
 
-import Model.*;
+import Model.ICategoria;
+import Model.IProdotto;
 
 import java.util.ArrayList;
 

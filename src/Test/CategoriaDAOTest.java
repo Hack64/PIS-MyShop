@@ -2,7 +2,6 @@ package Test;
 
 import DAO.Categoria.CategoriaDAO;
 import DbInterface.DbUser;
-import Model.Categoria;
 import Model.ICategoria;
 import org.junit.After;
 import org.junit.Before;

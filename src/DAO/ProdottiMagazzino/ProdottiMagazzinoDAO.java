@@ -4,7 +4,9 @@ import DAO.Magazzino.MagazzinoDAO;
 import DAO.Prodotto.ProdottoDAO;
 import DbInterface.DbConnection;
 import DbInterface.IDbConnection;
-import Model.*;
+import Model.Disponibilita;
+import Model.Magazzino;
+import Model.Posizione;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

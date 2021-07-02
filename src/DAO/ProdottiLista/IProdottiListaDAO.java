@@ -1,7 +1,7 @@
 package DAO.ProdottiLista;
 
-import Model.Lista;
 import Model.IProdotto;
+import Model.Lista;
 
 import java.util.ArrayList;
 import java.util.HashMap;

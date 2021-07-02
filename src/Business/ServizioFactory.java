@@ -1,9 +1,9 @@
 package Business;
 
 import Model.Articolo;
-import Model.Servizio;
 import Model.Categoria;
 import Model.CategoriaServizio;
+import Model.Servizio;
 
 public class ServizioFactory implements ArticoloFactory{
 

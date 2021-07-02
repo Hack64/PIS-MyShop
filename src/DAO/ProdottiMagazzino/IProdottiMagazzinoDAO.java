@@ -1,7 +1,6 @@
 package DAO.ProdottiMagazzino;
 
 import Model.Disponibilita;
-import Model.IProdotto;
 import Model.Magazzino;
 
 import java.util.ArrayList;

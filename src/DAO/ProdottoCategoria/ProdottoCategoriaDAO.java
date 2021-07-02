@@ -4,7 +4,9 @@ import DAO.Categoria.CategoriaDAO;
 import DAO.Prodotto.ProdottoDAO;
 import DbInterface.DbConnection;
 import DbInterface.IDbConnection;
-import Model.*;
+import Model.CategoriaProdotto;
+import Model.ICategoria;
+import Model.IProdotto;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

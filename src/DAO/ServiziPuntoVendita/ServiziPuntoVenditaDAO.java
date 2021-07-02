@@ -4,8 +4,8 @@ import DAO.PuntoVendita.PuntoVenditaDAO;
 import DAO.Servizio.ServizioDAO;
 import DbInterface.DbConnection;
 import DbInterface.IDbConnection;
-import Model.Servizio;
 import Model.PuntoVendita;
+import Model.Servizio;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

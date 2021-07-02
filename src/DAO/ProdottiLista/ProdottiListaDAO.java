@@ -6,7 +6,6 @@ import DbInterface.DbConnection;
 import DbInterface.IDbConnection;
 import Model.IProdotto;
 import Model.Lista;
-import Model.Prodotto;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

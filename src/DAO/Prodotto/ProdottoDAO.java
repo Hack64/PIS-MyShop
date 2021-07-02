@@ -4,12 +4,13 @@ import DAO.Feedback.FeedbackDAO;
 import DAO.Produttore.ProduttoreDAO;
 import DbInterface.DbConnection;
 import DbInterface.IDbConnection;
-import Model.Prodotto;
 import Model.IProdotto;
+import Model.Prodotto;
 import Model.Produttore;
 
-import java.io.*;
-import java.sql.*;
+import java.io.File;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ProdottoDAO implements IProdottoDAO {

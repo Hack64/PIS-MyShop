@@ -1,6 +1,7 @@
 package DAO.Utente;
 
-import DbInterface.*;
+import DbInterface.DbConnection;
+import DbInterface.IDbConnection;
 import Model.Utente;
 
 import java.sql.ResultSet;

@@ -1,11 +1,12 @@
 package DAO.ComposizioneProdotto;
 
 import DAO.Feedback.FeedbackDAO;
-import DAO.ProdottoCategoria.ProdottoCategoriaDAO;
 import DAO.Prodotto.ProdottoDAO;
+import DAO.ProdottoCategoria.ProdottoCategoriaDAO;
 import DbInterface.DbConnection;
 import DbInterface.IDbConnection;
-import Model.*;
+import Model.IProdotto;
+import Model.ProdottoComposito;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

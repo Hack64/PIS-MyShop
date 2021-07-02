@@ -1,8 +1,6 @@
 package DAO.ComposizioneProdotto;
 
 import Model.IProdotto;
-import Model.ProdottoComposito;
-import Model.Produttore;
 
 import java.util.ArrayList;
 
