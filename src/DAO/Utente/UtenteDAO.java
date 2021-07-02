@@ -6,6 +6,8 @@ import Model.Utente;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 
 public class UtenteDAO implements IUtenteDAO {
@@ -41,7 +43,10 @@ public class UtenteDAO implements IUtenteDAO {
                 utente.setResidenza(rs.getString("residenza"));
                 utente.setTelefono(rs.getString("telefono"));
                 utente.setProfessione(rs.getString("professione"));
-                utente.setEta(rs.getInt("eta"));
+                LocalDate l = LocalDate.parse(rs.getString("eta"));
+                LocalDate now = LocalDate.now(); //gets localDate
+                Period diff = Period.between(l, now);
+                utente.setEta(diff.getYears());
                 utente.setRuolo(Utente.Ruoli.valueOf(rs.getString("tipo")));
                 return utente;
             }
@@ -75,7 +80,10 @@ public class UtenteDAO implements IUtenteDAO {
                 utente.setResidenza(rs.getString("residenza"));
                 utente.setTelefono(rs.getString("telefono"));
                 utente.setProfessione(rs.getString("professione"));
-                utente.setEta(rs.getInt("eta"));
+                LocalDate l = LocalDate.parse(rs.getString("eta"));
+                LocalDate now = LocalDate.now(); //gets localDate
+                Period diff = Period.between(l, now);
+                utente.setEta(diff.getYears());
                 utente.setRuolo(Utente.Ruoli.valueOf(rs.getString("tipo")));
                 return utente;
             }
@@ -109,7 +117,10 @@ public class UtenteDAO implements IUtenteDAO {
                 utente.setResidenza(rs.getString("residenza"));
                 utente.setTelefono(rs.getString("telefono"));
                 utente.setProfessione(rs.getString("professione"));
-                utente.setEta(rs.getInt("eta"));
+                LocalDate l = LocalDate.parse(rs.getString("eta"));
+                LocalDate now = LocalDate.now(); //gets localDate
+                Period diff = Period.between(l, now);
+                utente.setEta(diff.getYears());
                 utente.setRuolo(Utente.Ruoli.valueOf(rs.getString("tipo")));
                 return utente;
             }
@@ -128,10 +139,34 @@ public class UtenteDAO implements IUtenteDAO {
     }
 
     @Override
+    public boolean checkCredentials(String username, String password) {
+        boolean credentialsOk = false;
+        conn = DbConnection.getInstance();
+        rs = conn.executeQuery("SELECT count(*) AS C FROM Utente WHERE Utente.email = '" + username + "' and Utente.passwordHash = '" + password + "';");
+        try {
+            rs.next();
+            if(rs.getRow()==1 && rs.getInt("C")==1){
+                credentialsOk = true;
+            }
+        } catch (SQLException e) {
+            // handle any errors
+            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("VendorError: " + e.getErrorCode());
+        } catch (NullPointerException e) {
+            // handle any errors
+            System.out.println("Resultset: " + e.getMessage());
+        } finally {
+            conn.close();
+        }
+        return credentialsOk;
+    }
+
+    @Override
     public boolean userExists(String username) {
         boolean userExists = false;
         conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT count(*) AS C FROM Utente WHERE Utente.username = '" + username + "';");
+        rs = conn.executeQuery("SELECT count(*) AS C FROM Utente WHERE Utente.email = '" + username + "';");
         try {
             rs.next();
             if(rs.getRow()==1 && rs.getInt("C")==1)
@@ -166,7 +201,10 @@ public class UtenteDAO implements IUtenteDAO {
                 utente.setResidenza(rs.getString("residenza"));
                 utente.setTelefono(rs.getString("telefono"));
                 utente.setProfessione(rs.getString("professione"));
-                utente.setEta(rs.getInt("eta"));
+                LocalDate l = LocalDate.parse(rs.getString("eta"));
+                LocalDate now = LocalDate.now(); //gets localDate
+                Period diff = Period.between(l, now);
+                utente.setEta(diff.getYears());
                 utente.setRuolo(Utente.Ruoli.valueOf(rs.getString("tipo")));
 
                 utenti.add(utente);

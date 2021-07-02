@@ -1,5 +1,11 @@
 package View;
 
+import Business.FactoryProvider;
+import Business.ProdottoFactory;
+import Model.Articolo;
+import Model.ICategoria;
+
+import javax.swing.*;
 import java.time.LocalDate;
 
 public class MainClass {
@@ -17,5 +23,7 @@ public class MainClass {
         System.out.println(u.getRuolo());*/
 
         System.out.println(LocalDate.now());
+
+        new AppFrame();
     }
 }
