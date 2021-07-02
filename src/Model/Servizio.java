@@ -3,15 +3,15 @@ package Model;
 public class Servizio extends Articolo {
 
     private int idServizio;
-    private CategoriaServizio categoria;
-    private int idFornitore;
+    private ICategoria categoria;
+    private Fornitore fornitore;
 
-    public int getIdFornitore() {
-        return idFornitore;
+    public Fornitore getFornitore() {
+        return fornitore;
     }
 
-    public void setIdFornitore(int idFornitore) {
-        this.idFornitore = idFornitore;
+    public void setFornitore(Fornitore fornitore) {
+        this.fornitore = this.fornitore;
     }
 
     public int getIdServizio() {
@@ -22,11 +22,11 @@ public class Servizio extends Articolo {
         this.idServizio = idServizio;
     }
 
-    public CategoriaServizio getCategoria() {
+    public ICategoria getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(CategoriaServizio categoria) {
+    public void setCategoria(ICategoria categoria) {
         this.categoria = categoria;
     }
 }

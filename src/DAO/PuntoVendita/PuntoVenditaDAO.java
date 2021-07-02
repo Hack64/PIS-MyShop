@@ -1,5 +1,6 @@
 package DAO.PuntoVendita;
 
+import DAO.Magazzino.MagazzinoDAO;
 import DAO.ProdottiPuntoVendita.ProdottiPuntoVenditaDAO;
 import DAO.ServiziPuntoVendita.ServiziPuntoVenditaDAO;
 import DAO.UtentiPuntoVendita.UtentiPuntoVenditaDAO;
@@ -18,6 +19,10 @@ public class PuntoVenditaDAO implements IPuntoVenditaDAO {
     private IDbConnection conn;
     private ResultSet rs;
     private PuntoVendita puntoVendita;
+    private ProdottiPuntoVenditaDAO ppvDAO;
+    private ServiziPuntoVenditaDAO spvDAO;
+    private UtentiPuntoVenditaDAO upvDAO;
+    private MagazzinoDAO mDAO;
 
     private PuntoVenditaDAO(){
         conn=null;
@@ -33,9 +38,11 @@ public class PuntoVenditaDAO implements IPuntoVenditaDAO {
     public PuntoVendita findByID(int idPuntoVendita) {
         conn = DbConnection.getInstance();
         rs = conn.executeQuery("SELECT idPuntoVendita, via, CAP, citta, idMagazzino FROM myshopdb.PuntoVendita WHERE myshopdb.PuntoVendita.idPuntoVendita = '" + idPuntoVendita + "';");
-        ProdottiPuntoVenditaDAO ppvDAO = ProdottiPuntoVenditaDAO.getInstance();
-        ServiziPuntoVenditaDAO spvDAO = ServiziPuntoVenditaDAO.getInstance();
-        UtentiPuntoVenditaDAO upvDAO = UtentiPuntoVenditaDAO.getInstance();
+        ppvDAO = ProdottiPuntoVenditaDAO.getInstance();
+        spvDAO = ServiziPuntoVenditaDAO.getInstance();
+        upvDAO = UtentiPuntoVenditaDAO.getInstance();
+        mDAO = MagazzinoDAO.getInstance();
+
         try {
             rs.next();
             if (rs.getRow()==1) {
@@ -44,8 +51,8 @@ public class PuntoVenditaDAO implements IPuntoVenditaDAO {
                 puntoVendita.setVia(rs.getString("via"));
                 puntoVendita.setCap(rs.getString("CAP"));
                 puntoVendita.setCitta(rs.getString("citta"));
-                puntoVendita.setIdMagazzino(rs.getInt("idMagazzino"));
-                puntoVendita.setIdManager(upvDAO.findShopManager(puntoVendita.getIdPuntoVendita()).getIdUtente());
+                puntoVendita.setMagazzino(mDAO.findByID(rs.getInt("idMagazzino")));
+                puntoVendita.setManager(upvDAO.findShopManager(puntoVendita.getIdPuntoVendita()));
                 puntoVendita.setCatalogoProdottiPuntoVendita(ppvDAO.findProductsByShopID(puntoVendita.getIdPuntoVendita()));
                 puntoVendita.setCatalogoServiziPuntoVendita(spvDAO.findServicesByShopID(puntoVendita.getIdPuntoVendita()));
                 puntoVendita.setClienti(upvDAO.findUsersByShopID(puntoVendita.getIdPuntoVendita()));
@@ -70,9 +77,10 @@ public class PuntoVenditaDAO implements IPuntoVenditaDAO {
     public ArrayList<PuntoVendita> findAll() {
         conn = DbConnection.getInstance();
         rs = conn.executeQuery("SELECT idPuntoVendita, via, CAP, citta, idMagazzino FROM myshopdb.PuntoVendita;");
-        ProdottiPuntoVenditaDAO ppvDAO = ProdottiPuntoVenditaDAO.getInstance();
-        ServiziPuntoVenditaDAO spvDAO = ServiziPuntoVenditaDAO.getInstance();
-        UtentiPuntoVenditaDAO upvDAO = UtentiPuntoVenditaDAO.getInstance();
+        ppvDAO = ProdottiPuntoVenditaDAO.getInstance();
+        spvDAO = ServiziPuntoVenditaDAO.getInstance();
+        upvDAO = UtentiPuntoVenditaDAO.getInstance();
+        mDAO = MagazzinoDAO.getInstance();
         ArrayList<PuntoVendita> puntiVendita = new ArrayList<>();
         try {
             while (rs.next()) {
@@ -81,8 +89,8 @@ public class PuntoVenditaDAO implements IPuntoVenditaDAO {
                 puntoVendita.setVia(rs.getString("via"));
                 puntoVendita.setCap(rs.getString("CAP"));
                 puntoVendita.setCitta(rs.getString("citta"));
-                puntoVendita.setIdMagazzino(rs.getInt("idMagazzino"));
-                puntoVendita.setIdManager(upvDAO.findShopManager(puntoVendita.getIdPuntoVendita()).getIdUtente());
+                puntoVendita.setMagazzino(mDAO.findByID(rs.getInt("idMagazzino")));
+                puntoVendita.setManager(upvDAO.findShopManager(puntoVendita.getIdPuntoVendita()));
                 puntoVendita.setCatalogoProdottiPuntoVendita(ppvDAO.findProductsByShopID(puntoVendita.getIdPuntoVendita()));
                 puntoVendita.setCatalogoServiziPuntoVendita(spvDAO.findServicesByShopID(puntoVendita.getIdPuntoVendita()));
                 puntoVendita.setClienti(upvDAO.findUsersByShopID(puntoVendita.getIdPuntoVendita()));
@@ -108,7 +116,7 @@ public class PuntoVenditaDAO implements IPuntoVenditaDAO {
     @Override
     public int add(PuntoVendita puntoVendita) {
         conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("INSERT INTO PuntoVendita VALUES ('" + puntoVendita.getIdPuntoVendita() + "','" + puntoVendita.getVia() + "','" + puntoVendita.getCap() + "','" + puntoVendita.getCitta() + "','" + puntoVendita.getIdMagazzino() + "');");
+        int rowCount = conn.executeUpdate("INSERT INTO PuntoVendita VALUES ('" + puntoVendita.getIdPuntoVendita() + "','" + puntoVendita.getVia() + "','" + puntoVendita.getCap() + "','" + puntoVendita.getCitta() + "','" + puntoVendita.getMagazzino().getIdMagazzino() + "');");
         conn.close();
         return rowCount;
     }

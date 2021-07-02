@@ -1,5 +1,8 @@
 package DAO.Feedback;
 
+import DAO.Prodotto.ProdottoDAO;
+import DAO.Servizio.ServizioDAO;
+import DAO.Utente.UtenteDAO;
 import DbInterface.DbConnection;
 import DbInterface.IDbConnection;
 import Model.Feedback;
@@ -16,6 +19,9 @@ public class FeedbackDAO implements IFeedbackDAO {
     private IDbConnection conn;
     private ResultSet rs;
     private Feedback feedback;
+    private UtenteDAO uDAO;
+    private ServizioDAO sDAO;
+    private ProdottoDAO pDAO;
 
     private FeedbackDAO(){
         conn=null;
@@ -32,6 +38,9 @@ public class FeedbackDAO implements IFeedbackDAO {
     public Feedback findByID(int idFeedback) {
         conn = DbConnection.getInstance();
         rs = conn.executeQuery("SELECT idFeedback, dataCreazione, commento, valutazione, idUtente, idServizio, idProdotto FROM myshopdb.Feedback WHERE myshopdb.Feedback.idFeedback = '" + idFeedback + "';");
+        pDAO = ProdottoDAO.getInstance();
+        sDAO = ServizioDAO.getInstance();
+        uDAO = UtenteDAO.getInstance();
         try {
             rs.next();
             if (rs.getRow()==1){
@@ -40,9 +49,9 @@ public class FeedbackDAO implements IFeedbackDAO {
                 feedback.setDataCreazione(LocalDate.parse(rs.getString("dataCreazione")));
                 feedback.setCommento(rs.getString("commento"));
                 feedback.setValutazione(rs.getInt("valutazione")); // da verificare il funzionamento!
-                feedback.setIdUtente(rs.getInt("idUtente"));
-                feedback.setIdServizio(rs.getInt("idServizio"));
-                feedback.setIdProdotto(rs.getInt("idProdotto"));
+                feedback.setUtente(uDAO.findByID(rs.getInt("idUtente")));
+                feedback.setServizio(sDAO.findByID(rs.getInt("idServizio")));
+                feedback.setProdotto(pDAO.findByID(rs.getInt("idProdotto")));
                 return feedback;
             }
         } catch (SQLException e) {
@@ -64,6 +73,9 @@ public class FeedbackDAO implements IFeedbackDAO {
         conn = DbConnection.getInstance();
         rs = conn.executeQuery("SELECT idFeedback, dataCreazione, commento, valutazione, idUtente, idServizio, idProdotto FROM myshopdb.Feedback WHERE myshopdb.Feedback.valutazione = '" + valutazione + "';");
         ArrayList<Feedback> feedbacks = new ArrayList<>();
+        pDAO = ProdottoDAO.getInstance();
+        sDAO = ServizioDAO.getInstance();
+        uDAO = UtenteDAO.getInstance();
         try {
             while(rs.next()){
                 feedback = new Feedback();
@@ -71,9 +83,9 @@ public class FeedbackDAO implements IFeedbackDAO {
                 feedback.setDataCreazione(LocalDate.parse(rs.getString("dataCreazione")));
                 feedback.setCommento(rs.getString("commento"));
                 feedback.setValutazione(rs.getInt("valutazione")); // da verificare il funzionamento!
-                feedback.setIdUtente(rs.getInt("idUtente"));
-                feedback.setIdServizio(rs.getInt("idServizio"));
-                feedback.setIdProdotto(rs.getInt("idProdotto"));
+                feedback.setUtente(uDAO.findByID(rs.getInt("idUtente")));
+                feedback.setServizio(sDAO.findByID(rs.getInt("idServizio")));
+                feedback.setProdotto(pDAO.findByID(rs.getInt("idProdotto")));
 
                 feedbacks.add(feedback);
             }
@@ -97,6 +109,9 @@ public class FeedbackDAO implements IFeedbackDAO {
         conn = DbConnection.getInstance();
         rs = conn.executeQuery("SELECT idFeedback, dataCreazione, commento, valutazione, idUtente, idServizio, idProdotto FROM myshopdb.Feedback WHERE myshopdb.Feedback.idUtente = '" + idUtente + "';");
         ArrayList<Feedback> feedbacks = new ArrayList<>();
+        pDAO = ProdottoDAO.getInstance();
+        sDAO = ServizioDAO.getInstance();
+        uDAO = UtenteDAO.getInstance();
         try {
             while(rs.next()){
                 feedback = new Feedback();
@@ -104,9 +119,9 @@ public class FeedbackDAO implements IFeedbackDAO {
                 feedback.setDataCreazione(LocalDate.parse(rs.getString("dataCreazione")));
                 feedback.setCommento(rs.getString("commento"));
                 feedback.setValutazione(rs.getInt("valutazione")); // da verificare il funzionamento!
-                feedback.setIdUtente(rs.getInt("idUtente"));
-                feedback.setIdServizio(rs.getInt("idServizio"));
-                feedback.setIdProdotto(rs.getInt("idProdotto"));
+                feedback.setUtente(uDAO.findByID(rs.getInt("idUtente")));
+                feedback.setServizio(sDAO.findByID(rs.getInt("idServizio")));
+                feedback.setProdotto(pDAO.findByID(rs.getInt("idProdotto")));
 
                 feedbacks.add(feedback);
             }
@@ -130,6 +145,9 @@ public class FeedbackDAO implements IFeedbackDAO {
         conn = DbConnection.getInstance();
         rs = conn.executeQuery("SELECT idFeedback, dataCreazione, commento, valutazione, idUtente, idServizio, idProdotto FROM myshopdb.Feedback WHERE myshopdb.Feedback.idProdotto = '" + idProdotto + "';");
         ArrayList<Feedback> feedbacks = new ArrayList<>();
+        pDAO = ProdottoDAO.getInstance();
+        sDAO = ServizioDAO.getInstance();
+        uDAO = UtenteDAO.getInstance();
         try {
             while(rs.next()){
                 feedback = new Feedback();
@@ -137,9 +155,9 @@ public class FeedbackDAO implements IFeedbackDAO {
                 feedback.setDataCreazione(LocalDate.parse(rs.getString("dataCreazione")));
                 feedback.setCommento(rs.getString("commento"));
                 feedback.setValutazione(rs.getInt("valutazione")); // da verificare il funzionamento!
-                feedback.setIdUtente(rs.getInt("idUtente"));
-                feedback.setIdServizio(rs.getInt("idServizio"));
-                feedback.setIdProdotto(rs.getInt("idProdotto"));
+                feedback.setUtente(uDAO.findByID(rs.getInt("idUtente")));
+                feedback.setServizio(sDAO.findByID(rs.getInt("idServizio")));
+                feedback.setProdotto(pDAO.findByID(rs.getInt("idProdotto")));
 
                 feedbacks.add(feedback);
             }
@@ -163,6 +181,9 @@ public class FeedbackDAO implements IFeedbackDAO {
         conn = DbConnection.getInstance();
         rs = conn.executeQuery("SELECT idFeedback, dataCreazione, commento, valutazione, idUtente, idServizio, idProdotto FROM myshopdb.Feedback WHERE myshopdb.Feedback.idServizio = '" + idServizio + "';");
         ArrayList<Feedback> feedbacks = new ArrayList<>();
+        pDAO = ProdottoDAO.getInstance();
+        sDAO = ServizioDAO.getInstance();
+        uDAO = UtenteDAO.getInstance();
         try {
             while(rs.next()){
                 feedback = new Feedback();
@@ -170,9 +191,9 @@ public class FeedbackDAO implements IFeedbackDAO {
                 feedback.setDataCreazione(LocalDate.parse(rs.getString("dataCreazione")));
                 feedback.setCommento(rs.getString("commento"));
                 feedback.setValutazione(rs.getInt("valutazione")); // da verificare il funzionamento!
-                feedback.setIdUtente(rs.getInt("idUtente"));
-                feedback.setIdServizio(rs.getInt("idServizio"));
-                feedback.setIdProdotto(rs.getInt("idProdotto"));
+                feedback.setUtente(uDAO.findByID(rs.getInt("idUtente")));
+                feedback.setServizio(sDAO.findByID(rs.getInt("idServizio")));
+                feedback.setProdotto(pDAO.findByID(rs.getInt("idProdotto")));
 
                 feedbacks.add(feedback);
             }
@@ -194,7 +215,7 @@ public class FeedbackDAO implements IFeedbackDAO {
     @Override
     public int add(Feedback feedback) {
         conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("INSERT INTO Feedback VALUES ('" + feedback.getIdFeedback() + "','" + feedback.getDataCreazione().toString() + "','" + feedback.getCommento() + "','" + feedback.getValutazione() + "','" + feedback.getIdUtente() + "','" + feedback.getIdServizio() + "','" + feedback.getIdProdotto() + "');");
+        int rowCount = conn.executeUpdate("INSERT INTO Feedback VALUES ('" + feedback.getIdFeedback() + "','" + feedback.getDataCreazione().toString() + "','" + feedback.getCommento() + "','" + feedback.getValutazione() + "','" + feedback.getUtente().getIdUtente() + "','" + feedback.getServizio().getIdServizio() + "','" + feedback.getProdotto().getIdProdotto() + "');");
         conn.close();
         return rowCount;
     }

@@ -4,6 +4,7 @@ import DAO.ProdottoCategoria.ProdottoCategoriaDAO;
 import DbInterface.DbUser;
 import Model.Categoria;
 import Model.CategoriaProdotto;
+import Model.ICategoria;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,12 +27,12 @@ public class ProdottoCategoriaDAOTest {
     @Test
     public void getCategoriesByProductIDTest() {
         ProdottoCategoriaDAO pcDAO = ProdottoCategoriaDAO.getInstance();
-        ArrayList<? super Categoria> categorieProdotto = pcDAO.getCategoriesByProductID(3);
+        ArrayList<ICategoria> categorieProdotto = pcDAO.getCategoriesByProductID(3);
 
         CategoriaProdotto c = (CategoriaProdotto) categorieProdotto.get(0);
         System.out.println(c.getNome());
         System.out.println(c.getIdCategoria());
-        System.out.println(c.getIdCategoriaPadre());
+        //System.out.println(c.getIdCategoriaPadre());
 
         /*c = (CategoriaProdotto) categorieProdotto.get(1);
         System.out.println(c.getNome());

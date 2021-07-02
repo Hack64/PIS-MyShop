@@ -3,6 +3,7 @@ package Test;
 import DAO.ProdottiLista.ProdottiListaDAO;
 import DAO.Prodotto.ProdottoDAO;
 import DbInterface.DbUser;
+import Model.IProdotto;
 import Model.Lista;
 import Model.Prodotto;
 import org.junit.After;
@@ -33,10 +34,10 @@ public class ProdottiListaDAOTest {
     public void addTest() {
         ProdottoDAO pDAO = ProdottoDAO.getInstance();
         ProdottiListaDAO plDAO = ProdottiListaDAO.getInstance();
-        ArrayList<Prodotto> prodotti = pDAO.findAll();
+        ArrayList<IProdotto> prodotti = pDAO.findAll();
         Lista lista = new Lista();
-        HashMap<Prodotto, String> hasProdotti = new HashMap<>();
-        for (Prodotto p:prodotti){
+        HashMap<IProdotto, String> hasProdotti = new HashMap<>();
+        for (IProdotto p:prodotti){
             hasProdotti.put(p, "NO");
         }
         lista.setIdLista(1);
@@ -44,7 +45,7 @@ public class ProdottiListaDAOTest {
         lista.setDataCreazione(LocalDate.now());
         lista.setStato(Lista.Stato.NON_PAGATA);
         lista.setPrezzoTotale(100);
-        lista.setIdUtente(1);
+        //lista.setUtente();
         //lista.setProdotti(hasProdotti);
 
         //plDAO.add(lista, hasProdotti);

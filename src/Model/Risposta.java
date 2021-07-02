@@ -7,23 +7,23 @@ public class Risposta {
     private int idRisposta;
     private LocalDate dataCreazione;
     private String testo;
-    private int idUtente;
-    private int idFeedback;
+    private Utente utente;
+    private Feedback feedback;
 
-    public Risposta(int idRisposta, LocalDate dataCreazione, String testo, int idUtente, int idFeedback) {
+    public Risposta(int idRisposta, LocalDate dataCreazione, String testo, Utente utente, Feedback feedback) {
         this.idRisposta = idRisposta;
         this.dataCreazione = dataCreazione;
         this.testo = testo;
-        this.idUtente = idUtente;
-        this.idFeedback = idFeedback;
+        this.utente = utente;
+        this.feedback = feedback;
     }
 
     public Risposta(){
         this.idRisposta = -1;
         this.dataCreazione = null;
         this.testo = null;
-        this.idUtente = -1;
-        this.idFeedback = -1;
+        this.utente = null;
+        this.feedback = null;
     }
 
     public int getIdRisposta() {
@@ -50,19 +50,19 @@ public class Risposta {
         this.testo = testo;
     }
 
-    public int getIdUtente() {
-        return idUtente;
+    public Utente getUtente() {
+        return utente;
     }
 
-    public void setIdUtente(int idUtente) {
-        this.idUtente = idUtente;
+    public void setUtente(Utente utente) {
+        this.utente = utente;
     }
 
-    public int getIdFeedback() {
-        return idFeedback;
+    public Feedback getFeedback() {
+        return feedback;
     }
 
-    public void setIdFeedback(int idFeedback) {
-        this.idFeedback = idFeedback;
+    public void setFeedback(Feedback feedback) {
+        this.feedback = feedback;
     }
 }

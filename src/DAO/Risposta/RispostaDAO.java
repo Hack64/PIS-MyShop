@@ -1,5 +1,7 @@
 package DAO.Risposta;
 
+import DAO.Feedback.FeedbackDAO;
+import DAO.Utente.UtenteDAO;
 import DbInterface.DbConnection;
 import DbInterface.IDbConnection;
 import Model.Risposta;
@@ -16,6 +18,8 @@ public class RispostaDAO implements IRispostaDAO {
     private IDbConnection conn;
     private ResultSet rs;
     private Risposta risposta;
+    private FeedbackDAO fDAO;
+    private UtenteDAO uDAO;
 
     private RispostaDAO(){
         conn = null;
@@ -31,15 +35,17 @@ public class RispostaDAO implements IRispostaDAO {
     public Risposta findByID(int idRisposta) {
         conn = DbConnection.getInstance();
         rs = conn.executeQuery("SELECT idRisposta, idFeedback, testo, dataCreazione, idUtente FROM Risposta WHERE Risposta.idRisposta = '" + idRisposta + "';");
+        fDAO = FeedbackDAO.getInstance();
+        uDAO = UtenteDAO.getInstance();
         try {
             rs.next();
             if (rs.getRow()==1){
                 risposta = new Risposta();
                 risposta.setIdRisposta(rs.getInt("idRisposta"));
-                risposta.setIdFeedback(rs.getInt("idFeedback"));
+                risposta.setFeedback(fDAO.findByID(rs.getInt("idFeedback")));
                 risposta.setTesto(rs.getString("testo"));
                 risposta.setDataCreazione(LocalDate.parse(rs.getString("dataCreazione")));
-                risposta.setIdUtente(rs.getInt("idUtente"));
+                risposta.setUtente(uDAO.findByID(rs.getInt("idUtente")));
 
                 return risposta;
             }
@@ -63,14 +69,16 @@ public class RispostaDAO implements IRispostaDAO {
         conn = DbConnection.getInstance();
         rs = conn.executeQuery("SELECT idRisposta, idFeedback, testo, dataCreazione, idUtente FROM Risposta;");
         ArrayList<Risposta> risposte = new ArrayList<>();
+        fDAO = FeedbackDAO.getInstance();
+        uDAO = UtenteDAO.getInstance();
         try {
             while(rs.next()){
                 risposta = new Risposta();
                 risposta.setIdRisposta(rs.getInt("idRisposta"));
-                risposta.setIdFeedback(rs.getInt("idFeedback"));
+                risposta.setFeedback(fDAO.findByID(rs.getInt("idFeedback")));
                 risposta.setTesto(rs.getString("testo"));
                 risposta.setDataCreazione(LocalDate.parse(rs.getString("dataCreazione")));
-                risposta.setIdUtente(rs.getInt("idUtente"));
+                risposta.setUtente(uDAO.findByID(rs.getInt("idUtente")));
 
                 risposte.add(risposta);
             }
@@ -95,14 +103,16 @@ public class RispostaDAO implements IRispostaDAO {
         conn = DbConnection.getInstance();
         rs = conn.executeQuery("SELECT idRisposta, idFeedback, testo, dataCreazione, idUtente FROM Risposta WHERE Risposta.idFeedback = '" + idFeedback + "';");
         ArrayList<Risposta> risposte = new ArrayList<>();
+        fDAO = FeedbackDAO.getInstance();
+        uDAO = UtenteDAO.getInstance();
         try {
             while(rs.next()){
                 risposta = new Risposta();
                 risposta.setIdRisposta(rs.getInt("idRisposta"));
-                risposta.setIdFeedback(rs.getInt("idFeedback"));
+                risposta.setFeedback(fDAO.findByID(rs.getInt("idFeedback")));
                 risposta.setTesto(rs.getString("testo"));
                 risposta.setDataCreazione(LocalDate.parse(rs.getString("dataCreazione")));
-                risposta.setIdUtente(rs.getInt("idUtente"));
+                risposta.setUtente(uDAO.findByID(rs.getInt("idUtente")));
 
                 risposte.add(risposta);
             }
@@ -127,14 +137,16 @@ public class RispostaDAO implements IRispostaDAO {
         conn = DbConnection.getInstance();
         rs = conn.executeQuery("SELECT idRisposta, idFeedback, testo, dataCreazione, idUtente FROM Risposta WHERE Risposta.idUtente = '" + idUtente + "';");
         ArrayList<Risposta> risposte = new ArrayList<>();
+        fDAO = FeedbackDAO.getInstance();
+        uDAO = UtenteDAO.getInstance();
         try {
             while(rs.next()){
                 risposta = new Risposta();
                 risposta.setIdRisposta(rs.getInt("idRisposta"));
-                risposta.setIdFeedback(rs.getInt("idFeedback"));
+                risposta.setFeedback(fDAO.findByID(rs.getInt("idFeedback")));
                 risposta.setTesto(rs.getString("testo"));
                 risposta.setDataCreazione(LocalDate.parse(rs.getString("dataCreazione")));
-                risposta.setIdUtente(rs.getInt("idUtente"));
+                risposta.setUtente(uDAO.findByID(rs.getInt("idUtente")));
 
                 risposte.add(risposta);
             }
@@ -157,7 +169,7 @@ public class RispostaDAO implements IRispostaDAO {
     @Override
     public int add(Risposta risposta) {
         conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("INSERT INTO Risposta VALUES ('" + risposta.getIdRisposta() + "','" + risposta.getIdFeedback() + "','" + risposta.getTesto() + "','" + risposta.getDataCreazione().toString() + "','" + risposta.getIdUtente() + "');");
+        int rowCount = conn.executeUpdate("INSERT INTO Risposta VALUES ('" + risposta.getIdRisposta() + "','" + risposta.getFeedback() + "','" + risposta.getTesto() + "','" + risposta.getDataCreazione().toString() + "','" + risposta.getUtente() + "');");
         conn.close();
         return rowCount;
     }

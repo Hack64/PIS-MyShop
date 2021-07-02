@@ -24,10 +24,9 @@ public class FornitoreDAO implements IFornitoreDAO {
         fornitore=null;
     }
 
-    public FornitoreDAO getInstance(){
+    public static FornitoreDAO getInstance(){
         return instance;
     }
-
 
     @Override
     public Fornitore findByID(int idFornitore) {

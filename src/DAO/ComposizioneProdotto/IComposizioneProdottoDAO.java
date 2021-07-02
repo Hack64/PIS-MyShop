@@ -7,10 +7,10 @@ import Model.Produttore;
 import java.util.ArrayList;
 
 public interface IComposizioneProdottoDAO {
-    ProdottoComposito findByID(int idProdotto);
-    ArrayList<ProdottoComposito> findAll();
-    ArrayList<ProdottoComposito> findAllByProducerID(int idProduttore);
+    IProdotto findByID(int idProdotto);
+    ArrayList<IProdotto> findAll();
+    ArrayList<IProdotto> findAllByProducerID(int idProduttore);
     boolean isCompositeProduct(int idProdotto);
-    ArrayList<Integer> add(ProdottoComposito prodotto);
+    ArrayList<Integer> add(IProdotto prodotto);
     int removeById(int idProdotto);
 }

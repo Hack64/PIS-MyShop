@@ -1,14 +1,13 @@
 package Model;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ProdottoComposito extends Articolo implements IProdotto {
 
-    private ArrayList<Prodotto> sottoprodotti = new ArrayList<>();
-    private ArrayList<? super Categoria> categorie = new ArrayList<>();
+    private ArrayList<IProdotto> sottoprodotti = new ArrayList<>();
+    private ArrayList<ICategoria> categorie = new ArrayList<>();
     private int idProdotto;
-    private int idProduttore;
+    private Produttore produttore;
 
     public void setIdProdotto(int idProdotto) {
         this.idProdotto = idProdotto;
@@ -18,11 +17,11 @@ public class ProdottoComposito extends Articolo implements IProdotto {
         return idProdotto;
     }
 
-    public ArrayList<? super Categoria> getCategorie() {
+    public ArrayList<ICategoria> getCategorie() {
         return categorie;
     }
 
-    public void setCategorie(ArrayList<? super Categoria> categorie) {
+    public void setCategorie(ArrayList<ICategoria> categorie) {
         this.categorie = categorie;
     }
 
@@ -30,23 +29,23 @@ public class ProdottoComposito extends Articolo implements IProdotto {
         categorie.add(categoria);
     }
 
-    public int getIdProduttore() {
-        return idProduttore;
+    public Produttore getProduttore() {
+        return produttore;
     }
 
-    public void setIdProduttore(int idProduttore) {
-        this.idProduttore = idProduttore;
+    public void setProduttore(Produttore produttore) {
+        this.produttore = produttore;
     }
 
-    public ArrayList<Prodotto> getSottoprodotti() {
+    public ArrayList<IProdotto> getSottoprodotti() {
         return sottoprodotti;
     }
 
-    public void setSottoprodotti(ArrayList<Prodotto> sottoprodotti) {
+    public void setSottoprodotti(ArrayList<IProdotto> sottoprodotti) {
         this.sottoprodotti = sottoprodotti;
     }
 
-    public void addSottoprodotto(Prodotto prodotto){
+    public void addSottoprodotto(IProdotto prodotto){
         //if (prodotto == this) return;
         sottoprodotti.add(prodotto);
     }
@@ -59,4 +58,5 @@ public class ProdottoComposito extends Articolo implements IProdotto {
         }
         return prezzoFinale;
     }
+
 }

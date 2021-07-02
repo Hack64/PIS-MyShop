@@ -1,21 +1,23 @@
 package Model;
 
-public class Categoria {
+import java.util.ArrayList;
+
+public class Categoria implements ICategoria {
 
     private int idCategoria;
     private String nome;
-    private int idCategoriaPadre;
+    private ICategoria categoriaPadre;
 
-    public Categoria(int idCategoria, String nome, int idCategoriaPadre) {
+    public Categoria(int idCategoria, String nome, ICategoria categoriaPadre) {
         this.idCategoria = idCategoria;
         this.nome = nome;
-        this.idCategoriaPadre = idCategoriaPadre;
+        this.categoriaPadre = categoriaPadre;
     }
 
     public Categoria() {
         this.idCategoria = -1;
         this.nome = null;
-        this.idCategoriaPadre = -1;
+        this.categoriaPadre = null;
     }
 
     public int getIdCategoria() {
@@ -34,11 +36,16 @@ public class Categoria {
         this.nome = nome;
     }
 
-    public int getIdCategoriaPadre() {
-        return idCategoriaPadre;
+    public ICategoria getCategoriaPadre() {
+        return categoriaPadre;
     }
 
-    public void setIdCategoriaPadre(int idCategoriaPadre) {
-        this.idCategoriaPadre = idCategoriaPadre;
+    @Override
+    public ArrayList<ICategoria> getSottoCategorie() {
+        return null;
+    }
+
+    public void setCategoriaPadre(ICategoria categoriaPadre) {
+        this.categoriaPadre = categoriaPadre;
     }
 }

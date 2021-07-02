@@ -2,23 +2,23 @@ package Model;
 
 public class Disponibilita /*Questa classe sarebbe prodottiMagazzino nel db*/ {
 
-    private int idMagazzino;
-    private int idProdotto;
+    private Magazzino magazzino;
+    private IProdotto prodotto;
     private int qta;
     private Posizione posizione;
 
-    public Disponibilita(int idMagazzino, int qta, Posizione posizione, int idProdotto) {
-        this.idMagazzino = idMagazzino;
+    public Disponibilita(Magazzino magazzino, int qta, Posizione posizione, IProdotto prodotto) {
+        this.magazzino = magazzino;
         this.qta = qta;
         this.posizione = posizione;
-        this.idProdotto = idProdotto;
+        this.prodotto = prodotto;
     }
 
     public Disponibilita() {
         this.qta = -1;
-        this.idMagazzino = -1;
+        this.magazzino = null;
         this.posizione = null;
-        this.idProdotto = -1;
+        this.prodotto = null;
     }
 
     public int getQta() {
@@ -37,19 +37,19 @@ public class Disponibilita /*Questa classe sarebbe prodottiMagazzino nel db*/ {
         this.posizione = posizione;
     }
 
-    public int getIdProdotto() {
-        return idProdotto;
+    public IProdotto getProdotto() {
+        return prodotto;
     }
 
-    public void setIdProdotto(int idProdotto) {
-        this.idProdotto = idProdotto;
+    public void setProdotto(IProdotto prodotto) {
+        this.prodotto = prodotto;
     }
 
-    public int getIdMagazzino() {
-        return idMagazzino;
+    public Magazzino getMagazzino() {
+        return magazzino;
     }
 
-    public void setIdMagazzino(int idMagazzino) {
-        this.idMagazzino = idMagazzino;
+    public void setMagazzino(Magazzino magazzino) {
+        this.magazzino = magazzino;
     }
 }

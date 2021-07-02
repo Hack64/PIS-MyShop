@@ -1,14 +1,14 @@
 package DAO.Categoria;
 
-import Model.Categoria;
+import Model.ICategoria;
 
 import java.util.ArrayList;
 
 public interface ICategoriaDAO {
-    Categoria findByID(int idCategoria);
-    ArrayList<Categoria> findAll();
-    ArrayList<? super Categoria> findAllSubcategoriesByCategoryID(int idCategoria);
-    int add(Categoria categoria);
+    ICategoria findByID(int idCategoria);
+    ArrayList<ICategoria> findAll();
+    ArrayList<ICategoria> findAllSubcategoriesByCategoryID(int idCategoria);
+    int add(ICategoria categoria);
     int removeByID(int idCategoria);
-    int update(Categoria categoria);
+    int update(ICategoria categoria);
 }

@@ -7,12 +7,12 @@ import Model.Produttore;
 import java.util.ArrayList;
 
 public interface IProdottoDAO {
-    Prodotto findByID(int idProdotto);
-    Prodotto getByName(String nomeProdotto);
+    IProdotto findByID(int idProdotto);
+    IProdotto getByName(String nomeProdotto);
     boolean productExists(String nomeProdotto);
-    ArrayList<Prodotto> findAll();
+    ArrayList<IProdotto> findAll();
     ArrayList<IProdotto> findAllByProducer(Produttore produttore);
-    int add(Prodotto prodotto);
+    int add(IProdotto prodotto);
     int removeById(int idProdotto);
-    int update(Prodotto prodotto);
+    int update(IProdotto prodotto);
 }

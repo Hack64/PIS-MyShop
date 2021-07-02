@@ -29,7 +29,7 @@ public class ComposizioneProdottoDAO implements IComposizioneProdottoDAO {
     public ProdottoComposito findByID(int idProdotto) {
         conn = DbConnection.getInstance();
         ResultSet rs = conn.executeQuery("SELECT componente FROM ComposizioneProdotto WHERE composto = '" + idProdotto + "';");
-        Prodotto prodotto;
+        IProdotto prodotto;
         ProdottoComposito prodottoComposito = new ProdottoComposito();
         ProdottoDAO pDAO = ProdottoDAO.getInstance();
         ProdottoCategoriaDAO pcDAO = ProdottoCategoriaDAO.getInstance();
@@ -41,7 +41,7 @@ public class ComposizioneProdottoDAO implements IComposizioneProdottoDAO {
             }
             prodotto = pDAO.findByID(idProdotto);
             prodottoComposito.setIdProdotto(prodotto.getIdProdotto());
-            prodottoComposito.setIdProduttore(prodotto.getIdProduttore());
+            prodottoComposito.setProduttore(prodotto.getProduttore());
             prodottoComposito.setCategorie(pcDAO.getCategoriesByProductID(prodotto.getIdProdotto()));
             prodottoComposito.setNome(prodotto.getNome());
             prodottoComposito.setImmagine(prodotto.getImmagine());
@@ -66,12 +66,12 @@ public class ComposizioneProdottoDAO implements IComposizioneProdottoDAO {
     }
 
     @Override
-    public ArrayList<ProdottoComposito> findAll() {
+    public ArrayList<IProdotto> findAll() {
         conn = DbConnection.getInstance();
         ResultSet rs = conn.executeQuery("SELECT DISTINCT composto FROM ComposizioneProdotto;");
         ProdottoComposito pc;
         ArrayList<Integer> ids = new ArrayList<>();
-        ArrayList<ProdottoComposito> prodottiCompositi = new ArrayList<>();
+        ArrayList<IProdotto> prodottiCompositi = new ArrayList<>();
         try {
             while(rs.next()){
                 pc = this.findByID(rs.getInt("composto"));
@@ -97,12 +97,12 @@ public class ComposizioneProdottoDAO implements IComposizioneProdottoDAO {
     }
 
     @Override
-    public ArrayList<ProdottoComposito> findAllByProducerID(int idProduttore) {
+    public ArrayList<IProdotto> findAllByProducerID(int idProduttore) {
         conn = DbConnection.getInstance();
         ResultSet rs = conn.executeQuery("SELECT DISTINCT ComposizioneProdotto.composto FROM ComposizioneProdotto INNER JOIN Prodotto ON ComposizioneProdotto.composto = Prodotto.idProdotto WHERE Prodotto.idProduttore = '" + idProduttore +"';");
         ProdottoComposito pc;
         ArrayList<Integer> ids = new ArrayList<>();
-        ArrayList<ProdottoComposito> prodottiCompositi = new ArrayList<>();
+        ArrayList<IProdotto> prodottiCompositi = new ArrayList<>();
         try {
             while(rs.next()){
                 pc = this.findByID(rs.getInt("composto"));
@@ -154,11 +154,11 @@ public class ComposizioneProdottoDAO implements IComposizioneProdottoDAO {
     }
 
     @Override
-    public ArrayList<Integer> add(ProdottoComposito prodotto) {
+    public ArrayList<Integer> add(IProdotto prodotto) {
         conn = DbConnection.getInstance();
-        ArrayList<Prodotto> sottoprodotti = prodotto.getSottoprodotti();
+        ArrayList<IProdotto> sottoprodotti = prodotto.getSottoprodotti();
         ArrayList<Integer> rowsCount = new ArrayList<>();
-        for (Prodotto p:sottoprodotti){
+        for (IProdotto p:sottoprodotti){
             int rowCount = conn.executeUpdate("INSERT INTO ComposizioneProdotto (composto, componente) VALUES ('" +  prodotto.getIdProdotto() + "','" + p.getIdProdotto() + "');");
             rowsCount.add(rowCount);
         }

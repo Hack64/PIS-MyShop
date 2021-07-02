@@ -2,6 +2,7 @@ package Test;
 
 import DAO.Prodotto.ProdottoDAO;
 import DbInterface.DbUser;
+import Model.IProdotto;
 import Model.Prodotto;
 import org.junit.After;
 import org.junit.Before;
@@ -26,7 +27,7 @@ public class ProdottoDAOTest {
     public void getCategoriesByProductIDTest() {
         ProdottoDAO pDAO = ProdottoDAO.getInstance();
 
-        Prodotto prodotto = new Prodotto();
+        IProdotto prodotto;
         prodotto = pDAO.findByID(7);
 
     }
@@ -41,7 +42,7 @@ public class ProdottoDAOTest {
         p.setNumeroCommenti(0);
         p.setCosto(5000000);
         p.setMediaValutazione(5);
-        p.setIdProduttore(1);
+        //p.setProduttore(1);
 
         prodottoDAO.add(p);
     }
@@ -49,7 +50,7 @@ public class ProdottoDAOTest {
     @Test
     public void getByNameTest() {
         ProdottoDAO prodottoDAO = ProdottoDAO.getInstance();
-        Prodotto p;
+        IProdotto p;
         p = prodottoDAO.getByName("Cucina");
 
         System.out.println(p.getIdProdotto());

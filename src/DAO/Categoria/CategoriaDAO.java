@@ -3,6 +3,7 @@ package DAO.Categoria;
 import DbInterface.DbConnection;
 import DbInterface.IDbConnection;
 import Model.Categoria;
+import Model.ICategoria;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,7 +15,7 @@ public class CategoriaDAO implements ICategoriaDAO {
 
     private IDbConnection conn;
     private ResultSet rs;
-    private ArrayList<? super Categoria> sottoCategorie = new ArrayList<>();
+    private ArrayList<ICategoria> sottoCategorie = new ArrayList<>();
 
     private CategoriaDAO(){
         this.conn = null;
@@ -26,7 +27,10 @@ public class CategoriaDAO implements ICategoriaDAO {
     }
 
     @Override
-    public Categoria findByID(int idCategoria) {
+    public ICategoria findByID(int idCategoria) {
+        if (idCategoria == 0){
+            return new Categoria(-1,"null", null);
+        }
         conn = DbConnection.getInstance();
         rs = conn.executeQuery("SELECT idCategoria, nome, idCategoriaPadre FROM myshopdb.Categoria WHERE myshopdb.Categoria.idCategoria = '" + idCategoria + "';");
         Categoria categoria;
@@ -36,8 +40,7 @@ public class CategoriaDAO implements ICategoriaDAO {
                 categoria = new Categoria();
                 categoria.setIdCategoria(rs.getInt("idCategoria"));
                 categoria.setNome(rs.getString("nome"));
-                // forse mettere un if per controllare se è null è una buona idea
-                categoria.setIdCategoriaPadre(rs.getInt("idCategoriaPadre"));
+                categoria.setCategoriaPadre(this.findByID(rs.getInt("idCategoriaPadre")));
                 return categoria;
             }
         } catch (SQLException e) {
@@ -55,18 +58,43 @@ public class CategoriaDAO implements ICategoriaDAO {
     }
 
     @Override
-    public ArrayList<Categoria> findAll() {
+    public ArrayList<ICategoria> findAll() {
+        conn = DbConnection.getInstance();
+        ResultSet rs2 = conn.executeQuery("SELECT idCategoria, nome, idCategoriaPadre FROM myshopdb.Categoria;");
+        ArrayList<ICategoria> categorie = new ArrayList<>();
+        Categoria categoria;
+
+        try {
+            while(rs2.next()){
+                categoria = new Categoria();
+                categoria.setIdCategoria(rs2.getInt("idCategoria"));
+                categoria.setNome(rs2.getString("nome"));
+                categoria.setCategoriaPadre(this.findByID(rs2.getInt("idCategoriaPadre")));
+                categorie.add(categoria);
+            }
+            return categorie;
+        } catch (SQLException e) {
+            // handle any errors
+            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("VendorError: " + e.getErrorCode());
+        } catch (NullPointerException e) {
+            // handle any errors
+            System.out.println("Resultset: " + e.getMessage());
+        } finally {
+            conn.close();
+        }
         return null;
     }
 
     @Override
-    public ArrayList<? super Categoria> findAllSubcategoriesByCategoryID(int idCategoria) {
+    public ArrayList<ICategoria> findAllSubcategoriesByCategoryID(int idCategoria) {
         if (idCategoria == 0) {
             return sottoCategorie;
         } else {
             conn = DbConnection.getInstance();
             rs = conn.executeQuery("SELECT idCategoriaPadre FROM myshopdb.Categoria WHERE myshopdb.Categoria.idCategoria = '" + idCategoria + "';");
-            Categoria categoria;
+            ICategoria categoria;
             try {
                 rs.next();
                 if (rs.getRow() == 1) {
@@ -91,9 +119,9 @@ public class CategoriaDAO implements ICategoriaDAO {
     }
 
     @Override
-    public int add(Categoria categoria) {
+    public int add(ICategoria categoria) {
         conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("INSERT INTO Categoria  VALUES ('" + categoria.getIdCategoria() + "','" + categoria.getNome() + "','" + categoria.getIdCategoriaPadre() + "');");
+        int rowCount = conn.executeUpdate("INSERT INTO Categoria  VALUES ('" + categoria.getIdCategoria() + "','" + categoria.getNome() + "','" + categoria.getCategoriaPadre().getIdCategoria() + "');");
         conn.close();
         return rowCount;
     }
@@ -107,7 +135,7 @@ public class CategoriaDAO implements ICategoriaDAO {
     }
 
     @Override
-    public int update(Categoria categoria) {
+    public int update(ICategoria categoria) {
         conn = DbConnection.getInstance();
         int rowCount = conn.executeUpdate("UPDATE Categoria SET nome = '" + categoria.getNome() + "' WHERE idCategoria = '" + categoria.getIdCategoria() + "';" );
         conn.close();

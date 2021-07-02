@@ -2,6 +2,7 @@ package DAO.Lista;
 
 import DAO.ProdottiLista.ProdottiListaDAO;
 import DAO.ServiziLista.ServiziListaDAO;
+import DAO.Utente.UtenteDAO;
 import DbInterface.DbConnection;
 import DbInterface.IDbConnection;
 import Model.Lista;
@@ -20,6 +21,7 @@ public class ListaDAO implements IListaDAO {
     private static ResultSet rs;
     private ProdottiListaDAO plDAO;
     private ServiziListaDAO slDAO;
+    private UtenteDAO uDAO;
 
     private ListaDAO(){
         lista = null;
@@ -38,6 +40,7 @@ public class ListaDAO implements IListaDAO {
         rs = conn.executeQuery("SELECT idLista, nome, dataCreazione, stato, prezzoTotale, idUtente FROM myshopdb.Lista WHERE myshopdb.Lista.idLista = '" + idLista + "';");
         plDAO = ProdottiListaDAO.getInstance();
         slDAO = ServiziListaDAO.getInstance();
+        uDAO = UtenteDAO.getInstance();
         try {
             rs.next();
             if (rs.getRow()==1) {
@@ -47,7 +50,7 @@ public class ListaDAO implements IListaDAO {
                 lista.setDataCreazione(LocalDate.parse(rs.getString("dataCreazione"))); //vedi se funziona
                 lista.setStato(Lista.Stato.valueOf(rs.getString("stato")));
                 lista.setPrezzoTotale(rs.getFloat("prezzoTotale"));
-                lista.setIdUtente(rs.getInt("idUtente"));
+                lista.setUtente(uDAO.findByID(rs.getInt("idUtente")));
                 lista.setProdotti(plDAO.findAllProductsByListID(rs.getInt("idLista")));
                 lista.setServizi(slDAO.findAllServicesByListID(rs.getInt("idLista")));
                 return lista;
@@ -72,6 +75,7 @@ public class ListaDAO implements IListaDAO {
         rs = conn.executeQuery("SELECT idLista, nome, dataCreazione, stato, prezzoTotale, idUtente FROM myshopdb.Lista;");
         plDAO = ProdottiListaDAO.getInstance();
         slDAO = ServiziListaDAO.getInstance();
+        uDAO = UtenteDAO.getInstance();
         ArrayList<Lista> liste = new ArrayList<>();
         try {
             while(rs.next()){
@@ -81,7 +85,7 @@ public class ListaDAO implements IListaDAO {
                 lista.setDataCreazione(LocalDate.parse(rs.getString("dataCreazione"))); //vedi se funziona
                 lista.setStato(Lista.Stato.valueOf(rs.getString("stato")));
                 lista.setPrezzoTotale(rs.getFloat("prezzoTotale"));
-                lista.setIdUtente(rs.getInt("idUtente"));
+                lista.setUtente(uDAO.findByID(rs.getInt("idUtente")));
                 lista.setProdotti(plDAO.findAllProductsByListID(rs.getInt("idLista")));
                 lista.setServizi(slDAO.findAllServicesByListID(rs.getInt("idLista")));
                 liste.add(lista);
@@ -107,6 +111,7 @@ public class ListaDAO implements IListaDAO {
         rs = conn.executeQuery("SELECT idLista, nome, dataCreazione, stato, prezzoTotale, idUtente FROM myshopdb.Lista WHERE myshopdb.Lista.idUtente = '" + idUtente +"';");
         plDAO = ProdottiListaDAO.getInstance();
         slDAO = ServiziListaDAO.getInstance();
+        uDAO = UtenteDAO.getInstance();
         ArrayList<Lista> liste = new ArrayList<>();
         try {
             while(rs.next()){
@@ -116,7 +121,7 @@ public class ListaDAO implements IListaDAO {
                 lista.setDataCreazione(LocalDate.parse(rs.getString("dataCreazione"))); //vedi se funziona
                 lista.setStato(Lista.Stato.valueOf(rs.getString("stato")));
                 lista.setPrezzoTotale(rs.getFloat("prezzoTotale"));
-                lista.setIdUtente(rs.getInt("idUtente"));
+                lista.setUtente(uDAO.findByID(rs.getInt("idUtente")));
                 lista.setProdotti(plDAO.findAllProductsByListID(rs.getInt("idLista")));
                 lista.setServizi(slDAO.findAllServicesByListID(rs.getInt("idLista")));
                 liste.add(lista);
@@ -142,6 +147,7 @@ public class ListaDAO implements IListaDAO {
         rs = conn.executeQuery("SELECT idLista, nome, dataCreazione, stato, prezzoTotale, idUtente FROM myshopdb.Lista WHERE myshopdb.Lista.stato = '" + stato.toString() +"';");
         plDAO = ProdottiListaDAO.getInstance();
         slDAO = ServiziListaDAO.getInstance();
+        uDAO = UtenteDAO.getInstance();
         ArrayList<Lista> liste = new ArrayList<>();
         try {
             while(rs.next()){
@@ -151,7 +157,7 @@ public class ListaDAO implements IListaDAO {
                 lista.setDataCreazione(LocalDate.parse(rs.getString("dataCreazione"))); //vedi se funziona
                 lista.setStato(Lista.Stato.valueOf(rs.getString("stato")));
                 lista.setPrezzoTotale(rs.getFloat("prezzoTotale"));
-                lista.setIdUtente(rs.getInt("idUtente"));
+                lista.setUtente(uDAO.findByID(rs.getInt("idUtente")));
                 lista.setProdotti(plDAO.findAllProductsByListID(rs.getInt("idLista")));
                 lista.setServizi(slDAO.findAllServicesByListID(rs.getInt("idLista")));
                 liste.add(lista);
@@ -177,6 +183,7 @@ public class ListaDAO implements IListaDAO {
         rs = conn.executeQuery("SELECT idLista, nome, dataCreazione, stato, prezzoTotale, idUtente FROM myshopdb.Lista WHERE myshopdb.Lista.stato = '" + stato.toString() + "' AND myshopdb.Lista.idUtente = '"+ idUtente + "';");
         plDAO = ProdottiListaDAO.getInstance();
         slDAO = ServiziListaDAO.getInstance();
+        uDAO = UtenteDAO.getInstance();
         ArrayList<Lista> liste = new ArrayList<>();
         try {
             while(rs.next()){
@@ -186,7 +193,7 @@ public class ListaDAO implements IListaDAO {
                 lista.setDataCreazione(LocalDate.parse(rs.getString("dataCreazione"))); //vedi se funziona
                 lista.setStato(Lista.Stato.valueOf(rs.getString("stato")));
                 lista.setPrezzoTotale(rs.getFloat("prezzoTotale"));
-                lista.setIdUtente(rs.getInt("idUtente"));
+                lista.setUtente(uDAO.findByID(rs.getInt("idUtente")));
                 lista.setProdotti(plDAO.findAllProductsByListID(rs.getInt("idLista")));
                 lista.setServizi(slDAO.findAllServicesByListID(rs.getInt("idLista")));
                 liste.add(lista);
@@ -209,7 +216,7 @@ public class ListaDAO implements IListaDAO {
     @Override
     public int add(Lista lista) {
         conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("INSERT INTO Lista VALUES ('" + lista.getIdLista() + "','" + lista.getNomeLista() + "','" + lista.getDataCreazione().toString() + "','" + lista.getStato().toString() + "','" + lista.getPrezzoTotale() + "','" + lista.getIdUtente() + "';");
+        int rowCount = conn.executeUpdate("INSERT INTO Lista VALUES ('" + lista.getIdLista() + "','" + lista.getNomeLista() + "','" + lista.getDataCreazione().toString() + "','" + lista.getStato().toString() + "','" + lista.getPrezzoTotale() + "','" + lista.getUtente().getIdUtente() + "';");
         conn.close();
         return rowCount;
     }

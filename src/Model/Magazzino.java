@@ -11,17 +11,17 @@ public class Magazzino {
     private String citta;
     private int numeroScaffali;
     private int numeroCorsie;
-    private int idPuntoVendita;
+    private PuntoVendita puntoVendita;
     private List<Disponibilita> prodottiDisponibili;
 
-    public Magazzino(int idMagazzino, String via, String cap, String citta, int numeroScaffali, int numeroCorsie, int idPuntoVendita, List<Disponibilita> prodottiDisponibili) {
+    public Magazzino(int idMagazzino, String via, String cap, String citta, int numeroScaffali, int numeroCorsie, PuntoVendita puntoVendita, List<Disponibilita> prodottiDisponibili) {
         this.idMagazzino = idMagazzino;
         this.via = via;
         this.cap = cap;
         this.citta = citta;
         this.numeroScaffali = numeroScaffali;
         this.numeroCorsie = numeroCorsie;
-        this.idPuntoVendita = idPuntoVendita;
+        this.puntoVendita = puntoVendita;
         this.prodottiDisponibili = prodottiDisponibili;
     }
 
@@ -32,7 +32,7 @@ public class Magazzino {
         this.citta = null;
         this.numeroCorsie = -1;
         this.numeroScaffali = -1;
-        this.idPuntoVendita = -1;
+        this.puntoVendita = null;
         this.prodottiDisponibili = null;
     }
 
@@ -84,12 +84,12 @@ public class Magazzino {
         this.numeroCorsie = numeroCorsie;
     }
 
-    public int getIdPuntoVendita() {
-        return idPuntoVendita;
+    public PuntoVendita getPuntoVendita() {
+        return puntoVendita;
     }
 
-    public void setIdPuntoVendita(int idPuntoVendita) {
-        this.idPuntoVendita = idPuntoVendita;
+    public void setPuntoVendita(PuntoVendita puntoVendita) {
+        this.puntoVendita = puntoVendita;
     }
 
     public List<Disponibilita> getProdottiDisponibili() {

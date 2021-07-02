@@ -1,13 +1,12 @@
 package Model;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Prodotto extends Articolo implements IProdotto {
 
     private int idProdotto;
-    private ArrayList<? super Categoria> categorie = new ArrayList<>();
-    private int idProduttore;
+    private ArrayList<ICategoria> categorie = new ArrayList<>();
+    private Produttore produttore;
 
     public void setIdProdotto(int idProdotto) {
         this.idProdotto = idProdotto;
@@ -17,11 +16,11 @@ public class Prodotto extends Articolo implements IProdotto {
         return idProdotto;
     }
 
-    public ArrayList<? super Categoria> getCategorie() {
+    public ArrayList<ICategoria> getCategorie() {
         return categorie;
     }
 
-    public void setCategorie(ArrayList<? super Categoria> categorie) {
+    public void setCategorie(ArrayList<ICategoria> categorie) {
         this.categorie = categorie;
     }
 
@@ -29,16 +28,21 @@ public class Prodotto extends Articolo implements IProdotto {
         categorie.add(categoria);
     }
 
-    public int getIdProduttore() {
-        return idProduttore;
+    public Produttore getProduttore() {
+        return produttore;
     }
 
-    public void setIdProduttore(int idProduttore) {
-        this.idProduttore = idProduttore;
+    public void setProduttore(Produttore produttore) {
+        this.produttore = produttore;
     }
 
     @Override
     public float getCosto() {
         return this.costo;
+    }
+
+    @Override
+    public ArrayList<IProdotto> getSottoprodotti() {
+        return null;
     }
 }

@@ -13,15 +13,15 @@ public class PuntoVendita {
     private String via;
     private String cap;
     private String citta;
-    private int idManager;
-    private int idMagazzino;
+    private Utente manager;
+    private Magazzino magazzino;
 
-    public int getIdManager() {
-        return idManager;
+    public Utente getManager() {
+        return manager;
     }
 
-    public void setIdManager(int idManager) {
-        this.idManager = idManager;
+    public void setManager(Utente manager) {
+        this.manager = manager;
     }
 
     public ArrayList<Servizio> getCatalogoServiziPuntoVendita() {
@@ -80,11 +80,11 @@ public class PuntoVendita {
         this.citta = citta;
     }
 
-    public int getIdMagazzino() {
-        return idMagazzino;
+    public Magazzino getMagazzino() {
+        return magazzino;
     }
 
-    public void setIdMagazzino(int idMagazzino) {
-        this.idMagazzino = idMagazzino;
+    public void setMagazzino(Magazzino magazzino) {
+        this.magazzino = magazzino;
     }
 }

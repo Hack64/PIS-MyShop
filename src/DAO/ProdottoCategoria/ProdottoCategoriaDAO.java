@@ -4,10 +4,7 @@ import DAO.Categoria.CategoriaDAO;
 import DAO.Prodotto.ProdottoDAO;
 import DbInterface.DbConnection;
 import DbInterface.IDbConnection;
-import Model.Categoria;
-import Model.CategoriaProdotto;
-import Model.IProdotto;
-import Model.Prodotto;
+import Model.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -54,21 +51,19 @@ public class ProdottoCategoriaDAO implements IProdottoCategoriaDAO {
         return null;
     }
 
-
-    /* ? super Categoria = qualsiasi oggetto la cui superclasse è Categoria */
     @Override
-    public ArrayList<? super Categoria> getCategoriesByProductID(int idProdotto) {
+    public ArrayList<ICategoria> getCategoriesByProductID(int idProdotto) {
         conn = DbConnection.getInstance();
         rs = conn.executeQuery("SELECT Categoria.idCategoria, Categoria.idCategoriaPadre FROM myshopdb.Categoria INNER JOIN myshopdb.ProdottoCategoria ON Categoria.idCategoria = ProdottoCategoria.idCategoria WHERE ProdottoCategoria.idProdotto = '" + idProdotto + "';");
-        ArrayList<? super Categoria> categorieProdotto = new ArrayList<>();
+        ArrayList<ICategoria> categorieProdotto = new ArrayList<>();
         CategoriaDAO cDAO = CategoriaDAO.getInstance();
         try {
             while (rs.next()){
-                Categoria categoria = cDAO.findByID(rs.getInt("idCategoria"));
+                ICategoria categoria = cDAO.findByID(rs.getInt("idCategoria"));
                 CategoriaProdotto categoriaProdotto = new CategoriaProdotto();
                 categoriaProdotto.setNome(categoria.getNome());
                 categoriaProdotto.setIdCategoria(categoria.getIdCategoria());
-                categoriaProdotto.setIdCategoriaPadre(categoria.getIdCategoriaPadre());
+                categoriaProdotto.setCategoriaPadre(categoria.getCategoriaPadre());
                 categoriaProdotto.setSottoCategorie(cDAO.findAllSubcategoriesByCategoryID(categoriaProdotto.getIdCategoria()));
                 categorieProdotto.add(categoriaProdotto);
             }
@@ -88,7 +83,7 @@ public class ProdottoCategoriaDAO implements IProdottoCategoriaDAO {
     }
 
     @Override
-    public int add(CategoriaProdotto categoriaProdotto, Prodotto prodotto) {
+    public int add(ICategoria categoriaProdotto, IProdotto prodotto) {
         conn = DbConnection.getInstance();
         int rowCount = conn.executeUpdate("INSERT INTO ProdottoCategoria (idProdotto, idCategoria) VALUES ('" + prodotto.getIdProdotto() + "','" + categoriaProdotto.getIdCategoria() + "');");
         conn.close();

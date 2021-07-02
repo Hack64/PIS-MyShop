@@ -11,14 +11,14 @@ public class Lista {
     private int idLista;
     private String nomeLista;
     private LocalDate dataCreazione;
-    private HashMap<Prodotto, Map.Entry<String, Integer>> prodotti = new HashMap<>();
+    private HashMap<IProdotto, Map.Entry<String, Integer>> prodotti = new HashMap<>();
     private ArrayList<Servizio> servizi = new ArrayList<>();
     public enum Stato {PAGATA, NON_PAGATA}
     private Stato stato;
     private float prezzoTotale;
-    private int idUtente;
+    private Utente utente;
 
-    public Lista(int idLista, String nomeLista, LocalDate dataCreazione, HashMap<Prodotto, Map.Entry<String, Integer>> prodotti, ArrayList<Servizio> servizi, Stato stato, float prezzoTotale, int idUtente) {
+    public Lista(int idLista, String nomeLista, LocalDate dataCreazione, HashMap<IProdotto, Map.Entry<String, Integer>> prodotti, ArrayList<Servizio> servizi, Stato stato, float prezzoTotale, Utente utente) {
         this.idLista = idLista;
         this.nomeLista = nomeLista;
         this.dataCreazione = dataCreazione;
@@ -26,7 +26,7 @@ public class Lista {
         this.servizi = servizi;
         this.stato = stato;
         this.prezzoTotale = prezzoTotale;
-        this.idUtente = idUtente;
+        this.utente = utente;
     }
 
     public Lista () {
@@ -36,7 +36,7 @@ public class Lista {
         this.servizi = null;
         this.prezzoTotale = 0;
         this.stato = Stato.NON_PAGATA;
-        this.idUtente = -1;
+        this.utente = null;
     }
 
     public Lista(String nomeLista){
@@ -53,15 +53,15 @@ public class Lista {
         this.idLista = idLista;
     }
 
-    public int getIdUtente() {
-        return idUtente;
+    public Utente getUtente() {
+        return utente;
     }
 
-    public void setIdUtente(int idUtente) {
-        this.idUtente = idUtente;
+    public void setUtente(Utente utente) {
+        this.utente = utente;
     }
 
-    public void setProdotti(HashMap<Prodotto, Map.Entry<String, Integer>> prodotti) {
+    public void setProdotti(HashMap<IProdotto, Map.Entry<String, Integer>> prodotti) {
         this.prodotti = prodotti;
     }
 
@@ -73,7 +73,7 @@ public class Lista {
         this.servizi = servizi;
     }
 
-    public void aggiungiProdotto (Prodotto prodotto, String prenotato, int quantita){
+    public void aggiungiProdotto (IProdotto prodotto, String prenotato, int quantita){
         this.prodotti.put(prodotto, new AbstractMap.SimpleEntry<String, Integer>(prenotato, quantita));
     }
 
@@ -89,7 +89,7 @@ public class Lista {
         this.dataCreazione = dataCreazione;
     }
 
-    public HashMap<Prodotto, Map.Entry<String, Integer>> getProdotti() {
+    public HashMap<IProdotto, Map.Entry<String, Integer>> getProdotti() {
         return prodotti;
     }
 

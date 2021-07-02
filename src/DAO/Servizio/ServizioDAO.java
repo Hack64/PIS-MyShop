@@ -1,15 +1,12 @@
 package DAO.Servizio;
 
+import DAO.Fornitore.FornitoreDAO;
 import DbInterface.DbConnection;
 import DbInterface.IDbConnection;
 import Model.Fornitore;
 import Model.Servizio;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.sql.Blob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -21,6 +18,7 @@ public class ServizioDAO implements IServizioDAO {
     private IDbConnection conn;
     private static ResultSet rs;
     private File file;
+    private FornitoreDAO fDAO;
 
     private ServizioDAO(){
         servizio = null;
@@ -36,6 +34,7 @@ public class ServizioDAO implements IServizioDAO {
     public Servizio findByID(int idServizio) {
         conn = DbConnection.getInstance();
         rs = conn.executeQuery("SELECT idServizio, nome, immagine, descrizione, numeroCommenti, costo, mediaValutazioni, idProduttore FROM myshopdb.Servizio WHERE myshopdb.Servizio.idServizio = '" + idServizio + "';");
+        fDAO = FornitoreDAO.getInstance();
         try {
             rs.next();
             if (rs.getRow()==1) {
@@ -49,7 +48,7 @@ public class ServizioDAO implements IServizioDAO {
                 servizio.setNumeroCommenti(rs.getInt("numeroCommenti"));
                 servizio.setCosto(rs.getFloat("costo"));
                 servizio.setMediaValutazione(rs.getFloat("mediaValutazioni"));
-                servizio.setIdFornitore(rs.getInt("idFornitore"));
+                servizio.setFornitore(fDAO.findByID(rs.getInt("idFornitore")));
 
                 return servizio;
             }
@@ -71,6 +70,7 @@ public class ServizioDAO implements IServizioDAO {
     public Servizio getByName(String nomeServizio) {
         conn = DbConnection.getInstance();
         rs = conn.executeQuery("SELECT idServizio, nome, immagine, descrizione, numeroCommenti, costo, mediaValutazioni, idProduttore FROM myshopdb.Servizio WHERE myshopdb.Servizio.nome = '" + nomeServizio + "';");
+        fDAO = FornitoreDAO.getInstance();
         try {
             rs.next();
             if (rs.getRow()==1) {
@@ -84,7 +84,7 @@ public class ServizioDAO implements IServizioDAO {
                 servizio.setNumeroCommenti(rs.getInt("numeroCommenti"));
                 servizio.setCosto(rs.getFloat("costo"));
                 servizio.setMediaValutazione(rs.getFloat("mediaValutazioni"));
-                servizio.setIdFornitore(rs.getInt("idFornitore"));
+                servizio.setFornitore(fDAO.findByID(rs.getInt("idFornitore")));
 
                 return servizio;
             }
@@ -107,6 +107,7 @@ public class ServizioDAO implements IServizioDAO {
         boolean serviceExists = false;
         conn = DbConnection.getInstance();
         rs = conn.executeQuery("SELECT count(*) AS C FROM Utente WHERE Servizio.nome = '" + nomeServizio + "';");
+        fDAO = FornitoreDAO.getInstance();
         try {
             rs.next();
             if(rs.getRow()==1 && rs.getInt("C")==1)
@@ -129,6 +130,7 @@ public class ServizioDAO implements IServizioDAO {
     public ArrayList<Servizio> findAll() {
         conn = DbConnection.getInstance();
         rs = conn.executeQuery("SELECT idServizio, nome, immagine, descrizione, numeroCommenti, costo, mediaValutazioni, idProduttore FROM myshopdb.Servizio;");
+        fDAO = FornitoreDAO.getInstance();
         ArrayList<Servizio> servizi = new ArrayList<>();
         try {
             while(rs.next()) {
@@ -142,7 +144,7 @@ public class ServizioDAO implements IServizioDAO {
                 servizio.setNumeroCommenti(rs.getInt("numeroCommenti"));
                 servizio.setCosto(rs.getFloat("costo"));
                 servizio.setMediaValutazione(rs.getFloat("mediaValutazioni"));
-                servizio.setIdFornitore(rs.getInt("idProduttore"));
+                servizio.setFornitore(fDAO.findByID(rs.getInt("idFornitore")));
 
                 servizi.add(servizio);
             }
@@ -165,6 +167,7 @@ public class ServizioDAO implements IServizioDAO {
     public ArrayList<Servizio> findAllBySupplier(Fornitore fornitore) {
         conn = DbConnection.getInstance();
         rs = conn.executeQuery("SELECT idProdotto, nome, immagine, descrizione, numeroCommenti, costo, mediaValutazioni, idProduttore FROM myshopdb.Prodotto WHERE Prodotto.idProduttore = '"+ fornitore.getIdFornitore() + "';");
+        fDAO = FornitoreDAO.getInstance();
         ArrayList<Servizio> servizi = new ArrayList<>();
         try {
             while(rs.next()) {
@@ -200,7 +203,7 @@ public class ServizioDAO implements IServizioDAO {
     @Override
     public int add(Servizio utente) {
         conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("INSERT INTO Servizio (nome, immagine, descrizione, numeroCommenti, costo, mediaValutazioni, idFornitore) VALUES ('" + servizio.getNome() + "','" + servizio.getImmagine().getName() + "','" + servizio.getDescrizione() + "','" + servizio.getNumeroCommenti() + "','" + servizio.getCosto() + "','" + servizio.getMediaValutazione() + ",'" + servizio.getIdFornitore() + "');");
+        int rowCount = conn.executeUpdate("INSERT INTO Servizio (nome, immagine, descrizione, numeroCommenti, costo, mediaValutazioni, idFornitore) VALUES ('" + servizio.getNome() + "','" + servizio.getImmagine().getName() + "','" + servizio.getDescrizione() + "','" + servizio.getNumeroCommenti() + "','" + servizio.getCosto() + "','" + servizio.getMediaValutazione() + ",'" + servizio.getFornitore().getIdFornitore() + "');");
         conn.close();
         return rowCount;
     }

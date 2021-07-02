@@ -52,18 +52,18 @@ public class ServizioCategoriaDAO implements IServizioCategoriaDAO {
     }
 
     @Override
-    public ArrayList<? super Categoria> getCategoriesByServiceID(int idServizio) {
+    public ArrayList<ICategoria> getCategoriesByServiceID(int idServizio) {
         conn = DbConnection.getInstance();
         rs = conn.executeQuery("SELECT Categoria.idCategoria FROM myshopdb.Categoria INNER JOIN myshopdb.ServizioCategoria ON Categoria.idCategoria = ServizioCategoria.idCategoria WHERE ServizioCategoria.idServizio = '" + idServizio + "';");
-        ArrayList<? super Categoria> categorieServizio = new ArrayList<>();
+        ArrayList<ICategoria> categorieServizio = new ArrayList<>();
         CategoriaDAO cDAO = CategoriaDAO.getInstance();
         try {
             while (rs.next()){
-                Categoria categoria = cDAO.findByID(rs.getInt("idCategoria"));
+                ICategoria categoria = cDAO.findByID(rs.getInt("idCategoria"));
                 CategoriaServizio categoriaServizio = new CategoriaServizio();
                 categoriaServizio.setNome(categoria.getNome());
                 categoriaServizio.setIdCategoria(categoria.getIdCategoria());
-                categoriaServizio.setIdCategoriaPadre(categoria.getIdCategoriaPadre());
+                categoriaServizio.setCategoriaPadre(categoria.getCategoriaPadre());
                 categorieServizio.add(categoriaServizio);
             }
             return categorieServizio;

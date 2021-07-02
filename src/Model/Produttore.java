@@ -19,7 +19,7 @@ public class Produttore extends Imprenditore  {
 
     @Override
     public void addArticoloLista(Articolo art) {
-        prodottiProduttore.add((Prodotto) art);
+        prodottiProduttore.add((IProdotto) art);
     }
 
     public ArrayList<IProdotto> getProdottiProduttore() {

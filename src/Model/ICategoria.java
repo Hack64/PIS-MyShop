@@ -1,5 +1,10 @@
 package Model;
 
+import java.util.ArrayList;
+
 public interface ICategoria {
-    public String getNome();
+    int getIdCategoria();
+    String getNome();
+    ICategoria getCategoriaPadre();
+    ArrayList<ICategoria> getSottoCategorie();
 }

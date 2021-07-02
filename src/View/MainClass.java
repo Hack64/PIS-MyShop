@@ -1,5 +1,7 @@
 package View;
 
+import Model.IProdotto;
+
 import java.time.LocalDate;
 
 public class MainClass {

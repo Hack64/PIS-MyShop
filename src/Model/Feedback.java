@@ -8,18 +8,18 @@ public class Feedback {
     private LocalDate dataCreazione;
     private String commento;
     private int valutazione;
-    private int idUtente;
-    private int idProdotto;
-    private int idServizio;
+    private Utente utente;
+    private IProdotto prodotto;
+    private Servizio servizio;
 
-    public Feedback(int idFeedback, LocalDate dataCreazione, String commento, int valutazione, int idUtente, int idProdotto, int idServizio) {
+    public Feedback(int idFeedback, LocalDate dataCreazione, String commento, int valutazione, Utente utente, IProdotto prodotto, Servizio servizio) {
         this.idFeedback = idFeedback;
         this.dataCreazione = dataCreazione;
         this.commento = commento;
         this.valutazione = valutazione;
-        this.idUtente = idUtente;
-        this.idProdotto = idProdotto;
-        this.idServizio = idServizio;
+        this.utente = utente;
+        this.prodotto = prodotto;
+        this.servizio = servizio;
     }
 
     public Feedback(){
@@ -27,9 +27,9 @@ public class Feedback {
         this.dataCreazione = null;
         this.commento = "";
         this.valutazione = -1;
-        this.idUtente = -1;
-        this.idProdotto = -1;
-        this.idServizio = -1;
+        this.utente = null;
+        this.prodotto = null;
+        this.servizio = null;
     }
 
     public int getIdFeedback() {
@@ -64,27 +64,27 @@ public class Feedback {
         this.valutazione = valutazione;
     }
 
-    public int getIdUtente() {
-        return idUtente;
+    public Utente getUtente() {
+        return this.utente;
     }
 
-    public void setIdUtente(int idUtente) {
-        this.idUtente = idUtente;
+    public void setUtente(Utente utente) {
+        this.utente = utente;
     }
 
-    public int getIdProdotto() {
-        return idProdotto;
+    public IProdotto getProdotto() {
+        return prodotto;
     }
 
-    public void setIdProdotto(int idProdotto) {
-        this.idProdotto = idProdotto;
+    public void setProdotto(IProdotto prodotto) {
+        this.prodotto = prodotto;
     }
 
-    public int getIdServizio() {
-        return idServizio;
+    public Servizio getServizio() {
+        return servizio;
     }
 
-    public void setIdServizio(int idServizio) {
-        this.idServizio = idServizio;
+    public void setServizio(Servizio servizio) {
+        this.servizio = servizio;
     }
 }
