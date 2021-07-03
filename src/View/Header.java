@@ -23,8 +23,9 @@ public class Header extends JPanel {
         JButton btnLogin = new JButton("Login");
         JButton btnRegister = new JButton("Registrati");
         btnLogin.setActionCommand("btnLoginForm");
-        btnRegister.setActionCommand("btnRegister");
+        btnRegister.setActionCommand("btnRegisterForm");
         btnLogin.addActionListener(list);
+        btnRegister.addActionListener(list);
 
         loggedOut.add(btnLogin);
         loggedOut.add(btnRegister);

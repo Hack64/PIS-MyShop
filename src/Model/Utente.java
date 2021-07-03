@@ -1,6 +1,7 @@
 package Model;
 
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class Utente {
@@ -14,7 +15,7 @@ public class Utente {
     private String telefono;
     private String professione;
     private List<Lista> liste;
-    private int eta;
+    private LocalDate eta;
 
     public enum Ruoli {
         amm,
@@ -25,7 +26,7 @@ public class Utente {
     private Ruoli ruolo;
 
 
-    public Utente(int idUtente, String email, String nome, String cognome, String passwordHash, String residenza, String telefono, String professione, int eta, String ruolo) {
+    public Utente(int idUtente, String email, String nome, String cognome, String passwordHash, String residenza, String telefono, String professione, LocalDate eta, String ruolo) {
         this.idUtente = idUtente;
         this.email = email;
         this.nome = nome;
@@ -47,7 +48,7 @@ public class Utente {
         this.residenza = "";
         this.telefono = "";
         this.professione = "";
-        this.eta = -1;
+        this.eta = null;
         this.ruolo = null;
     }
 
@@ -115,11 +116,11 @@ public class Utente {
         this.professione = professione;
     }
 
-    public int getEta() {
+    public LocalDate getEta() {
         return eta;
     }
 
-    public void setEta(int eta) {
+    public void setEta(LocalDate eta) {
         this.eta = eta;
     }
 

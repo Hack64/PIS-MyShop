@@ -3,6 +3,7 @@ package DAO.Utente;
 import DbInterface.DbConnection;
 import DbInterface.IDbConnection;
 import Model.Utente;
+import at.favre.lib.crypto.bcrypt.BCrypt;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -43,10 +44,11 @@ public class UtenteDAO implements IUtenteDAO {
                 utente.setResidenza(rs.getString("residenza"));
                 utente.setTelefono(rs.getString("telefono"));
                 utente.setProfessione(rs.getString("professione"));
-                LocalDate l = LocalDate.parse(rs.getString("eta"));
+                /*LocalDate l = LocalDate.parse(rs.getString("eta"));
                 LocalDate now = LocalDate.now(); //gets localDate
                 Period diff = Period.between(l, now);
-                utente.setEta(diff.getYears());
+                utente.setEta(diff.getYears());*/
+                utente.setEta(LocalDate.parse(rs.getString("eta")));
                 utente.setRuolo(Utente.Ruoli.valueOf(rs.getString("tipo")));
                 return utente;
             }
@@ -80,10 +82,7 @@ public class UtenteDAO implements IUtenteDAO {
                 utente.setResidenza(rs.getString("residenza"));
                 utente.setTelefono(rs.getString("telefono"));
                 utente.setProfessione(rs.getString("professione"));
-                LocalDate l = LocalDate.parse(rs.getString("eta"));
-                LocalDate now = LocalDate.now(); //gets localDate
-                Period diff = Period.between(l, now);
-                utente.setEta(diff.getYears());
+                utente.setEta(LocalDate.parse(rs.getString("eta")));
                 utente.setRuolo(Utente.Ruoli.valueOf(rs.getString("tipo")));
                 return utente;
             }
@@ -117,10 +116,7 @@ public class UtenteDAO implements IUtenteDAO {
                 utente.setResidenza(rs.getString("residenza"));
                 utente.setTelefono(rs.getString("telefono"));
                 utente.setProfessione(rs.getString("professione"));
-                LocalDate l = LocalDate.parse(rs.getString("eta"));
-                LocalDate now = LocalDate.now(); //gets localDate
-                Period diff = Period.between(l, now);
-                utente.setEta(diff.getYears());
+                utente.setEta(LocalDate.parse(rs.getString("eta")));
                 utente.setRuolo(Utente.Ruoli.valueOf(rs.getString("tipo")));
                 return utente;
             }
@@ -142,11 +138,14 @@ public class UtenteDAO implements IUtenteDAO {
     public boolean checkCredentials(String username, String password) {
         boolean credentialsOk = false;
         conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT count(*) AS C FROM Utente WHERE Utente.email = '" + username + "' and Utente.passwordHash = '" + password + "';");
+        rs = conn.executeQuery("SELECT passwordHash FROM Utente WHERE Utente.email = '" + username + "';");
         try {
             rs.next();
-            if(rs.getRow()==1 && rs.getInt("C")==1){
-                credentialsOk = true;
+            if(rs.getRow()==1){
+                BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), rs.getString("passwordHash"));
+                if (result.verified){
+                    credentialsOk = true;
+                }
             }
         } catch (SQLException e) {
             // handle any errors
@@ -201,10 +200,7 @@ public class UtenteDAO implements IUtenteDAO {
                 utente.setResidenza(rs.getString("residenza"));
                 utente.setTelefono(rs.getString("telefono"));
                 utente.setProfessione(rs.getString("professione"));
-                LocalDate l = LocalDate.parse(rs.getString("eta"));
-                LocalDate now = LocalDate.now(); //gets localDate
-                Period diff = Period.between(l, now);
-                utente.setEta(diff.getYears());
+                utente.setEta(LocalDate.parse(rs.getString("eta")));
                 utente.setRuolo(Utente.Ruoli.valueOf(rs.getString("tipo")));
 
                 utenti.add(utente);
@@ -227,7 +223,7 @@ public class UtenteDAO implements IUtenteDAO {
     @Override
     public int add(Utente utente) {
         conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("INSERT INTO Utente VALUES ('"+ utente.getIdUtente() + "','" + utente.getEmail() + "','" + utente.getNome() + "','" + utente.getCognome() + "','" + utente.getPasswordHash() + "','" + utente.getResidenza() + "','" + utente.getTelefono() + ",'" + utente.getProfessione() + "','" + utente.getEta() + "','" + utente.getRuolo().toString() + "');");
+        int rowCount = conn.executeUpdate("INSERT INTO Utente (email, nome, cognome, passwordHash, residenza, telefono, professione, eta, tipo) VALUES ('" + utente.getEmail() + "','" + utente.getNome() + "','" + utente.getCognome() + "','" + utente.getPasswordHash() + "','" + utente.getResidenza() + "','" + utente.getTelefono() + "','" + utente.getProfessione() + "','" + utente.getEta().toString() + "','" + utente.getRuolo().toString() + "');");
         conn.close();
         return rowCount;
     }

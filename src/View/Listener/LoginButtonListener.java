@@ -6,6 +6,7 @@ import Model.LoginResponse;
 import Model.Utente;
 import View.AppFrame;
 import View.LoginDialog;
+import View.RegistrationDialog;
 import View.WelcomePanel;
 import com.mysql.cj.log.Log;
 
@@ -17,9 +18,11 @@ public class LoginButtonListener implements ActionListener {
 
     AppFrame appFrame;
     LoginDialog loginDialog;
+    RegistrationDialog registrationDialog;
 
     public final static String BTN_LOGIN_FORM = "btnLoginForm";
     public final static String BTN_LOGOUT = "btnLogout";
+    public final static String BTN_REGISTER = "btnRegisterForm";
 
     public LoginButtonListener(AppFrame appFrame){
         this.appFrame = appFrame;
@@ -28,14 +31,21 @@ public class LoginButtonListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String cmd = e.getActionCommand();
-        if (BTN_LOGIN_FORM.equals(cmd)){
-            loginDialog = new LoginDialog(appFrame);
-        }
-        if(BTN_LOGOUT.equals(cmd)) {
-            // reset della view mostrando interfaccia guest
-            SessionManager.getInstance().getSession().remove("loggedUser");
-            appFrame.getHeader().refresh();
-            appFrame.getSideMenu().refresh();
+
+        switch(cmd){
+            case BTN_LOGIN_FORM:
+                loginDialog = new LoginDialog(appFrame);
+                break;
+            case BTN_LOGOUT:
+                SessionManager.getInstance().getSession().remove("loggedUser");
+                appFrame.getHeader().refresh();
+                appFrame.getSideMenu().refresh();
+                break;
+            case BTN_REGISTER:
+                registrationDialog = new RegistrationDialog(appFrame);
+                break;
+            default:
+                break;
         }
     }
 }
