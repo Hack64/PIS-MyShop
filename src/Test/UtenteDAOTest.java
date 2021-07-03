@@ -1,16 +1,13 @@
 package Test;
 
-import DAO.Categoria.CategoriaDAO;
 import DAO.Utente.UtenteDAO;
 import DbInterface.DbUser;
-import Model.ICategoria;
 import Model.Utente;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 public class UtenteDAOTest {
     DbUser dbUser = DbUser.getInstance();
@@ -38,7 +35,6 @@ public class UtenteDAOTest {
         u.setEmail("marco@si.com");
         u.setPasswordHash("a");
         u.setTelefono("90");
-
 
         utenteDAO.add(u);
     }

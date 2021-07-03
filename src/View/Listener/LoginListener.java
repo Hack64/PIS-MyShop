@@ -7,7 +7,6 @@ import Model.Utente;
 import View.AppFrame;
 import View.LoginDialog;
 
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

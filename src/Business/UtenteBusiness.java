@@ -7,7 +7,6 @@ import at.favre.lib.crypto.bcrypt.BCrypt;
 import org.apache.commons.validator.routines.EmailValidator;
 
 import java.time.LocalDate;
-import java.time.Period;
 
 public class UtenteBusiness {
 

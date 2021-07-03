@@ -8,7 +8,6 @@ import at.favre.lib.crypto.bcrypt.BCrypt;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.Period;
 import java.util.ArrayList;
 
 public class UtenteDAO implements IUtenteDAO {

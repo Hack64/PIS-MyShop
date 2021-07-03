@@ -1,16 +1,10 @@
 package View.Listener;
 
 import Business.SessionManager;
-import Business.UtenteBusiness;
-import Model.LoginResponse;
-import Model.Utente;
 import View.AppFrame;
 import View.LoginDialog;
 import View.RegistrationDialog;
-import View.WelcomePanel;
-import com.mysql.cj.log.Log;
 
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
