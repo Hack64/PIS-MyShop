@@ -35,7 +35,6 @@ public class LoginListener implements ActionListener {
 
             LoginResponse res = UtenteBusiness.getInstance().login(loginDialog.getUsername(), loginDialog.getPassword());
             loginDialog.clearFields();
-            appFrame.setCurrentMainPanel(new WelcomePanel());
             Utente u = res.getUtente(); //potrebbe essere null in caso di login fallito
 
             if(u == null) {
@@ -52,9 +51,10 @@ public class LoginListener implements ActionListener {
                 //login ok
                 System.out.println("Login ok!");
                 SessionManager.getInstance().getSession().put("loggedUser", u);
+                //appFrame.setCurrentMainPanel(new WelcomePanel());
+                loginDialog.setVisible(false);
                 appFrame.getHeader().refresh();
                 appFrame.getSideMenu().refresh();
-
                 /*
                 if(u instanceof Manager) {
                     //metti i pulsanti per il manager
@@ -67,15 +67,6 @@ public class LoginListener implements ActionListener {
             u.setName("Roberto"); // mock
             res.setUtente(u); // mock
              */
-
-
-
-        }
-        if("btnLogout".equals(cmd)) {
-            // reset della view mostrando interfaccia guest
-            SessionManager.getInstance().getSession().remove("loggedUser");
-            appFrame.getHeader().refresh();
-            appFrame.getSideMenu().refresh();
         }
     }
 }

@@ -19,6 +19,7 @@ public class LoginButtonListener implements ActionListener {
     LoginDialog loginDialog;
 
     public final static String BTN_LOGIN_FORM = "btnLoginForm";
+    public final static String BTN_LOGOUT = "btnLogout";
 
     public LoginButtonListener(AppFrame appFrame){
         this.appFrame = appFrame;
@@ -29,6 +30,12 @@ public class LoginButtonListener implements ActionListener {
         String cmd = e.getActionCommand();
         if (BTN_LOGIN_FORM.equals(cmd)){
             loginDialog = new LoginDialog(appFrame);
+        }
+        if(BTN_LOGOUT.equals(cmd)) {
+            // reset della view mostrando interfaccia guest
+            SessionManager.getInstance().getSession().remove("loggedUser");
+            appFrame.getHeader().refresh();
+            appFrame.getSideMenu().refresh();
         }
     }
 }

@@ -1,5 +1,7 @@
 package View;
 
+import Business.SessionManager;
+import Model.Utente;
 import View.Listener.LoginButtonListener;
 
 import javax.swing.*;
@@ -18,7 +20,6 @@ public class Header extends JPanel {
         Border loweredetched;
         loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
 
-
         JButton btnLogin = new JButton("Login");
         JButton btnRegister = new JButton("Registrati");
         btnLogin.setActionCommand("btnLoginForm");
@@ -28,19 +29,18 @@ public class Header extends JPanel {
         loggedOut.add(btnLogin);
         loggedOut.add(btnRegister);
 
-        welcome = new JLabel("Benvenuto _____");
+        welcome = new JLabel("Benvenuto ");
         JButton btnLogout = new JButton("Logout");
         btnLogout.setActionCommand("btnLogout");
-        //btnLogout.addActionListener(/*list*/);
+        btnLogout.addActionListener(list);
         loggedIn.add(welcome);
         loggedIn.add(btnLogout);
 
-        add(loggedIn, BorderLayout.EAST);
+        add(loggedIn, BorderLayout.CENTER);
         add(loggedOut, BorderLayout.EAST);
 
         setLoggedOutStatus();
         this.setBorder(loweredetched);
-
     }
 
     public void setLoggedInStatus() {
@@ -54,16 +54,16 @@ public class Header extends JPanel {
 
     public void refresh() {
         // 1. prendere l'utente loggato u
-        //Utente u = (Utente) SessionManager.getInstance().getSession().get("loggedUser");
+        Utente u = (Utente) SessionManager.getInstance().getSession().get("loggedUser");
 
         // 2. se u è null -> chiama setLoggedOutStatus()
-        /*if(u==null) setLoggedOutStatus();
+        if(u==null) setLoggedOutStatus();
 
             // 3. altrimenti setLoggedInStatus();
         else {
-            welcome.setText("Benvenuto, "+u.getName());
+            welcome.setText("Benvenuto, " + u.getNome());
             setLoggedInStatus();
-        }*/
+        }
     }
 
 }
