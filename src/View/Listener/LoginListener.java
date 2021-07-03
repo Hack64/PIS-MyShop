@@ -6,6 +6,8 @@ import Model.LoginResponse;
 import Model.Utente;
 import View.AppFrame;
 import View.LoginDialog;
+import View.UserProfilePanel;
+import View.WelcomePanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -52,6 +54,7 @@ public class LoginListener implements ActionListener {
                 System.out.println("Login ok!");
                 SessionManager.getInstance().getSession().put("loggedUser", u);
                 loginDialog.setVisible(false);
+                appFrame.setCurrentMainPanel(new UserProfilePanel());
                 appFrame.getHeader().refresh();
                 appFrame.getSideMenu().refresh();
             }

@@ -4,6 +4,7 @@ import Business.SessionManager;
 import View.AppFrame;
 import View.LoginDialog;
 import View.RegistrationDialog;
+import View.WelcomePanel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -32,6 +33,7 @@ public class LoginButtonListener implements ActionListener {
                 break;
             case BTN_LOGOUT:
                 SessionManager.getInstance().getSession().remove("loggedUser");
+                appFrame.setCurrentMainPanel(new WelcomePanel());
                 appFrame.getHeader().refresh();
                 appFrame.getSideMenu().refresh();
                 break;

@@ -16,7 +16,7 @@ public class Header extends JPanel {
     JLabel welcome;
 
     public Header(LoginButtonListener list) {
-        setLayout(new BorderLayout());
+        setLayout(new FlowLayout(FlowLayout.RIGHT));
         Border loweredetched;
         loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
 
@@ -37,16 +37,16 @@ public class Header extends JPanel {
         loggedIn.add(welcome);
         loggedIn.add(btnLogout);
 
-        add(loggedIn, BorderLayout.CENTER);
-        add(loggedOut, BorderLayout.EAST);
+        add(loggedIn);
+        add(loggedOut);
 
         setLoggedOutStatus();
         this.setBorder(loweredetched);
     }
 
     public void setLoggedInStatus() {
-        loggedIn.setVisible(true);
         loggedOut.setVisible(false);
+        loggedIn.setVisible(true);
     }
     public void setLoggedOutStatus() {
         loggedIn.setVisible(false);
@@ -62,7 +62,7 @@ public class Header extends JPanel {
 
             // 3. altrimenti setLoggedInStatus();
         else {
-            welcome.setText("Benvenuto, " + u.getNome());
+            welcome.setText( u.getNome() + " " + u.getCognome() + " ");
             setLoggedInStatus();
         }
     }

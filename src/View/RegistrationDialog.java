@@ -155,6 +155,7 @@ public class RegistrationDialog extends JDialog {
         txtCognome.setText("");
         txtUsername.setText("");
         txtPassword.setText("");
+        txtPassword2.setText("");
         txtResidenza.setText("");
         txtTelefono.setText("");
         txtProfessione.setText("");

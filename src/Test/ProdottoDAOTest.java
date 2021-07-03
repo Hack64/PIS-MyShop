@@ -4,11 +4,13 @@ import DAO.Prodotto.ProdottoDAO;
 import DbInterface.DbUser;
 import Model.IProdotto;
 import Model.Prodotto;
+import Model.Produttore;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
+import java.util.ArrayList;
 
 public class ProdottoDAOTest {
     DbUser dbUser = DbUser.getInstance();
@@ -36,13 +38,15 @@ public class ProdottoDAOTest {
     public void addTest() {
         ProdottoDAO prodottoDAO = ProdottoDAO.getInstance();
         Prodotto p = new Prodotto();
-        p.setNome("Cucina");
-        p.setImmagine(new File("./img/Cucina.jpg"));
-        p.setDescrizione("una bellissima cucina");
+        Produttore prd = new Produttore();
+        prd.setIdProduttore(1);
+        p.setNome("Lavello");
+        p.setImmagine(new File("./img/Lavello.jpg"));
+        p.setDescrizione("un bellissimo lavello");
         p.setNumeroCommenti(0);
-        p.setCosto(5000000);
-        p.setMediaValutazione(5);
-        //p.setProduttore(1);
+        p.setCosto(502300000);
+        p.setMediaValutazione((float)3.4);
+        p.setProduttore(prd);
 
         prodottoDAO.add(p);
     }
@@ -51,10 +55,41 @@ public class ProdottoDAOTest {
     public void getByNameTest() {
         ProdottoDAO prodottoDAO = ProdottoDAO.getInstance();
         IProdotto p;
-        p = prodottoDAO.getByName("Cucina");
+        p = prodottoDAO.getByName("Scopa");
 
         System.out.println(p.getIdProdotto());
         System.out.println(p.getNome());
-        System.out.println(p.getImmagine().getName());
+        System.out.println(p.getImmagine().getPath());
+    }
+
+    @Test
+    public void findAllByProducerTest(){
+        ProdottoDAO prodottoDAO = ProdottoDAO.getInstance();
+
+        Produttore p = new Produttore();
+        p.setIdProduttore(1);
+
+        ArrayList<IProdotto> prodotti;
+        prodotti = prodottoDAO.findAllByProducer(p);
+
+        for (IProdotto prodotto : prodotti){
+            System.out.println(prodotto.getNome());
+        }
+
+
+    }
+
+    @Test
+    public void findAllTest(){
+        ProdottoDAO prodottoDAO = ProdottoDAO.getInstance();
+
+        ArrayList<IProdotto> prodotti;
+        prodotti = prodottoDAO.findAll();
+
+        for (IProdotto prodotto : prodotti){
+            System.out.println(prodotto.getNome());
+        }
+
+
     }
 }

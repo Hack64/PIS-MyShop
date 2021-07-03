@@ -1,14 +1,16 @@
 package View;
 
+import View.Listener.SideMenuListener;
+
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
 
 public class SideMenu extends JPanel {
 
-    //private SideMenuListener listener;
+    private SideMenuListener listener;
 
-    public SideMenu( /*SideMenuListener listener*/ ) { /* AppFrame appFrame*/
+    public SideMenu( SideMenuListener listener ) { /* AppFrame appFrame*/
 
         setLayout(new GridLayout(20,1));
         TitledBorder title;
@@ -16,14 +18,15 @@ public class SideMenu extends JPanel {
         title.setTitleJustification(TitledBorder.CENTER);
         this.setBorder(title);
 
-        /*
+        this.listener = listener;
+
         Menu menu = new GuestMenu();
         //menu = new ClienteMenuDecorator(menu);
-        for(JButton btn: menu.getPulsanti()) {
+        for(JButton btn:menu.getPulsanti()) {
             btn.addActionListener(listener);
             add(btn);
         }
-         */
+
         refresh();
     }
 
@@ -43,7 +46,7 @@ public class SideMenu extends JPanel {
         }*/
 
         for(JButton btn: menu.getPulsanti()) {
-            //btn.addActionListener(listener);
+            btn.addActionListener(listener);
             add(btn);
         }
 

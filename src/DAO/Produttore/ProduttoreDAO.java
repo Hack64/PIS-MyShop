@@ -45,7 +45,7 @@ public class ProduttoreDAO implements IProduttoreDAO {
                 produttore.setSito(rs.getString("sito"));
                 produttore.setCitta(rs.getString("citta"));
                 produttore.setNazione(rs.getString("nazione"));
-                produttore.setProdottiProduttore(pDAO.findAllByProducer(produttore));
+                //produttore.setProdottiProduttore(pDAO.findAllByProducer(produttore));
 
                 return produttore;
             }
@@ -77,7 +77,7 @@ public class ProduttoreDAO implements IProduttoreDAO {
                 produttore.setSito(rs.getString("sito"));
                 produttore.setCitta(rs.getString("citta"));
                 produttore.setNazione(rs.getString("nazione"));
-                produttore.setProdottiProduttore(pDAO.findAllByProducer(produttore));
+                //produttore.setProdottiProduttore(pDAO.findAllByProducer(produttore));
 
                 return produttore;
             }
@@ -132,7 +132,7 @@ public class ProduttoreDAO implements IProduttoreDAO {
                 produttore.setSito(rs.getString("sito"));
                 produttore.setCitta(rs.getString("citta"));
                 produttore.setNazione(rs.getString("nazione"));
-                produttore.setProdottiProduttore(pDAO.findAllByProducer(produttore));
+                //produttore.setProdottiProduttore(pDAO.findAllByProducer(produttore));
 
                 produttori.add(produttore);
             }

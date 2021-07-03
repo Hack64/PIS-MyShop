@@ -110,10 +110,10 @@ public class ProdottoDAO implements IProdottoDAO {
     }
 
     @Override
-    public boolean productExists(String nomeProdotto) {
+    public boolean productExists(int idProdotto) {
         boolean productExists = false;
         conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT count(*) AS C FROM Utente WHERE Prodotto.nome = '" + nomeProdotto + "';");
+        rs = conn.executeQuery("SELECT count(*) AS C FROM Prodotto WHERE idProdotto = '" + idProdotto + "';");
         try {
             rs.next();
             if(rs.getRow()==1 && rs.getInt("C")==1)
@@ -138,6 +138,7 @@ public class ProdottoDAO implements IProdottoDAO {
         rs = conn.executeQuery("SELECT idProdotto, nome, immagine, descrizione, numeroCommenti, costo, mediaValutazioni, idProduttore FROM myshopdb.Prodotto;");
         ArrayList<IProdotto> prodotti = new ArrayList<>();
         fDAO = FeedbackDAO.getInstance();
+        pDAO = ProduttoreDAO.getInstance();
         try {
             while(rs.next()) {
                 prodotto = new Prodotto();
@@ -211,7 +212,7 @@ public class ProdottoDAO implements IProdottoDAO {
     @Override
     public int add(IProdotto prodotto) {
         conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("INSERT INTO Prodotto (nome, immagine, descrizione, numeroCommenti, costo, mediaValutazioni, idProduttore) VALUES ('"+ prodotto.getNome() + "','" + prodotto.getImmagine().getName() + "','" + prodotto.getDescrizione() + "','" + prodotto.getNumeroCommenti() + "','" + prodotto.getCosto() + "','" + prodotto.getMediaValutazione() + "','" + prodotto.getProduttore() + "');");
+        int rowCount = conn.executeUpdate("INSERT INTO Prodotto (nome, immagine, descrizione, numeroCommenti, costo, mediaValutazioni, idProduttore) VALUES ('"+ prodotto.getNome() + "','" + prodotto.getImmagine().getName() + "','" + prodotto.getDescrizione() + "','" + prodotto.getNumeroCommenti() + "','" + prodotto.getCosto() + "','" + prodotto.getMediaValutazione() + "','" + prodotto.getProduttore().getIdProduttore() + "');");
         conn.close();
         return rowCount;
     }

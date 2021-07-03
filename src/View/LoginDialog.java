@@ -26,7 +26,6 @@ public class LoginDialog extends JDialog {
 
         JButton btnLogin = new JButton("Accedi");
 
-
         txtUsername = new JTextField(10);
         txtPassword = new JPasswordField(10);
 

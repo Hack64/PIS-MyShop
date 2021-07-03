@@ -1,6 +1,7 @@
 package View;
 
 import View.Listener.LoginButtonListener;
+import View.Listener.SideMenuListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,16 +16,19 @@ public class AppFrame extends JFrame {
     public AppFrame(){
         super("Finestra");
         LoginButtonListener llist = new LoginButtonListener(this);
+        SideMenuListener sideMenuListener = new SideMenuListener(this);
 
         setLayout(new BorderLayout());
-        sideMenu = new SideMenu();
+        sideMenu = new SideMenu(sideMenuListener);
         header = new Header(llist);
 
         add(sideMenu, BorderLayout.WEST);
         add(header, BorderLayout.NORTH);
 
-        setSize(800, 600);
+        setSize(1400, 800);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setCurrentMainPanel(new BrowsePanel(this));
+        setResizable(false);
         setVisible(true);
     }
 
