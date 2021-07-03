@@ -47,7 +47,9 @@ public class LoginListener implements ActionListener {
                         JOptionPane.ERROR_MESSAGE);
             }
             else {
+                String reason = res.getMessage();
                 //login ok
+                JOptionPane.showMessageDialog(appFrame, reason, "Login avvenuto", JOptionPane.INFORMATION_MESSAGE);
                 System.out.println("Login ok!");
                 SessionManager.getInstance().getSession().put("loggedUser", u);
                 loginDialog.setVisible(false);

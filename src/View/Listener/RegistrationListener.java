@@ -44,7 +44,9 @@ public class RegistrationListener implements ActionListener {
             }
             else {
                 //registrazione ok
-                System.out.println("Login ok!");
+                String reason = res.getMessage();
+                System.out.println("Registrazione ok!");
+                JOptionPane.showMessageDialog(appFrame, reason, "Registrazione avvenuta", JOptionPane.INFORMATION_MESSAGE);
                 SessionManager.getInstance().getSession().put("loggedUser", u);
                 registrationDialog.setVisible(false);
                 appFrame.getHeader().refresh();
