@@ -9,10 +9,10 @@ import View.ProductPanel;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class ProductPanelListener implements MouseListener {
+public class ProductGridPanelListener implements MouseListener {
 
     AppFrame appFrame;
-    public ProductPanelListener(AppFrame appFrame){
+    public ProductGridPanelListener(AppFrame appFrame){
         this.appFrame = appFrame;
     }
 
