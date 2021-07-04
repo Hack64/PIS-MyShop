@@ -1,10 +1,8 @@
 package Business;
 
 import DAO.Lista.ListaDAO;
-import DAO.Prodotto.ProdottoDAO;
 import Model.Lista;
 import Model.Responses.ListaResponse;
-import Model.Responses.ProdottoResponse;
 import Model.Utente;
 
 import java.util.ArrayList;

@@ -1,6 +1,9 @@
 package View.Listener;
 
-import View.*;
+import View.AppFrame;
+import View.BrowsePanel;
+import View.CatalogPanel;
+import View.ListsPanel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

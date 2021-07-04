@@ -3,11 +3,9 @@ package View.Listener;
 import Business.ProdottoBusiness;
 import View.AppFrame;
 import View.CatalogPanel;
-import View.CatalogoTableModel;
 import View.ProductAdditionDialog;
 
 import javax.swing.*;
-import javax.swing.table.TableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 

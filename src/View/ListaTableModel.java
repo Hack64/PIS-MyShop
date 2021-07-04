@@ -2,7 +2,6 @@ package View;
 
 import Model.Lista;
 
-
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 

@@ -3,7 +3,9 @@ package View;
 import Model.IProdotto;
 
 import javax.swing.*;
-import javax.swing.border.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 
 public class ProductPanel extends JPanel {
