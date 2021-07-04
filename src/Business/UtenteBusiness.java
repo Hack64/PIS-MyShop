@@ -1,7 +1,7 @@
 package Business;
 
 import DAO.Utente.UtenteDAO;
-import Model.LoginResponse;
+import Model.Responses.LoginResponse;
 import Model.Utente;
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import org.apache.commons.validator.routines.EmailValidator;

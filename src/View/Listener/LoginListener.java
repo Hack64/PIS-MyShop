@@ -2,12 +2,11 @@ package View.Listener;
 
 import Business.SessionManager;
 import Business.UtenteBusiness;
-import Model.LoginResponse;
+import Model.Responses.LoginResponse;
 import Model.Utente;
 import View.AppFrame;
 import View.LoginDialog;
 import View.UserProfilePanel;
-import View.WelcomePanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

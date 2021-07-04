@@ -35,7 +35,7 @@ public class ProdottiListaDAO implements IProdottiListaDAO {
     @Override
     public HashMap<IProdotto, Map.Entry<String, Integer>> findAllProductsByListID(int idLista) {
         conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT idProdottoLista, idProdotto, idLista, prenotato FROM ProdottoLista WHERE idLista = '" + idLista + "';");
+        rs = conn.executeQuery("SELECT idProdotto, idLista, prenotato FROM ProdottoLista WHERE idLista = '" + idLista + "';");
         HashMap<IProdotto, Map.Entry<String, Integer>> prodottiLista = new HashMap<>();
         IProdotto prodotto;
         pDAO = ProdottoDAO.getInstance();
@@ -62,7 +62,7 @@ public class ProdottiListaDAO implements IProdottiListaDAO {
     @Override
     public HashMap<IProdotto, String> findAllProductsByListIDAndState(int idLista, String prenotato) {
         conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT idProdottoLista, idProdotto, idLista, prenotato FROM ProdottoLista WHERE idLista = '" + idLista + "' AND prenotato = '" + prenotato + "';");
+        rs = conn.executeQuery("SELECT idProdotto, idLista, prenotato FROM ProdottoLista WHERE idLista = '" + idLista + "' AND prenotato = '" + prenotato + "';");
         HashMap<IProdotto, String> prodottiLista = new HashMap<>();
         IProdotto prodotto;
         pDAO = ProdottoDAO.getInstance();
@@ -89,7 +89,7 @@ public class ProdottiListaDAO implements IProdottiListaDAO {
     @Override
     public ArrayList<Lista> findAllListsByProductID(int idProdotto) {
         conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT idProdottoLista, idProdotto, idLista, prenotato FROM ProdottoLista WHERE idProdotto = '" + idProdotto + "';");
+        rs = conn.executeQuery("SELECT idProdotto, idLista, prenotato FROM ProdottoLista WHERE idProdotto = '" + idProdotto + "';");
         ArrayList<Lista> listeProdotto = new ArrayList<>();
         Lista lista;
         ListaDAO lDAO = ListaDAO.getInstance();

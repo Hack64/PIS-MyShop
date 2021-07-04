@@ -1,5 +1,8 @@
 package View;
 
+import Business.SessionManager;
+import Business.UtenteBusiness;
+import Model.Utente;
 import View.Listener.SideMenuListener;
 
 import javax.swing.*;
@@ -21,7 +24,6 @@ public class SideMenu extends JPanel {
         this.listener = listener;
 
         Menu menu = new GuestMenu();
-        //menu = new ClienteMenuDecorator(menu);
         for(JButton btn:menu.getPulsanti()) {
             btn.addActionListener(listener);
             add(btn);
@@ -34,16 +36,16 @@ public class SideMenu extends JPanel {
 
         removeAll();
         Menu menu = new GuestMenu();
-        //Utente u = (Utente) SessionManager.getInstance().getSession().get("loggedUser");
+        Utente u = (Utente) SessionManager.getInstance().getSession().get("loggedUser");
 
-        /*if(u != null) {
+        if(u != null) {
             menu = new ClienteMenuDecorator(menu);
 
             if(UtenteBusiness.getInstance().userCan(u, UtenteBusiness.Privilegio.MANAGE_SHOP)) //manager
                 menu = new ManagerMenuDecorator(menu);
             if(UtenteBusiness.getInstance().userCan(u, UtenteBusiness.Privilegio.ADMIN_SYSTEM)) //amministratore
                 menu = new AmministratoreMenuDecorator(menu);
-        }*/
+        }
 
         for(JButton btn: menu.getPulsanti()) {
             btn.addActionListener(listener);

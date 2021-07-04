@@ -1,4 +1,6 @@
-package Model;
+package Model.Responses;
+
+import Model.IProdotto;
 
 public class ProdottoResponse {
 

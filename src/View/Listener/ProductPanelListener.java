@@ -1,7 +1,7 @@
 package View.Listener;
 
 import Business.ProdottoBusiness;
-import Model.ProdottoResponse;
+import Model.Responses.ProdottoResponse;
 import View.AppFrame;
 import View.GridImagePanel;
 import View.ProductPanel;

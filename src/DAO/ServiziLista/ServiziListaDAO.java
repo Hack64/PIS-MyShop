@@ -30,7 +30,7 @@ public class ServiziListaDAO implements IServiziListaDAO {
     @Override
     public ArrayList<Servizio> findAllServicesByListID(int idLista) {
         conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT idServizioLista, idServizio, idLista FROM ServizioLista WHERE idLista = '" + idLista + "';");
+        rs = conn.executeQuery("SELECT idServizio, idLista FROM ServizioLista WHERE idLista = '" + idLista + "';");
         ArrayList<Servizio> serviziLista = new ArrayList<>();
         Servizio servizio;
         ServizioDAO sDAO = ServizioDAO.getInstance();
@@ -57,7 +57,7 @@ public class ServiziListaDAO implements IServiziListaDAO {
     @Override
     public ArrayList<Lista> findAllListsByServiceID(int idServizioLista) {
         conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT idServizioLista, idServizio, idLista FROM ProdottoLista WHERE idServizio = '" + idServizioLista + "';");
+        rs = conn.executeQuery("SELECT idServizio, idLista FROM ProdottoLista WHERE idServizio = '" + idServizioLista + "';");
         ArrayList<Lista> listeServizio = new ArrayList<>();
         Lista lista;
         ListaDAO lDAO = ListaDAO.getInstance();
