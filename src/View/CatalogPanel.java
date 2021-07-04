@@ -10,14 +10,18 @@ import java.util.ArrayList;
 
 public class CatalogPanel extends JPanel {
 
+    AppFrame appFrame;
+
     public CatalogPanel(AppFrame appFrame){
+
+        this.appFrame = appFrame;
         setLayout(new BorderLayout());
 
         ArrayList<IProdotto> prodottiCatalogo = ProdottoBusiness.getInstance().findAllProducts();
 
-        JTable tabellaListe = new JTable(new CatalogoTableModel(prodottiCatalogo));
+        JTable tabellaProdotti = new JTable(new CatalogoTableModel(prodottiCatalogo));
 
-        JScrollPane scrollPane = new JScrollPane(tabellaListe);
+        JScrollPane scrollPane = new JScrollPane(tabellaProdotti);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         add(scrollPane, BorderLayout.CENTER);
@@ -33,7 +37,7 @@ public class CatalogPanel extends JPanel {
         btnEdit.setActionCommand("btnEdit");
         btnDelete.setActionCommand("btnDelete");
 
-        CatalogPanelListener catalogPanelListener = new CatalogPanelListener(appFrame);
+        CatalogPanelListener catalogPanelListener = new CatalogPanelListener(appFrame, tabellaProdotti);
         btnAdd.addActionListener(catalogPanelListener);
         btnEdit.addActionListener(catalogPanelListener);
         btnDelete.addActionListener(catalogPanelListener);

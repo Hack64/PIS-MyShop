@@ -38,4 +38,10 @@ public class ProdottoBusiness {
 
         return prodottoDAO.findAll();
     }
+
+    public int deleteByID(int id){
+        prodottoDAO = ProdottoDAO.getInstance();
+
+        return prodottoDAO.removeById(id);
+    }
 }
