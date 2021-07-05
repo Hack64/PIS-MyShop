@@ -1,6 +1,7 @@
 package DAO.Prodotto;
 
 import DAO.Feedback.FeedbackDAO;
+import DAO.ProdottoCategoria.ProdottoCategoriaDAO;
 import DAO.Produttore.ProduttoreDAO;
 import DbInterface.DbConnection;
 import DbInterface.IDbConnection;
@@ -23,6 +24,7 @@ public class ProdottoDAO implements IProdottoDAO {
     private File file;
     private FeedbackDAO fDAO;
     private ProduttoreDAO pDAO;
+    private ProdottoCategoriaDAO pcDAO;
 
     private ProdottoDAO(){
         prodotto = null;
@@ -40,6 +42,7 @@ public class ProdottoDAO implements IProdottoDAO {
         rs = conn.executeQuery("SELECT idProdotto, nome, immagine, descrizione, numeroCommenti, costo, mediaValutazioni, idProduttore FROM myshopdb.Prodotto WHERE myshopdb.Prodotto.idProdotto = '" + idProdotto + "';");
         fDAO = FeedbackDAO.getInstance();
         pDAO = ProduttoreDAO.getInstance();
+        pcDAO = ProdottoCategoriaDAO.getInstance();
         try {
             rs.next();
             if (rs.getRow()==1) {
@@ -55,7 +58,7 @@ public class ProdottoDAO implements IProdottoDAO {
                 prodotto.setMediaValutazione(rs.getFloat("mediaValutazioni"));
                 prodotto.setProduttore(pDAO.findByID(rs.getInt("idProduttore")));
                 prodotto.setListaFeedback(fDAO.findAllByProductID(prodotto.getIdProdotto()));
-
+                prodotto.setCategorie(pcDAO.getCategoriesByProductID(prodotto.getIdProdotto()));
                 return prodotto;
             }
         } catch (SQLException e) {
@@ -78,6 +81,7 @@ public class ProdottoDAO implements IProdottoDAO {
         rs = conn.executeQuery("SELECT idProdotto, nome, immagine, descrizione, numeroCommenti, costo, mediaValutazioni, idProduttore FROM myshopdb.Prodotto WHERE myshopdb.Prodotto.nome = '" + nomeProdotto + "';");
         fDAO = FeedbackDAO.getInstance();
         pDAO = ProduttoreDAO.getInstance();
+        pcDAO = ProdottoCategoriaDAO.getInstance();
         try {
             rs.next();
             if (rs.getRow()==1) {
@@ -93,6 +97,7 @@ public class ProdottoDAO implements IProdottoDAO {
                 prodotto.setMediaValutazione(rs.getFloat("mediaValutazioni"));
                 prodotto.setProduttore(pDAO.findByID(rs.getInt("idProduttore")));
                 prodotto.setListaFeedback(fDAO.findAllByProductID(prodotto.getIdProdotto()));
+                prodotto.setCategorie(pcDAO.getCategoriesByProductID(prodotto.getIdProdotto()));
                 return prodotto;
             }
         } catch (SQLException e) {
@@ -139,6 +144,7 @@ public class ProdottoDAO implements IProdottoDAO {
         ArrayList<IProdotto> prodotti = new ArrayList<>();
         fDAO = FeedbackDAO.getInstance();
         pDAO = ProduttoreDAO.getInstance();
+        pcDAO = ProdottoCategoriaDAO.getInstance();
         try {
             while(rs.next()) {
                 prodotto = new Prodotto();
@@ -153,7 +159,7 @@ public class ProdottoDAO implements IProdottoDAO {
                 prodotto.setMediaValutazione(rs.getFloat("mediaValutazioni"));
                 prodotto.setProduttore(pDAO.findByID(rs.getInt("idProduttore")));
                 prodotto.setListaFeedback(fDAO.findAllByProductID(prodotto.getIdProdotto()));
-
+                prodotto.setCategorie(pcDAO.getCategoriesByProductID(prodotto.getIdProdotto()));
                 prodotti.add(prodotto);
             }
             return prodotti;
@@ -178,6 +184,7 @@ public class ProdottoDAO implements IProdottoDAO {
         ArrayList<IProdotto> prodotti = new ArrayList<>();
         fDAO = FeedbackDAO.getInstance();
         pDAO = ProduttoreDAO.getInstance();
+        pcDAO = ProdottoCategoriaDAO.getInstance();
         try {
             while(rs.next()) {
                 prodotto = new Prodotto();
@@ -192,6 +199,7 @@ public class ProdottoDAO implements IProdottoDAO {
                 prodotto.setMediaValutazione(rs.getFloat("mediaValutazioni"));
                 prodotto.setProduttore(pDAO.findByID(rs.getInt("idProduttore")));
                 prodotto.setListaFeedback(fDAO.findAllByProductID(prodotto.getIdProdotto()));
+                prodotto.setCategorie(pcDAO.getCategoriesByProductID(prodotto.getIdProdotto()));
                 prodotti.add(prodotto);
             }
             return prodotti;

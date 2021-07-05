@@ -23,6 +23,7 @@ public class ProductOperationDialog extends JDialog {
     JLabel lblPrezzo;
     JLabel lblProduttori;
     JLabel lblImgChooser;
+    JLabel lblCategorie;
 
     JTextField txtNome;
     JTextArea txtDescrizione;
@@ -31,6 +32,7 @@ public class ProductOperationDialog extends JDialog {
     JComboBox boxProduttori;
 
     JButton btnImgChooser;
+    JButton btnCategorie;
     JButton btnOk;
     JButton btnAnnulla;
 
@@ -43,7 +45,7 @@ public class ProductOperationDialog extends JDialog {
         this.prodotto = prodotto;
 
         setLayout(new FlowLayout());
-        setSize(475,425);
+        setSize(475,455);
 
         form = new JPanel(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
@@ -58,6 +60,7 @@ public class ProductOperationDialog extends JDialog {
         lblProduttori = new JLabel("Produttore: ");
         lblPrezzo = new JLabel("Prezzo:");
         lblImgChooser = new JLabel("Immagine: ");
+        lblCategorie = new JLabel("Categorie: ");
 
         txtNome = new JTextField(20);
         txtPrezzo = new JTextField(20);
@@ -78,12 +81,15 @@ public class ProductOperationDialog extends JDialog {
 
         btnAnnulla = new JButton("Annulla");
         btnImgChooser = new JButton("Seleziona...");
+        btnCategorie = new JButton("Scegli...");
 
         ProductOperationListener productOperationListener = new ProductOperationListener(appFrame, this);
         btnImgChooser.setActionCommand("btnImg");
+        btnCategorie.setActionCommand("btnCategories");
 
         btnImgChooser.addActionListener(productOperationListener);
         btnOk.addActionListener(productOperationListener);
+        btnCategorie.addActionListener(productOperationListener);
 
         btnAnnulla.addActionListener(new ActionListener() {
             @Override
@@ -102,22 +108,27 @@ public class ProductOperationDialog extends JDialog {
         form.add(lblPrezzo, c);
         c.gridx=1;
         form.add(txtPrezzo, c);
-        c.gridx=0;
         c.gridy=2;
+        c.gridx=0;
+        form.add(lblCategorie, c);
+        c.gridx=1;
+        form.add(btnCategorie, c);
+        c.gridy=3;
+        c.gridx=0;
         form.add(lblProduttori, c);
         c.gridx=1;
         form.add(boxProduttori, c);
-        c.gridy=3;
+        c.gridy=4;
         c.gridx=0;
         form.add(lblDescrizione, c);
         c.gridx=1;
         form.add(txtDescrizione, c);
-        c.gridy=4;
+        c.gridy=5;
         c.gridx=0;
         form.add(lblImgChooser, c);
         c.gridx=1;
         form.add(btnImgChooser, c);
-        c.gridy=5;
+        c.gridy=6;
         c.gridx=0;
         c.insets =  new Insets(30,0,5,0);
         form.add(btnOk, c);

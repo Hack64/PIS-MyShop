@@ -1,10 +1,7 @@
 package Business;
 
 import DAO.Prodotto.ProdottoDAO;
-import Model.Articolo;
-import Model.IProdotto;
-import Model.Prodotto;
-import Model.Produttore;
+import Model.*;
 import Model.Responses.ProdottoResponse;
 
 import java.io.File;
@@ -49,7 +46,7 @@ public class ProdottoBusiness {
         return prodottoDAO.removeById(id);
     }
 
-    public int addNew(String nome, File immagine, String descrizione, float costo, Produttore produttore){
+    public int addNew(String nome, File immagine, String descrizione, float costo, Produttore produttore, ArrayList<ICategoria> categorie ){
         prodottoDAO = ProdottoDAO.getInstance();
         ProdottoFactory prodottoFactory = (ProdottoFactory) FactoryProvider.getFactory(FactoryProvider.TipoFactory.PRODOTTO);
         Prodotto p = prodottoFactory.crea();
@@ -61,8 +58,13 @@ public class ProdottoBusiness {
         /*MODIFICA QUALCOSA*/
         p.setNumeroCommenti(0);
         p.setMediaValutazione(0);
+        int rowCount = prodottoDAO.add(p);
+        if (rowCount==1) {
+            IProdotto p2 = prodottoDAO.getByName(nome);
+            rowCount+=CategoriaBusiness.getInstance().addCategoriesToProduct(p2, categorie);
 
-        return prodottoDAO.add(p);
+        }
+        return rowCount;
     }
 
     public int update(String nome, File immagine, String descrizione, float costo, Produttore produttore, int idProdotto){

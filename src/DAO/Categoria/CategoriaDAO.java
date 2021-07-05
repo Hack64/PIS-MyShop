@@ -58,6 +58,34 @@ public class CategoriaDAO implements ICategoriaDAO {
     }
 
     @Override
+    public ICategoria findByName(String nome) {
+        conn = DbConnection.getInstance();
+        rs = conn.executeQuery("SELECT idCategoria, nome, idCategoriaPadre FROM myshopdb.Categoria WHERE myshopdb.Categoria.nome = '" + nome + "';");
+        Categoria categoria;
+        try {
+            rs.next();
+            if (rs.getRow()==1) {
+                categoria = new Categoria();
+                categoria.setIdCategoria(rs.getInt("idCategoria"));
+                categoria.setNome(rs.getString("nome"));
+                categoria.setCategoriaPadre(this.findByID(rs.getInt("idCategoriaPadre")));
+                return categoria;
+            }
+        } catch (SQLException e) {
+            // handle any errors
+            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("VendorError: " + e.getErrorCode());
+        } catch (NullPointerException e) {
+            // handle any errors
+            System.out.println("Resultset: " + e.getMessage());
+        } finally {
+            conn.close();
+        }
+        return null;
+    }
+
+    @Override
     public ArrayList<ICategoria> findAll() {
         conn = DbConnection.getInstance();
         ResultSet rs2 = conn.executeQuery("SELECT idCategoria, nome, idCategoriaPadre FROM myshopdb.Categoria;");

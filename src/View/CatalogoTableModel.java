@@ -1,14 +1,18 @@
 package View;
 
 import Business.ProdottoBusiness;
+import Model.ICategoria;
 import Model.IProdotto;
 import Model.Responses.ProdottoResponse;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.StringJoiner;
 
 public class CatalogoTableModel extends AbstractTableModel {
     ArrayList<IProdotto> lista;
+    ArrayList<String> categorie;
 
     public CatalogoTableModel(ArrayList<IProdotto> lista){
         this.lista = lista;
@@ -19,10 +23,11 @@ public class CatalogoTableModel extends AbstractTableModel {
         return switch (columnIndex) {
             case 0 -> "ID";
             case 1 -> "Nome";
-            case 2 -> "Prezzo";
-            case 3 -> "Produttore";
-            case 4 -> "Media Valutazioni";
-            case 5 -> "Numero Commenti";
+            case 2 -> "Categorie";
+            case 3 -> "Prezzo";
+            case 4 -> "Produttore";
+            case 5 -> "Media Valutazioni";
+            case 6 -> "Numero Commenti";
             default -> null;
         };
     }
@@ -34,23 +39,27 @@ public class CatalogoTableModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        //id, nome, prezzo, produttore, media val, num commenti
-        return 6;
+        //id, nome, categoria, prezzo, produttore, media val, num commenti
+        return 7;
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         IProdotto p = lista.get(rowIndex);
-
-        switch (columnIndex) {
-            case 0: return p.getIdProdotto();
-            case 1: return p.getNome();
-            case 2: return p.getCosto();
-            case 3: return p.getProduttore().getNome();
-            case 4: return p.getMediaValutazione();
-            case 5: return p.getNumeroCommenti();
+        categorie = new ArrayList<>();
+        for (ICategoria c:p.getCategorie()){
+            categorie.add(c.getNome());
         }
-        return null;
+        return switch (columnIndex) {
+            case 0 -> p.getIdProdotto();
+            case 1 -> p.getNome();
+            case 2 -> categorie.toString();
+            case 3 -> p.getCosto();
+            case 4 -> p.getProduttore().getNome();
+            case 5 -> p.getMediaValutazione();
+            case 6 -> p.getNumeroCommenti();
+            default -> null;
+        };
     }
 
     public ArrayList<IProdotto> getLista() {

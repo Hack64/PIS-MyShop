@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public interface ICategoriaDAO {
     ICategoria findByID(int idCategoria);
+    ICategoria findByName(String nome);
     ArrayList<ICategoria> findAll();
     ArrayList<ICategoria> findAllSubcategoriesByCategoryID(int idCategoria);
     int add(ICategoria categoria);
