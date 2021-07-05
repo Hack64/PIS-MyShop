@@ -230,7 +230,7 @@ public class ProdottoDAO implements IProdottoDAO {
         conn = DbConnection.getInstance();
         int rowCount = conn.executeUpdate("UPDATE Prodotto SET nome = '" + prodotto.getNome() + "', immagine = '" + prodotto.getImmagine().getName() + "', descrizione = '" + prodotto.getDescrizione() + "', numeroCommenti = '" + prodotto.getNumeroCommenti() + "', costo = '" + prodotto.getCosto() + "', mediaValutazioni = '" + prodotto.getMediaValutazione() + "' WHERE idProdotto = '" + prodotto.getIdProdotto() + "';");
         conn.close();
-        return 0;
+        return rowCount;
     }
 
 }

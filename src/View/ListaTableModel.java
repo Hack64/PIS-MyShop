@@ -50,6 +50,10 @@ public class ListaTableModel extends AbstractTableModel {
         return null;
     }
 
+    public Object getRow(int rowIndex){
+        return lista.get(rowIndex);
+    }
+
     public ArrayList<Lista> getLista() {
         return lista;
     }

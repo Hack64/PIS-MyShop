@@ -41,4 +41,10 @@ public class ListaBusiness {
 
         return listaDAO.findAllByUserID(u.getIdUtente());
     }
+
+    public int deleteByID(int idLista){
+        listaDAO = ListaDAO.getInstance();
+
+        return listaDAO.removeById(idLista);
+    }
 }

@@ -1,9 +1,10 @@
 package View.Listener;
 
 import Business.ProdottoBusiness;
+import Model.Responses.ProdottoResponse;
 import View.AppFrame;
 import View.CatalogPanel;
-import View.ProductAdditionDialog;
+import View.ProductOperationDialog;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -13,7 +14,7 @@ public class CatalogPanelListener  implements ActionListener {
 
     AppFrame appFrame;
     JTable table;
-    ProductAdditionDialog productAdditionDialog;
+    ProductOperationDialog productOperationDialog;
 
     public final static String BTN_ADD_PRODUCT = "btnAdd";
     public final static String BTN_EDIT_PRODUCT = "btnEdit";
@@ -30,13 +31,19 @@ public class CatalogPanelListener  implements ActionListener {
 
         switch (cmd){
             case BTN_ADD_PRODUCT:
-                new ProductAdditionDialog(appFrame);
+                new ProductOperationDialog(appFrame, false, null);
+                break;
+            case BTN_EDIT_PRODUCT:
+                int rowToEdit = table.getSelectedRow();
+                int colToEdit = 0;
+                ProdottoResponse pr = ProdottoBusiness.getInstance().find(Integer.parseInt(table.getModel().getValueAt(rowToEdit, colToEdit).toString()));
+                new ProductOperationDialog(appFrame, true, pr.getProdotto());
                 break;
             case BTN_DELETE_PRODUCT:
                 String esit;
-                int row = table.getSelectedRow();
-                int col = 0;
-                int idToDelete = Integer.parseInt(table.getModel().getValueAt(row, col).toString());
+                int rowToDelete = table.getSelectedRow();
+                int colToDelete = 0;
+                int idToDelete = Integer.parseInt(table.getModel().getValueAt(rowToDelete, colToDelete).toString());
                 int i = ProdottoBusiness.getInstance().deleteByID(idToDelete);
                 if (i==1){
                     esit = "Prodotto eliminato con successo!";

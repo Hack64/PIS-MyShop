@@ -4,6 +4,7 @@ import Business.ListaBusiness;
 import Business.SessionManager;
 import Model.Lista;
 import Model.Utente;
+import View.Listener.ListPanelListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 
 public class ListsPanel extends JPanel {
 
-    public ListsPanel(){
+    public ListsPanel(AppFrame appFrame){
         setLayout(new BorderLayout());
 
         ArrayList<Lista> listeUtente = ListaBusiness.getInstance().findAllListsByUser((Utente)SessionManager.getInstance().getSession().get("loggedUser"));
@@ -27,7 +28,13 @@ public class ListsPanel extends JPanel {
         operazionitabella.setLayout(new FlowLayout());
 
         JButton btnEdit = new JButton("Modifica Lista");
+        btnEdit.setActionCommand("btnEdit");
         JButton btnDelete = new JButton("Elimina Lista");
+        btnDelete.setActionCommand("btnDelete");
+
+        ListPanelListener listPanelListener = new ListPanelListener(appFrame, tabellaListe);
+        btnDelete.addActionListener(listPanelListener);
+        btnEdit.addActionListener(listPanelListener);
 
         operazionitabella.add(btnEdit);
         operazionitabella.add(btnDelete);

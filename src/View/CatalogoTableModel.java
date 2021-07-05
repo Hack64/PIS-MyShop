@@ -1,6 +1,8 @@
 package View;
 
+import Business.ProdottoBusiness;
 import Model.IProdotto;
+import Model.Responses.ProdottoResponse;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;

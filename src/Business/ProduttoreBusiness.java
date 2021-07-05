@@ -32,4 +32,9 @@ public class ProduttoreBusiness {
 
         return nomi;
     }
+
+    public Produttore findByName(String nome){
+        produttoreDAO = ProduttoreDAO.getInstance();
+        return produttoreDAO.getByName(nome);
+    }
 }
