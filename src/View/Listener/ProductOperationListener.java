@@ -20,7 +20,6 @@ import java.util.ArrayList;
 
 public class ProductOperationListener implements ActionListener {
 
-
     AppFrame appFrame;
     ProductOperationDialog productOperationDialog;
     CategoriesChooserDialog categoriesChooserDialog;
@@ -63,16 +62,21 @@ public class ProductOperationListener implements ActionListener {
                 break;
             case BTN_EDIT:
                 Produttore pr = ProduttoreBusiness.getInstance().findByName((String) productOperationDialog.getProduttore());
-                int st = ProdottoBusiness.getInstance().update(productOperationDialog.getTxtNome(), img, productOperationDialog.getTxtDescrizione(), Float.parseFloat(productOperationDialog.getTxtPrezzo()), pr, productOperationDialog.getID());
-                if (st == 1){
-                    String esit = "Prodotto aggiunto con successo!";
-                    JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
-                    productOperationDialog.dispose();
-                    appFrame.setCurrentMainPanel(new CatalogPanel(appFrame));
-                } else {
-                    String esit = "Errore durante l'aggiunta del prodotto!";
+                if (img == null ){
+                    String esit = "Coglione imposta l'immagine";
                     JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
-                    appFrame.setCurrentMainPanel(new CatalogPanel(appFrame));
+                } else {
+                    int st = ProdottoBusiness.getInstance().update(productOperationDialog.getTxtNome(), img, productOperationDialog.getTxtDescrizione(), Float.parseFloat(productOperationDialog.getTxtPrezzo()), pr, productOperationDialog.getID());
+                    if (st == 1) {
+                        String esit = "Prodotto aggiunto con successo!";
+                        JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
+                        productOperationDialog.dispose();
+                        appFrame.setCurrentMainPanel(new CatalogPanel(appFrame));
+                    } else {
+                        String esit = "Errore durante l'aggiunta del prodotto!";
+                        JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
+                        appFrame.setCurrentMainPanel(new CatalogPanel(appFrame));
+                    }
                 }
                 break;
             case BTN_IMG_CHOOSER:

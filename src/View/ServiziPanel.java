@@ -1,27 +1,28 @@
 package View;
 
-import Business.ProdottoBusiness;
-import Model.IProdotto;
+import Business.ServizioBusiness;
+import Model.Servizio;
 import View.Listener.CatalogPanelListener;
+import View.Listener.ServiziPanelListener;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class CatalogPanel extends JPanel {
+public class ServiziPanel extends JPanel {
 
     AppFrame appFrame;
 
-    public CatalogPanel(AppFrame appFrame){
+    public ServiziPanel(AppFrame appFrame) {
 
         this.appFrame = appFrame;
         setLayout(new BorderLayout());
 
-        ArrayList<IProdotto> prodottiCatalogo = ProdottoBusiness.getInstance().findAllProducts();
+        ArrayList<Servizio> serviziCatalogo = ServizioBusiness.getInstance().findAllServices();
 
-        JTable tabellaProdotti = new JTable(new CatalogoTableModel(prodottiCatalogo));
+        JTable tabellaServizi = new JTable(new ServizioTableModel(serviziCatalogo));
 
-        JScrollPane scrollPane = new JScrollPane(tabellaProdotti);
+        JScrollPane scrollPane = new JScrollPane(tabellaServizi);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         add(scrollPane, BorderLayout.CENTER);
@@ -29,9 +30,9 @@ public class CatalogPanel extends JPanel {
         JPanel operazionitabella = new JPanel();
         operazionitabella.setLayout(new FlowLayout());
 
-        JButton btnAdd = new JButton("Aggiungi nuovo prodotto");
-        JButton btnEdit = new JButton("Modifica Prodotto");
-        JButton btnDelete = new JButton("Elimina Prodotto");
+        JButton btnAdd = new JButton("Aggiungi nuovo servizio");
+        JButton btnEdit = new JButton("Modifica Servizio");
+        JButton btnDelete = new JButton("Elimina Servizio");
         JButton btnCategories = new JButton("Gestisci Categorie");
 
         btnAdd.setActionCommand("btnAdd");
@@ -39,11 +40,11 @@ public class CatalogPanel extends JPanel {
         btnDelete.setActionCommand("btnDelete");
         btnCategories.setActionCommand("btnCategories");
 
-        CatalogPanelListener catalogPanelListener = new CatalogPanelListener(appFrame, tabellaProdotti);
-        btnAdd.addActionListener(catalogPanelListener);
-        btnEdit.addActionListener(catalogPanelListener);
-        btnDelete.addActionListener(catalogPanelListener);
-        btnCategories.addActionListener(catalogPanelListener);
+        ServiziPanelListener serviziPanelListener = new ServiziPanelListener(appFrame, tabellaServizi);
+        btnAdd.addActionListener(serviziPanelListener);
+        btnEdit.addActionListener(serviziPanelListener);
+        btnDelete.addActionListener(serviziPanelListener);
+        btnCategories.addActionListener(serviziPanelListener);
 
         operazionitabella.add(btnCategories);
         operazionitabella.add(btnAdd);

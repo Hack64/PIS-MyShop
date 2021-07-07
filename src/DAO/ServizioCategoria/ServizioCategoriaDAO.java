@@ -85,7 +85,7 @@ public class ServizioCategoriaDAO implements IServizioCategoriaDAO {
     }
 
     @Override
-    public int add(Categoria categoria, Servizio servizio) {
+    public int add(ICategoria categoria, Servizio servizio) {
         conn = DbConnection.getInstance();
         int rowCount = conn.executeUpdate("INSERT INTO ServizioCategoria VALUES('" + servizio.getIdServizio() + "','" + categoria.getIdCategoria() + "');");
         conn.close();

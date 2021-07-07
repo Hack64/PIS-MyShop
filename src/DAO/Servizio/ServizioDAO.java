@@ -1,8 +1,10 @@
 package DAO.Servizio;
 
 import DAO.Fornitore.FornitoreDAO;
+import DAO.ServizioCategoria.ServizioCategoriaDAO;
 import DbInterface.DbConnection;
 import DbInterface.IDbConnection;
+import Model.CategoriaServizio;
 import Model.Fornitore;
 import Model.Servizio;
 
@@ -19,6 +21,7 @@ public class ServizioDAO implements IServizioDAO {
     private static ResultSet rs;
     private File file;
     private FornitoreDAO fDAO;
+    private ServizioCategoriaDAO scDAO;
 
     private ServizioDAO(){
         servizio = null;
@@ -33,7 +36,7 @@ public class ServizioDAO implements IServizioDAO {
     @Override
     public Servizio findByID(int idServizio) {
         conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT idServizio, nome, immagine, descrizione, numeroCommenti, costo, mediaValutazioni, idProduttore FROM myshopdb.Servizio WHERE myshopdb.Servizio.idServizio = '" + idServizio + "';");
+        rs = conn.executeQuery("SELECT idServizio, nome, immagine, descrizione, numeroCommenti, costo, mediaValutazioni, idProduttore FROM Servizio WHERE idServizio = '" + idServizio + "';");
         fDAO = FornitoreDAO.getInstance();
         try {
             rs.next();
@@ -49,6 +52,7 @@ public class ServizioDAO implements IServizioDAO {
                 servizio.setCosto(rs.getFloat("costo"));
                 servizio.setMediaValutazione(rs.getFloat("mediaValutazioni"));
                 servizio.setFornitore(fDAO.findByID(rs.getInt("idFornitore")));
+                servizio.setCategorie(scDAO.getCategoriesByServiceID(servizio.getIdServizio()));
 
                 return servizio;
             }
@@ -69,7 +73,7 @@ public class ServizioDAO implements IServizioDAO {
     @Override
     public Servizio getByName(String nomeServizio) {
         conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT idServizio, nome, immagine, descrizione, numeroCommenti, costo, mediaValutazioni, idProduttore FROM myshopdb.Servizio WHERE myshopdb.Servizio.nome = '" + nomeServizio + "';");
+        rs = conn.executeQuery("SELECT idServizio, nome, immagine, descrizione, numeroCommenti, costo, mediaValutazioni, idFornitore FROM myshopdb.Servizio WHERE Servizio.nome = '" + nomeServizio + "';");
         fDAO = FornitoreDAO.getInstance();
         try {
             rs.next();
@@ -85,6 +89,7 @@ public class ServizioDAO implements IServizioDAO {
                 servizio.setCosto(rs.getFloat("costo"));
                 servizio.setMediaValutazione(rs.getFloat("mediaValutazioni"));
                 servizio.setFornitore(fDAO.findByID(rs.getInt("idFornitore")));
+                servizio.setCategorie(scDAO.getCategoriesByServiceID(servizio.getIdServizio()));
 
                 return servizio;
             }
@@ -103,10 +108,10 @@ public class ServizioDAO implements IServizioDAO {
     }
 
     @Override
-    public boolean serviceExists(String nomeServizio) {
+    public boolean serviceExists(int idServizio) {
         boolean serviceExists = false;
         conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT count(*) AS C FROM Utente WHERE Servizio.nome = '" + nomeServizio + "';");
+        rs = conn.executeQuery("SELECT count(*) AS C FROM Servizio WHERE Servizio.idServizio = '" + idServizio + "';");
         fDAO = FornitoreDAO.getInstance();
         try {
             rs.next();
@@ -129,8 +134,9 @@ public class ServizioDAO implements IServizioDAO {
     @Override
     public ArrayList<Servizio> findAll() {
         conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT idServizio, nome, immagine, descrizione, numeroCommenti, costo, mediaValutazioni, idProduttore FROM myshopdb.Servizio;");
+        rs = conn.executeQuery("SELECT idServizio, nome, immagine, descrizione, numeroCommenti, costo, mediaValutazioni, idFornitore FROM myshopdb.Servizio;");
         fDAO = FornitoreDAO.getInstance();
+        scDAO = ServizioCategoriaDAO.getInstance();
         ArrayList<Servizio> servizi = new ArrayList<>();
         try {
             while(rs.next()) {
@@ -145,6 +151,7 @@ public class ServizioDAO implements IServizioDAO {
                 servizio.setCosto(rs.getFloat("costo"));
                 servizio.setMediaValutazione(rs.getFloat("mediaValutazioni"));
                 servizio.setFornitore(fDAO.findByID(rs.getInt("idFornitore")));
+                servizio.setCategorie(scDAO.getCategoriesByServiceID(servizio.getIdServizio()));
 
                 servizi.add(servizio);
             }
@@ -166,7 +173,7 @@ public class ServizioDAO implements IServizioDAO {
     @Override
     public ArrayList<Servizio> findAllBySupplier(Fornitore fornitore) {
         conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT idProdotto, nome, immagine, descrizione, numeroCommenti, costo, mediaValutazioni, idProduttore FROM myshopdb.Prodotto WHERE Prodotto.idProduttore = '"+ fornitore.getIdFornitore() + "';");
+        rs = conn.executeQuery("SELECT idServizio, nome, immagine, descrizione, numeroCommenti, costo, mediaValutazioni, idFornitore FROM Servizio WHERE Servizio.idFornitore = '"+ fornitore.getIdFornitore() + "';");
         fDAO = FornitoreDAO.getInstance();
         ArrayList<Servizio> servizi = new ArrayList<>();
         try {
@@ -181,7 +188,9 @@ public class ServizioDAO implements IServizioDAO {
                 servizio.setNumeroCommenti(rs.getInt("numeroCommenti"));
                 servizio.setCosto(rs.getFloat("costo"));
                 servizio.setMediaValutazione(rs.getFloat("mediaValutazioni"));
-                servizio.setIdServizio(rs.getInt("idProduttore"));
+                servizio.setFornitore(fDAO.findByID(rs.getInt("idFornitore")));
+                servizio.setCategorie(scDAO.getCategoriesByServiceID(servizio.getIdServizio()));
+
 
                 servizi.add(servizio);
             }

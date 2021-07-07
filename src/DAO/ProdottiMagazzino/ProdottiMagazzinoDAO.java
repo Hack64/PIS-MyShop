@@ -31,7 +31,7 @@ public class ProdottiMagazzinoDAO implements IProdottiMagazzinoDAO {
     @Override
     public ArrayList<Disponibilita> findAllProductsByWarehouseID(int idMagazzino) {
         conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT idProdottiMagazzino, idMagazzino, idProdotto, scaffale, corsia, quantita FROM ProdottiMagazzino WHERE ProdottiMagazzino.idMagazzino = '" + idMagazzino + "';");
+        rs = conn.executeQuery("SELECT idMagazzino, idProdotto, scaffale, corsia, quantita FROM ProdottiMagazzino WHERE ProdottiMagazzino.idMagazzino = '" + idMagazzino + "';");
         ArrayList<Disponibilita> prodottiMagazzino = new ArrayList<>();
         Disponibilita disponibilita = new Disponibilita();
         ProdottoDAO pDAO = ProdottoDAO.getInstance();
@@ -63,7 +63,7 @@ public class ProdottiMagazzinoDAO implements IProdottiMagazzinoDAO {
     @Override
     public ArrayList<Magazzino> findAllWarehousesByProductID(int idProdotto) {
         conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT idProdottiMagazzino, idMagazzino, idProdotto, scaffale, corsia, quantita FROM ProdottiMagazzino WHERE ProdottiMagazzino.idProdotto = '" + idProdotto + "';");
+        rs = conn.executeQuery("SELECT idMagazzino, idProdotto, scaffale, corsia, quantita FROM ProdottiMagazzino WHERE ProdottiMagazzino.idProdotto = '" + idProdotto + "';");
         ArrayList<Magazzino> magazzini = new ArrayList<>();
         Magazzino magazzino;
         MagazzinoDAO mDAO = MagazzinoDAO.getInstance();

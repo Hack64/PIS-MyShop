@@ -1,9 +1,11 @@
 package Model;
 
+import java.util.ArrayList;
+
 public class Servizio extends Articolo {
 
     private int idServizio;
-    private ICategoria categoria;
+    private ArrayList<ICategoria> categorie;
     private Fornitore fornitore;
 
     public Fornitore getFornitore() {
@@ -11,7 +13,7 @@ public class Servizio extends Articolo {
     }
 
     public void setFornitore(Fornitore fornitore) {
-        this.fornitore = this.fornitore;
+        this.fornitore = fornitore;
     }
 
     public int getIdServizio() {
@@ -22,11 +24,11 @@ public class Servizio extends Articolo {
         this.idServizio = idServizio;
     }
 
-    public ICategoria getCategoria() {
-        return categoria;
+    public ArrayList<ICategoria> getCategorie() {
+        return categorie;
     }
 
-    public void setCategoria(ICategoria categoria) {
-        this.categoria = categoria;
+    public void setCategorie(ArrayList<ICategoria> categorie) {
+        this.categorie = categorie;
     }
 }

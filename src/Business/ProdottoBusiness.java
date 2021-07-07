@@ -49,7 +49,7 @@ public class ProdottoBusiness {
     public int addNew(String nome, File immagine, String descrizione, float costo, Produttore produttore, ArrayList<ICategoria> categorie ){
         prodottoDAO = ProdottoDAO.getInstance();
         ProdottoFactory prodottoFactory = (ProdottoFactory) FactoryProvider.getFactory(FactoryProvider.TipoFactory.PRODOTTO);
-        Prodotto p = prodottoFactory.crea();
+        Prodotto p = (Prodotto) prodottoFactory.crea();
         p.setNome(nome);
         p.setImmagine(immagine);
         p.setDescrizione(descrizione);
@@ -70,7 +70,7 @@ public class ProdottoBusiness {
     public int update(String nome, File immagine, String descrizione, float costo, Produttore produttore, int idProdotto){
         prodottoDAO = ProdottoDAO.getInstance();
         ProdottoFactory prodottoFactory = (ProdottoFactory) FactoryProvider.getFactory(FactoryProvider.TipoFactory.PRODOTTO);
-        Prodotto p = prodottoFactory.crea();
+        Prodotto p = (Prodotto) prodottoFactory.crea();
         p.setIdProdotto(idProdotto);
         p.setNome(nome);
         p.setImmagine(immagine);

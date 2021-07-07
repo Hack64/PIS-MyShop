@@ -1,17 +1,15 @@
 package View.Listener;
 
 import Business.ProdottoBusiness;
+import Business.ServizioBusiness;
 import Model.Responses.ProdottoResponse;
-import View.AppFrame;
-import View.CatalogPanel;
-import View.ManageCategoriesPanel;
-import View.ProductOperationDialog;
+import View.*;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class CatalogPanelListener  implements ActionListener {
+public class ServiziPanelListener implements ActionListener {
 
     AppFrame appFrame;
     JTable table;
@@ -22,7 +20,7 @@ public class CatalogPanelListener  implements ActionListener {
     public final static String BTN_DELETE_PRODUCT = "btnDelete";
     public final static String BTN_MANAGE_CATEGORIES = "btnCategories";
 
-    public CatalogPanelListener(AppFrame appFrame, JTable table){
+    public ServiziPanelListener(AppFrame appFrame, JTable table){
         this.appFrame = appFrame;
         this.table = table;
     }
@@ -46,19 +44,19 @@ public class CatalogPanelListener  implements ActionListener {
                 int rowToDelete = table.getSelectedRow();
                 int colToDelete = 0;
                 int idToDelete = Integer.parseInt(table.getModel().getValueAt(rowToDelete, colToDelete).toString());
-                int i = ProdottoBusiness.getInstance().deleteByID(idToDelete);
+                int i = ServizioBusiness.getInstance().deleteByID(idToDelete);
                 if (i==1){
-                    esit = "Prodotto eliminato con successo!";
+                    esit = "Servizio eliminato con successo!";
                     JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
-                    appFrame.setCurrentMainPanel(new CatalogPanel(appFrame));
+                    appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame));
                 } else{
                     esit = "Errore durante l'eliminazione";
                     JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
                 }
                 break;
             case BTN_MANAGE_CATEGORIES:
-                    appFrame.setCurrentMainPanel(new ManageCategoriesPanel(appFrame));
-                    break;
+                appFrame.setCurrentMainPanel(new ManageCategoriesPanel(appFrame));
+                break;
         }
     }
 }

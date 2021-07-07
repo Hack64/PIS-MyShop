@@ -34,7 +34,7 @@ public class SideMenuListener implements ActionListener {
                 break;
             case BTN_CATALOG:
                 System.out.println("Premuto Gestisci Catalogo");
-                appFrame.setCurrentMainPanel(new CatalogPanel(appFrame));
+                appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame));
                 break;
             case BTN_SHOPS:
                 break;

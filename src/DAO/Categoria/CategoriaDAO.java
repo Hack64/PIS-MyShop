@@ -149,7 +149,13 @@ public class CategoriaDAO implements ICategoriaDAO {
     @Override
     public int add(ICategoria categoria) {
         conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("INSERT INTO Categoria  VALUES ('" + categoria.getIdCategoria() + "','" + categoria.getNome() + "','" + categoria.getCategoriaPadre().getIdCategoria() + "');");
+        int rowCount;
+        if (categoria.getCategoriaPadre() == null) {
+            rowCount = conn.executeUpdate("INSERT INTO Categoria (nome) VALUES ('" + categoria.getNome() + "');");
+
+        } else {
+            rowCount = conn.executeUpdate("INSERT INTO Categoria (nome, idCategoriaPadre) VALUES ('" + categoria.getNome() + "','" + categoria.getCategoriaPadre().getIdCategoria() + "');");
+        }
         conn.close();
         return rowCount;
     }

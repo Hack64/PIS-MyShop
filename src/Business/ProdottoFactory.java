@@ -8,7 +8,7 @@ import Model.Prodotto;
 public class ProdottoFactory implements ArticoloFactory {
 
     @Override
-    public Prodotto crea() {
+    public Articolo crea() {
         return new Prodotto();
     }
 

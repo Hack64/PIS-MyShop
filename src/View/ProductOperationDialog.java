@@ -65,7 +65,13 @@ public class ProductOperationDialog extends JDialog {
         txtNome = new JTextField(20);
         txtPrezzo = new JTextField(20);
         txtDescrizione = new JTextArea(10,20);
-        txtDescrizione.setBorder(new LineBorder(Color.DARK_GRAY));
+        txtDescrizione.setLineWrap(true);
+        txtDescrizione.setWrapStyleWord(true);
+
+        JScrollPane scrollPane = new JScrollPane(txtDescrizione);
+        scrollPane.setBorder(new LineBorder(Color.DARK_GRAY));
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
         if (editMode){
             setFields();
@@ -113,6 +119,9 @@ public class ProductOperationDialog extends JDialog {
         form.add(lblCategorie, c);
         c.gridx=1;
         form.add(btnCategorie, c);
+        if(editMode){
+           btnCategorie.setEnabled(false);
+        }
         c.gridy=3;
         c.gridx=0;
         form.add(lblProduttori, c);
@@ -122,7 +131,7 @@ public class ProductOperationDialog extends JDialog {
         c.gridx=0;
         form.add(lblDescrizione, c);
         c.gridx=1;
-        form.add(txtDescrizione, c);
+        form.add(scrollPane, c);
         c.gridy=5;
         c.gridx=0;
         form.add(lblImgChooser, c);
