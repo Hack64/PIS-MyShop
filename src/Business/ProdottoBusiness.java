@@ -1,7 +1,10 @@
 package Business;
 
 import DAO.Prodotto.ProdottoDAO;
-import Model.*;
+import Model.ICategoria;
+import Model.IProdotto;
+import Model.Prodotto;
+import Model.Produttore;
 import Model.Responses.ProdottoResponse;
 
 import java.io.File;

@@ -1,9 +1,11 @@
 package View.Listener;
 
 import Business.ProdottoBusiness;
-import Model.IProdotto;
 import Model.Responses.ProdottoResponse;
-import View.*;
+import View.AppFrame;
+import View.CatalogPanel;
+import View.CustomOperationDialogView;
+import View.ManageCategoriesPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -13,7 +15,6 @@ public class CatalogPanelListener  implements ActionListener {
 
     AppFrame appFrame;
     JTable table;
-    ProductOperationDialog productOperationDialog;
 
     public final static String BTN_ADD_PRODUCT = "btnAdd";
     public final static String BTN_EDIT_PRODUCT = "btnEdit";

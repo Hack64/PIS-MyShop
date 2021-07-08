@@ -1,14 +1,12 @@
 package Test;
 
-import DAO.Prodotto.ProdottoDAO;
 import DAO.Servizio.ServizioDAO;
 import DbInterface.DbUser;
-import Model.*;
+import Model.Servizio;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.File;
 import java.util.ArrayList;
 
 public class ServizioDAOTest {    DbUser dbUser = DbUser.getInstance();

@@ -4,7 +4,6 @@ import DAO.Fornitore.FornitoreDAO;
 import DAO.ServizioCategoria.ServizioCategoriaDAO;
 import DbInterface.DbConnection;
 import DbInterface.IDbConnection;
-import Model.CategoriaServizio;
 import Model.Fornitore;
 import Model.Servizio;
 

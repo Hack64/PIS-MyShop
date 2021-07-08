@@ -1,6 +1,5 @@
 package View;
 
-import Business.ProdottoBusiness;
 import Model.ICategoria;
 import Model.IProdotto;
 

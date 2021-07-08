@@ -1,9 +1,7 @@
 package Business;
 
 import DAO.Fornitore.FornitoreDAO;
-import DAO.Produttore.ProduttoreDAO;
 import Model.Fornitore;
-import Model.Produttore;
 
 import java.util.ArrayList;
 

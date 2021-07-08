@@ -1,10 +1,11 @@
 package View.Listener;
 
-import Business.ProdottoBusiness;
 import Business.ServizioBusiness;
-import Model.Responses.ProdottoResponse;
 import Model.Responses.ServizioResponse;
-import View.*;
+import View.AppFrame;
+import View.CustomOperationDialogView;
+import View.MainCatalogPanel;
+import View.ManageCategoriesPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -14,7 +15,6 @@ public class ServiziPanelListener implements ActionListener {
 
     AppFrame appFrame;
     JTable table;
-    ProductOperationDialog productOperationDialog;
 
     public final static String BTN_ADD_SERVICE = "btnAdd";
     public final static String BTN_EDIT_SERVICE = "btnEdit";

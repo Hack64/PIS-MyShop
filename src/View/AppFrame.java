@@ -1,6 +1,5 @@
 package View;
 
-import View.Listener.CatalogPanelListener;
 import View.Listener.LoginButtonListener;
 import View.Listener.SideMenuListener;
 

@@ -12,7 +12,6 @@ import org.junit.Test;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class ProdottoDAOTest {
     DbUser dbUser = DbUser.getInstance();

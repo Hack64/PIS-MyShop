@@ -2,9 +2,7 @@ package View.Listener;
 
 import View.AppFrame;
 import View.CategoriesChooserDialog;
-import View.ProductOperationDialog;
 
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 

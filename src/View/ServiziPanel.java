@@ -2,7 +2,6 @@ package View;
 
 import Business.ServizioBusiness;
 import Model.Servizio;
-import View.Listener.CatalogPanelListener;
 import View.Listener.ServiziPanelListener;
 
 import javax.swing.*;

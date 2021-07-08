@@ -1,7 +1,5 @@
 package View;
 
-import View.Listener.CatalogPanelListener;
-
 import javax.swing.*;
 import java.util.List;
 

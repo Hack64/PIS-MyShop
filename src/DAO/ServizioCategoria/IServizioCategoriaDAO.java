@@ -1,6 +1,5 @@
 package DAO.ServizioCategoria;
 
-import Model.Categoria;
 import Model.ICategoria;
 import Model.Servizio;
 

@@ -1,12 +1,10 @@
 package View.Listener;
 
 import Business.CategoriaBusiness;
-import Business.ProdottoBusiness;
-import Business.ProduttoreBusiness;
 import Model.ICategoria;
-import Model.Produttore;
-import Model.Responses.ProdottoResponse;
-import View.*;
+import View.AppFrame;
+import View.CategoriesOperationDialog;
+import View.ManageCategoriesPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

@@ -2,7 +2,9 @@ package View.Listener;
 
 import Business.CategoriaBusiness;
 import Model.Categoria;
-import View.*;
+import View.AppFrame;
+import View.CategoriesOperationDialog;
+import View.ManageCategoriesPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

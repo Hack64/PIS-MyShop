@@ -4,7 +4,10 @@ import Business.*;
 import Model.Fornitore;
 import Model.ICategoria;
 import Model.Produttore;
-import View.*;
+import View.AppFrame;
+import View.CategoriesChooserDialog;
+import View.CustomOperationDialogView;
+import View.MainCatalogPanel;
 import org.apache.commons.io.FileUtils;
 
 import javax.swing.*;
