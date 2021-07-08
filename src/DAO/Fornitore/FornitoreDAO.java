@@ -71,7 +71,7 @@ public class FornitoreDAO implements IFornitoreDAO {
                 fornitore.setSito(rs.getString("sito"));
                 fornitore.setCitta(rs.getString("citta"));
                 fornitore.setNazione(rs.getString("nazione"));
-                fornitore.setServiziFornitore(sDAO.findAllBySupplier(fornitore));
+                //fornitore.setServiziFornitore(sDAO.findAllBySupplier(fornitore));
                 return fornitore;
             }
         } catch (SQLException e) {
@@ -124,7 +124,7 @@ public class FornitoreDAO implements IFornitoreDAO {
                 fornitore.setSito(rs.getString("sito"));
                 fornitore.setCitta(rs.getString("citta"));
                 fornitore.setNazione(rs.getString("nazione"));
-                fornitore.setServiziFornitore(sDAO.findAllBySupplier(fornitore));
+                //fornitore.setServiziFornitore(sDAO.findAllBySupplier(fornitore));
 
                 produttori.add(fornitore);
             }

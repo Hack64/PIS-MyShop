@@ -1,11 +1,9 @@
 package View.Listener;
 
 import Business.ProdottoBusiness;
+import Model.IProdotto;
 import Model.Responses.ProdottoResponse;
-import View.AppFrame;
-import View.CatalogPanel;
-import View.ManageCategoriesPanel;
-import View.ProductOperationDialog;
+import View.*;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -33,13 +31,14 @@ public class CatalogPanelListener  implements ActionListener {
 
         switch (cmd){
             case BTN_ADD_PRODUCT:
-                new ProductOperationDialog(appFrame, false, null);
+                System.out.println("Aggiungi prodotto");
+                new CustomOperationDialogView(appFrame, true);
                 break;
             case BTN_EDIT_PRODUCT:
                 int rowToEdit = table.getSelectedRow();
                 int colToEdit = 0;
                 ProdottoResponse pr = ProdottoBusiness.getInstance().find(Integer.parseInt(table.getModel().getValueAt(rowToEdit, colToEdit).toString()));
-                new ProductOperationDialog(appFrame, true, pr.getProdotto());
+                new CustomOperationDialogView(appFrame, pr.getProdotto(), true);
                 break;
             case BTN_DELETE_PRODUCT:
                 String esit;

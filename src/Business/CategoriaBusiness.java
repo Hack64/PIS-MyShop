@@ -47,10 +47,13 @@ public class CategoriaBusiness {
         return rowCount;
     }
 
-    public int addCategoryToService(Servizio s, ICategoria categoria){
+    public int addCategoryToService(Servizio s, ArrayList<ICategoria> categorie){
         categoriaDAO = CategoriaDAO.getInstance();
         servizioCategoriaDAO = ServizioCategoriaDAO.getInstance();
-        int rowCount = servizioCategoriaDAO.add(categoria, s);
+        int rowCount = 0;
+        for (ICategoria c:categorie){
+            rowCount = servizioCategoriaDAO.add(c, s);
+        }
         return rowCount;
     }
 

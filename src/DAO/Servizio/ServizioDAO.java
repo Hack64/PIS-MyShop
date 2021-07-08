@@ -36,7 +36,7 @@ public class ServizioDAO implements IServizioDAO {
     @Override
     public Servizio findByID(int idServizio) {
         conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT idServizio, nome, immagine, descrizione, numeroCommenti, costo, mediaValutazioni, idProduttore FROM Servizio WHERE idServizio = '" + idServizio + "';");
+        rs = conn.executeQuery("SELECT idServizio, nome, immagine, descrizione, numeroCommenti, costo, mediaValutazioni, idFornitore FROM Servizio WHERE idServizio = '" + idServizio + "';");
         fDAO = FornitoreDAO.getInstance();
         try {
             rs.next();
@@ -112,7 +112,6 @@ public class ServizioDAO implements IServizioDAO {
         boolean serviceExists = false;
         conn = DbConnection.getInstance();
         rs = conn.executeQuery("SELECT count(*) AS C FROM Servizio WHERE Servizio.idServizio = '" + idServizio + "';");
-        fDAO = FornitoreDAO.getInstance();
         try {
             rs.next();
             if(rs.getRow()==1 && rs.getInt("C")==1)
@@ -179,7 +178,7 @@ public class ServizioDAO implements IServizioDAO {
         try {
             while(rs.next()) {
                 servizio = new Servizio();
-                servizio.setIdServizio(rs.getInt("idProdotto"));
+                servizio.setIdServizio(rs.getInt("idServizio"));
                 servizio.setNome(rs.getString("nome"));
                 String imgName = rs.getString("immagine");
                 file = new File("./img/" + imgName);
@@ -190,7 +189,6 @@ public class ServizioDAO implements IServizioDAO {
                 servizio.setMediaValutazione(rs.getFloat("mediaValutazioni"));
                 servizio.setFornitore(fDAO.findByID(rs.getInt("idFornitore")));
                 servizio.setCategorie(scDAO.getCategoriesByServiceID(servizio.getIdServizio()));
-
 
                 servizi.add(servizio);
             }
@@ -210,9 +208,9 @@ public class ServizioDAO implements IServizioDAO {
     }
 
     @Override
-    public int add(Servizio utente) {
+    public int add(Servizio servizio) {
         conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("INSERT INTO Servizio (nome, immagine, descrizione, numeroCommenti, costo, mediaValutazioni, idFornitore) VALUES ('" + servizio.getNome() + "','" + servizio.getImmagine().getName() + "','" + servizio.getDescrizione() + "','" + servizio.getNumeroCommenti() + "','" + servizio.getCosto() + "','" + servizio.getMediaValutazione() + ",'" + servizio.getFornitore().getIdFornitore() + "');");
+        int rowCount = conn.executeUpdate("INSERT INTO Servizio (nome, immagine, descrizione, numeroCommenti, costo, mediaValutazioni, idFornitore) VALUES ('" + servizio.getNome() + "','" + servizio.getImmagine().getName() + "','" + servizio.getDescrizione() + "','" + servizio.getNumeroCommenti() + "','" + servizio.getCosto() + "','" + servizio.getMediaValutazione() + "','" + servizio.getFornitore().getIdFornitore() + "');");
         conn.close();
         return rowCount;
     }
