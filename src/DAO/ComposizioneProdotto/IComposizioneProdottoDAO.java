@@ -9,6 +9,6 @@ public interface IComposizioneProdottoDAO {
     ArrayList<IProdotto> findAll();
     ArrayList<IProdotto> findAllByProducerID(int idProduttore);
     boolean isCompositeProduct(int idProdotto);
-    ArrayList<Integer> add(IProdotto prodotto);
+    int add(IProdotto prodotto);
     int removeById(int idProdotto);
 }

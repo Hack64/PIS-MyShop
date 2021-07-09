@@ -29,6 +29,7 @@ public class CategoriaDAO implements ICategoriaDAO {
     @Override
     public ICategoria findByID(int idCategoria) {
         if (idCategoria == 0){
+            conn.close();
             return new Categoria(-1,"null", null);
         }
         conn = DbConnection.getInstance();
@@ -91,7 +92,6 @@ public class CategoriaDAO implements ICategoriaDAO {
         ResultSet rs2 = conn.executeQuery("SELECT idCategoria, nome, idCategoriaPadre FROM myshopdb.Categoria;");
         ArrayList<ICategoria> categorie = new ArrayList<>();
         Categoria categoria;
-
         try {
             while(rs2.next()){
                 categoria = new Categoria();
@@ -118,6 +118,7 @@ public class CategoriaDAO implements ICategoriaDAO {
     @Override
     public ArrayList<ICategoria> findAllSubcategoriesByCategoryID(int idCategoria) {
         if (idCategoria == 0) {
+            conn.close();
             return sottoCategorie;
         } else {
             conn = DbConnection.getInstance();

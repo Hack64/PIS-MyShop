@@ -12,12 +12,17 @@ public class CatalogPanel extends JPanel {
 
     AppFrame appFrame;
 
-    public CatalogPanel(AppFrame appFrame){
+    public CatalogPanel(AppFrame appFrame, boolean compositeMode){
 
         this.appFrame = appFrame;
         setLayout(new BorderLayout());
+        ArrayList<IProdotto> prodottiCatalogo;
 
-        ArrayList<IProdotto> prodottiCatalogo = ProdottoBusiness.getInstance().findAllProducts();
+        if (!compositeMode){
+            prodottiCatalogo = ProdottoBusiness.getInstance().findAllNonCompositeProducts();
+        } else {
+            prodottiCatalogo = ProdottoBusiness.getInstance().findAllCompositeProducts();
+        }
 
         JTable tabellaProdotti = new JTable(new CatalogoTableModel(prodottiCatalogo));
 
@@ -34,9 +39,16 @@ public class CatalogPanel extends JPanel {
         JButton btnDelete = new JButton("Elimina Prodotto");
         JButton btnCategories = new JButton("Gestisci Categorie");
 
-        btnAdd.setActionCommand("btnAdd");
-        btnEdit.setActionCommand("btnEdit");
-        btnDelete.setActionCommand("btnDelete");
+        if (compositeMode){
+            btnAdd.setActionCommand("btnAddComp");
+            btnEdit.setActionCommand("btnEditComp");
+            btnDelete.setActionCommand("btnDeleteComp");
+        } else {
+            btnAdd.setActionCommand("btnAdd");
+            btnEdit.setActionCommand("btnEdit");
+            btnDelete.setActionCommand("btnDelete");
+        }
+
         btnCategories.setActionCommand("btnCategories");
 
         CatalogPanelListener catalogPanelListener = new CatalogPanelListener(appFrame, tabellaProdotti);

@@ -90,6 +90,7 @@ public class DbConnection implements IDbConnection {
                 System.out.println("SQL State: " + e.getSQLState());
                 System.out.println("Vendor Error: " + e.getErrorCode());
             }
+            conn = null;
         }
     }
 

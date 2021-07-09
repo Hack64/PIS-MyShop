@@ -1,9 +1,6 @@
 package Business;
 
-import Model.Articolo;
-import Model.CategoriaProdotto;
-import Model.ICategoria;
-import Model.Prodotto;
+import Model.*;
 
 public class ProdottoFactory implements ArticoloFactory {
 

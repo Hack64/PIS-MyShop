@@ -1,5 +1,6 @@
 package DAO.Prodotto;
 
+import DAO.ComposizioneProdotto.ComposizioneProdottoDAO;
 import DAO.Feedback.FeedbackDAO;
 import DAO.ProdottoCategoria.ProdottoCategoriaDAO;
 import DAO.Produttore.ProduttoreDAO;
@@ -119,6 +120,29 @@ public class ProdottoDAO implements IProdottoDAO {
         boolean productExists = false;
         conn = DbConnection.getInstance();
         rs = conn.executeQuery("SELECT count(*) AS C FROM Prodotto WHERE idProdotto = '" + idProdotto + "';");
+        try {
+            rs.next();
+            if(rs.getRow()==1 && rs.getInt("C")==1)
+                productExists = true;
+        } catch (SQLException e) {
+            // handle any errors
+            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("VendorError: " + e.getErrorCode());
+        } catch (NullPointerException e) {
+            // handle any errors
+            System.out.println("Resultset: " + e.getMessage());
+        } finally {
+            conn.close();
+        }
+        return productExists;
+    }
+
+    @Override
+    public boolean productExists(String nomeProdotto) {
+        boolean productExists = false;
+        conn = DbConnection.getInstance();
+        rs = conn.executeQuery("SELECT count(*) AS C FROM Prodotto WHERE nome = '" + nomeProdotto + "';");
         try {
             rs.next();
             if(rs.getRow()==1 && rs.getInt("C")==1)

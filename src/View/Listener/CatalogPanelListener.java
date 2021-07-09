@@ -2,10 +2,7 @@ package View.Listener;
 
 import Business.ProdottoBusiness;
 import Model.Responses.ProdottoResponse;
-import View.AppFrame;
-import View.CatalogPanel;
-import View.CustomOperationDialogView;
-import View.ManageCategoriesPanel;
+import View.*;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -17,8 +14,11 @@ public class CatalogPanelListener  implements ActionListener {
     JTable table;
 
     public final static String BTN_ADD_PRODUCT = "btnAdd";
+    public final static String BTN_ADD_COMP_PRODUCT = "btnAddComp";
     public final static String BTN_EDIT_PRODUCT = "btnEdit";
+    public final static String BTN_EDIT_COMP_PRODUCT = "btnEditComp";
     public final static String BTN_DELETE_PRODUCT = "btnDelete";
+    public final static String BTN_DELETE_COMP_PRODUCT = "btnDeleteComp";
     public final static String BTN_MANAGE_CATEGORIES = "btnCategories";
 
     public CatalogPanelListener(AppFrame appFrame, JTable table){
@@ -33,7 +33,7 @@ public class CatalogPanelListener  implements ActionListener {
         switch (cmd){
             case BTN_ADD_PRODUCT:
                 System.out.println("Aggiungi prodotto");
-                new CustomOperationDialogView(appFrame, true);
+                new CustomOperationDialogView(appFrame, true, false);
                 break;
             case BTN_EDIT_PRODUCT:
                 int rowToEdit = table.getSelectedRow();
@@ -50,11 +50,15 @@ public class CatalogPanelListener  implements ActionListener {
                 if (i==1){
                     esit = "Prodotto eliminato con successo!";
                     JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
-                    appFrame.setCurrentMainPanel(new CatalogPanel(appFrame));
+                    appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame));
                 } else{
                     esit = "Errore durante l'eliminazione";
                     JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
                 }
+                break;
+            case BTN_ADD_COMP_PRODUCT:
+                System.out.println("Aggiungi prodotto composito");
+                new CustomOperationDialogView(appFrame, true, true);
                 break;
             case BTN_MANAGE_CATEGORIES:
                     appFrame.setCurrentMainPanel(new ManageCategoriesPanel(appFrame));

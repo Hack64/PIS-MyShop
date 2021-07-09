@@ -159,8 +159,7 @@ public class RispostaDAO implements IRispostaDAO {
         } catch (NullPointerException e) {
             // handle any errors
             System.out.println("Resultset: " + e.getMessage());
-        }
-        finally {
+        } finally {
             conn.close();
         }
         return null;
