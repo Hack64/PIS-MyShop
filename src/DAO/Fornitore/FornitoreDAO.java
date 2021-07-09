@@ -14,7 +14,8 @@ public class FornitoreDAO implements IFornitoreDAO {
     private final static FornitoreDAO instance = new FornitoreDAO();
 
     private ServizioDAO sDAO = ServizioDAO.getInstance();
-    private IDbConnection conn;
+    private static IDbConnection conn;
+
     private ResultSet rs;
     private Fornitore fornitore;
 

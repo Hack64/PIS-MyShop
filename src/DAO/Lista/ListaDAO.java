@@ -17,7 +17,8 @@ public class ListaDAO implements IListaDAO {
     private final static ListaDAO instance = new ListaDAO();
 
     private Lista lista;
-    private IDbConnection conn;
+    private static IDbConnection conn;
+
     private static ResultSet rs;
     private ProdottiListaDAO plDAO;
     private ServiziListaDAO slDAO;

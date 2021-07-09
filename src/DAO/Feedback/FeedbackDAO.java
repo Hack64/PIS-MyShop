@@ -16,7 +16,8 @@ public class FeedbackDAO implements IFeedbackDAO {
 
     private final static FeedbackDAO instance = new FeedbackDAO();
 
-    private IDbConnection conn;
+    private static IDbConnection conn;
+
     private ResultSet rs;
     private Feedback feedback;
     private UtenteDAO uDAO;
@@ -155,6 +156,7 @@ public class FeedbackDAO implements IFeedbackDAO {
                 feedback.setDataCreazione(LocalDate.parse(rs.getString("dataCreazione")));
                 feedback.setCommento(rs.getString("commento"));
                 feedback.setValutazione(rs.getInt("valutazione")); // da verificare il funzionamento!
+                conn.close();
                 feedback.setUtente(uDAO.findByID(rs.getInt("idUtente")));
                 feedback.setServizio(sDAO.findByID(rs.getInt("idServizio")));
                 feedback.setProdotto(pDAO.findByID(rs.getInt("idProdotto")));

@@ -16,7 +16,8 @@ public class ProdottiPuntoVenditaDAO implements IProdottiPuntoVenditaDAO {
 
     private final static ProdottiPuntoVenditaDAO instance = new ProdottiPuntoVenditaDAO();
 
-    private IDbConnection conn;
+    private static IDbConnection conn;
+
     private ResultSet rs;
 
     private ProdottiPuntoVenditaDAO(){

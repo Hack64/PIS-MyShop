@@ -14,7 +14,8 @@ import java.util.ArrayList;
 public class ServiziPuntoVenditaDAO implements IServiziPuntoVenditaDAO {
     private final static ServiziPuntoVenditaDAO instance = new ServiziPuntoVenditaDAO();
 
-    private IDbConnection conn;
+    private static IDbConnection conn;
+
     private ResultSet rs;
 
     private ServiziPuntoVenditaDAO(){

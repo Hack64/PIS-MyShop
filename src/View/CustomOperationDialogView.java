@@ -109,10 +109,12 @@ public class CustomOperationDialogView extends JDialog {
         add(operationDialog.getButtons().get(2), c);
 
         if (p!=null){
+            operationDialog.getButtons().get(1).setEnabled(false);
             operationDialog.getButtons().get(3).setActionCommand("btnEditProduct");
             operationDialog.getButtons().get(3).setText("Modifica");
             setProductFields();
         } else if (s!=null){
+            operationDialog.getButtons().get(1).setEnabled(false);
             operationDialog.getButtons().get(3).setText("Modifica");
             operationDialog.getButtons().get(3).setActionCommand("btnEditService");
             setServiceFields();

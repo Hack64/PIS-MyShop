@@ -20,7 +20,7 @@ public class ProdottoDAO implements IProdottoDAO {
     private final static ProdottoDAO instance = new ProdottoDAO();
 
     private Prodotto prodotto;
-    private IDbConnection conn;
+    private static IDbConnection conn;
     private static ResultSet rs;
     private File file;
     private FeedbackDAO fDAO;
@@ -44,6 +44,7 @@ public class ProdottoDAO implements IProdottoDAO {
         fDAO = FeedbackDAO.getInstance();
         pDAO = ProduttoreDAO.getInstance();
         pcDAO = ProdottoCategoriaDAO.getInstance();
+        int idProduttore=0;
         try {
             rs.next();
             if (rs.getRow()==1) {
@@ -57,10 +58,7 @@ public class ProdottoDAO implements IProdottoDAO {
                 prodotto.setNumeroCommenti(rs.getInt("numeroCommenti"));
                 prodotto.setCosto(rs.getFloat("costo"));
                 prodotto.setMediaValutazione(rs.getFloat("mediaValutazioni"));
-                prodotto.setProduttore(pDAO.findByID(rs.getInt("idProduttore")));
-                prodotto.setListaFeedback(fDAO.findAllByProductID(prodotto.getIdProdotto()));
-                prodotto.setCategorie(pcDAO.getCategoriesByProductID(prodotto.getIdProdotto()));
-                return prodotto;
+                idProduttore = rs.getInt("idProduttore");
             }
         } catch (SQLException e) {
             // handle any errors
@@ -72,8 +70,12 @@ public class ProdottoDAO implements IProdottoDAO {
             System.out.println("Resultset: " + e.getMessage());
         } finally {
             conn.close();
+            prodotto.setProduttore(pDAO.findByID(idProduttore));
+            prodotto.setListaFeedback(fDAO.findAllByProductID(prodotto.getIdProdotto()));
+            prodotto.setCategorie(pcDAO.getCategoriesByProductID(prodotto.getIdProdotto()));
         }
-        return null;
+        return prodotto;
+        //return null;
     }
 
     @Override

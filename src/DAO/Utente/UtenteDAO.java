@@ -14,7 +14,8 @@ public class UtenteDAO implements IUtenteDAO {
     private final static UtenteDAO instance = new UtenteDAO();
 
     private Utente utente;
-    private IDbConnection conn;
+    private static IDbConnection conn;
+
     private static ResultSet rs;
 
     private UtenteDAO(){

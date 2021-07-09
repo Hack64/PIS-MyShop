@@ -16,7 +16,8 @@ public class ServizioCategoriaDAO implements IServizioCategoriaDAO {
 
     private final static ServizioCategoriaDAO instance = new ServizioCategoriaDAO();
 
-    private IDbConnection conn;
+    private static IDbConnection conn;
+
     private ResultSet rs;
 
     private ServizioCategoriaDAO(){

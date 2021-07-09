@@ -16,7 +16,8 @@ public class PuntoVenditaDAO implements IPuntoVenditaDAO {
 
     private final static PuntoVenditaDAO instance = new PuntoVenditaDAO();
 
-    private IDbConnection conn;
+    private static IDbConnection conn;
+
     private ResultSet rs;
     private PuntoVendita puntoVendita;
     private ProdottiPuntoVenditaDAO ppvDAO;

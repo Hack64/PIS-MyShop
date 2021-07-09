@@ -16,7 +16,8 @@ public class ComposizioneProdottoDAO implements IComposizioneProdottoDAO {
 
     private final static ComposizioneProdottoDAO instance = new ComposizioneProdottoDAO();
 
-    private IDbConnection conn;
+    private static IDbConnection conn;
+
 
     private ComposizioneProdottoDAO(){
         this.conn = null;

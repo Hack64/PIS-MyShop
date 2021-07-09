@@ -15,7 +15,8 @@ public class RispostaDAO implements IRispostaDAO {
 
     private final static RispostaDAO instance = new RispostaDAO();
 
-    private IDbConnection conn;
+    private static IDbConnection conn;
+
     private ResultSet rs;
     private Risposta risposta;
     private FeedbackDAO fDAO;

@@ -7,16 +7,20 @@ import DbInterface.IDbConnection;
 import Model.CategoriaProdotto;
 import Model.ICategoria;
 import Model.IProdotto;
+import com.google.protobuf.MapEntry;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ProdottoCategoriaDAO implements IProdottoCategoriaDAO {
 
     private final static ProdottoCategoriaDAO instance = new ProdottoCategoriaDAO();
 
-    private IDbConnection conn;
+    private static IDbConnection conn;
+
     private ResultSet rs;
 
     private ProdottoCategoriaDAO(){
@@ -58,16 +62,11 @@ public class ProdottoCategoriaDAO implements IProdottoCategoriaDAO {
         conn = DbConnection.getInstance();
         rs = conn.executeQuery("SELECT Categoria.idCategoria, Categoria.idCategoriaPadre FROM myshopdb.Categoria INNER JOIN myshopdb.ProdottoCategoria ON Categoria.idCategoria = ProdottoCategoria.idCategoria WHERE ProdottoCategoria.idProdotto = '" + idProdotto + "';");
         ArrayList<ICategoria> categorieProdotto = new ArrayList<>();
+        HashMap<Integer, Integer> idCategorie = new HashMap<>();
         CategoriaDAO cDAO = CategoriaDAO.getInstance();
         try {
             while (rs.next()){
-                ICategoria categoria = cDAO.findByID(rs.getInt("idCategoria"));
-                CategoriaProdotto categoriaProdotto = new CategoriaProdotto();
-                categoriaProdotto.setNome(categoria.getNome());
-                categoriaProdotto.setIdCategoria(categoria.getIdCategoria());
-                categoriaProdotto.setCategoriaPadre(categoria.getCategoriaPadre());
-                categoriaProdotto.setSottoCategorie(cDAO.findAllSubcategoriesByCategoryID(categoriaProdotto.getIdCategoria()));
-                categorieProdotto.add(categoriaProdotto);
+                idCategorie.put(rs.getInt("idCategoria"), rs.getInt("idCategoriaPadre"));
             }
             return categorieProdotto;
         } catch (SQLException e) {
@@ -80,8 +79,17 @@ public class ProdottoCategoriaDAO implements IProdottoCategoriaDAO {
             System.out.println("Resultset: " + e.getMessage());
         } finally {
             conn.close();
+            for (Map.Entry<Integer, Integer> i:idCategorie.entrySet()){
+                ICategoria categoria = cDAO.findByID(i.getKey());
+                CategoriaProdotto categoriaProdotto = new CategoriaProdotto();
+                categoriaProdotto.setNome(categoria.getNome());
+                categoriaProdotto.setIdCategoria(categoria.getIdCategoria());
+                categoriaProdotto.setCategoriaPadre(categoria.getCategoriaPadre());
+                categoriaProdotto.setSottoCategorie(cDAO.findAllSubcategoriesByCategoryID(categoriaProdotto.getIdCategoria()));
+                categorieProdotto.add(categoriaProdotto);
+            }
         }
-        return null;
+        return categorieProdotto;
     }
 
     @Override

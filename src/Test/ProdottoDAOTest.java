@@ -1,5 +1,6 @@
 package Test;
 
+import Business.ProdottoBusiness;
 import DAO.Categoria.CategoriaDAO;
 import DAO.Feedback.FeedbackDAO;
 import DAO.Fornitore.FornitoreDAO;
@@ -106,6 +107,19 @@ public class ProdottoDAOTest {
             for (ICategoria c:prodotto.getCategorie()){
                 System.out.println(c.getNome());
             }
+        }
+
+        Scanner in = new Scanner(System.in);
+        in.nextLine();
+
+    }
+    @Test
+    public void findByIDTest(){
+        ProdottoDAO prodottoDAO = ProdottoDAO.getInstance();
+        IProdotto prodotto = prodottoDAO.findByID(1);
+        System.out.println(prodotto.getNome());
+        for (ICategoria c:prodotto.getCategorie()){
+            System.out.println(c.getNome());
         }
 
         Scanner in = new Scanner(System.in);

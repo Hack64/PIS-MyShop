@@ -91,8 +91,8 @@ public class CustomOperationDialogViewListener implements ActionListener {
                 break;
             case BTN_EDIT_PRODUCT:
                 Produttore pr = ProduttoreBusiness.getInstance().findByName((String) operationDialogView.getProduttore());
-                if (img == null ){
-                    String esit = "Coglione imposta l'immagine";
+                if (img == null){
+                    String esit = "Imposta l'immagine";
                     JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
                 } else {
                     int st = ProdottoBusiness.getInstance().update(operationDialogView.getTxtNome(), img, operationDialogView.getTxtDescrizione(), Float.parseFloat(operationDialogView.getTxtPrezzo()), pr, operationDialogView.getID());

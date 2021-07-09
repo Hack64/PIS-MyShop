@@ -13,7 +13,8 @@ public class MagazzinoDAO implements IMagazzinoDAO {
 
     private final static MagazzinoDAO instance = new MagazzinoDAO();
 
-    private IDbConnection conn;
+    private static IDbConnection conn;
+
     private ResultSet rs;
     private Magazzino magazzino;
     private ProdottiMagazzinoDAO pmDAO;
