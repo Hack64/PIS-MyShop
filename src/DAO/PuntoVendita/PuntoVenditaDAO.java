@@ -53,7 +53,7 @@ public class PuntoVenditaDAO implements IPuntoVenditaDAO {
                 puntoVendita.setCap(rs.getString("CAP"));
                 puntoVendita.setCitta(rs.getString("citta"));
                 puntoVendita.setMagazzino(mDAO.findByID(rs.getInt("idMagazzino")));
-                puntoVendita.setManager(upvDAO.findShopManager(puntoVendita.getIdPuntoVendita()));
+                puntoVendita.setManager(upvDAO.findShopManagerByShopID(puntoVendita.getIdPuntoVendita()));
                 puntoVendita.setCatalogoProdottiPuntoVendita(ppvDAO.findProductsByShopID(puntoVendita.getIdPuntoVendita()));
                 puntoVendita.setCatalogoServiziPuntoVendita(spvDAO.findServicesByShopID(puntoVendita.getIdPuntoVendita()));
                 puntoVendita.setClienti(upvDAO.findUsersByShopID(puntoVendita.getIdPuntoVendita()));
@@ -91,7 +91,7 @@ public class PuntoVenditaDAO implements IPuntoVenditaDAO {
                 puntoVendita.setCap(rs.getString("CAP"));
                 puntoVendita.setCitta(rs.getString("citta"));
                 puntoVendita.setMagazzino(mDAO.findByID(rs.getInt("idMagazzino")));
-                puntoVendita.setManager(upvDAO.findShopManager(puntoVendita.getIdPuntoVendita()));
+                puntoVendita.setManager(upvDAO.findShopManagerByShopID(puntoVendita.getIdPuntoVendita()));
                 puntoVendita.setCatalogoProdottiPuntoVendita(ppvDAO.findProductsByShopID(puntoVendita.getIdPuntoVendita()));
                 puntoVendita.setCatalogoServiziPuntoVendita(spvDAO.findServicesByShopID(puntoVendita.getIdPuntoVendita()));
                 puntoVendita.setClienti(upvDAO.findUsersByShopID(puntoVendita.getIdPuntoVendita()));

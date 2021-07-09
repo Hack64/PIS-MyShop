@@ -1,16 +1,15 @@
-package View;
+package View.TableModels;
 
 import Model.ICategoria;
-import Model.IProdotto;
+import Model.Servizio;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 
-public class CatalogoTableModel extends AbstractTableModel {
-    ArrayList<IProdotto> lista;
+public class ServizioTableModel extends AbstractTableModel {
+    ArrayList<Servizio> lista;
     ArrayList<String> categorie;
-
-    public CatalogoTableModel(ArrayList<IProdotto> lista){
+    public ServizioTableModel(ArrayList<Servizio> lista){
         this.lista = lista;
     }
 
@@ -19,9 +18,9 @@ public class CatalogoTableModel extends AbstractTableModel {
         return switch (columnIndex) {
             case 0 -> "ID";
             case 1 -> "Nome";
-            case 2 -> "Categorie";
+            case 2 -> "Categoria";
             case 3 -> "Prezzo";
-            case 4 -> "Produttore";
+            case 4 -> "Fornitore";
             case 5 -> "Media Valutazioni";
             case 6 -> "Numero Commenti";
             default -> null;
@@ -41,24 +40,24 @@ public class CatalogoTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        IProdotto p = lista.get(rowIndex);
+        Servizio s = lista.get(rowIndex);
         categorie = new ArrayList<>();
-        for (ICategoria c:p.getCategorie()){
+        for (ICategoria c:s.getCategorie()){
             categorie.add(c.getNome());
         }
         return switch (columnIndex) {
-            case 0 -> p.getIdProdotto();
-            case 1 -> p.getNome();
+            case 0 -> s.getIdServizio();
+            case 1 -> s.getNome();
             case 2 -> categorie.toString();
-            case 3 -> p.getCosto();
-            case 4 -> p.getProduttore().getNome();
-            case 5 -> p.getMediaValutazione();
-            case 6 -> p.getNumeroCommenti();
+            case 3 -> s.getCosto();
+            case 4 -> s.getFornitore().getNome();
+            case 5 -> s.getMediaValutazione();
+            case 6 -> s.getNumeroCommenti();
             default -> null;
         };
     }
 
-    public ArrayList<IProdotto> getLista() {
+    public ArrayList<Servizio> getLista() {
         return lista;
     }
 }

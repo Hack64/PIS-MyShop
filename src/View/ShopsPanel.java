@@ -1,28 +1,26 @@
 package View;
 
-import Business.ServizioBusiness;
-import Model.Servizio;
+import Business.PuntoVenditaBusiness;
+import Model.PuntoVendita;
 import View.Listener.ServiziPanelListener;
-import View.TableModels.ServizioTableModel;
+import View.TableModels.ShopTableModel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class ServiziPanel extends JPanel {
-
+public class ShopsPanel extends JPanel {
     AppFrame appFrame;
 
-    public ServiziPanel(AppFrame appFrame) {
-
+    public ShopsPanel(AppFrame appFrame){
         this.appFrame = appFrame;
         setLayout(new BorderLayout());
 
-        ArrayList<Servizio> serviziCatalogo = ServizioBusiness.getInstance().findAllServices();
+        ArrayList<PuntoVendita> puntiVendita = PuntoVenditaBusiness.getInstance().findAllShops();
 
-        JTable tabellaServizi = new JTable(new ServizioTableModel(serviziCatalogo));
+        JTable tabellaPuntiVendita = new JTable(new ShopTableModel(puntiVendita));
 
-        JScrollPane scrollPane = new JScrollPane(tabellaServizi);
+        JScrollPane scrollPane = new JScrollPane(tabellaPuntiVendita);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         add(scrollPane, BorderLayout.CENTER);
@@ -30,23 +28,19 @@ public class ServiziPanel extends JPanel {
         JPanel operazionitabella = new JPanel();
         operazionitabella.setLayout(new FlowLayout());
 
-        JButton btnAdd = new JButton("Aggiungi nuovo servizio");
-        JButton btnEdit = new JButton("Modifica Servizio");
-        JButton btnDelete = new JButton("Elimina Servizio");
-        JButton btnCategories = new JButton("Gestisci Categorie");
+        JButton btnAdd = new JButton("Aggiungi nuovo P.V.");
+        JButton btnEdit = new JButton("Modifica P.V.");
+        JButton btnDelete = new JButton("Elimina P.V.");
 
         btnAdd.setActionCommand("btnAdd");
         btnEdit.setActionCommand("btnEdit");
         btnDelete.setActionCommand("btnDelete");
-        btnCategories.setActionCommand("btnCategories");
 
-        ServiziPanelListener serviziPanelListener = new ServiziPanelListener(appFrame, tabellaServizi);
+        ServiziPanelListener serviziPanelListener = new ServiziPanelListener(appFrame, tabellaPuntiVendita);
         btnAdd.addActionListener(serviziPanelListener);
         btnEdit.addActionListener(serviziPanelListener);
         btnDelete.addActionListener(serviziPanelListener);
-        btnCategories.addActionListener(serviziPanelListener);
 
-        operazionitabella.add(btnCategories);
         operazionitabella.add(btnAdd);
         operazionitabella.add(btnEdit);
         operazionitabella.add(btnDelete);

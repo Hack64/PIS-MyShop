@@ -3,6 +3,7 @@ package View;
 import Business.ProdottoBusiness;
 import Model.IProdotto;
 import View.Listener.CatalogPanelListener;
+import View.TableModels.CatalogoTableModel;
 
 import javax.swing.*;
 import java.awt.*;

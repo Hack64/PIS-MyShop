@@ -1,9 +1,6 @@
 package View.Listener;
 
-import View.AppFrame;
-import View.BrowsePanel;
-import View.ListsPanel;
-import View.MainCatalogPanel;
+import View.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -40,7 +37,12 @@ public class SideMenuListener implements ActionListener {
                 appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame));
                 break;
             case BTN_SHOPS:
+                System.out.println("Premuto punti vendita");
+                appFrame.setCurrentMainPanel(new ShopsPanel(appFrame));
                 break;
+            case BTN_USERS:
+                System.out.println("Premuto utenti");
+                appFrame.setCurrentMainPanel(new UsersPanel(appFrame));
         }
 
     }

@@ -5,6 +5,7 @@ import Business.SessionManager;
 import Model.Lista;
 import Model.Utente;
 import View.Listener.ListPanelListener;
+import View.TableModels.ListaTableModel;
 
 import javax.swing.*;
 import java.awt.*;

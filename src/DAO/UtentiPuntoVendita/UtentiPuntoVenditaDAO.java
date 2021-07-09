@@ -81,7 +81,7 @@ public class UtentiPuntoVenditaDAO implements IUtentiPuntoVenditaDAO {
     }
 
     @Override
-    public Utente findShopManager(int idPuntoVendita) {
+    public Utente findShopManagerByShopID(int idPuntoVendita) {
         conn = DbConnection.getInstance();
         rs = conn.executeQuery("SELECT idUtente FROM myshopdb.UtentePuntoVendita WHERE idPuntoVendita = '" + idPuntoVendita + "' AND isManager = 'SI';");
         UtenteDAO uDAO = UtenteDAO.getInstance();
@@ -105,6 +105,34 @@ public class UtentiPuntoVenditaDAO implements IUtentiPuntoVenditaDAO {
             conn.close();
         }
         return null;
+    }
+
+    @Override
+    public PuntoVendita findShopByShopManagerID(int idUtente) {
+        conn = DbConnection.getInstance();
+        rs = conn.executeQuery("SELECT idPuntoVendita FROM myshopdb.UtentePuntoVendita WHERE idUtente = '" + idUtente + "' AND isManager = 'SI';");
+        PuntoVenditaDAO pvDAO = PuntoVenditaDAO.getInstance();
+        int idPuntoVendita=0;
+        PuntoVendita puntoVendita;
+        try {
+            rs.next();
+            if (rs.getRow()==1){
+                idPuntoVendita=rs.getInt("idPuntoVendita");
+            }
+        } catch (SQLException e) {
+            // handle any errors
+            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("VendorError: " + e.getErrorCode());
+        } catch (NullPointerException e) {
+            // handle any errors
+            System.out.println("Resultset: " + e.getMessage());
+        }
+        finally {
+            conn.close();
+            puntoVendita = pvDAO.findByID(idPuntoVendita);
+        }
+        return puntoVendita;
     }
 
     @Override

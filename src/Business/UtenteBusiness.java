@@ -1,12 +1,17 @@
 package Business;
 
+import DAO.PuntoVendita.PuntoVenditaDAO;
 import DAO.Utente.UtenteDAO;
+import DAO.UtentiPuntoVendita.UtentiPuntoVenditaDAO;
+import Model.PuntoVendita;
 import Model.Responses.LoginResponse;
 import Model.Utente;
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import org.apache.commons.validator.routines.EmailValidator;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class UtenteBusiness {
 
@@ -120,5 +125,12 @@ public class UtenteBusiness {
         EmailValidator validator = EmailValidator.getInstance();
         result = validator.isValid(email);
         return result;
+    }
+
+    public HashMap<Utente, String> findAllUsersByShopManager(Utente u){
+        UtentiPuntoVenditaDAO utentiPuntoVenditaDAO = UtentiPuntoVenditaDAO.getInstance();
+        PuntoVendita pv = utentiPuntoVenditaDAO.findShopByShopManagerID(u.getIdUtente());
+
+        return utentiPuntoVenditaDAO.findUsersByShopID(pv.getIdPuntoVendita());
     }
 }
