@@ -52,11 +52,7 @@ public class ProdottoComposito extends Articolo implements IProdotto {
 
     @Override
     public float getCosto() {
-        float prezzoFinale=0;
-        for (IProdotto p:sottoprodotti){
-            prezzoFinale+=p.getCosto();
-        }
-        return prezzoFinale;
+        return this.costo;
     }
 
 }

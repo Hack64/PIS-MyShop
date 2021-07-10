@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class UtentiPuntoVenditaDAO implements IUtentiPuntoVenditaDAO {
 
@@ -32,13 +33,13 @@ public class UtentiPuntoVenditaDAO implements IUtentiPuntoVenditaDAO {
     public HashMap<Utente, String> findUsersByShopID(int idPuntoVendita) {
         conn = DbConnection.getInstance();
         rs = conn.executeQuery("SELECT idUtente, disattivato FROM myshopdb.UtentePuntoVendita WHERE idPuntoVendita = '" + idPuntoVendita + "';");
-        HashMap<Utente, String> utentiPuntoVendita = new HashMap<>();
+        HashMap<Utente, String> utentiPuntoVendita;
+        HashMap<Integer, String> idUtenti = new HashMap<>();
         UtenteDAO uDAO = UtenteDAO.getInstance();
         try {
             while (rs.next()){
-                utentiPuntoVendita.put(uDAO.findByID(rs.getInt("idUtente")), rs.getString("disattivato"));
+                idUtenti.put(rs.getInt("idUtente"), rs.getString("disattivato"));
             }
-            return utentiPuntoVendita;
         } catch (SQLException e) {
             // handle any errors
             System.out.println("SQLException: " + e.getMessage());
@@ -51,7 +52,11 @@ public class UtentiPuntoVenditaDAO implements IUtentiPuntoVenditaDAO {
         finally {
             conn.close();
         }
-        return null;
+        utentiPuntoVendita = new HashMap<>();
+        for (Map.Entry<Integer,String> entry:idUtenti.entrySet()){
+            utentiPuntoVendita.put(uDAO.findByID(entry.getKey()), entry.getValue());
+        }
+        return utentiPuntoVendita;
     }
 
     @Override

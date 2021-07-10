@@ -18,7 +18,6 @@ public class ComposizioneProdottoDAO implements IComposizioneProdottoDAO {
 
     private static IDbConnection conn;
 
-
     private ComposizioneProdottoDAO(){
         this.conn = null;
     }
@@ -168,6 +167,15 @@ public class ComposizioneProdottoDAO implements IComposizioneProdottoDAO {
         conn = DbConnection.getInstance();
         int rowCount = conn.executeUpdate("DELETE FROM ComposizioneProdotto WHERE idProdottoComposito = '" + idProdotto + "';");
         conn.close();
+        return rowCount;
+    }
+
+    @Override
+    public int update(IProdotto prodotto) {
+        conn = DbConnection.getInstance();
+        int rowCount = conn.executeUpdate("DELETE FROM ComposizioneProdotto WHERE composto = '" + prodotto.getIdProdotto() + "';");
+        conn.close();
+        this.add(prodotto);
         return rowCount;
     }
 

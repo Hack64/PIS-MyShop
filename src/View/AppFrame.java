@@ -12,7 +12,6 @@ public class AppFrame extends JFrame {
     SideMenu sideMenu;
     Header header;
 
-
     public AppFrame(){
         super("Finestra");
         LoginButtonListener llist = new LoginButtonListener(this);

@@ -142,4 +142,10 @@ public class UtenteBusiness {
 
         return utentiPuntoVenditaDAO.findUsersByShopID(pv.getIdPuntoVendita());
     }
+
+    public int deleteByIDFromShop(int idUtente, int idPuntoVendita){
+        UtentiPuntoVenditaDAO utentiPuntoVenditaDAO = UtentiPuntoVenditaDAO.getInstance();
+
+        return utentiPuntoVenditaDAO.removeByID(idUtente, idPuntoVendita);
+    }
 }

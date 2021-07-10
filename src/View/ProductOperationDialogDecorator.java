@@ -41,6 +41,7 @@ public class ProductOperationDialogDecorator extends CustomOperationDialogDecora
 
     @Override
     public JComboBox getComboBox() {
+        if(comboBox != null) return comboBox;
         ArrayList<String> produttori = ProduttoreBusiness.getInstance().findAllProducersNames();
         comboBox = new JComboBox(produttori.toArray());
         return comboBox;

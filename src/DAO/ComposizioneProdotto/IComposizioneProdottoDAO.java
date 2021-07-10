@@ -11,4 +11,5 @@ public interface IComposizioneProdottoDAO {
     boolean isCompositeProduct(int idProdotto);
     int add(IProdotto prodotto);
     int removeById(int idProdotto);
+    int update (IProdotto prodotto);
 }

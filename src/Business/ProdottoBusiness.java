@@ -113,7 +113,7 @@ public class ProdottoBusiness {
         return rowCount;
     }
 
-    public int update(String nome, File immagine, String descrizione, float costo, Produttore produttore, int idProdotto){
+    public int update(String nome, File immagine, String descrizione, float costo, int idProdotto){
         prodottoDAO = ProdottoDAO.getInstance();
         ProdottoFactory prodottoFactory = (ProdottoFactory) FactoryProvider.getFactory(FactoryProvider.TipoFactory.PRODOTTO);
         Prodotto p = (Prodotto) prodottoFactory.crea();
@@ -122,12 +122,35 @@ public class ProdottoBusiness {
         p.setImmagine(immagine);
         p.setDescrizione(descrizione);
         p.setCosto(costo);
-        p.setProduttore(produttore);
         /*MODIFICA QUALCOSA*/
         p.setNumeroCommenti(0);
         p.setMediaValutazione(0);
 
         return prodottoDAO.update(p);
+    }
+
+    public int updateComposite(String nome, File immagine, String descrizione, float costo, int idProdotto, ArrayList<IProdotto> sottoprodotti){
+        composizioneProdottoDAO = ComposizioneProdottoDAO.getInstance();
+        prodottoDAO = ProdottoDAO.getInstance();
+
+        ProdottoCompositoFactory prodottoCompositoFactory = (ProdottoCompositoFactory) FactoryProvider.getFactory(FactoryProvider.TipoFactory.PRODOTTO_COMPOSITO);
+        ProdottoComposito pc = (ProdottoComposito) prodottoCompositoFactory.crea();
+        pc.setIdProdotto(idProdotto);
+        pc.setNome(nome);
+        pc.setImmagine(immagine);
+        pc.setDescrizione(descrizione);
+        pc.setCosto(costo);
+        /*MODIFICA QUALCOSA*/
+        pc.setNumeroCommenti(0);
+        pc.setMediaValutazione(0);
+        pc.setSottoprodotti(sottoprodotti);
+
+        int st = 0;
+        st+=prodottoDAO.update(pc);
+
+        st += composizioneProdottoDAO.update(pc);
+
+        return st;
     }
 
     public ArrayList<IProdotto> findAllNonCompositeProducts() {
@@ -157,5 +180,16 @@ public class ProdottoBusiness {
         composizioneProdottoDAO = ComposizioneProdottoDAO.getInstance();
 
         return composizioneProdottoDAO.add(p);
+    }
+
+    public int deleteCompositeByID(int idProdotto){
+        composizioneProdottoDAO = ComposizioneProdottoDAO.getInstance();
+        prodottoDAO = ProdottoDAO.getInstance();
+
+        if (composizioneProdottoDAO.isCompositeProduct(idProdotto)){
+            return prodottoDAO.removeById(idProdotto);
+        } else {
+            return -1;
+        }
     }
 }

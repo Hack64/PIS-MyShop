@@ -39,7 +39,7 @@ public class CatalogPanelListener  implements ActionListener {
                 int rowToEdit = table.getSelectedRow();
                 int colToEdit = 0;
                 ProdottoResponse pr = ProdottoBusiness.getInstance().find(Integer.parseInt(table.getModel().getValueAt(rowToEdit, colToEdit).toString()));
-                new CustomOperationDialogView(appFrame, pr.getProdotto(), true);
+                new CustomOperationDialogView(appFrame, pr.getProdotto(), true, false);
                 break;
             case BTN_DELETE_PRODUCT:
                 String esit;
@@ -60,6 +60,23 @@ public class CatalogPanelListener  implements ActionListener {
                 System.out.println("Aggiungi prodotto composito");
                 new CustomOperationDialogView(appFrame, true, true);
                 break;
+            case BTN_EDIT_COMP_PRODUCT:
+                System.out.println("Modifica prodotto composito");
+                ProdottoResponse prc = ProdottoBusiness.getInstance().find(Integer.parseInt(table.getModel().getValueAt(table.getSelectedRow(), 0).toString()));
+                new CustomOperationDialogView(appFrame, prc.getProdotto(),true, true);
+                break;
+            case BTN_DELETE_COMP_PRODUCT:
+                String esit_comp;
+                int idToDeleteComp = Integer.parseInt(table.getModel().getValueAt(table.getSelectedRow(), 0).toString());
+                int i_comp = ProdottoBusiness.getInstance().deleteCompositeByID(idToDeleteComp);
+                if (i_comp==1){
+                    esit = "Prodotto eliminato con successo!";
+                    JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
+                    appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame));
+                } else{
+                    esit = "Errore durante l'eliminazione";
+                    JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
+                }
             case BTN_MANAGE_CATEGORIES:
                     appFrame.setCurrentMainPanel(new ManageCategoriesPanel(appFrame));
                     break;

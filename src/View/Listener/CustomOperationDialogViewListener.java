@@ -1,10 +1,7 @@
 package View.Listener;
 
 import Business.*;
-import Model.Fornitore;
-import Model.ICategoria;
-import Model.IProdotto;
-import Model.Produttore;
+import Model.*;
 import View.*;
 import org.apache.commons.io.FileUtils;
 
@@ -51,7 +48,6 @@ public class CustomOperationDialogViewListener implements ActionListener {
                     }
                 }
                 categoriesChooserDialog.dispose();
-                //TODO: perché sceglie sempre il primo produttore?
                 int statusProd = ProdottoBusiness.getInstance().addNew(operationDialogView.getTxtNome(), img, operationDialogView.getTxtDescrizione(), Float.parseFloat(operationDialogView.getTxtPrezzo()), ProduttoreBusiness.getInstance().findByName(operationDialogView.getProduttore().toString()), categorie);
                 if (statusProd == 2){
                     String esit = "Prodotto aggiunto con successo!";
@@ -91,12 +87,11 @@ public class CustomOperationDialogViewListener implements ActionListener {
                 }
                 break;
             case BTN_EDIT_PRODUCT:
-                Produttore pr = ProduttoreBusiness.getInstance().findByName((String) operationDialogView.getProduttore());
                 if (img == null){
                     String esit = "Imposta l'immagine";
                     JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
                 } else {
-                    int st = ProdottoBusiness.getInstance().update(operationDialogView.getTxtNome(), img, operationDialogView.getTxtDescrizione(), Float.parseFloat(operationDialogView.getTxtPrezzo()), pr, operationDialogView.getID());
+                    int st = ProdottoBusiness.getInstance().update(operationDialogView.getTxtNome(), img, operationDialogView.getTxtDescrizione(), Float.parseFloat(operationDialogView.getTxtPrezzo()), operationDialogView.getID());
                     if (st == 1) {
                         String esit = "Prodotto modificato con successo!";
                         JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
@@ -104,6 +99,30 @@ public class CustomOperationDialogViewListener implements ActionListener {
                         appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame));
                     } else {
                         String esit = "Errore durante l'aggiunta del prodotto!";
+                        JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
+                        appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame));
+                    }
+                }
+                break;
+            case BTN_EDIT_COMP_PRODUCT:
+                ArrayList<IProdotto> sottoprodotti_edit = new ArrayList<>();
+                for (JCheckBox b:subProductChooserDialog.getCheckBoxes()){
+                    if (b.isSelected()){
+                        sottoprodotti_edit.add(ProdottoBusiness.getInstance().findByName(b.getText()).getProdotto());
+                    }
+                }
+                if (img == null){
+                    String esit = "Imposta l'immagine";
+                    JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    int st = ProdottoBusiness.getInstance().updateComposite(operationDialogView.getTxtNome(), img, operationDialogView.getTxtDescrizione(), Float.parseFloat(operationDialogView.getTxtPrezzo()), operationDialogView.getID(), sottoprodotti_edit);
+                    if (st == 3) {
+                            String esit = "Prodotto composito modificato con successo!";
+                            JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
+                            operationDialogView.dispose();
+                            appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame));
+                    } else {
+                        String esit = "Errore durante la modifica del prodotto!";
                         JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
                         appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame));
                     }
