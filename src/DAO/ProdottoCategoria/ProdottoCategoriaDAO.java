@@ -68,7 +68,6 @@ public class ProdottoCategoriaDAO implements IProdottoCategoriaDAO {
             while (rs.next()){
                 idCategorie.put(rs.getInt("idCategoria"), rs.getInt("idCategoriaPadre"));
             }
-            return categorieProdotto;
         } catch (SQLException e) {
             // handle any errors
             System.out.println("SQLException: " + e.getMessage());
@@ -79,15 +78,15 @@ public class ProdottoCategoriaDAO implements IProdottoCategoriaDAO {
             System.out.println("Resultset: " + e.getMessage());
         } finally {
             conn.close();
-            for (Map.Entry<Integer, Integer> i:idCategorie.entrySet()){
-                ICategoria categoria = cDAO.findByID(i.getKey());
-                CategoriaProdotto categoriaProdotto = new CategoriaProdotto();
-                categoriaProdotto.setNome(categoria.getNome());
-                categoriaProdotto.setIdCategoria(categoria.getIdCategoria());
-                categoriaProdotto.setCategoriaPadre(categoria.getCategoriaPadre());
-                categoriaProdotto.setSottoCategorie(cDAO.findAllSubcategoriesByCategoryID(categoriaProdotto.getIdCategoria()));
-                categorieProdotto.add(categoriaProdotto);
-            }
+        }
+        for (Map.Entry<Integer, Integer> i:idCategorie.entrySet()){
+            ICategoria categoria = cDAO.findByID(i.getKey());
+            CategoriaProdotto categoriaProdotto = new CategoriaProdotto();
+            categoriaProdotto.setNome(categoria.getNome());
+            categoriaProdotto.setIdCategoria(categoria.getIdCategoria());
+            categoriaProdotto.setCategoriaPadre(categoria.getCategoriaPadre());
+            categoriaProdotto.setSottoCategorie(cDAO.findAllSubcategoriesByCategoryID(categoriaProdotto.getIdCategoria()));
+            categorieProdotto.add(categoriaProdotto);
         }
         return categorieProdotto;
     }

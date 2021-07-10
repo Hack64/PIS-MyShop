@@ -70,10 +70,10 @@ public class ProdottoDAO implements IProdottoDAO {
             System.out.println("Resultset: " + e.getMessage());
         } finally {
             conn.close();
-            prodotto.setProduttore(pDAO.findByID(idProduttore));
-            prodotto.setListaFeedback(fDAO.findAllByProductID(prodotto.getIdProdotto()));
-            prodotto.setCategorie(pcDAO.getCategoriesByProductID(prodotto.getIdProdotto()));
         }
+        prodotto.setProduttore(pDAO.findByID(idProduttore));
+        prodotto.setListaFeedback(fDAO.findAllByProductID(prodotto.getIdProdotto()));
+        prodotto.setCategorie(pcDAO.getCategoriesByProductID(prodotto.getIdProdotto()));
         return prodotto;
         //return null;
     }

@@ -110,7 +110,7 @@ public class UtentiPuntoVenditaDAO implements IUtentiPuntoVenditaDAO {
     @Override
     public PuntoVendita findShopByShopManagerID(int idUtente) {
         conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT idPuntoVendita FROM myshopdb.UtentePuntoVendita WHERE idUtente = '" + idUtente + "' AND isManager = 'SI';");
+        rs = conn.executeQuery("SELECT idPuntoVendita FROM myshopdb.UtentePuntoVendita WHERE idUtente = '" + idUtente + "' AND isManager = 1;");
         PuntoVenditaDAO pvDAO = PuntoVenditaDAO.getInstance();
         int idPuntoVendita=0;
         PuntoVendita puntoVendita;
@@ -130,9 +130,63 @@ public class UtentiPuntoVenditaDAO implements IUtentiPuntoVenditaDAO {
         }
         finally {
             conn.close();
-            puntoVendita = pvDAO.findByID(idPuntoVendita);
         }
+        puntoVendita = pvDAO.findByID(idPuntoVendita);
         return puntoVendita;
+    }
+
+    @Override
+    public boolean isUserBanned(int idUtente, int idPuntoVendita) {
+        conn = DbConnection.getInstance();
+        boolean banned = false;
+        rs = conn.executeQuery("SELECT disattivato FROM UtentePuntoVendita WHERE idUtente = '" + idUtente + "' AND idPuntoVendita = '" + idPuntoVendita +"';");
+        try{
+            rs.next();
+            if (rs.getRow() == 1){
+                if (rs.getInt("disattivato") == 1){
+                    banned=true;
+                }
+            }
+        } catch (SQLException e) {
+            // handle any errors
+            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("VendorError: " + e.getErrorCode());
+        } catch (NullPointerException e) {
+            // handle any errors
+            System.out.println("Resultset: " + e.getMessage());
+        }
+        finally {
+            conn.close();
+        }
+        return banned;
+    }
+
+    @Override
+    public boolean isUserShopManager(int idUtente, int idPuntoVendita) {
+        conn = DbConnection.getInstance();
+        boolean isManager = false;
+        rs = conn.executeQuery("SELECT isManager FROM UtentePuntoVendita WHERE idUtente = '" + idUtente + "' AND idPuntoVendita = '" + idPuntoVendita +"';");
+        try{
+            rs.next();
+            if (rs.getRow() == 1){
+                if (rs.getInt("isManager") == 1){
+                    isManager=true;
+                }
+            }
+        } catch (SQLException e) {
+            // handle any errors
+            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("VendorError: " + e.getErrorCode());
+        } catch (NullPointerException e) {
+            // handle any errors
+            System.out.println("Resultset: " + e.getMessage());
+        }
+        finally {
+            conn.close();
+        }
+        return isManager;
     }
 
     @Override

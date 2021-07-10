@@ -53,8 +53,8 @@ public class CategoriaDAO implements ICategoriaDAO {
             System.out.println("Resultset: " + e.getMessage());
         } finally {
             conn.close();
-            categoria.setCategoriaPadre(this.findByID(idPadre));
         }
+        categoria.setCategoriaPadre(this.findByID(idPadre));
         return categoria;
         //return null;
     }

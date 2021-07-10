@@ -11,6 +11,8 @@ public interface IUtentiPuntoVenditaDAO {
     ArrayList<PuntoVendita> findShopsByUserID(int idUtente);
     Utente findShopManagerByShopID(int idPuntoVendita);
     PuntoVendita findShopByShopManagerID(int idUtente);
+    boolean isUserBanned(int idUtente, int idPuntoVendita);
+    boolean isUserShopManager(int idUtente, int idPuntoVendita);
     int add(Utente utente, PuntoVendita puntoVendita, String disattivato, String isManager);
     int removeByID(int idUtente, int idPuntoVendita);
     int update(Utente utente, PuntoVendita puntoVendita, String disattivato, String isManager);

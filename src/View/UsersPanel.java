@@ -42,7 +42,7 @@ public class UsersPanel extends JPanel {
         ServiziPanelListener serviziPanelListener = new ServiziPanelListener(appFrame, tabellaPuntiVendita);
         btnEdit.addActionListener(serviziPanelListener);
         btnDelete.addActionListener(serviziPanelListener);
-        
+
         operazionitabella.add(btnEdit);
         operazionitabella.add(btnDelete);
 
