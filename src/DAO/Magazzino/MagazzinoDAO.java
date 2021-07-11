@@ -13,7 +13,8 @@ public class MagazzinoDAO implements IMagazzinoDAO {
 
     private final static MagazzinoDAO instance = new MagazzinoDAO();
 
-    private IDbConnection conn;
+    private static IDbConnection conn;
+
     private ResultSet rs;
     private Magazzino magazzino;
     private ProdottiMagazzinoDAO pmDAO;
@@ -45,9 +46,6 @@ public class MagazzinoDAO implements IMagazzinoDAO {
                 magazzino.setCitta(rs.getString("citta"));
                 magazzino.setNumeroScaffali(rs.getInt("numeroScaffali"));
                 magazzino.setNumeroCorsie(rs.getInt("numeroCorsie"));
-                magazzino.setProdottiDisponibili(pmDAO.findAllProductsByWarehouseID(magazzino.getIdMagazzino()));
-
-                return magazzino;
             }
         } catch (SQLException e) {
             // handle any errors
@@ -60,7 +58,8 @@ public class MagazzinoDAO implements IMagazzinoDAO {
         } finally {
             conn.close();
         }
-        return null;
+        magazzino.setProdottiDisponibili(pmDAO.findAllProductsByWarehouseID(magazzino.getIdMagazzino()));
+        return magazzino;
     }
 
     @Override

@@ -18,7 +18,8 @@ public class ProdottiListaDAO implements IProdottiListaDAO {
 
     private final static ProdottiListaDAO instance = new ProdottiListaDAO();
 
-    private IDbConnection conn;
+    private static IDbConnection conn;
+
     private ResultSet rs;
     private ProdottoDAO pDAO;
 

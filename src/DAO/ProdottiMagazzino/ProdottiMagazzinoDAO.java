@@ -16,7 +16,8 @@ public class ProdottiMagazzinoDAO implements IProdottiMagazzinoDAO {
 
     private final static ProdottiMagazzinoDAO instance = new ProdottiMagazzinoDAO();
 
-    private IDbConnection conn;
+    private static IDbConnection conn;
+
     private ResultSet rs;
 
     private ProdottiMagazzinoDAO(){

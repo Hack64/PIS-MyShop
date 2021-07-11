@@ -15,7 +15,8 @@ public class ProduttoreDAO implements IProduttoreDAO {
 
     private ProdottoDAO pDAO;
     //private ProdottoCompositoDAO pCompDAO = ProdottoCompositoDAO.getInstance();
-    private IDbConnection conn;
+    private static IDbConnection conn;
+
     private ResultSet rs;
     private Produttore produttore;
 
@@ -46,7 +47,6 @@ public class ProduttoreDAO implements IProduttoreDAO {
                 produttore.setCitta(rs.getString("citta"));
                 produttore.setNazione(rs.getString("nazione"));
                 //produttore.setProdottiProduttore(pDAO.findAllByProducer(produttore));
-
                 return produttore;
             }
         } catch (SQLException e) {

@@ -9,6 +9,7 @@ public interface IProdottoDAO {
     IProdotto findByID(int idProdotto);
     IProdotto getByName(String nomeProdotto);
     boolean productExists(int idProdotto);
+    boolean productExists(String nomeProdotto);
     ArrayList<IProdotto> findAll();
     ArrayList<IProdotto> findAllByProducer(Produttore produttore);
     int add(IProdotto prodotto);

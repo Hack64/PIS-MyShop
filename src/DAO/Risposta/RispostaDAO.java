@@ -15,7 +15,8 @@ public class RispostaDAO implements IRispostaDAO {
 
     private final static RispostaDAO instance = new RispostaDAO();
 
-    private IDbConnection conn;
+    private static IDbConnection conn;
+
     private ResultSet rs;
     private Risposta risposta;
     private FeedbackDAO fDAO;
@@ -159,8 +160,7 @@ public class RispostaDAO implements IRispostaDAO {
         } catch (NullPointerException e) {
             // handle any errors
             System.out.println("Resultset: " + e.getMessage());
-        }
-        finally {
+        } finally {
             conn.close();
         }
         return null;

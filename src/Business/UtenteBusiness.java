@@ -1,12 +1,17 @@
 package Business;
 
+import DAO.PuntoVendita.PuntoVenditaDAO;
 import DAO.Utente.UtenteDAO;
+import DAO.UtentiPuntoVendita.UtentiPuntoVenditaDAO;
+import Model.PuntoVendita;
 import Model.Responses.LoginResponse;
 import Model.Utente;
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import org.apache.commons.validator.routines.EmailValidator;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class UtenteBusiness {
 
@@ -27,6 +32,7 @@ public class UtenteBusiness {
         res.setMessage("Errore non definito.");
 
         UtenteDAO uDAO = UtenteDAO.getInstance();
+        UtentiPuntoVenditaDAO utentiPuntoVenditaDAO = UtentiPuntoVenditaDAO.getInstance();
 
         // 1. username non esistente
         if(!uDAO.userExists(username)) {
@@ -43,6 +49,12 @@ public class UtenteBusiness {
         // 3. ottenere i dati dell'utente
         Utente u = uDAO.getByUsername(username);
         //alternativa: restituire istanza specifica di Cliente, Manager o Amministratore
+
+        // 4. dati corretti ma utente bandito
+        if (utentiPuntoVenditaDAO.isUserBanned(u.getIdUtente(), 1)){
+            res.setMessage("Sei stato bandito da questo punto vendita!");
+            return res;
+        }
 
         if(u != null) {
             res.setMessage("Benvenuto " + u.getNome() + "!");
@@ -102,9 +114,11 @@ public class UtenteBusiness {
     }
 
     public boolean userCan(Utente u, Privilegio p) {
-        UtenteDAO uDAO = UtenteDAO.getInstance();
+        UtentiPuntoVenditaDAO utentiPuntoVenditaDAO = UtentiPuntoVenditaDAO.getInstance();
 
-        if(Privilegio.MANAGE_SHOP.equals(p) && u.getRuolo().toString().equals("man")) {
+        //TODO: cercare di capire come passare il punto vendita
+
+        if(Privilegio.MANAGE_SHOP.equals(p) && u.getRuolo().toString().equals("man") && utentiPuntoVenditaDAO.isUserShopManager(u.getIdUtente(), 1) ) {
             // vediamo se u è un manager
             return true;
         }
@@ -120,5 +134,18 @@ public class UtenteBusiness {
         EmailValidator validator = EmailValidator.getInstance();
         result = validator.isValid(email);
         return result;
+    }
+
+    public HashMap<Utente, String> findAllUsersByShopManager(Utente u){
+        UtentiPuntoVenditaDAO utentiPuntoVenditaDAO = UtentiPuntoVenditaDAO.getInstance();
+        PuntoVendita pv = utentiPuntoVenditaDAO.findShopByShopManagerID(u.getIdUtente());
+
+        return utentiPuntoVenditaDAO.findUsersByShopID(pv.getIdPuntoVendita());
+    }
+
+    public int deleteByIDFromShop(int idUtente, int idPuntoVendita){
+        UtentiPuntoVenditaDAO utentiPuntoVenditaDAO = UtentiPuntoVenditaDAO.getInstance();
+
+        return utentiPuntoVenditaDAO.removeByID(idUtente, idPuntoVendita);
     }
 }

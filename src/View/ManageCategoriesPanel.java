@@ -3,6 +3,7 @@ package View;
 import Business.CategoriaBusiness;
 import Model.ICategoria;
 import View.Listener.ManageCategoriesPanelListener;
+import View.TableModels.CategoriesTableModel;
 
 import javax.swing.*;
 import java.awt.*;

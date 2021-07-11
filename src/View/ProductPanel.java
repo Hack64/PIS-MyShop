@@ -1,5 +1,6 @@
 package View;
 
+import Model.ICategoria;
 import Model.IProdotto;
 
 import javax.swing.*;
@@ -7,6 +8,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class ProductPanel extends JPanel {
 
@@ -33,9 +35,15 @@ public class ProductPanel extends JPanel {
         productDescriptionPanel.setBorder(new LineBorder(Color.GREEN));*/
 
         //ProductDetails
+        ArrayList<String> categorie = new ArrayList<>();
+        for (ICategoria c1:prodotto.getCategorie()){
+            categorie.add(c1.getNome());
+        }
         JLabel lblNomeProdotto = new JLabel(prodotto.getNome());
         JLabel lblCostoProdotto = new JLabel("Costo:      €" + prodotto.getCosto());
         JLabel lblMediaValutazioni = new JLabel("Media Valutazioni:      " + prodotto.getMediaValutazione());
+        JLabel lblCategorieProdotti = new JLabel("Categorie: " + categorie);
+
         JButton btnCommenti = new JButton("Visualizza commenti");
         JButton btnAggiungi = new JButton("Aggiungi a una lista");
 
@@ -58,6 +66,7 @@ public class ProductPanel extends JPanel {
         productDetailsPanel.add(lblNomeProdotto);
         productDetailsPanel.add(lblCostoProdotto);
         productDetailsPanel.add(lblMediaValutazioni);
+        productDetailsPanel.add(lblCategorieProdotti);
 
         c.gridx=0;
         c.gridy=0;

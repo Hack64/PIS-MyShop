@@ -14,5 +14,6 @@ public interface IListaDAO {
     int add(Lista lista);
     int removeById(int idLista);
     int update(Lista lista);
+    int editName(Lista lista);
 
 }

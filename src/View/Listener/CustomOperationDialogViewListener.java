@@ -1,13 +1,8 @@
 package View.Listener;
 
 import Business.*;
-import Model.Fornitore;
-import Model.ICategoria;
-import Model.Produttore;
-import View.AppFrame;
-import View.CategoriesChooserDialog;
-import View.CustomOperationDialogView;
-import View.MainCatalogPanel;
+import Model.*;
+import View.*;
 import org.apache.commons.io.FileUtils;
 
 import javax.swing.*;
@@ -20,16 +15,20 @@ import java.util.ArrayList;
 public class CustomOperationDialogViewListener implements ActionListener {
 
     AppFrame appFrame;
-    CustomOperationDialogView operationDialogView ;
+    CustomOperationDialogView operationDialogView;
     CategoriesChooserDialog categoriesChooserDialog;
+    SubProductChooserDialog subProductChooserDialog;
     File img;
     JFileChooser fileChooser;
     public final static String BTN_ADD_PRODUCT = "btnAddProduct";
+    public final static String BTN_ADD_COMP_PRODUCT = "btnAddCompProduct";
     public final static String BTN_ADD_SERVICE = "btnAddService";
     public final static String BTN_EDIT_PRODUCT = "btnEditProduct";
+    public final static String BTN_EDIT_COMP_PRODUCT = "btnEditCompProduct";
     public final static String BTN_EDIT_SERVICE = "btnEditService";
     public final static String BTN_IMG_CHOOSER = "btnImg";
     public final static String BTN_CATEGORIES = "btnCategories";
+    public final static String BTN_SUB_PRODUCTS = "btnSubProducts";
 
     public CustomOperationDialogViewListener(AppFrame appFrame, CustomOperationDialogView dialog){
         this.appFrame = appFrame;
@@ -49,7 +48,7 @@ public class CustomOperationDialogViewListener implements ActionListener {
                     }
                 }
                 categoriesChooserDialog.dispose();
-                int statusProd = ProdottoBusiness.getInstance().addNew(operationDialogView.getTxtNome(), img, operationDialogView.getTxtDescrizione(), Float.parseFloat(operationDialogView.getTxtPrezzo()), ProduttoreBusiness.getInstance().findByName((String)operationDialogView.getProduttore()), categorie);
+                int statusProd = ProdottoBusiness.getInstance().addNew(operationDialogView.getTxtNome(), img, operationDialogView.getTxtDescrizione(), Float.parseFloat(operationDialogView.getTxtPrezzo()), ProduttoreBusiness.getInstance().findByName(operationDialogView.getProduttore().toString()), categorie);
                 if (statusProd == 2){
                     String esit = "Prodotto aggiunto con successo!";
                     JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
@@ -61,13 +60,38 @@ public class CustomOperationDialogViewListener implements ActionListener {
                     appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame));
                 }
                 break;
+            case BTN_ADD_COMP_PRODUCT:
+                ArrayList<IProdotto> sottoprodotti = new ArrayList<>();
+                for (JCheckBox b:subProductChooserDialog.getCheckBoxes()){
+                    if (b.isSelected()){
+                        sottoprodotti.add(ProdottoBusiness.getInstance().findByName(b.getText()).getProdotto());
+                    }
+                }
+                ArrayList<ICategoria> categorieComp = new ArrayList<>();
+                for (JCheckBox b:categoriesChooserDialog.getCheckBoxes()){
+                    if (b.isSelected()){
+                        categorieComp.add(CategoriaBusiness.getInstance().findByName(b.getText()));
+                    }
+                }
+                subProductChooserDialog.dispose();
+                int statusCompProd = ProdottoBusiness.getInstance().addNewComp(operationDialogView.getTxtNome(), img, operationDialogView.getTxtDescrizione(), Float.parseFloat(operationDialogView.getTxtPrezzo()), ProduttoreBusiness.getInstance().findByName((String)operationDialogView.getProduttore()), categorieComp, sottoprodotti);
+                if (statusCompProd == 3){
+                    String esit = "Prodotto composito aggiunto con successo!";
+                    JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
+                    operationDialogView.dispose();
+                    appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame));
+                } else {
+                    String esit = "Errore durante l'aggiunta del prodotto composito!";
+                    JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
+                    appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame));
+                }
+                break;
             case BTN_EDIT_PRODUCT:
-                Produttore pr = ProduttoreBusiness.getInstance().findByName((String) operationDialogView.getProduttore());
-                if (img == null ){
-                    String esit = "Coglione imposta l'immagine";
+                if (img == null){
+                    String esit = "Imposta l'immagine";
                     JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
                 } else {
-                    int st = ProdottoBusiness.getInstance().update(operationDialogView.getTxtNome(), img, operationDialogView.getTxtDescrizione(), Float.parseFloat(operationDialogView.getTxtPrezzo()), pr, operationDialogView.getID());
+                    int st = ProdottoBusiness.getInstance().update(operationDialogView.getTxtNome(), img, operationDialogView.getTxtDescrizione(), Float.parseFloat(operationDialogView.getTxtPrezzo()), operationDialogView.getID());
                     if (st == 1) {
                         String esit = "Prodotto modificato con successo!";
                         JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
@@ -75,6 +99,30 @@ public class CustomOperationDialogViewListener implements ActionListener {
                         appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame));
                     } else {
                         String esit = "Errore durante l'aggiunta del prodotto!";
+                        JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
+                        appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame));
+                    }
+                }
+                break;
+            case BTN_EDIT_COMP_PRODUCT:
+                ArrayList<IProdotto> sottoprodotti_edit = new ArrayList<>();
+                for (JCheckBox b:subProductChooserDialog.getCheckBoxes()){
+                    if (b.isSelected()){
+                        sottoprodotti_edit.add(ProdottoBusiness.getInstance().findByName(b.getText()).getProdotto());
+                    }
+                }
+                if (img == null){
+                    String esit = "Imposta l'immagine";
+                    JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    int st = ProdottoBusiness.getInstance().updateComposite(operationDialogView.getTxtNome(), img, operationDialogView.getTxtDescrizione(), Float.parseFloat(operationDialogView.getTxtPrezzo()), operationDialogView.getID(), sottoprodotti_edit);
+                    if (st == 3) {
+                            String esit = "Prodotto composito modificato con successo!";
+                            JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
+                            operationDialogView.dispose();
+                            appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame));
+                    } else {
+                        String esit = "Errore durante la modifica del prodotto!";
                         JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
                         appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame));
                     }
@@ -137,7 +185,11 @@ public class CustomOperationDialogViewListener implements ActionListener {
             case BTN_CATEGORIES:
                 System.out.println("Hai premuto categorie");
                 categoriesChooserDialog = new CategoriesChooserDialog(appFrame);
+                break;
+            case BTN_SUB_PRODUCTS:
+                System.out.println("Hai premuto sottoprodotti");
+                subProductChooserDialog = new SubProductChooserDialog(appFrame);
+                break;
         }
     }
-
 }

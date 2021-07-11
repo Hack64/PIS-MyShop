@@ -3,6 +3,7 @@ package View;
 import Business.ServizioBusiness;
 import Model.Servizio;
 import View.Listener.ServiziPanelListener;
+import View.TableModels.ServizioTableModel;
 
 import javax.swing.*;
 import java.awt.*;

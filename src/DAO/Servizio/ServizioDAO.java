@@ -16,7 +16,8 @@ public class ServizioDAO implements IServizioDAO {
     private final static ServizioDAO instance = new ServizioDAO();
 
     private Servizio servizio;
-    private IDbConnection conn;
+    private static IDbConnection conn;
+
     private static ResultSet rs;
     private File file;
     private FornitoreDAO fDAO;

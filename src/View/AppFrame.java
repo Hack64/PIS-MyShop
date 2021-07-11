@@ -7,11 +7,10 @@ import javax.swing.*;
 import java.awt.*;
 
 public class AppFrame extends JFrame {
-
+    //TODO: Cercare di settare il punto vendita
     JPanel currentPanel;
     SideMenu sideMenu;
     Header header;
-
 
     public AppFrame(){
         super("Finestra");

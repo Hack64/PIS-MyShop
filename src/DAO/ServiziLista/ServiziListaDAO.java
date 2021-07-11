@@ -15,7 +15,8 @@ public class ServiziListaDAO implements IServiziListaDAO {
 
     private final static ServiziListaDAO instance = new ServiziListaDAO();
 
-    private IDbConnection conn;
+    private static IDbConnection conn;
+
     private ResultSet rs;
 
     private ServiziListaDAO(){

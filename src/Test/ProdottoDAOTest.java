@@ -1,17 +1,20 @@
 package Test;
 
+import Business.ProdottoBusiness;
+import DAO.Categoria.CategoriaDAO;
+import DAO.Feedback.FeedbackDAO;
+import DAO.Fornitore.FornitoreDAO;
 import DAO.Prodotto.ProdottoDAO;
+import DAO.Produttore.ProduttoreDAO;
 import DbInterface.DbUser;
-import Model.ICategoria;
-import Model.IProdotto;
-import Model.Prodotto;
-import Model.Produttore;
+import Model.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class ProdottoDAOTest {
     DbUser dbUser = DbUser.getInstance();
@@ -81,6 +84,9 @@ public class ProdottoDAOTest {
 
         for (IProdotto prodotto : prodotti){
             System.out.println(prodotto.getNome());
+            for (ICategoria c:prodotto.getCategorie()){
+                System.out.println(c.getNome());
+            }
         }
 
 
@@ -89,20 +95,35 @@ public class ProdottoDAOTest {
     @Test
     public void findAllTest(){
         ProdottoDAO prodottoDAO = ProdottoDAO.getInstance();
+        ProduttoreDAO produttoreDAO = ProduttoreDAO.getInstance();
+        CategoriaDAO categoriaDAO = CategoriaDAO.getInstance();
+        FeedbackDAO feedbackDAO = FeedbackDAO.getInstance();
 
-        ArrayList<IProdotto> prodotti;
-        prodotti = prodottoDAO.findAll();
+        ArrayList<IProdotto> prodotti = prodottoDAO.findAll();
+
 
         for (IProdotto prodotto : prodotti){
             System.out.println(prodotto.getNome());
-            ArrayList<String> categorie = new ArrayList<>();
             for (ICategoria c:prodotto.getCategorie()){
-                categorie.add(c.getNome());
+                System.out.println(c.getNome());
             }
-            String categorieConcat = String.join(" , ", categorie);
-            System.out.println(categorieConcat);
         }
 
+        Scanner in = new Scanner(System.in);
+        in.nextLine();
+
+    }
+    @Test
+    public void findByIDTest(){
+        ProdottoDAO prodottoDAO = ProdottoDAO.getInstance();
+        IProdotto prodotto = prodottoDAO.findByID(1);
+        System.out.println(prodotto.getNome());
+        for (ICategoria c:prodotto.getCategorie()){
+            System.out.println(c.getNome());
+        }
+
+        Scanner in = new Scanner(System.in);
+        in.nextLine();
 
     }
 }

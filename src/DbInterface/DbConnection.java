@@ -82,14 +82,15 @@ public class DbConnection implements IDbConnection {
             }
             stmt = null;
         }
-        if (conn != null) {
+        if (conn != null){
             try {
                 conn.close();
-            } catch (SQLException e) {
+            } catch (SQLException e){
                 System.out.println("SQL Exception: " + e.getMessage());
                 System.out.println("SQL State: " + e.getSQLState());
                 System.out.println("Vendor Error: " + e.getErrorCode());
             }
+            conn = null;
         }
     }
 

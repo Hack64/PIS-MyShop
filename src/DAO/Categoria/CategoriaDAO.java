@@ -13,7 +13,8 @@ public class CategoriaDAO implements ICategoriaDAO {
 
     private final static CategoriaDAO instance = new CategoriaDAO();
 
-    private IDbConnection conn;
+    private static IDbConnection conn;
+
     private ResultSet rs;
     private ArrayList<ICategoria> sottoCategorie = new ArrayList<>();
 
@@ -33,15 +34,14 @@ public class CategoriaDAO implements ICategoriaDAO {
         }
         conn = DbConnection.getInstance();
         rs = conn.executeQuery("SELECT idCategoria, nome, idCategoriaPadre FROM myshopdb.Categoria WHERE myshopdb.Categoria.idCategoria = '" + idCategoria + "';");
-        Categoria categoria;
+        Categoria categoria = new Categoria();
+        int idPadre=0;
         try {
             rs.next();
             if (rs.getRow()==1) {
-                categoria = new Categoria();
                 categoria.setIdCategoria(rs.getInt("idCategoria"));
                 categoria.setNome(rs.getString("nome"));
-                categoria.setCategoriaPadre(this.findByID(rs.getInt("idCategoriaPadre")));
-                return categoria;
+                idPadre = rs.getInt("idCategoriaPadre");
             }
         } catch (SQLException e) {
             // handle any errors
@@ -54,7 +54,9 @@ public class CategoriaDAO implements ICategoriaDAO {
         } finally {
             conn.close();
         }
-        return null;
+        categoria.setCategoriaPadre(this.findByID(idPadre));
+        return categoria;
+        //return null;
     }
 
     @Override
@@ -91,7 +93,6 @@ public class CategoriaDAO implements ICategoriaDAO {
         ResultSet rs2 = conn.executeQuery("SELECT idCategoria, nome, idCategoriaPadre FROM myshopdb.Categoria;");
         ArrayList<ICategoria> categorie = new ArrayList<>();
         Categoria categoria;
-
         try {
             while(rs2.next()){
                 categoria = new Categoria();
@@ -118,6 +119,7 @@ public class CategoriaDAO implements ICategoriaDAO {
     @Override
     public ArrayList<ICategoria> findAllSubcategoriesByCategoryID(int idCategoria) {
         if (idCategoria == 0) {
+            conn.close();
             return sottoCategorie;
         } else {
             conn = DbConnection.getInstance();
@@ -127,9 +129,10 @@ public class CategoriaDAO implements ICategoriaDAO {
                 rs.next();
                 if (rs.getRow() == 1) {
                     int idCategoriaPadre = rs.getInt("idCategoriaPadre");
+                    conn.close();
                     categoria = findByID(idCategoriaPadre);
                     sottoCategorie.add(categoria);
-                    return findAllSubcategoriesByCategoryID(idCategoriaPadre);
+                    findAllSubcategoriesByCategoryID(idCategoriaPadre);
                 }
             } catch (SQLException e) {
                 // handle any errors

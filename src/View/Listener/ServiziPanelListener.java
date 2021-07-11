@@ -32,7 +32,7 @@ public class ServiziPanelListener implements ActionListener {
 
         switch (cmd){
             case BTN_ADD_SERVICE:
-                new CustomOperationDialogView(appFrame, false);
+                new CustomOperationDialogView(appFrame, false, false);
                 break;
             case BTN_EDIT_SERVICE:
                 int rowToEdit = table.getSelectedRow();

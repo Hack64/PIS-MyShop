@@ -11,15 +11,17 @@ public class CustomOperationDialogView extends JDialog {
 
     private AppFrame appFrame;
     private boolean isProduct = false;
+    private boolean isComposite = false;
     private IProdotto p;
     private Servizio s;
     private OperationDialog operationDialog;
 
-    public CustomOperationDialogView(AppFrame appFrame, IProdotto p,  boolean isProduct) {
+    public CustomOperationDialogView(AppFrame appFrame, IProdotto p,  boolean isProduct, boolean isComposite) {
         super(appFrame, "Aggiungi");
         this.p = p;
         s = null;
         this.isProduct = isProduct;
+        this.isComposite = isComposite;
         this.appFrame = appFrame;
         setUp();
     }
@@ -33,9 +35,10 @@ public class CustomOperationDialogView extends JDialog {
         setUp();
     }
 
-    public CustomOperationDialogView(AppFrame appFrame, boolean isProduct){
+    public CustomOperationDialogView(AppFrame appFrame, boolean isProduct, boolean isComposite){
         super(appFrame, "Aggiungi");
         this.isProduct = isProduct;
+        this.isComposite = isComposite;
         this.appFrame = appFrame;
         setUp();
     }
@@ -47,11 +50,12 @@ public class CustomOperationDialogView extends JDialog {
         GridBagConstraints c = new GridBagConstraints();
         c.insets = new Insets(5,2,5,2);
 
-
         operationDialog = new ItemOperationDialog();
 
-        if(isProduct){
+        if(isProduct && !isComposite){
             operationDialog = new ProductOperationDialogDecorator(operationDialog);
+        } else if (isProduct) {
+            operationDialog = new CompositeProductOperationDialogDecorator(operationDialog);
         } else {
             operationDialog = new ServiceOperationDialogDecorator(operationDialog);
         }
@@ -72,6 +76,13 @@ public class CustomOperationDialogView extends JDialog {
         add(operationDialog.getFields().get(1), c);
         c.gridy++;
         c.gridx=0;
+        if (isComposite){
+            add(operationDialog.getLabels().get(6), c);
+            c.gridx=1;
+            add(operationDialog.getButtons().get(4), c);
+            c.gridx=0;
+            c.gridy++;
+        }
         add(operationDialog.getLabels().get(1), c);
         c.gridx=1;
         add(operationDialog.getButtons().get(1), c);
@@ -98,15 +109,26 @@ public class CustomOperationDialogView extends JDialog {
         operationDialog.getButtons().get(2).addActionListener(e -> dispose());
         add(operationDialog.getButtons().get(2), c);
 
-        if (p!=null){
+        if (p != null && isComposite){
+            operationDialog.getButtons().get(1).setEnabled(false);
+            operationDialog.getButtons().get(3).setActionCommand("btnEditCompProduct");
+            operationDialog.getButtons().get(3).setText("Modifica");
+            operationDialog.getComboBox().setEnabled(false);
+            setProductFields();
+        } else if (p!=null) {
+            operationDialog.getButtons().get(1).setEnabled(false);
             operationDialog.getButtons().get(3).setActionCommand("btnEditProduct");
             operationDialog.getButtons().get(3).setText("Modifica");
+            operationDialog.getComboBox().setEnabled(false);
             setProductFields();
         } else if (s!=null){
+            operationDialog.getButtons().get(1).setEnabled(false);
             operationDialog.getButtons().get(3).setText("Modifica");
             operationDialog.getButtons().get(3).setActionCommand("btnEditService");
+            operationDialog.getComboBox().setEnabled(false);
             setServiceFields();
         }
+
 
         setVisible(true);
     }

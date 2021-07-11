@@ -16,7 +16,7 @@ public class ComposizioneProdottoDAO implements IComposizioneProdottoDAO {
 
     private final static ComposizioneProdottoDAO instance = new ComposizioneProdottoDAO();
 
-    private IDbConnection conn;
+    private static IDbConnection conn;
 
     private ComposizioneProdottoDAO(){
         this.conn = null;
@@ -78,10 +78,6 @@ public class ComposizioneProdottoDAO implements IComposizioneProdottoDAO {
                 pc = this.findByID(rs.getInt("composto"));
                 prodottiCompositi.add(pc);
             }
-            System.out.println(ids);
-            for (Integer id:ids){
-
-            } /* PERCHÈ QUESTO FUNZIONA???????*/
             return prodottiCompositi;
         } catch (SQLException e) {
             // handle any errors
@@ -155,15 +151,15 @@ public class ComposizioneProdottoDAO implements IComposizioneProdottoDAO {
     }
 
     @Override
-    public ArrayList<Integer> add(IProdotto prodotto) {
+    public int add(IProdotto prodotto) {
         conn = DbConnection.getInstance();
         ArrayList<IProdotto> sottoprodotti = prodotto.getSottoprodotti();
-        ArrayList<Integer> rowsCount = new ArrayList<>();
+        int rowCount=0;
         for (IProdotto p:sottoprodotti){
-            int rowCount = conn.executeUpdate("INSERT INTO ComposizioneProdotto (composto, componente) VALUES ('" +  prodotto.getIdProdotto() + "','" + p.getIdProdotto() + "');");
-            rowsCount.add(rowCount);
+            rowCount = conn.executeUpdate("INSERT INTO ComposizioneProdotto (composto, componente) VALUES ('" +  prodotto.getIdProdotto() + "','" + p.getIdProdotto() + "');");
         }
-        return rowsCount;
+        conn.close();
+        return rowCount;
     }
 
     @Override
@@ -171,6 +167,15 @@ public class ComposizioneProdottoDAO implements IComposizioneProdottoDAO {
         conn = DbConnection.getInstance();
         int rowCount = conn.executeUpdate("DELETE FROM ComposizioneProdotto WHERE idProdottoComposito = '" + idProdotto + "';");
         conn.close();
+        return rowCount;
+    }
+
+    @Override
+    public int update(IProdotto prodotto) {
+        conn = DbConnection.getInstance();
+        int rowCount = conn.executeUpdate("DELETE FROM ComposizioneProdotto WHERE composto = '" + prodotto.getIdProdotto() + "';");
+        conn.close();
+        this.add(prodotto);
         return rowCount;
     }
 

@@ -1,6 +1,7 @@
 package View;
 
 import Business.FornitoreBusiness;
+import Business.ProduttoreBusiness;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -41,8 +42,10 @@ public class ServiceOperationDialogDecorator extends CustomOperationDialogDecora
 
     @Override
     public JComboBox getComboBox() {
+        if(comboBox != null) return comboBox;
         ArrayList<String> fornitori = FornitoreBusiness.getInstance().findAllSuppliersNames();
-        return new JComboBox(fornitori.toArray());
+        comboBox = new JComboBox(fornitori.toArray());
+        return comboBox;
     }
 
     @Override
