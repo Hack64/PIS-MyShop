@@ -77,6 +77,7 @@ public class CatalogPanelListener  implements ActionListener {
                     esit = "Errore durante l'eliminazione";
                     JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
                 }
+                break;
             case BTN_MANAGE_CATEGORIES:
                     appFrame.setCurrentMainPanel(new ManageCategoriesPanel(appFrame));
                     break;

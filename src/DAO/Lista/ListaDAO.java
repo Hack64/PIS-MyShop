@@ -217,7 +217,7 @@ public class ListaDAO implements IListaDAO {
     @Override
     public int add(Lista lista) {
         conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("INSERT INTO Lista VALUES ('" + lista.getIdLista() + "','" + lista.getNomeLista() + "','" + lista.getDataCreazione().toString() + "','" + lista.getStato().toString() + "','" + lista.getPrezzoTotale() + "','" + lista.getUtente().getIdUtente() + "';");
+        int rowCount = conn.executeUpdate("INSERT INTO Lista (nome, dataCreazione, stato, prezzoTotale, idUtente) VALUES ('" + lista.getNomeLista() + "','" + lista.getDataCreazione().toString() + "','" + lista.getStato().toString() + "','" + lista.getPrezzoTotale() + "','" + lista.getUtente().getIdUtente() + "');");
         conn.close();
         return rowCount;
     }
@@ -233,7 +233,15 @@ public class ListaDAO implements IListaDAO {
     @Override
     public int update(Lista lista) {
         conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("UPDATE Lista SET nome = '" + lista.getNomeLista() + "', dataCreazione = '" + lista.getDataCreazione().toString() + "', stato = '" + lista.getStato().toString() + "', prezzoTotale = '" + lista.getPrezzoTotale() + "' WHERE idLista = '" + lista.getIdLista() + "';");
+        int rowCount = conn.executeUpdate("UPDATE Lista SET nome = '" + lista.getNomeLista() + "', stato = '" + lista.getStato().toString() + "', prezzoTotale = '" + lista.getPrezzoTotale() + "' WHERE idLista = '" + lista.getIdLista() + "';");
+        conn.close();
+        return rowCount;
+    }
+
+    @Override
+    public int editName(Lista lista) {
+        conn = DbConnection.getInstance();
+        int rowCount = conn.executeUpdate("UPDATE Lista SET nome = '" + lista.getNomeLista() + "' WHERE idLista = '" + lista.getIdLista() + "';");
         conn.close();
         return rowCount;
     }

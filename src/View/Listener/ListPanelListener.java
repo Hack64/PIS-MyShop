@@ -1,7 +1,9 @@
 package View.Listener;
 
 import Business.ListaBusiness;
+import Model.Lista;
 import View.AppFrame;
+import View.ListOperationDialog;
 import View.ListsPanel;
 
 import javax.swing.*;
@@ -13,6 +15,7 @@ public class ListPanelListener implements ActionListener {
     AppFrame appFrame;
     JTable table;
 
+    public final static String BTN_ADD_LIST = "btnAdd";
     public final static String BTN_EDIT_LIST = "btnEdit";
     public final static String BTN_DELETE_LIST = "btnDelete";
 
@@ -26,8 +29,12 @@ public class ListPanelListener implements ActionListener {
         String cmd = e.getActionCommand();
 
         switch (cmd){
-            case BTN_EDIT_LIST:_LIST:
-                //new ProductAdditionDialog(appFrame);
+            case BTN_ADD_LIST:
+                new ListOperationDialog(appFrame, null);
+                break;
+            case BTN_EDIT_LIST:
+                Lista lista = ListaBusiness.getInstance().find((Integer.parseInt(table.getModel().getValueAt(table.getSelectedRow(), 0).toString()))).getLista();
+                new ListOperationDialog(appFrame, lista);
                 break;
             case BTN_DELETE_LIST:
                 String esit;

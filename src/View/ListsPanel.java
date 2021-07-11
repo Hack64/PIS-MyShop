@@ -28,15 +28,19 @@ public class ListsPanel extends JPanel {
         JPanel operazionitabella = new JPanel();
         operazionitabella.setLayout(new FlowLayout());
 
+        JButton btnAdd = new JButton("Crea Lista");
+        btnAdd.setActionCommand("btnAdd");
         JButton btnEdit = new JButton("Modifica Lista");
         btnEdit.setActionCommand("btnEdit");
         JButton btnDelete = new JButton("Elimina Lista");
         btnDelete.setActionCommand("btnDelete");
 
         ListPanelListener listPanelListener = new ListPanelListener(appFrame, tabellaListe);
+        btnAdd.addActionListener(listPanelListener);
         btnDelete.addActionListener(listPanelListener);
         btnEdit.addActionListener(listPanelListener);
 
+        operazionitabella.add(btnAdd);
         operazionitabella.add(btnEdit);
         operazionitabella.add(btnDelete);
 
