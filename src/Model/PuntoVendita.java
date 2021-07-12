@@ -14,7 +14,7 @@ public class PuntoVendita {
     private String cap;
     private String citta;
     private Utente manager;
-    private Magazzino magazzino;
+    //private Magazzino magazzino;
 
     public Utente getManager() {
         return manager;
@@ -80,11 +80,11 @@ public class PuntoVendita {
         this.citta = citta;
     }
 
-    public Magazzino getMagazzino() {
+    /*public Magazzino getMagazzino() {
         return magazzino;
     }
 
     public void setMagazzino(Magazzino magazzino) {
         this.magazzino = magazzino;
-    }
+    }*/
 }
