@@ -44,7 +44,7 @@ public class ProdottoDAOTest {
         Prodotto p = new Prodotto();
         Produttore prd = new Produttore();
         prd.setIdProduttore(1);
-        p.setNome("Lavello");
+        p.setNome("Lavello8");
         p.setImmagine(new File("./img/Lavello.jpg"));
         p.setDescrizione("un bellissimo lavello");
         p.setNumeroCommenti(0);

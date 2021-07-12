@@ -3,6 +3,7 @@ package View;
 import Business.PuntoVenditaBusiness;
 import Model.PuntoVendita;
 import View.Listener.ServiziPanelListener;
+import View.Listener.ShopsPanelListener;
 import View.TableModels.ShopTableModel;
 
 import javax.swing.*;
@@ -36,10 +37,10 @@ public class ShopsPanel extends JPanel {
         btnEdit.setActionCommand("btnEdit");
         btnDelete.setActionCommand("btnDelete");
 
-        ServiziPanelListener serviziPanelListener = new ServiziPanelListener(appFrame, tabellaPuntiVendita);
-        btnAdd.addActionListener(serviziPanelListener);
-        btnEdit.addActionListener(serviziPanelListener);
-        btnDelete.addActionListener(serviziPanelListener);
+        ShopsPanelListener shopsPanelListener = new ShopsPanelListener(appFrame, tabellaPuntiVendita);
+        btnAdd.addActionListener(shopsPanelListener);
+        btnEdit.addActionListener(shopsPanelListener);
+        btnDelete.addActionListener(shopsPanelListener);
 
         operazionitabella.add(btnAdd);
         operazionitabella.add(btnEdit);

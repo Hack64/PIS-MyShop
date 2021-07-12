@@ -34,7 +34,7 @@ public class MagazzinoDAO implements IMagazzinoDAO {
     @Override
     public Magazzino findByID(int idMagazzino) {
         conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT idMagazzino, via, CAP, citta, numeroScaffali, numeroCorsie FROM myshopdb.Magazzino WHERE myshopdb.Magazzino.idMagazzino = '" + idMagazzino + "';");
+        rs = conn.executeQuery("SELECT idMagazzino, via, CAP, citta, numeroScaffali, numeroCorsie, idPuntoVendita FROM myshopdb.Magazzino WHERE myshopdb.Magazzino.idMagazzino = '" + idMagazzino + "';");
         pmDAO = ProdottiMagazzinoDAO.getInstance();
         try {
             rs.next();
@@ -65,7 +65,7 @@ public class MagazzinoDAO implements IMagazzinoDAO {
     @Override
     public ArrayList<Magazzino> findAll() {
         conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT idMagazzino, via, CAP, citta, numeroScaffali, numeroCorsie FROM myshopdb.Magazzino;");
+        rs = conn.executeQuery("SELECT idMagazzino, via, CAP, citta, numeroScaffali, numeroCorsie, idPuntoVendita FROM myshopdb.Magazzino;");
         ArrayList<Magazzino> magazzini = new ArrayList<>();
         pmDAO = ProdottiMagazzinoDAO.getInstance();
         try {
@@ -99,7 +99,7 @@ public class MagazzinoDAO implements IMagazzinoDAO {
     @Override
     public int add(Magazzino magazzino) {
         conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("INSERT INTO Magazzino VALUES ('" + magazzino.getIdMagazzino() + "','" + magazzino.getVia() + "','" + magazzino.getCap() + "','" + magazzino.getCitta() + "','" + magazzino.getNumeroScaffali() + "','" + magazzino.getNumeroCorsie() + "');");
+        int rowCount = conn.executeUpdate("INSERT INTO Magazzino (via, CAP, citta, numeroScaffali, numeroCorsie, idPuntoVendita) VALUES ('" + magazzino.getVia() + "','" + magazzino.getCap() + "','" + magazzino.getCitta() + "','" + magazzino.getNumeroScaffali() + "','" + magazzino.getNumeroCorsie() + "','" + magazzino.getPuntoVendita().getIdPuntoVendita() + "');");
         conn.close();
         return rowCount;
     }
