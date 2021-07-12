@@ -1,10 +1,9 @@
 package Business;
 
-import DAO.PuntoVendita.PuntoVenditaDAO;
 import DAO.Utente.UtenteDAO;
 import DAO.UtentiPuntoVendita.UtentiPuntoVenditaDAO;
 import Model.PuntoVendita;
-import Model.Responses.LoginResponse;
+import Model.Responses.UtenteResponse;
 import Model.Utente;
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import org.apache.commons.validator.routines.EmailValidator;
@@ -26,9 +25,9 @@ public class UtenteBusiness {
 
     private UtenteBusiness() {}
 
-    public LoginResponse login(String username, String password) {
+    public UtenteResponse login(String username, String password) {
 
-        LoginResponse res = new LoginResponse();
+        UtenteResponse res = new UtenteResponse();
         res.setMessage("Errore non definito.");
 
         UtenteDAO uDAO = UtenteDAO.getInstance();
@@ -64,8 +63,8 @@ public class UtenteBusiness {
         return res;
     }
 
-    public LoginResponse registration(String nome, String cognome, String email, String password, String confermaPassword, String residenza, String telefono, String professione, String eta){
-        LoginResponse res = new LoginResponse();
+    public UtenteResponse registration(String nome, String cognome, String email, String password, String confermaPassword, String residenza, String telefono, String professione, String eta){
+        UtenteResponse res = new UtenteResponse();
         res.setMessage("Errore non definito.");
 
         UtenteDAO uDAO = UtenteDAO.getInstance();
@@ -118,7 +117,7 @@ public class UtenteBusiness {
 
         //TODO: cercare di capire come passare il punto vendita
 
-        if(Privilegio.MANAGE_SHOP.equals(p) && u.getRuolo().toString().equals("man") && utentiPuntoVenditaDAO.isUserShopManager(u.getIdUtente(), 1) ) {
+        if(Privilegio.MANAGE_SHOP.equals(p) && u.getRuolo().toString().equals("man") && utentiPuntoVenditaDAO.isUserShopManager(u.getIdUtente(), 4) ) {
             // vediamo se u è un manager
             return true;
         }
@@ -147,5 +146,28 @@ public class UtenteBusiness {
         UtentiPuntoVenditaDAO utentiPuntoVenditaDAO = UtentiPuntoVenditaDAO.getInstance();
 
         return utentiPuntoVenditaDAO.removeByID(idUtente, idPuntoVendita);
+    }
+
+    public ArrayList<Utente> findAllManagers(){
+        UtenteDAO utenteDAO = UtenteDAO.getInstance();
+
+        return utenteDAO.findAllByRole(Utente.Ruoli.man);
+    }
+
+    public UtenteResponse findByEmail(String email){
+        UtenteDAO utenteDAO = UtenteDAO.getInstance();
+        UtenteResponse res = new UtenteResponse();
+
+        res.setMessage("Errore non definito");
+        Utente u = utenteDAO.findByEmail(email);
+        if (u!=null){
+            res.setUtente(u);
+            res.setMessage("Utente trovato");
+        } else {
+            res.setMessage("Errore durante la ricerca dell'utente");
+            return res;
+        }
+
+        return res;
     }
 }

@@ -195,7 +195,33 @@ public class UtentiPuntoVenditaDAO implements IUtentiPuntoVenditaDAO {
     }
 
     @Override
-    public int add(Utente utente, PuntoVendita puntoVendita, String disattivato, String isManager) {
+    public boolean isUserShopManagerSomewhere(int idUtente) {
+        conn = DbConnection.getInstance();
+        boolean isManager = false;
+        rs = conn.executeQuery("SELECT isManager FROM UtentePuntoVendita WHERE idUtente = '" + idUtente + "';");
+        try{
+            while (rs.next()){
+                if (rs.getInt("isManager") == 1) {
+                    isManager = true;
+                }
+            }
+        } catch (SQLException e) {
+            // handle any errors
+            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("VendorError: " + e.getErrorCode());
+        } catch (NullPointerException e) {
+            // handle any errors
+            System.out.println("Resultset: " + e.getMessage());
+        }
+        finally {
+            conn.close();
+        }
+        return isManager;
+    }
+
+    @Override
+    public int add(Utente utente, PuntoVendita puntoVendita, int disattivato, int isManager) {
         conn = DbConnection.getInstance();
         int rowCount = conn.executeUpdate("INSERT INTO UtentePuntoVendita VALUES ('" + puntoVendita.getIdPuntoVendita() + "','" + utente.getIdUtente() + "','" + disattivato + "','" + isManager + "');");
         conn.close();
@@ -211,7 +237,7 @@ public class UtentiPuntoVenditaDAO implements IUtentiPuntoVenditaDAO {
     }
 
     @Override
-    public int update(Utente utente, PuntoVendita puntoVendita, String disattivato, String isManager) {
+    public int update(Utente utente, PuntoVendita puntoVendita, int disattivato, int isManager) {
         conn = DbConnection.getInstance();
         int rowCount = conn.executeUpdate("UPDATE UtentePuntoVendita SET disattivato = '" + disattivato + "', isManager = '" + isManager + "' WHERE idPuntoVendita = '" + puntoVendita.getIdPuntoVendita() + "' AND idUtente = '" + utente.getIdUtente() +"';");
         conn.close();

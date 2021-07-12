@@ -2,7 +2,7 @@ package Model.Responses;
 
 import Model.Utente;
 
-public class LoginResponse {
+public class UtenteResponse {
 
     String message;
     Utente utente;

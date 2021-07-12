@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class UtenteDAOTest {
     DbUser dbUser = DbUser.getInstance();
@@ -37,5 +38,14 @@ public class UtenteDAOTest {
         u.setTelefono("90");
 
         utenteDAO.add(u);
+    }
+    @Test
+    public void findAllByRoleTest(){
+        UtenteDAO utenteDAO = UtenteDAO.getInstance();
+        ArrayList<Utente> managers = utenteDAO.findAllByRole(Utente.Ruoli.ute);
+
+        for (Utente u:managers){
+            System.out.println(u.getEmail());
+        }
     }
 }

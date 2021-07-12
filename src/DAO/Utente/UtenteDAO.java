@@ -135,6 +135,42 @@ public class UtenteDAO implements IUtenteDAO {
     }
 
     @Override
+    public ArrayList<Utente> findAllByRole(Utente.Ruoli ruolo) {
+        conn = DbConnection.getInstance();
+        rs = conn.executeQuery("SELECT * FROM Utente WHERE tipo = '" + ruolo.toString() + "';");
+        ArrayList<Utente> utenti = new ArrayList<>();
+        try {
+            while (rs.next()) {
+                utente = new Utente();
+                utente.setIdUtente(rs.getInt("idUtente"));
+                utente.setNome(rs.getString("nome"));
+                utente.setCognome(rs.getString("cognome"));
+                utente.setEmail(rs.getString("email"));
+                utente.setPasswordHash(rs.getString("passwordHash"));
+                utente.setResidenza(rs.getString("residenza"));
+                utente.setTelefono(rs.getString("telefono"));
+                utente.setProfessione(rs.getString("professione"));
+                utente.setEta(LocalDate.parse(rs.getString("eta")));
+                utente.setRuolo(Utente.Ruoli.valueOf(rs.getString("tipo")));
+
+                utenti.add(utente);
+            }
+            return utenti;
+        } catch (SQLException e) {
+            // Gestisce le differenti categorie d'errore
+            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("VendorError: " + e.getErrorCode());
+        } catch (NullPointerException e) {
+            // Gestisce le differenti categorie d'errore
+            System.out.println("Resultset: " + e.getMessage());
+        } finally {
+            conn.close();
+        }
+        return null;
+    }
+
+    @Override
     public boolean checkCredentials(String username, String password) {
         boolean credentialsOk = false;
         conn = DbConnection.getInstance();
@@ -187,7 +223,7 @@ public class UtenteDAO implements IUtenteDAO {
     @Override
     public ArrayList<Utente> findAll() {
         conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT * FROM Booking.Utente;");
+        rs = conn.executeQuery("SELECT * FROM Utente;");
         ArrayList<Utente> utenti = new ArrayList<>();
         try {
             while (rs.next()) {

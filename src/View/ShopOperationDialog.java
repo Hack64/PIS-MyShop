@@ -1,5 +1,8 @@
 package View;
 
+import Model.Magazzino;
+import Model.PuntoVendita;
+import Model.Utente;
 import View.Listener.ListDialogListener;
 import View.Listener.ShopOperationDialogListener;
 
@@ -16,6 +19,8 @@ public class ShopOperationDialog extends JDialog {
 
     JButton btnOK;
     JButton btnAnnulla;
+    JButton btnProducts;
+    JButton btnManager;
 
     JLabel lblShopVia;
     JLabel lblShopCAP;
@@ -25,6 +30,8 @@ public class ShopOperationDialog extends JDialog {
     JLabel lblMagCitta;
     JLabel lblMagScaffali;
     JLabel lblMagCorsie;
+    JLabel lblManager;
+    JLabel lblProducts;
 
     JTextField txtShopVia;
     JTextField txtShopCAP;
@@ -35,15 +42,20 @@ public class ShopOperationDialog extends JDialog {
     JSpinner txtMagScaffali;
     JSpinner txtMagCorsie;
 
-    public ShopOperationDialog(AppFrame appFrame){
+    PuntoVendita p;
+    Magazzino m;
+
+    public ShopOperationDialog(AppFrame appFrame, boolean editMode, PuntoVendita p, Magazzino m){
         super(appFrame, "Aggiungi");
+        this.p=p;
+        this.m=m;
         Insets i = new Insets(5,2,5,2);
         setLayout(new FlowLayout());
         form = new JPanel(new GridBagLayout());
-        form.setBorder(new EmptyBorder(20, 10, 10, 10));
+        form.setBorder(new EmptyBorder(15, 10, 10, 10));
         GridBagConstraints c = new GridBagConstraints();
 
-        setSize(320,380);
+        setSize(365,470);
 
         lblShopVia = new JLabel("Via P.V.: ");
         lblShopCAP = new JLabel("CAP P.V.: ");
@@ -53,16 +65,18 @@ public class ShopOperationDialog extends JDialog {
         lblMagCitta = new JLabel("Città magazzino: ");
         lblMagScaffali = new JLabel("N° scaffali magazzino:");
         lblMagCorsie = new JLabel("N° corsie magazzino: ");
+        lblManager = new JLabel("Assegna un manager: ");
+        lblProducts = new JLabel("Scegli prodotti: ");
 
         btnAnnulla = new JButton("Annulla");
         btnAnnulla.addActionListener(e -> dispose());
 
-        txtShopVia = new JTextField(10);
-        txtShopCAP = new JTextField(10);
-        txtShopCitta = new JTextField(10);
-        txtMagVia = new JTextField(10);
-        txtMagCAP = new JTextField(10);
-        txtMagCitta = new JTextField(10);
+        txtShopVia = new JTextField(15);
+        txtShopCAP = new JTextField(15);
+        txtShopCitta = new JTextField(15);
+        txtMagVia = new JTextField(15);
+        txtMagCAP = new JTextField(15);
+        txtMagCitta = new JTextField(15);
         txtMagScaffali = new JSpinner();
         JComponent editor = txtMagScaffali.getEditor();
         JFormattedTextField tf = ((JSpinner.DefaultEditor) editor).getTextField();
@@ -71,6 +85,15 @@ public class ShopOperationDialog extends JDialog {
         editor = txtMagCorsie.getEditor();
         tf = ((JSpinner.DefaultEditor) editor).getTextField();
         tf.setColumns(5);
+
+        ShopOperationDialogListener shopOperationDialogListener = new ShopOperationDialogListener(appFrame, this);
+
+        btnProducts = new JButton("Scegli...");
+        btnProducts.setActionCommand("btnProducts");
+        btnProducts.addActionListener(shopOperationDialogListener);
+        btnManager = new JButton("Assegna");
+        btnManager.setActionCommand("btnManager");
+        btnManager.addActionListener(shopOperationDialogListener);
 
         c.insets = i;
         c.gridx=0;
@@ -116,10 +139,25 @@ public class ShopOperationDialog extends JDialog {
         form.add(txtMagCorsie, c);
         c.gridx=0;
         c.gridy++;
+        form.add(lblManager, c);
+        c.gridx=1;
+        form.add(btnManager, c);
+        c.gridx=0;
+        c.gridy++;
+        form.add(lblProducts, c);
+        c.gridx=1;
+        form.add(btnProducts, c);
 
-        btnOK = new JButton("OK");
-        btnOK.setActionCommand("btnAdd");
-        btnOK.addActionListener(new ShopOperationDialogListener(appFrame, this));
+        if (editMode){
+            setFields();
+            btnOK = new JButton("Modifica");
+            btnOK.setActionCommand("btnEdit");
+        } else {
+            btnOK = new JButton("OK");
+            btnOK.setActionCommand("btnAdd");
+        }
+        btnOK.addActionListener(shopOperationDialogListener);
+
         add(form);
         add(btnOK);
         add(btnAnnulla);
@@ -158,5 +196,24 @@ public class ShopOperationDialog extends JDialog {
 
     public Integer getTxtMagCorsie() {
         return (Integer)txtMagCorsie.getValue();
+    }
+
+
+    public void setFields(){
+        txtShopVia.setText(p.getVia());
+        txtShopCAP.setText(p.getCap());
+        txtShopCitta.setText(p.getCitta());
+        txtMagVia.setText(m.getVia());
+        txtMagCAP.setText(m.getCap());
+        txtMagCitta.setText(m.getCitta());
+        txtMagScaffali.setValue(m.getNumeroScaffali());
+        txtMagCorsie.setValue(m.getNumeroCorsie());
+    }
+
+    public int getID(){
+        if (p!=null){
+            return p.getIdPuntoVendita();
+        }
+        return -1;
     }
 }

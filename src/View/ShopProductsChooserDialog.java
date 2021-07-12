@@ -1,32 +1,33 @@
 package View;
 
-import Business.CategoriaBusiness;
-import Model.ICategoria;
+import Business.ProdottoBusiness;
+import Model.IProdotto;
 import View.Listener.CategoriesChooserDialogListener;
+import View.Listener.ShopProductsChooserDialogListener;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class CategoriesChooserDialog extends JDialog {
+public class ShopProductsChooserDialog extends JDialog{
 
     JButton btnExit;
     JButton btnOk;
     ArrayList<JCheckBox> boxes;
 
-    public CategoriesChooserDialog(AppFrame appFrame){
-        super(appFrame, "Categorie");
+    public ShopProductsChooserDialog(AppFrame appFrame){
+        super(appFrame, "Prodotti");
         setLayout(new BorderLayout());
         setSize(250,250);
         JPanel form = new JPanel(new GridLayout(0, 1));
         JPanel operazioni = new JPanel(new FlowLayout());
 
         boxes = new ArrayList<>();
-        ArrayList<ICategoria> categorie = CategoriaBusiness.getInstance().findAll();
+        ArrayList<IProdotto> prodotti = ProdottoBusiness.getInstance().findAllProducts();
         int i=0;
-        for (ICategoria c:categorie){
-            boxes.add(new JCheckBox(c.getNome(), false));
+        for (IProdotto p:prodotti){
+            boxes.add(new JCheckBox(p.getNome(), false));
             form.add(boxes.get(i));
             i++;
         }
@@ -34,8 +35,8 @@ public class CategoriesChooserDialog extends JDialog {
         btnOk = new JButton("OK");
 
         btnOk.setActionCommand("btnOk");
-        CategoriesChooserDialogListener categoriesChooserDialogListener = new CategoriesChooserDialogListener(appFrame, this);
-        btnOk.addActionListener(categoriesChooserDialogListener);
+        ShopProductsChooserDialogListener shopProductsChooserDialogListener = new ShopProductsChooserDialogListener(appFrame, this);
+        btnOk.addActionListener(shopProductsChooserDialogListener);
 
         btnExit.addActionListener(e -> dispose());
 
@@ -53,5 +54,15 @@ public class CategoriesChooserDialog extends JDialog {
 
     public ArrayList<JCheckBox> getCheckBoxes(){
         return boxes;
+    }
+
+    public ArrayList<String> getSelectedProducts(){
+        ArrayList<String> selectedProducts = new ArrayList<>();
+        for (JCheckBox box:boxes){
+            if (box.isSelected()){
+                selectedProducts.add(box.getText());
+            }
+        }
+        return selectedProducts;
     }
 }

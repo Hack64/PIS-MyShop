@@ -2,6 +2,7 @@ package View.Listener;
 
 import Business.PuntoVenditaBusiness;
 import Business.ServizioBusiness;
+import Model.Responses.PuntoVenditaResponse;
 import Model.Responses.ServizioResponse;
 import View.*;
 
@@ -28,13 +29,13 @@ public class ShopsPanelListener implements ActionListener {
 
         switch (cmd){
             case BTN_ADD_SHOP:
-                new ShopOperationDialog(appFrame);
+                new ShopOperationDialog(appFrame, false, null,null);
                 break;
             case BTN_EDIT_SHOP:
                 int rowToEdit = table.getSelectedRow();
                 int colToEdit = 0;
-                ServizioResponse sr = ServizioBusiness.getInstance().find(Integer.parseInt(table.getModel().getValueAt(rowToEdit, colToEdit).toString()));
-                new CustomOperationDialogView(appFrame, sr.getServizio(), false);
+                PuntoVenditaResponse pvr = PuntoVenditaBusiness.getInstance().findByID(Integer.parseInt(table.getModel().getValueAt(rowToEdit, colToEdit).toString()));
+                new ShopOperationDialog(appFrame, true, pvr.getPuntoVendita(), pvr.getMagazzino());
                 break;
             case BTN_DELETE_SHOP:
                 String esit;

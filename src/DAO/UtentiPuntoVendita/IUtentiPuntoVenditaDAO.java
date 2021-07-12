@@ -13,7 +13,8 @@ public interface IUtentiPuntoVenditaDAO {
     PuntoVendita findShopByShopManagerID(int idUtente);
     boolean isUserBanned(int idUtente, int idPuntoVendita);
     boolean isUserShopManager(int idUtente, int idPuntoVendita);
-    int add(Utente utente, PuntoVendita puntoVendita, String disattivato, String isManager);
+    boolean isUserShopManagerSomewhere(int idUtente);
+    int add(Utente utente, PuntoVendita puntoVendita, int disattivato, int isManager);
     int removeByID(int idUtente, int idPuntoVendita);
-    int update(Utente utente, PuntoVendita puntoVendita, String disattivato, String isManager);
+    int update(Utente utente, PuntoVendita puntoVendita, int disattivato, int isManager);
 }

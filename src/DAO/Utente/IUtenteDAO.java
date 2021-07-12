@@ -8,6 +8,7 @@ public interface IUtenteDAO {
     Utente findByID(int idUtente);
     Utente findByEmail(String email);
     Utente getByUsername(String username);
+    ArrayList<Utente> findAllByRole(Utente.Ruoli ruolo);
     boolean checkCredentials(String username, String password);
     boolean userExists(String username);
     ArrayList<Utente> findAll();

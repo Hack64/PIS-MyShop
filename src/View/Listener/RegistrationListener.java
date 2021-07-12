@@ -2,7 +2,7 @@ package View.Listener;
 
 import Business.SessionManager;
 import Business.UtenteBusiness;
-import Model.Responses.LoginResponse;
+import Model.Responses.UtenteResponse;
 import Model.Utente;
 import View.AppFrame;
 import View.RegistrationDialog;
@@ -28,7 +28,7 @@ public class RegistrationListener implements ActionListener {
 
         if(BTN_REGISTER.equals(cmd)) {
             // chiamare la classe di business per fare registrazione
-            LoginResponse res = UtenteBusiness.getInstance().registration(registrationDialog.getNome(), registrationDialog.getCognome(), registrationDialog.getUsername(), registrationDialog.getPassword(), registrationDialog.getPassword2(), registrationDialog.getResidenza(), registrationDialog.getTelefono(), registrationDialog.getProfessione(), registrationDialog.getEta());
+            UtenteResponse res = UtenteBusiness.getInstance().registration(registrationDialog.getNome(), registrationDialog.getCognome(), registrationDialog.getUsername(), registrationDialog.getPassword(), registrationDialog.getPassword2(), registrationDialog.getResidenza(), registrationDialog.getTelefono(), registrationDialog.getProfessione(), registrationDialog.getEta());
             registrationDialog.clearFields();
             Utente u = res.getUtente(); //potrebbe essere null in caso di login fallito
 

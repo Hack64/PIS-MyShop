@@ -63,6 +63,37 @@ public class MagazzinoDAO implements IMagazzinoDAO {
     }
 
     @Override
+    public Magazzino findByShopID(int idPuntoVendita) {
+        conn = DbConnection.getInstance();
+        rs = conn.executeQuery("SELECT idMagazzino, via, CAP, citta, numeroScaffali, numeroCorsie, idPuntoVendita FROM myshopdb.Magazzino WHERE idPuntoVendita = '" + idPuntoVendita + "';");
+        pmDAO = ProdottiMagazzinoDAO.getInstance();
+        try {
+            rs.next();
+            if (rs.getRow()==1) {
+                magazzino = new Magazzino();
+                magazzino.setIdMagazzino(rs.getInt("idMagazzino"));
+                magazzino.setVia(rs.getString("via"));
+                magazzino.setCap(rs.getString("CAP")); //vedi se funziona
+                magazzino.setCitta(rs.getString("citta"));
+                magazzino.setNumeroScaffali(rs.getInt("numeroScaffali"));
+                magazzino.setNumeroCorsie(rs.getInt("numeroCorsie"));
+            }
+        } catch (SQLException e) {
+            // handle any errors
+            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("VendorError: " + e.getErrorCode());
+        } catch (NullPointerException e) {
+            // handle any errors
+            System.out.println("Resultset: " + e.getMessage());
+        } finally {
+            conn.close();
+        }
+        magazzino.setProdottiDisponibili(pmDAO.findAllProductsByWarehouseID(magazzino.getIdMagazzino()));
+        return magazzino;
+    }
+
+    @Override
     public ArrayList<Magazzino> findAll() {
         conn = DbConnection.getInstance();
         rs = conn.executeQuery("SELECT idMagazzino, via, CAP, citta, numeroScaffali, numeroCorsie, idPuntoVendita FROM myshopdb.Magazzino;");

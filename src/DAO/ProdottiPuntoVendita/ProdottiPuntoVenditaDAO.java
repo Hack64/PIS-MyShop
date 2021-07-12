@@ -5,7 +5,6 @@ import DAO.PuntoVendita.PuntoVenditaDAO;
 import DbInterface.DbConnection;
 import DbInterface.IDbConnection;
 import Model.IProdotto;
-import Model.Prodotto;
 import Model.PuntoVendita;
 
 import java.sql.ResultSet;
@@ -80,7 +79,7 @@ public class ProdottiPuntoVenditaDAO implements IProdottiPuntoVenditaDAO {
     }
 
     @Override
-    public int add(PuntoVendita puntoVendita, Prodotto prodotto) {
+    public int add(PuntoVendita puntoVendita, IProdotto prodotto) {
         conn = DbConnection.getInstance();
         int rowCount = conn.executeUpdate("INSERT INTO ProdottiPuntoVendita (idPuntoVendita, idProdotto) VALUES ('" + puntoVendita.getIdPuntoVendita() + "','" + prodotto.getIdProdotto() + "');");
         conn.close();
