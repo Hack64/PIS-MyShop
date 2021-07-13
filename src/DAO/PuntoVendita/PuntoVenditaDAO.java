@@ -79,10 +79,10 @@ public class PuntoVenditaDAO implements IPuntoVenditaDAO {
     }
 
     @Override
-    public PuntoVendita findByAddress(String citta, String via, String cap) {
+    public PuntoVendita findByAddress(String citta, String via) {
         //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
-        sql = "SELECT idPuntoVendita, via, CAP, citta FROM myshopdb.PuntoVendita WHERE via = '" + via + "' AND cap = '" + cap + "' AND citta = '"+ citta +"';";
+        sql = "SELECT idPuntoVendita, via, CAP, citta FROM myshopdb.PuntoVendita WHERE via = '" + via + "' AND citta = '"+ citta +"';";
         dbOperation = new ReadDbOperation(sql);
         rs = (ResultSet) executor.executeOperation(dbOperation);
         ppvDAO = ProdottiPuntoVenditaDAO.getInstance();

@@ -1,5 +1,6 @@
 package View;
 
+import Model.PuntoVendita;
 import View.Listener.LoginButtonListener;
 import View.Listener.SideMenuListener;
 
@@ -7,11 +8,11 @@ import javax.swing.*;
 import java.awt.*;
 
 public class AppFrame extends JFrame {
-    //TODO: Cercare di settare il punto vendita
     JPanel currentPanel;
     JScrollPane currentScrollPane;
     SideMenu sideMenu;
     Header header;
+    PuntoVendita puntoVendita;
 
     public AppFrame(){
         super("Finestra");
@@ -19,15 +20,15 @@ public class AppFrame extends JFrame {
         SideMenuListener sideMenuListener = new SideMenuListener(this);
 
         setLayout(new BorderLayout());
-        sideMenu = new SideMenu(sideMenuListener);
-        header = new Header(llist);
+        sideMenu = new SideMenu(sideMenuListener, this);
+        header = new Header(llist, this);
 
         add(sideMenu, BorderLayout.WEST);
         add(header, BorderLayout.NORTH);
 
         setSize(1400, 800);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setCurrentMainPanel(new BrowsePanel(this));
+        this.setCurrentMainPanel(new WelcomePanel(this));
         setResizable(false);
         setVisible(true);
     }
@@ -47,20 +48,6 @@ public class AppFrame extends JFrame {
         repaint();
     }
 
-    public void setCurrentMainPanel(JScrollPane scrollPane){
-        if(currentPanel!=null) remove(currentPanel);
-        if(currentScrollPane!=null) remove(currentScrollPane);
-
-        //2. aggiungere nuovo panel
-        add(scrollPane, BorderLayout.CENTER);
-
-        currentScrollPane = scrollPane;
-
-        invalidate();
-        validate();
-        repaint();
-    }
-
     public Header getHeader() {
         return this.header;
     }
@@ -69,4 +56,11 @@ public class AppFrame extends JFrame {
         return this.sideMenu;
     }
 
+    public PuntoVendita getPuntoVendita() {
+        return puntoVendita;
+    }
+
+    public void setPuntoVendita(PuntoVendita puntoVendita){
+        this.puntoVendita = puntoVendita;
+    }
 }

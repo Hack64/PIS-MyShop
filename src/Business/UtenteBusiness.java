@@ -64,6 +64,7 @@ public class UtenteBusiness {
     }
 
     public UtenteResponse registration(String nome, String cognome, String email, String password, String confermaPassword, String residenza, String telefono, String professione, String eta, Utente.Ruoli ruolo){
+        //TODO: aggiungi l'utente appena creato in utentepuntovendita
         UtenteResponse res = new UtenteResponse();
         res.setMessage("Errore non definito.");
 
@@ -112,12 +113,12 @@ public class UtenteBusiness {
         }
     }
 
-    public boolean userCan(Utente u, Privilegio p) {
+    public boolean userCan(Utente u, Privilegio p, PuntoVendita pv) {
         UtentiPuntoVenditaDAO utentiPuntoVenditaDAO = UtentiPuntoVenditaDAO.getInstance();
 
         //TODO: cercare di capire come passare il punto vendita
 
-        if(Privilegio.MANAGE_SHOP.equals(p) && u.getRuolo().toString().equals("man") && utentiPuntoVenditaDAO.isUserShopManager(u.getIdUtente(), 4) ) {
+        if(Privilegio.MANAGE_SHOP.equals(p) && u.getRuolo().toString().equals("man") && utentiPuntoVenditaDAO.isUserShopManager(u.getIdUtente(), pv.getIdPuntoVendita()) ) {
             // vediamo se u è un manager
             return true;
         }

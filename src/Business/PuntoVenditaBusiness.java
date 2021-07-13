@@ -56,7 +56,7 @@ public class PuntoVenditaBusiness {
         int st=0;
 
         st=puntoVenditaDAO.add(p);
-        p = puntoVenditaDAO.findByAddress(cittaPV, viaPV, capPV);
+        p = puntoVenditaDAO.findByAddress(cittaPV, viaPV);
         m.setPuntoVendita(p);
         st+=magazzinoDAO.add(m);
         if (!utentiPuntoVenditaDAO.isUserShopManagerSomewhere(manager.getIdUtente())){
@@ -123,10 +123,40 @@ public class PuntoVenditaBusiness {
         int st=0;
 
         st=puntoVenditaDAO.update(p);
-        p = puntoVenditaDAO.findByAddress(cittaPV, viaPV, capPV);
+        p = puntoVenditaDAO.findByAddress(cittaPV, viaPV);
         m.setPuntoVendita(p);
         st+=magazzinoDAO.update(m);
 
         return st;
+    }
+
+    public ArrayList<String> findAllShopsAddresses(){
+        puntoVenditaDAO = PuntoVenditaDAO.getInstance();
+        ArrayList<String> indirizzi = new ArrayList<>();
+        for (PuntoVendita p: puntoVenditaDAO.findAll()){
+            String indirizzo =  p.getVia() + " , " + p.getCitta();
+            indirizzi.add(indirizzo);
+        }
+
+        return indirizzi;
+    }
+
+    public PuntoVenditaResponse findShopByAddress(String indirizzo){
+        puntoVenditaDAO = PuntoVenditaDAO.getInstance();
+        PuntoVenditaResponse pvr = new PuntoVenditaResponse();
+        pvr.setMessage("Errore non definito");
+
+        String[] indirizzi = indirizzo.split(", ");
+
+        PuntoVendita p = puntoVenditaDAO.findByAddress(indirizzi[1],indirizzi[0]);
+        if (p!=null){
+            pvr.setMessage("Punto vendita trovato con successo");
+            pvr.setPuntoVendita(p);
+        } else {
+            pvr.setMessage("Errore durante la ricerca del punto vendita");
+            return pvr;
+        }
+
+        return pvr;
     }
 }

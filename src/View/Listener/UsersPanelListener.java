@@ -38,8 +38,7 @@ public class UsersPanelListener implements ActionListener {
                 int rowToDelete = table.getSelectedRow();
                 int colToDelete = 0;
                 int idToDelete = Integer.parseInt(table.getModel().getValueAt(rowToDelete, colToDelete).toString());
-                //TODO: cambia idpuntovendita
-                int i = UtenteBusiness.getInstance().deleteByIDFromShop(idToDelete, 1);
+                int i = UtenteBusiness.getInstance().deleteByIDFromShop(idToDelete, appFrame.getPuntoVendita().getIdPuntoVendita());
                 if (i==1){
                     esit = "Utente eliminato con successo!";
                     JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);

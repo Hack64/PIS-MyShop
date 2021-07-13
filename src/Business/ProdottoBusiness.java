@@ -2,6 +2,7 @@ package Business;
 
 import DAO.ComposizioneProdotto.ComposizioneProdottoDAO;
 import DAO.Feedback.FeedbackDAO;
+import DAO.ProdottiPuntoVendita.ProdottiPuntoVenditaDAO;
 import DAO.Prodotto.ProdottoDAO;
 import DAO.ProdottoCategoria.ProdottoCategoriaDAO;
 import DAO.Produttore.ProduttoreDAO;
@@ -59,6 +60,12 @@ public class ProdottoBusiness {
         prodottoDAO = ProdottoDAO.getInstance();
 
         return prodottoDAO.findAll();
+    }
+
+    public ArrayList<IProdotto> findAllProductsByShop(PuntoVendita puntoVendita){
+        ProdottiPuntoVenditaDAO prodottiPuntoVenditaDAO = ProdottiPuntoVenditaDAO.getInstance();
+
+        return prodottiPuntoVenditaDAO.findProductsByShopID(puntoVendita.getIdPuntoVendita());
     }
 
     public int deleteByID(int id){

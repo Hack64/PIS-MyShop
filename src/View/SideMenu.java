@@ -12,9 +12,10 @@ import java.awt.*;
 public class SideMenu extends JPanel {
 
     private SideMenuListener listener;
+    private AppFrame appFrame;
 
-    public SideMenu( SideMenuListener listener ) { /* AppFrame appFrame*/
-
+    public SideMenu(SideMenuListener listener, AppFrame appFrame) { /* AppFrame appFrame*/
+        this.appFrame = appFrame;
         setLayout(new GridLayout(20,1));
         TitledBorder title;
         title = BorderFactory.createTitledBorder("Menu");
@@ -29,11 +30,14 @@ public class SideMenu extends JPanel {
             add(btn);
         }
 
-        refresh();
+        this.setVisible(false);
     }
 
     public void refresh() {
 
+        if (!this.isVisible()){
+            this.setVisible(true);
+        }
         removeAll();
         Menu menu = new GuestMenu();
         Utente u = (Utente) SessionManager.getInstance().getSession().get("loggedUser");
@@ -41,9 +45,9 @@ public class SideMenu extends JPanel {
         if(u != null) {
             menu = new ClienteMenuDecorator(menu);
 
-            if(UtenteBusiness.getInstance().userCan(u, UtenteBusiness.Privilegio.MANAGE_SHOP)) //manager
+            if(UtenteBusiness.getInstance().userCan(u, UtenteBusiness.Privilegio.MANAGE_SHOP, appFrame.getPuntoVendita())) //manager
                 menu = new ManagerMenuDecorator(menu);
-            if(UtenteBusiness.getInstance().userCan(u, UtenteBusiness.Privilegio.ADMIN_SYSTEM)) //amministratore
+            if(UtenteBusiness.getInstance().userCan(u, UtenteBusiness.Privilegio.ADMIN_SYSTEM, appFrame.getPuntoVendita())) //amministratore
                 menu = new AmministratoreMenuDecorator(menu);
         }
 
