@@ -29,8 +29,6 @@ public class ShopOperationDialog extends JDialog {
     JLabel lblMagVia;
     JLabel lblMagCAP;
     JLabel lblMagCitta;
-    JLabel lblMagScaffali;
-    JLabel lblMagCorsie;
     JLabel lblManager;
     JLabel lblProducts;
 
@@ -40,8 +38,6 @@ public class ShopOperationDialog extends JDialog {
     JTextField txtMagVia;
     JTextField txtMagCAP;
     JTextField txtMagCitta;
-    JSpinner txtMagScaffali;
-    JSpinner txtMagCorsie;
 
     PuntoVendita p;
     Magazzino m;
@@ -64,8 +60,6 @@ public class ShopOperationDialog extends JDialog {
         lblMagVia = new JLabel("Via magazzino: ");
         lblMagCAP = new JLabel("CAP magazzino: ");
         lblMagCitta = new JLabel("Città magazzino: ");
-        lblMagScaffali = new JLabel("N° scaffali magazzino:");
-        lblMagCorsie = new JLabel("N° corsie magazzino: ");
         lblManager = new JLabel("Assegna un manager: ");
         lblProducts = new JLabel("Scegli prodotti: ");
 
@@ -78,14 +72,6 @@ public class ShopOperationDialog extends JDialog {
         txtMagVia = new JTextField(15);
         txtMagCAP = new JTextField(15);
         txtMagCitta = new JTextField(15);
-        txtMagScaffali = new JSpinner();
-        JComponent editor = txtMagScaffali.getEditor();
-        JFormattedTextField tf = ((JSpinner.DefaultEditor) editor).getTextField();
-        tf.setColumns(5);
-        txtMagCorsie = new JSpinner();
-        editor = txtMagCorsie.getEditor();
-        tf = ((JSpinner.DefaultEditor) editor).getTextField();
-        tf.setColumns(5);
 
         ShopOperationDialogListener shopOperationDialogListener = new ShopOperationDialogListener(appFrame, this);
 
@@ -131,16 +117,6 @@ public class ShopOperationDialog extends JDialog {
         form.add(lblMagCitta, c);
         c.gridx=1;
         form.add(txtMagCitta, c);
-        c.gridx=0;
-        c.gridy++;
-        form.add(lblMagScaffali, c);
-        c.gridx=1;
-        form.add(txtMagScaffali, c);
-        c.gridx=0;
-        c.gridy++;
-        form.add(lblMagCorsie, c);
-        c.gridx=1;
-        form.add(txtMagCorsie, c);
         c.gridx=0;
         c.gridy++;
         form.add(lblManager, c);
@@ -198,15 +174,6 @@ public class ShopOperationDialog extends JDialog {
         return txtMagCitta.getText();
     }
 
-    public Integer getTxtMagScaffali() {
-        return (Integer)txtMagScaffali.getValue();
-    }
-
-    public Integer getTxtMagCorsie() {
-        return (Integer)txtMagCorsie.getValue();
-    }
-
-
     public void setFields(){
         txtShopVia.setText(p.getVia());
         txtShopCAP.setText(p.getCap());
@@ -214,8 +181,6 @@ public class ShopOperationDialog extends JDialog {
         txtMagVia.setText(m.getVia());
         txtMagCAP.setText(m.getCap());
         txtMagCitta.setText(m.getCitta());
-        txtMagScaffali.setValue(m.getNumeroScaffali());
-        txtMagCorsie.setValue(m.getNumeroCorsie());
     }
 
     public int getID(){

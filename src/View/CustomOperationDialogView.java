@@ -46,7 +46,7 @@ public class CustomOperationDialogView extends JDialog {
     public void setUp(){
         CustomOperationDialogViewListener customOperationDialogViewListener = new CustomOperationDialogViewListener(appFrame, this);
         setLayout(new GridBagLayout());
-        setSize(475,455);
+        setSize(500,500);
         GridBagConstraints c = new GridBagConstraints();
         c.insets = new Insets(5,2,5,2);
 
@@ -77,7 +77,7 @@ public class CustomOperationDialogView extends JDialog {
         c.gridy++;
         c.gridx=0;
         if (isComposite){
-            add(operationDialog.getLabels().get(6), c);
+            add(operationDialog.getLabels().get(8), c);
             c.gridx=1;
             add(operationDialog.getButtons().get(4), c);
             c.gridx=0;
@@ -101,6 +101,16 @@ public class CustomOperationDialogView extends JDialog {
         add(operationDialog.getLabels().get(3), c);
         c.gridx=1;
         add(operationDialog.getButtons().get(0), c);
+        c.gridy++;
+        c.gridx=0;
+        add(operationDialog.getLabels().get(6), c);
+        c.gridx=1;
+        add(operationDialog.getFields().get(2),c);
+        c.gridy++;
+        c.gridx=0;
+        add(operationDialog.getLabels().get(7), c);
+        c.gridx=1;
+        add(operationDialog.getFields().get(3), c);
         c.gridy++;
         c.gridx=0;
         c.insets =  new Insets(30,0,5,0);
@@ -134,6 +144,8 @@ public class CustomOperationDialogView extends JDialog {
     }
 
     public void setServiceFields(){
+        //TODO: Crea posizionebusiness per settare i campi
+        //PosizioneBusiness
         operationDialog.getFields().get(0).setText(s.getNome());
         operationDialog.getFields().get(1).setText(Float.toString(s.getCosto()));
         operationDialog.getjTextArea().setText(s.getDescrizione());
@@ -161,6 +173,14 @@ public class CustomOperationDialogView extends JDialog {
 
     public Object getProduttore() {
         return operationDialog.getComboBox().getSelectedItem();
+    }
+
+    public int getScaffale(){
+        return Integer.parseInt(operationDialog.getFields().get(2).getText());
+    }
+
+    public int getCorsia(){
+        return Integer.parseInt(operationDialog.getFields().get(3).getText());
     }
 
     public int getID(){

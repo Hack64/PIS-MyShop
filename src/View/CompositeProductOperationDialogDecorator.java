@@ -22,8 +22,14 @@ public class CompositeProductOperationDialogDecorator extends CustomOperationDia
         if (labels.size() > 0 ) return labels;
         labels.addAll(this.operationDialog.getLabels());
         JLabel lblProduttore = new JLabel("Produttore: ");
-        JLabel lblSottoprodotti = new JLabel("Sottoprodotti: ");
         labels.add(lblProduttore);
+        JLabel lblScaffale = new JLabel("Scaffale: ");
+        labels.add(lblScaffale);
+        JLabel lblCorsia = new JLabel("Corsia: ");
+        labels.add(lblCorsia);
+
+        JLabel lblSottoprodotti = new JLabel("Sottoprodotti: ");
+
         labels.add(lblSottoprodotti);
         return labels;
     }
@@ -32,6 +38,10 @@ public class CompositeProductOperationDialogDecorator extends CustomOperationDia
     public ArrayList<JTextField> getFields() {
         if (fields.size() > 0 ) return fields;
         fields.addAll(this.operationDialog.getFields());
+        JTextField txtScaffale = new JTextField(5);
+        fields.add(txtScaffale);
+        JTextField txtCorsia = new JTextField(5);
+        fields.add(txtCorsia);
         return fields;
     }
 

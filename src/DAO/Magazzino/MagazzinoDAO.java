@@ -38,7 +38,7 @@ public class MagazzinoDAO implements IMagazzinoDAO {
     public Magazzino findByID(int idMagazzino) {
         //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
-        sql = "SELECT idMagazzino, via, CAP, citta, numeroScaffali, numeroCorsie, idPuntoVendita FROM myshopdb.Magazzino WHERE myshopdb.Magazzino.idMagazzino = '" + idMagazzino + "';";
+        sql = "SELECT idMagazzino, via, CAP, citta, idPuntoVendita FROM myshopdb.Magazzino WHERE myshopdb.Magazzino.idMagazzino = '" + idMagazzino + "';";
         dbOperation = new ReadDbOperation(sql);
         rs = (ResultSet) executor.executeOperation(dbOperation);
         pmDAO = ProdottiMagazzinoDAO.getInstance();
@@ -50,8 +50,6 @@ public class MagazzinoDAO implements IMagazzinoDAO {
                 magazzino.setVia(rs.getString("via"));
                 magazzino.setCap(rs.getString("CAP")); //vedi se funziona
                 magazzino.setCitta(rs.getString("citta"));
-                magazzino.setNumeroScaffali(rs.getInt("numeroScaffali"));
-                magazzino.setNumeroCorsie(rs.getInt("numeroCorsie"));
             }
         } catch (SQLException e) {
             // handle any errors
@@ -72,7 +70,7 @@ public class MagazzinoDAO implements IMagazzinoDAO {
     public Magazzino findByShopID(int idPuntoVendita) {
         //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
-        sql = "SELECT idMagazzino, via, CAP, citta, numeroScaffali, numeroCorsie, idPuntoVendita FROM myshopdb.Magazzino WHERE idPuntoVendita = '" + idPuntoVendita + "';";
+        sql = "SELECT idMagazzino, via, CAP, citta, idPuntoVendita FROM myshopdb.Magazzino WHERE idPuntoVendita = '" + idPuntoVendita + "';";
         dbOperation = new ReadDbOperation(sql);
         rs = (ResultSet) executor.executeOperation(dbOperation);
         pmDAO = ProdottiMagazzinoDAO.getInstance();
@@ -84,8 +82,6 @@ public class MagazzinoDAO implements IMagazzinoDAO {
                 magazzino.setVia(rs.getString("via"));
                 magazzino.setCap(rs.getString("CAP")); //vedi se funziona
                 magazzino.setCitta(rs.getString("citta"));
-                magazzino.setNumeroScaffali(rs.getInt("numeroScaffali"));
-                magazzino.setNumeroCorsie(rs.getInt("numeroCorsie"));
             }
         } catch (SQLException e) {
             // handle any errors
@@ -106,7 +102,7 @@ public class MagazzinoDAO implements IMagazzinoDAO {
     public ArrayList<Magazzino> findAll() {
         //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
-        sql = "SELECT idMagazzino, via, CAP, citta, numeroScaffali, numeroCorsie, idPuntoVendita FROM myshopdb.Magazzino;";
+        sql = "SELECT idMagazzino, via, CAP, citta, idPuntoVendita FROM myshopdb.Magazzino;";
         dbOperation = new ReadDbOperation(sql);
         rs = (ResultSet) executor.executeOperation(dbOperation);
         ArrayList<Magazzino> magazzini = new ArrayList<>();
@@ -118,8 +114,6 @@ public class MagazzinoDAO implements IMagazzinoDAO {
                 magazzino.setVia(rs.getString("via"));
                 magazzino.setCap(rs.getString("CAP")); //vedi se funziona
                 magazzino.setCitta(rs.getString("citta"));
-                magazzino.setNumeroScaffali(rs.getInt("numeroScaffali"));
-                magazzino.setNumeroCorsie(rs.getInt("numeroCorsie"));
                 magazzino.setProdottiDisponibili(pmDAO.findAllProductsByWarehouseID(magazzino.getIdMagazzino()));
 
                 magazzini.add(magazzino);
@@ -143,7 +137,7 @@ public class MagazzinoDAO implements IMagazzinoDAO {
     public int add(Magazzino magazzino) {
         //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
-        sql = "INSERT INTO Magazzino (via, CAP, citta, numeroScaffali, numeroCorsie, idPuntoVendita) VALUES ('" + magazzino.getVia() + "','" + magazzino.getCap() + "','" + magazzino.getCitta() + "','" + magazzino.getNumeroScaffali() + "','" + magazzino.getNumeroCorsie() + "','" + magazzino.getPuntoVendita().getIdPuntoVendita() + "');";
+        sql = "INSERT INTO Magazzino (via, CAP, citta, idPuntoVendita) VALUES ('" + magazzino.getVia() + "','" + magazzino.getCap() + "','" + magazzino.getCitta() + "','" + magazzino.getPuntoVendita().getIdPuntoVendita() + "');";
         dbOperation = new WriteDbOperation(sql);
         int rowCount = (int) executor.executeOperation(dbOperation);
         executor.closeOperation(dbOperation);
@@ -165,7 +159,7 @@ public class MagazzinoDAO implements IMagazzinoDAO {
     public int update(Magazzino magazzino) {
         //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
-        sql = "UPDATE Magazzino SET via = '" + magazzino.getVia() + "', CAP = '" + magazzino.getCap() + "', citta = '" + magazzino.getCitta() + "', numeroScaffali = '" + magazzino.getNumeroScaffali() + "', numeroCorsie = '" + magazzino.getNumeroCorsie() + "' WHERE idMagazzino = '" + magazzino.getIdMagazzino() + "';";
+        sql = "UPDATE Magazzino SET via = '" + magazzino.getVia() + "', CAP = '" + magazzino.getCap() + "', citta = '" + magazzino.getCitta() + "' WHERE idMagazzino = '" + magazzino.getIdMagazzino() + "';";
         dbOperation = new WriteDbOperation(sql);
         int rowCount = (int) executor.executeOperation(dbOperation);
         executor.closeOperation(dbOperation);

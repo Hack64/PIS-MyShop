@@ -8,18 +8,14 @@ public class Magazzino {
     private String via;
     private String cap;
     private String citta;
-    private int numeroScaffali;
-    private int numeroCorsie;
     private PuntoVendita puntoVendita;
     private List<Disponibilita> prodottiDisponibili;
 
-    public Magazzino(int idMagazzino, String via, String cap, String citta, int numeroScaffali, int numeroCorsie, PuntoVendita puntoVendita, List<Disponibilita> prodottiDisponibili) {
+    public Magazzino(int idMagazzino, String via, String cap, String citta, PuntoVendita puntoVendita, List<Disponibilita> prodottiDisponibili) {
         this.idMagazzino = idMagazzino;
         this.via = via;
         this.cap = cap;
         this.citta = citta;
-        this.numeroScaffali = numeroScaffali;
-        this.numeroCorsie = numeroCorsie;
         this.puntoVendita = puntoVendita;
         this.prodottiDisponibili = prodottiDisponibili;
     }
@@ -29,8 +25,6 @@ public class Magazzino {
         this.via = null;
         this.cap = null;
         this.citta = null;
-        this.numeroCorsie = -1;
-        this.numeroScaffali = -1;
         this.puntoVendita = null;
         this.prodottiDisponibili = null;
     }
@@ -65,22 +59,6 @@ public class Magazzino {
 
     public void setCitta(String citta) {
         this.citta = citta;
-    }
-
-    public int getNumeroScaffali() {
-        return numeroScaffali;
-    }
-
-    public void setNumeroScaffali(int numeroScaffali) {
-        this.numeroScaffali = numeroScaffali;
-    }
-
-    public int getNumeroCorsie() {
-        return numeroCorsie;
-    }
-
-    public void setNumeroCorsie(int numeroCorsie) {
-        this.numeroCorsie = numeroCorsie;
     }
 
     public PuntoVendita getPuntoVendita() {

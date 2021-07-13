@@ -34,7 +34,7 @@ public class PuntoVenditaBusiness {
         return puntoVenditaDAO.removeById(idPuntoVendita);
     }
 
-    public int addNewShop(String viaPV, String capPV, String cittaPV, String viaM, String cittaM, String capM, int corsie, int scaffali, Utente manager, ArrayList<IProdotto> prodotti) {
+    public int addNewShop(String viaPV, String capPV, String cittaPV, String viaM, String cittaM, String capM, Utente manager, ArrayList<IProdotto> prodotti) {
         puntoVenditaDAO = PuntoVenditaDAO.getInstance();
         MagazzinoDAO magazzinoDAO = MagazzinoDAO.getInstance();
         ProdottiPuntoVenditaDAO prodottiPuntoVenditaDAO = ProdottiPuntoVenditaDAO.getInstance();
@@ -50,8 +50,6 @@ public class PuntoVenditaBusiness {
         m.setCap(capM);
         m.setCitta(cittaM);
         m.setVia(viaM);
-        m.setNumeroScaffali(scaffali);
-        m.setNumeroCorsie(corsie);
 
         int st=0;
 
@@ -100,7 +98,7 @@ public class PuntoVenditaBusiness {
         return res;
     }
 
-    public int updateShopAndWarehouse(int idPuntoVendita, String viaPV, String capPV, String cittaPV, String viaM, String cittaM, String capM, int corsie, int scaffali, Utente manager, ArrayList<IProdotto> prodotti){
+    public int updateShopAndWarehouse(int idPuntoVendita, String viaPV, String capPV, String cittaPV, String viaM, String cittaM, String capM, Utente manager, ArrayList<IProdotto> prodotti){
         puntoVenditaDAO = PuntoVenditaDAO.getInstance();
         MagazzinoDAO magazzinoDAO = MagazzinoDAO.getInstance();
 
@@ -117,8 +115,6 @@ public class PuntoVenditaBusiness {
         m.setCap(capM);
         m.setCitta(cittaM);
         m.setVia(viaM);
-        m.setNumeroScaffali(scaffali);
-        m.setNumeroCorsie(corsie);
 
         int st=0;
 

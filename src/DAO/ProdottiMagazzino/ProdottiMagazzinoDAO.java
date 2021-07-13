@@ -1,6 +1,9 @@
 package DAO.ProdottiMagazzino;
 
 import DAO.Magazzino.MagazzinoDAO;
+import DAO.Posizione.IPosizioneDAO;
+import DAO.Posizione.PosizioneDAO;
+import DAO.Prodotto.IProdottoDAO;
 import DAO.Prodotto.ProdottoDAO;
 import DbInterface.*;
 import Model.Disponibilita;
@@ -34,16 +37,17 @@ public class ProdottiMagazzinoDAO implements IProdottiMagazzinoDAO {
     public ArrayList<Disponibilita> findAllProductsByWarehouseID(int idMagazzino) {
         //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
-        sql = "SELECT idMagazzino, idProdotto, scaffale, corsia, quantita FROM ProdottiMagazzino WHERE ProdottiMagazzino.idMagazzino = '" + idMagazzino + "';";
+        sql = "SELECT idMagazzino, idProdotto, quantita FROM ProdottiMagazzino WHERE ProdottiMagazzino.idMagazzino = '" + idMagazzino + "';";
         dbOperation = new ReadDbOperation(sql);
         rs = (ResultSet) executor.executeOperation(dbOperation);
         ArrayList<Disponibilita> prodottiMagazzino = new ArrayList<>();
         Disponibilita disponibilita = new Disponibilita();
-        ProdottoDAO pDAO = ProdottoDAO.getInstance();
+        IProdottoDAO pDAO = ProdottoDAO.getInstance();
+        IPosizioneDAO posizioneDAO = PosizioneDAO.getInstance();
         Posizione posizione;
         try {
             while(rs.next()){
-                posizione = new Posizione(rs.getInt("corsia") , rs.getInt("scaffale"));
+                posizione = posizioneDAO.findByProductID(rs.getInt("idProdotto"));
                 disponibilita.setQta(rs.getInt("quantita"));
                 disponibilita.setPosizione(posizione);
                 disponibilita.setProdotto(pDAO.findByID(rs.getInt("idProdotto")));
@@ -69,7 +73,7 @@ public class ProdottiMagazzinoDAO implements IProdottiMagazzinoDAO {
     public ArrayList<Magazzino> findAllWarehousesByProductID(int idProdotto) {
         //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
-        sql = "SELECT idMagazzino, idProdotto, scaffale, corsia, quantita FROM ProdottiMagazzino WHERE ProdottiMagazzino.idProdotto = '" + idProdotto + "';";
+        sql = "SELECT idMagazzino, idProdotto, quantita FROM ProdottiMagazzino WHERE ProdottiMagazzino.idProdotto = '" + idProdotto + "';";
         dbOperation = new ReadDbOperation(sql);
         rs = (ResultSet) executor.executeOperation(dbOperation);
         ArrayList<Magazzino> magazzini = new ArrayList<>();
@@ -99,7 +103,7 @@ public class ProdottiMagazzinoDAO implements IProdottiMagazzinoDAO {
     public int add(Disponibilita disponibilita) {
         //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
-        sql = "INSERT INTO ProdottiMagazzino (idMagazzino, idProdotto, scaffale, corsia, quantita) VALUES ('" + disponibilita.getMagazzino().getIdMagazzino() + "','" + disponibilita.getProdotto().getIdProdotto() + "','" + disponibilita.getPosizione().getCorsia() + "','" + disponibilita.getPosizione().getScaffale() + "','" + disponibilita.getQta() + "');";
+        sql = "INSERT INTO ProdottiMagazzino (idMagazzino, idProdotto, quantita) VALUES ('" + disponibilita.getMagazzino().getIdMagazzino() + "','" + disponibilita.getProdotto().getIdProdotto() + "','" + disponibilita.getQta() + "');";
         dbOperation = new WriteDbOperation(sql);
         int rowCount = (int) executor.executeOperation(dbOperation);
         executor.closeOperation(dbOperation);
@@ -121,7 +125,7 @@ public class ProdottiMagazzinoDAO implements IProdottiMagazzinoDAO {
     public int update(Disponibilita disponibilita) {
         //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
-        sql = "UPDATE ProdottiMagazzino SET scaffale = '" + disponibilita.getPosizione().getScaffale() + "', corsia = '" + disponibilita.getPosizione().getCorsia() + "', quantita = '" + disponibilita.getQta() + "' WHERE idMagazzino = '" + disponibilita.getMagazzino().getIdMagazzino() + "' AND idProdotto = '" + disponibilita.getProdotto().getIdProdotto() + "';";
+        sql = "UPDATE ProdottiMagazzino SET quantita = '" + disponibilita.getQta() + "' WHERE idMagazzino = '" + disponibilita.getMagazzino().getIdMagazzino() + "' AND idProdotto = '" + disponibilita.getProdotto().getIdProdotto() + "';";
         dbOperation = new WriteDbOperation(sql);
         int rowCount = (int) executor.executeOperation(dbOperation);
         executor.closeOperation(dbOperation);

@@ -37,7 +37,7 @@ public class ShopOperationDialogListener implements ActionListener {
                 for (String s:shopProductsChooserDialog.getSelectedProducts()){
                     prodotti.add(ProdottoBusiness.getInstance().findByName(s).getProdotto());
                 }
-                int st = PuntoVenditaBusiness.getInstance().addNewShop(shopOperationDialog.getTxtShopVia(), shopOperationDialog.getTxtShopCAP(), shopOperationDialog.getTxtShopCitta(), shopOperationDialog.getTxtMagVia(), shopOperationDialog.getTxtMagCitta(), shopOperationDialog.getTxtMagCAP(), shopOperationDialog.getTxtMagCorsie(), shopOperationDialog.getTxtMagScaffali(), shopManagerChooserDialog.getSelectedUser(), prodotti);
+                int st = PuntoVenditaBusiness.getInstance().addNewShop(shopOperationDialog.getTxtShopVia(), shopOperationDialog.getTxtShopCAP(), shopOperationDialog.getTxtShopCitta(), shopOperationDialog.getTxtMagVia(), shopOperationDialog.getTxtMagCitta(), shopOperationDialog.getTxtMagCAP(), shopManagerChooserDialog.getSelectedUser(), prodotti);
                 if (st == 4) {
                     String esit = "Punto Vendita e magazzino creato con successo!";
                     JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
@@ -50,7 +50,7 @@ public class ShopOperationDialogListener implements ActionListener {
                 }
                 break;
             case BTN_EDIT_SHOP:
-                int st_e = PuntoVenditaBusiness.getInstance().updateShopAndWarehouse(shopOperationDialog.getID(), shopOperationDialog.getTxtShopVia(), shopOperationDialog.getTxtShopCAP(), shopOperationDialog.getTxtShopCitta(), shopOperationDialog.getTxtMagVia(), shopOperationDialog.getTxtMagCitta(), shopOperationDialog.getTxtMagCAP(), shopOperationDialog.getTxtMagCorsie(), shopOperationDialog.getTxtMagScaffali(), shopManagerChooserDialog.getSelectedUser(), null);
+                int st_e = PuntoVenditaBusiness.getInstance().updateShopAndWarehouse(shopOperationDialog.getID(), shopOperationDialog.getTxtShopVia(), shopOperationDialog.getTxtShopCAP(), shopOperationDialog.getTxtShopCitta(), shopOperationDialog.getTxtMagVia(), shopOperationDialog.getTxtMagCitta(), shopOperationDialog.getTxtMagCAP(), shopManagerChooserDialog.getSelectedUser(), null);
                 if (st_e == 2){
                     String esit = "Punto vendita e magazzino modificati con successo!";
                     JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);

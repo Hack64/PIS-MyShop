@@ -48,7 +48,7 @@ public class CustomOperationDialogViewListener implements ActionListener {
                     }
                 }
                 categoriesChooserDialog.dispose();
-                int statusProd = ProdottoBusiness.getInstance().addNew(operationDialogView.getTxtNome(), img, operationDialogView.getTxtDescrizione(), Float.parseFloat(operationDialogView.getTxtPrezzo()), ProduttoreBusiness.getInstance().findByName(operationDialogView.getProduttore().toString()).getProduttore(), categorie);
+                int statusProd = ProdottoBusiness.getInstance().addNew(operationDialogView.getTxtNome(), img, operationDialogView.getTxtDescrizione(), Float.parseFloat(operationDialogView.getTxtPrezzo()), ProduttoreBusiness.getInstance().findByName(operationDialogView.getProduttore().toString()).getProduttore(), categorie, operationDialogView.getScaffale(), operationDialogView.getCorsia());
                 if (statusProd == 2){
                     String esit = "Prodotto aggiunto con successo!";
                     JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
@@ -74,7 +74,7 @@ public class CustomOperationDialogViewListener implements ActionListener {
                     }
                 }
                 subProductChooserDialog.dispose();
-                int statusCompProd = ProdottoBusiness.getInstance().addNewComp(operationDialogView.getTxtNome(), img, operationDialogView.getTxtDescrizione(), Float.parseFloat(operationDialogView.getTxtPrezzo()), ProduttoreBusiness.getInstance().findByName((String)operationDialogView.getProduttore()).getProduttore(), categorieComp, sottoprodotti);
+                int statusCompProd = ProdottoBusiness.getInstance().addNewComp(operationDialogView.getTxtNome(), img, operationDialogView.getTxtDescrizione(), Float.parseFloat(operationDialogView.getTxtPrezzo()), ProduttoreBusiness.getInstance().findByName((String)operationDialogView.getProduttore()).getProduttore(), categorieComp, sottoprodotti, operationDialogView.getScaffale(), operationDialogView.getCorsia());
                 if (statusCompProd == 3){
                     String esit = "Prodotto composito aggiunto con successo!";
                     JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
@@ -91,7 +91,7 @@ public class CustomOperationDialogViewListener implements ActionListener {
                     String esit = "Imposta l'immagine";
                     JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
                 } else {
-                    int st = ProdottoBusiness.getInstance().update(operationDialogView.getTxtNome(), img, operationDialogView.getTxtDescrizione(), Float.parseFloat(operationDialogView.getTxtPrezzo()), operationDialogView.getID());
+                    int st = ProdottoBusiness.getInstance().update(operationDialogView.getTxtNome(), img, operationDialogView.getTxtDescrizione(), Float.parseFloat(operationDialogView.getTxtPrezzo()), operationDialogView.getID(), operationDialogView.getScaffale(), operationDialogView.getCorsia());
                     if (st == 1) {
                         String esit = "Prodotto modificato con successo!";
                         JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
@@ -115,7 +115,7 @@ public class CustomOperationDialogViewListener implements ActionListener {
                     String esit = "Imposta l'immagine";
                     JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
                 } else {
-                    int st = ProdottoBusiness.getInstance().updateComposite(operationDialogView.getTxtNome(), img, operationDialogView.getTxtDescrizione(), Float.parseFloat(operationDialogView.getTxtPrezzo()), operationDialogView.getID(), sottoprodotti_edit);
+                    int st = ProdottoBusiness.getInstance().updateComposite(operationDialogView.getTxtNome(), img, operationDialogView.getTxtDescrizione(), Float.parseFloat(operationDialogView.getTxtPrezzo()), operationDialogView.getID(), sottoprodotti_edit, operationDialogView.getScaffale(), operationDialogView.getCorsia());
                     if (st == 3) {
                             String esit = "Prodotto composito modificato con successo!";
                             JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);

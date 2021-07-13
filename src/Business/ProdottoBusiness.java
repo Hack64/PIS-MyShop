@@ -2,6 +2,7 @@ package Business;
 
 import DAO.ComposizioneProdotto.ComposizioneProdottoDAO;
 import DAO.Feedback.FeedbackDAO;
+import DAO.Posizione.PosizioneDAO;
 import DAO.ProdottiPuntoVendita.ProdottiPuntoVenditaDAO;
 import DAO.Prodotto.ProdottoDAO;
 import DAO.ProdottoCategoria.ProdottoCategoriaDAO;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 public class ProdottoBusiness {
     private static ProdottoBusiness instance;
     private ProdottoDAO prodottoDAO;
+    private PosizioneDAO posizioneDAO;
     private ComposizioneProdottoDAO composizioneProdottoDAO;
 
     public static synchronized ProdottoBusiness getInstance() {
@@ -74,8 +76,9 @@ public class ProdottoBusiness {
         return prodottoDAO.removeById(id);
     }
 
-    public int addNew(String nome, File immagine, String descrizione, float costo, Produttore produttore, ArrayList<ICategoria> categorie ){
+    public int addNew(String nome, File immagine, String descrizione, float costo, Produttore produttore, ArrayList<ICategoria> categorie, int scaffale, int corsia ){
         prodottoDAO = ProdottoDAO.getInstance();
+        posizioneDAO = PosizioneDAO.getInstance();
         ProdottoFactory prodottoFactory = (ProdottoFactory) FactoryProvider.getFactory(FactoryProvider.TipoFactory.PRODOTTO);
         Prodotto p = (Prodotto) prodottoFactory.crea();
         p.setNome(nome);
@@ -87,15 +90,21 @@ public class ProdottoBusiness {
         p.setNumeroCommenti(0);
         p.setMediaValutazione(0);
         int rowCount = prodottoDAO.add(p);
+        IProdotto p2 = prodottoDAO.getByName(nome);
         if (rowCount==1) {
-            IProdotto p2 = prodottoDAO.getByName(nome);
             rowCount+=CategoriaBusiness.getInstance().addCategoriesToProduct(p2, categorie);
-
+        }
+        if (rowCount==2){
+            Posizione posizione = new Posizione();
+            posizione.setScaffale(scaffale);
+            posizione.setCorsia(corsia);
+            posizione.setProdotto(p2);
+            rowCount+=posizioneDAO.add(posizione);
         }
         return rowCount;
     }
 
-    public int addNewComp(String nome, File immagine, String descrizione, float costo, Produttore produttore, ArrayList<ICategoria> categorie, ArrayList<IProdotto> sottoProdotti){
+    public int addNewComp(String nome, File immagine, String descrizione, float costo, Produttore produttore, ArrayList<ICategoria> categorie, ArrayList<IProdotto> sottoProdotti, int scaffale, int corsia){
         prodottoDAO = ProdottoDAO.getInstance();
         ProdottoCompositoFactory prodottoCompositoFactory = (ProdottoCompositoFactory) FactoryProvider.getFactory(FactoryProvider.TipoFactory.PRODOTTO_COMPOSITO);
         ProdottoComposito p = (ProdottoComposito) prodottoCompositoFactory.crea();
@@ -116,12 +125,18 @@ public class ProdottoBusiness {
         if (rowCount==2){
             p.setIdProdotto(p2.getIdProdotto());
             rowCount+=this.addSubProductsToCompositeProduct(p);
+            Posizione posizione = new Posizione();
+            posizione.setScaffale(scaffale);
+            posizione.setCorsia(corsia);
+            posizione.setProdotto(p);
+            rowCount+=posizioneDAO.add(posizione);
         }
         return rowCount;
     }
 
-    public int update(String nome, File immagine, String descrizione, float costo, int idProdotto){
+    public int update(String nome, File immagine, String descrizione, float costo, int idProdotto, int scaffale, int corsia){
         prodottoDAO = ProdottoDAO.getInstance();
+        posizioneDAO = PosizioneDAO.getInstance();
         ProdottoFactory prodottoFactory = (ProdottoFactory) FactoryProvider.getFactory(FactoryProvider.TipoFactory.PRODOTTO);
         Prodotto p = (Prodotto) prodottoFactory.crea();
         p.setIdProdotto(idProdotto);
@@ -133,10 +148,19 @@ public class ProdottoBusiness {
         p.setNumeroCommenti(0);
         p.setMediaValutazione(0);
 
-        return prodottoDAO.update(p);
+        int rowCount = prodottoDAO.update(p);
+        if (rowCount == 1) {
+            Posizione posizione = new Posizione();
+            posizione.setCorsia(corsia);
+            posizione.setScaffale(scaffale);
+            posizione.setProdotto(prodottoDAO.findByID(p.getIdProdotto()));
+
+            rowCount+=posizioneDAO.update(posizione);
+        }
+        return rowCount;
     }
 
-    public int updateComposite(String nome, File immagine, String descrizione, float costo, int idProdotto, ArrayList<IProdotto> sottoprodotti){
+    public int updateComposite(String nome, File immagine, String descrizione, float costo, int idProdotto, ArrayList<IProdotto> sottoprodotti, int scaffale, int corsia){
         composizioneProdottoDAO = ComposizioneProdottoDAO.getInstance();
         prodottoDAO = ProdottoDAO.getInstance();
 
@@ -154,6 +178,14 @@ public class ProdottoBusiness {
 
         int st = 0;
         st+=prodottoDAO.update(pc);
+
+        if (st==1){
+            Posizione posizione = new Posizione();
+            posizione.setScaffale(scaffale);
+            posizione.setCorsia(corsia);
+            posizione.setProdotto(pc);
+            st+=posizioneDAO.add(posizione);
+        }
 
         st += composizioneProdottoDAO.update(pc);
 
