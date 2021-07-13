@@ -2,8 +2,7 @@ package DAO.ServizioCategoria;
 
 import DAO.Categoria.CategoriaDAO;
 import DAO.Servizio.ServizioDAO;
-import DbInterface.DbConnection;
-import DbInterface.IDbConnection;
+import DbInterface.*;
 import Model.CategoriaServizio;
 import Model.ICategoria;
 import Model.Servizio;
@@ -17,8 +16,10 @@ public class ServizioCategoriaDAO implements IServizioCategoriaDAO {
     private final static ServizioCategoriaDAO instance = new ServizioCategoriaDAO();
 
     private static IDbConnection conn;
-
     private ResultSet rs;
+    private String sql;
+    private DbOperationExecutor executor;
+    private IDbOperation dbOperation;
 
     private ServizioCategoriaDAO(){
         this.conn = null;
@@ -31,8 +32,11 @@ public class ServizioCategoriaDAO implements IServizioCategoriaDAO {
 
     @Override
     public ArrayList<Servizio> getServicesByCategoryID(int idCategoria) {
-        conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT idServizio FROM myshopdb.ServizioCategoria WHERE idCategoria = '" + idCategoria + "';");
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "SELECT idServizio FROM myshopdb.ServizioCategoria WHERE idCategoria = '" + idCategoria + "';";
+        dbOperation = new ReadDbOperation(sql);
+        rs = (ResultSet) executor.executeOperation(dbOperation);
         ArrayList<Servizio> serviziCategoria = new ArrayList<>();
         ServizioDAO sDAO = ServizioDAO.getInstance();
         try {
@@ -49,15 +53,18 @@ public class ServizioCategoriaDAO implements IServizioCategoriaDAO {
             // handle any errors
             System.out.println("Resultset: " + e.getMessage());
         } finally {
-            conn.close();
+            executor.closeOperation(dbOperation);
         }
         return null;
     }
 
     @Override
     public ArrayList<ICategoria> getCategoriesByServiceID(int idServizio) {
-        conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT Categoria.idCategoria FROM myshopdb.Categoria INNER JOIN myshopdb.ServizioCategoria ON Categoria.idCategoria = ServizioCategoria.idCategoria WHERE ServizioCategoria.idServizio = '" + idServizio + "';");
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "SELECT Categoria.idCategoria FROM myshopdb.Categoria INNER JOIN myshopdb.ServizioCategoria ON Categoria.idCategoria = ServizioCategoria.idCategoria WHERE ServizioCategoria.idServizio = '" + idServizio + "';";
+        dbOperation = new ReadDbOperation(sql);
+        rs = (ResultSet) executor.executeOperation(dbOperation);
         ArrayList<ICategoria> categorieServizio = new ArrayList<>();
         CategoriaDAO cDAO = CategoriaDAO.getInstance();
         try {
@@ -79,24 +86,30 @@ public class ServizioCategoriaDAO implements IServizioCategoriaDAO {
             // handle any errors
             System.out.println("Resultset: " + e.getMessage());
         } finally {
-            conn.close();
+            executor.closeOperation(dbOperation);
         }
         return null;
     }
 
     @Override
     public int add(ICategoria categoria, Servizio servizio) {
-        conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("INSERT INTO ServizioCategoria VALUES('" + servizio.getIdServizio() + "','" + categoria.getIdCategoria() + "');");
-        conn.close();
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "INSERT INTO ServizioCategoria VALUES('" + servizio.getIdServizio() + "','" + categoria.getIdCategoria() + "');";
+        dbOperation = new WriteDbOperation(sql);
+        int rowCount = (int) executor.executeOperation(dbOperation);
+        executor.closeOperation(dbOperation);
         return rowCount;
     }
 
     @Override
     public int removeByID(int idCategoria, int idServizio) {
-        conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("DELETE FROM ServizioCategoria WHERE idServizio = '" + idServizio + "'AND idCategoria = '" + idCategoria + "';");
-        conn.close();
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "DELETE FROM ServizioCategoria WHERE idServizio = '" + idServizio + "'AND idCategoria = '" + idCategoria + "';";
+        dbOperation = new WriteDbOperation(sql);
+        int rowCount = (int) executor.executeOperation(dbOperation);
+        executor.closeOperation(dbOperation);
         return rowCount;
     }
 

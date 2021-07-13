@@ -2,8 +2,7 @@ package DAO.UtentiPuntoVendita;
 
 import DAO.PuntoVendita.PuntoVenditaDAO;
 import DAO.Utente.UtenteDAO;
-import DbInterface.DbConnection;
-import DbInterface.IDbConnection;
+import DbInterface.*;
 import Model.PuntoVendita;
 import Model.Utente;
 
@@ -17,8 +16,11 @@ public class UtentiPuntoVenditaDAO implements IUtentiPuntoVenditaDAO {
 
     private final static UtentiPuntoVenditaDAO instance = new UtentiPuntoVenditaDAO();
 
-    IDbConnection conn;
-    ResultSet rs;
+    private static IDbConnection conn;
+    private ResultSet rs;
+    private IDbOperation dbOperation;
+    private DbOperationExecutor executor;
+    private String sql;
 
     private UtentiPuntoVenditaDAO(){
         conn = null;
@@ -31,8 +33,11 @@ public class UtentiPuntoVenditaDAO implements IUtentiPuntoVenditaDAO {
 
     @Override
     public HashMap<Utente, String> findUsersByShopID(int idPuntoVendita) {
-        conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT idUtente, disattivato FROM myshopdb.UtentePuntoVendita WHERE idPuntoVendita = '" + idPuntoVendita + "';");
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "SELECT idUtente, disattivato FROM myshopdb.UtentePuntoVendita WHERE idPuntoVendita = '" + idPuntoVendita + "';";
+        dbOperation = new ReadDbOperation(sql);
+        rs = (ResultSet) executor.executeOperation(dbOperation);
         HashMap<Utente, String> utentiPuntoVendita;
         HashMap<Integer, String> idUtenti = new HashMap<>();
         UtenteDAO uDAO = UtenteDAO.getInstance();
@@ -50,7 +55,7 @@ public class UtentiPuntoVenditaDAO implements IUtentiPuntoVenditaDAO {
             System.out.println("Resultset: " + e.getMessage());
         }
         finally {
-            conn.close();
+            executor.closeOperation(dbOperation);
         }
         utentiPuntoVendita = new HashMap<>();
         for (Map.Entry<Integer,String> entry:idUtenti.entrySet()){
@@ -61,8 +66,11 @@ public class UtentiPuntoVenditaDAO implements IUtentiPuntoVenditaDAO {
 
     @Override
     public ArrayList<PuntoVendita> findShopsByUserID(int idUtente) {
-        conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT idPuntoVendita FROM myshopdb.UtentePuntoVendita WHERE idUtente = '" + idUtente + "';");
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "SELECT idPuntoVendita FROM myshopdb.UtentePuntoVendita WHERE idUtente = '" + idUtente + "';";
+        dbOperation = new ReadDbOperation(sql);
+        rs = (ResultSet) executor.executeOperation(dbOperation);
         ArrayList<PuntoVendita> puntiVenditaUtente = new ArrayList<>();
         PuntoVenditaDAO pvDAO = PuntoVenditaDAO.getInstance();
         try {
@@ -80,15 +88,18 @@ public class UtentiPuntoVenditaDAO implements IUtentiPuntoVenditaDAO {
             System.out.println("Resultset: " + e.getMessage());
         }
         finally {
-            conn.close();
+            executor.closeOperation(dbOperation);
         }
         return null;
     }
 
     @Override
     public Utente findShopManagerByShopID(int idPuntoVendita) {
-        conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT idUtente FROM myshopdb.UtentePuntoVendita WHERE idPuntoVendita = '" + idPuntoVendita + "' AND isManager = 'SI';");
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "SELECT idUtente FROM myshopdb.UtentePuntoVendita WHERE idPuntoVendita = '" + idPuntoVendita + "' AND isManager = 'SI';";
+        dbOperation = new ReadDbOperation(sql);
+        rs = (ResultSet) executor.executeOperation(dbOperation);
         UtenteDAO uDAO = UtenteDAO.getInstance();
         try {
             rs.next();
@@ -107,15 +118,18 @@ public class UtentiPuntoVenditaDAO implements IUtentiPuntoVenditaDAO {
             System.out.println("Resultset: " + e.getMessage());
         }
         finally {
-            conn.close();
+            executor.closeOperation(dbOperation);
         }
         return null;
     }
 
     @Override
     public PuntoVendita findShopByShopManagerID(int idUtente) {
-        conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT idPuntoVendita FROM myshopdb.UtentePuntoVendita WHERE idUtente = '" + idUtente + "' AND isManager = 1;");
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "SELECT idPuntoVendita FROM myshopdb.UtentePuntoVendita WHERE idUtente = '" + idUtente + "' AND isManager = 1;";
+        dbOperation = new ReadDbOperation(sql);
+        rs = (ResultSet) executor.executeOperation(dbOperation);
         PuntoVenditaDAO pvDAO = PuntoVenditaDAO.getInstance();
         int idPuntoVendita=0;
         PuntoVendita puntoVendita;
@@ -134,7 +148,7 @@ public class UtentiPuntoVenditaDAO implements IUtentiPuntoVenditaDAO {
             System.out.println("Resultset: " + e.getMessage());
         }
         finally {
-            conn.close();
+            executor.closeOperation(dbOperation);
         }
         puntoVendita = pvDAO.findByID(idPuntoVendita);
         return puntoVendita;
@@ -142,9 +156,13 @@ public class UtentiPuntoVenditaDAO implements IUtentiPuntoVenditaDAO {
 
     @Override
     public boolean isUserBanned(int idUtente, int idPuntoVendita) {
-        conn = DbConnection.getInstance();
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "SELECT disattivato FROM UtentePuntoVendita WHERE idUtente = '" + idUtente + "' AND idPuntoVendita = '" + idPuntoVendita +"';";
+        dbOperation = new ReadDbOperation(sql);
+        rs = (ResultSet) executor.executeOperation(dbOperation);
+
         boolean banned = false;
-        rs = conn.executeQuery("SELECT disattivato FROM UtentePuntoVendita WHERE idUtente = '" + idUtente + "' AND idPuntoVendita = '" + idPuntoVendita +"';");
         try{
             rs.next();
             if (rs.getRow() == 1){
@@ -162,16 +180,19 @@ public class UtentiPuntoVenditaDAO implements IUtentiPuntoVenditaDAO {
             System.out.println("Resultset: " + e.getMessage());
         }
         finally {
-            conn.close();
+            executor.closeOperation(dbOperation);
         }
         return banned;
     }
 
     @Override
     public boolean isUserShopManager(int idUtente, int idPuntoVendita) {
-        conn = DbConnection.getInstance();
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "SELECT isManager FROM UtentePuntoVendita WHERE idUtente = '" + idUtente + "' AND idPuntoVendita = '" + idPuntoVendita +"';";
+        dbOperation = new ReadDbOperation(sql);
+        rs = (ResultSet) executor.executeOperation(dbOperation);
         boolean isManager = false;
-        rs = conn.executeQuery("SELECT isManager FROM UtentePuntoVendita WHERE idUtente = '" + idUtente + "' AND idPuntoVendita = '" + idPuntoVendita +"';");
         try{
             rs.next();
             if (rs.getRow() == 1){
@@ -189,16 +210,19 @@ public class UtentiPuntoVenditaDAO implements IUtentiPuntoVenditaDAO {
             System.out.println("Resultset: " + e.getMessage());
         }
         finally {
-            conn.close();
+            executor.closeOperation(dbOperation);
         }
         return isManager;
     }
 
     @Override
     public boolean isUserShopManagerSomewhere(int idUtente) {
-        conn = DbConnection.getInstance();
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "SELECT isManager FROM UtentePuntoVendita WHERE idUtente = '" + idUtente + "';";
+        dbOperation = new ReadDbOperation(sql);
+        rs = (ResultSet) executor.executeOperation(dbOperation);
         boolean isManager = false;
-        rs = conn.executeQuery("SELECT isManager FROM UtentePuntoVendita WHERE idUtente = '" + idUtente + "';");
         try{
             while (rs.next()){
                 if (rs.getInt("isManager") == 1) {
@@ -215,32 +239,41 @@ public class UtentiPuntoVenditaDAO implements IUtentiPuntoVenditaDAO {
             System.out.println("Resultset: " + e.getMessage());
         }
         finally {
-            conn.close();
+            executor.closeOperation(dbOperation);
         }
         return isManager;
     }
 
     @Override
     public int add(Utente utente, PuntoVendita puntoVendita, int disattivato, int isManager) {
-        conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("INSERT INTO UtentePuntoVendita VALUES ('" + puntoVendita.getIdPuntoVendita() + "','" + utente.getIdUtente() + "','" + disattivato + "','" + isManager + "');");
-        conn.close();
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "INSERT INTO UtentePuntoVendita VALUES ('" + puntoVendita.getIdPuntoVendita() + "','" + utente.getIdUtente() + "','" + disattivato + "','" + isManager + "');";
+        dbOperation = new WriteDbOperation(sql);
+        int rowCount = (int) executor.executeOperation(dbOperation);
+        executor.closeOperation(dbOperation);
         return rowCount;
     }
 
     @Override
     public int removeByID(int idUtente, int idPuntoVendita) {
-        conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("DELETE FROM UtentePuntoVendita WHERE idPuntoVendita = '" + idPuntoVendita + "' AND idUtente = '" + idUtente + "';");
-        conn.close();
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "DELETE FROM UtentePuntoVendita WHERE idPuntoVendita = '" + idPuntoVendita + "' AND idUtente = '" + idUtente + "';";
+        dbOperation = new WriteDbOperation(sql);
+        int rowCount = (int) executor.executeOperation(dbOperation);
+        executor.closeOperation(dbOperation);
         return rowCount;
     }
 
     @Override
     public int update(Utente utente, PuntoVendita puntoVendita, int disattivato, int isManager) {
-        conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("UPDATE UtentePuntoVendita SET disattivato = '" + disattivato + "', isManager = '" + isManager + "' WHERE idPuntoVendita = '" + puntoVendita.getIdPuntoVendita() + "' AND idUtente = '" + utente.getIdUtente() +"';");
-        conn.close();
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "UPDATE UtentePuntoVendita SET disattivato = '" + disattivato + "', isManager = '" + isManager + "' WHERE idPuntoVendita = '" + puntoVendita.getIdPuntoVendita() + "' AND idUtente = '" + utente.getIdUtente() +"';";
+        dbOperation = new WriteDbOperation(sql);
+        int rowCount = (int) executor.executeOperation(dbOperation);
+        executor.closeOperation(dbOperation);
         return rowCount;
     }
 }

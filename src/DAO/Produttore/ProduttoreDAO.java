@@ -1,8 +1,7 @@
 package DAO.Produttore;
 
 import DAO.Prodotto.ProdottoDAO;
-import DbInterface.DbConnection;
-import DbInterface.IDbConnection;
+import DbInterface.*;
 import Model.Produttore;
 
 import java.sql.ResultSet;
@@ -13,11 +12,14 @@ public class ProduttoreDAO implements IProduttoreDAO {
 
     private final static ProduttoreDAO instance = new ProduttoreDAO();
 
+    private static IDbConnection conn;
+    private ResultSet rs;
+    private DbOperationExecutor executor;
+    private IDbOperation dbOperation;
+    private String sql;
+
     private ProdottoDAO pDAO;
     //private ProdottoCompositoDAO pCompDAO = ProdottoCompositoDAO.getInstance();
-    private static IDbConnection conn;
-
-    private ResultSet rs;
     private Produttore produttore;
 
     private ProduttoreDAO(){
@@ -34,9 +36,12 @@ public class ProduttoreDAO implements IProduttoreDAO {
 
     @Override
     public Produttore findByID(int idProduttore) {
-        conn = DbConnection.getInstance();
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "SELECT idProduttore, nome, sito, citta, nazione FROM myshopdb.Produttore WHERE myshopdb.Produttore.idProduttore = '" + idProduttore + "';";
+        dbOperation = new ReadDbOperation(sql);
+        rs = (ResultSet) executor.executeOperation(dbOperation);
         pDAO = ProdottoDAO.getInstance();
-        rs = conn.executeQuery("SELECT idProduttore, nome, sito, citta, nazione FROM myshopdb.Produttore WHERE myshopdb.Produttore.idProduttore = '" + idProduttore + "';");
         try {
             rs.next();
             if (rs.getRow()==1){
@@ -58,16 +63,20 @@ public class ProduttoreDAO implements IProduttoreDAO {
             // handle any errors
             System.out.println("Resultset: " + e.getMessage());
         } finally {
-            conn.close();
+            executor.closeOperation(dbOperation);
         }
         return null;
     }
 
     @Override
     public Produttore getByName(String nomeProduttore) {
-        conn = DbConnection.getInstance();
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "SELECT idProduttore, nome, sito, citta, nazione FROM myshopdb.Produttore WHERE myshopdb.Produttore.nome = '" + nomeProduttore + "';";
+        dbOperation = new ReadDbOperation(sql);
+        rs = (ResultSet) executor.executeOperation(dbOperation);
         pDAO = ProdottoDAO.getInstance();
-        rs = conn.executeQuery("SELECT idProduttore, nome, sito, citta, nazione FROM myshopdb.Produttore WHERE myshopdb.Produttore.nome = '" + nomeProduttore + "';");
+
         try {
             rs.next();
             if (rs.getRow()==1){
@@ -90,7 +99,7 @@ public class ProduttoreDAO implements IProduttoreDAO {
             // handle any errors
             System.out.println("Resultset: " + e.getMessage());
         } finally {
-            conn.close();
+            executor.closeOperation(dbOperation);
         }
         return null;
     }
@@ -98,8 +107,11 @@ public class ProduttoreDAO implements IProduttoreDAO {
     @Override
     public boolean producerExists(String nomeProduttore) {
         boolean producerExists = false;
-        conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT count(*) AS C FROM Utente WHERE Produttore.nome = '" + nomeProduttore + "';");
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "SELECT count(*) AS C FROM Utente WHERE Produttore.nome = '" + nomeProduttore + "';";
+        dbOperation = new ReadDbOperation(sql);
+        rs = (ResultSet) executor.executeOperation(dbOperation);
         try {
             rs.next();
             if(rs.getRow()==1 && rs.getInt("C")==1)
@@ -113,16 +125,19 @@ public class ProduttoreDAO implements IProduttoreDAO {
             // handle any errors
             System.out.println("Resultset: " + e.getMessage());
         } finally {
-            conn.close();
+            executor.closeOperation(dbOperation);
         }
         return producerExists;
     }
 
     @Override
     public ArrayList<Produttore> findAll() {
-        conn = DbConnection.getInstance();
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "SELECT idProduttore, nome, sito, citta, nazione FROM myshopdb.Produttore;";
+        dbOperation = new ReadDbOperation(sql);
+        rs = (ResultSet) executor.executeOperation(dbOperation);
         pDAO = ProdottoDAO.getInstance();
-        rs = conn.executeQuery("SELECT idProduttore, nome, sito, citta, nazione FROM myshopdb.Produttore;");
         ArrayList<Produttore> produttori = new ArrayList<>();
         try {
             while(rs.next()){
@@ -146,32 +161,41 @@ public class ProduttoreDAO implements IProduttoreDAO {
             // handle any errors
             System.out.println("Resultset: " + e.getMessage());
         } finally {
-            conn.close();
+            executor.closeOperation(dbOperation);
         }
         return null;
     }
 
     @Override
     public int add(Produttore produttore) {
-        conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("INSERT INTO Produttore VALUES ('" + produttore.getIdProduttore() + "','" + produttore.getNome() + "','" + produttore.getSito() + "','" + produttore.getCitta() + "','" + produttore.getNazione() + "');");
-        conn.close();
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "INSERT INTO Produttore VALUES ('" + produttore.getIdProduttore() + "','" + produttore.getNome() + "','" + produttore.getSito() + "','" + produttore.getCitta() + "','" + produttore.getNazione() + "');";
+        dbOperation = new WriteDbOperation(sql);
+        int rowCount = (int) executor.executeOperation(dbOperation);
+        executor.closeOperation(dbOperation);
         return rowCount;
     }
 
     @Override
     public int removeById(int idProduttore) {
-        conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("DELETE FROM Produttore WHERE Produttore.idProduttore = '" + produttore + "';");
-        conn.close();
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "DELETE FROM Produttore WHERE Produttore.idProduttore = '" + produttore + "';";
+        dbOperation = new WriteDbOperation(sql);
+        int rowCount = (int) executor.executeOperation(dbOperation);
+        executor.closeOperation(dbOperation);
         return rowCount;
     }
 
     @Override
     public int update(Produttore produttore) {
-        conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("UPDATE Produttore SET nome = '" + produttore.getNome() + "', sito = '" + produttore.getSito() + "', citta = '" + produttore.getCitta() + "', nazione = '" + produttore.getNazione() + "' WHERE idProduttore = '" + produttore.getIdProduttore() + "';'");
-        conn.close();
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "UPDATE Produttore SET nome = '" + produttore.getNome() + "', sito = '" + produttore.getSito() + "', citta = '" + produttore.getCitta() + "', nazione = '" + produttore.getNazione() + "' WHERE idProduttore = '" + produttore.getIdProduttore() + "';'";
+        dbOperation = new WriteDbOperation(sql);
+        int rowCount = (int) executor.executeOperation(dbOperation);
+        executor.closeOperation(dbOperation);
         return rowCount;
     }
 

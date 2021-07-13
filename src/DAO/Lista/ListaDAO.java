@@ -3,8 +3,7 @@ package DAO.Lista;
 import DAO.ProdottiLista.ProdottiListaDAO;
 import DAO.ServiziLista.ServiziListaDAO;
 import DAO.Utente.UtenteDAO;
-import DbInterface.DbConnection;
-import DbInterface.IDbConnection;
+import DbInterface.*;
 import Model.Lista;
 
 import java.sql.ResultSet;
@@ -18,8 +17,11 @@ public class ListaDAO implements IListaDAO {
 
     private Lista lista;
     private static IDbConnection conn;
-
     private static ResultSet rs;
+    private DbOperationExecutor executor;
+    private IDbOperation dbOperation;
+    private String sql;
+
     private ProdottiListaDAO plDAO;
     private ServiziListaDAO slDAO;
     private UtenteDAO uDAO;
@@ -37,8 +39,11 @@ public class ListaDAO implements IListaDAO {
 
     @Override
     public Lista findByID(int idLista) {
-        conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT idLista, nome, dataCreazione, stato, prezzoTotale, idUtente FROM myshopdb.Lista WHERE myshopdb.Lista.idLista = '" + idLista + "';");
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "SELECT idLista, nome, dataCreazione, stato, prezzoTotale, idUtente FROM myshopdb.Lista WHERE myshopdb.Lista.idLista = '" + idLista + "';";
+        dbOperation = new ReadDbOperation(sql);
+        rs = (ResultSet) executor.executeOperation(dbOperation);
         plDAO = ProdottiListaDAO.getInstance();
         slDAO = ServiziListaDAO.getInstance();
         uDAO = UtenteDAO.getInstance();
@@ -65,15 +70,18 @@ public class ListaDAO implements IListaDAO {
             // handle any errors
             System.out.println("Resultset: " + e.getMessage());
         } finally {
-            conn.close();
+            executor.closeOperation(dbOperation);
         }
         return null;
     }
 
     @Override
     public ArrayList<Lista> findAll() {
-        conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT idLista, nome, dataCreazione, stato, prezzoTotale, idUtente FROM myshopdb.Lista;");
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "SELECT idLista, nome, dataCreazione, stato, prezzoTotale, idUtente FROM myshopdb.Lista;";
+        dbOperation = new ReadDbOperation(sql);
+        rs = (ResultSet) executor.executeOperation(dbOperation);
         plDAO = ProdottiListaDAO.getInstance();
         slDAO = ServiziListaDAO.getInstance();
         uDAO = UtenteDAO.getInstance();
@@ -101,15 +109,18 @@ public class ListaDAO implements IListaDAO {
             // handle any errors
             System.out.println("Resultset: " + e.getMessage());
         } finally {
-            conn.close();
+            executor.closeOperation(dbOperation);
         }
         return null;
     }
 
     @Override
     public ArrayList<Lista> findAllByUserID(int idUtente) {
-        conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT idLista, nome, dataCreazione, stato, prezzoTotale, idUtente FROM myshopdb.Lista WHERE myshopdb.Lista.idUtente = '" + idUtente +"';");
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "SELECT idLista, nome, dataCreazione, stato, prezzoTotale, idUtente FROM myshopdb.Lista WHERE myshopdb.Lista.idUtente = '" + idUtente +"';";
+        dbOperation = new ReadDbOperation(sql);
+        rs = (ResultSet) executor.executeOperation(dbOperation);
         plDAO = ProdottiListaDAO.getInstance();
         slDAO = ServiziListaDAO.getInstance();
         uDAO = UtenteDAO.getInstance();
@@ -137,15 +148,18 @@ public class ListaDAO implements IListaDAO {
             // handle any errors
             System.out.println("Resultset: " + e.getMessage());
         } finally {
-            conn.close();
+            executor.closeOperation(dbOperation);
         }
         return null;
     }
 
     @Override
     public ArrayList<Lista> findAllByState(Lista.Stato stato) {
-        conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT idLista, nome, dataCreazione, stato, prezzoTotale, idUtente FROM myshopdb.Lista WHERE myshopdb.Lista.stato = '" + stato.toString() +"';");
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "SELECT idLista, nome, dataCreazione, stato, prezzoTotale, idUtente FROM myshopdb.Lista WHERE myshopdb.Lista.stato = '" + stato.toString() +"';";
+        dbOperation = new ReadDbOperation(sql);
+        rs = (ResultSet) executor.executeOperation(dbOperation);
         plDAO = ProdottiListaDAO.getInstance();
         slDAO = ServiziListaDAO.getInstance();
         uDAO = UtenteDAO.getInstance();
@@ -173,15 +187,18 @@ public class ListaDAO implements IListaDAO {
             // handle any errors
             System.out.println("Resultset: " + e.getMessage());
         } finally {
-            conn.close();
+            executor.closeOperation(dbOperation);
         }
         return null;
     }
 
     @Override
     public ArrayList<Lista> findAllByUserAndState(int idUtente, Lista.Stato stato) {
-        conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT idLista, nome, dataCreazione, stato, prezzoTotale, idUtente FROM myshopdb.Lista WHERE myshopdb.Lista.stato = '" + stato.toString() + "' AND myshopdb.Lista.idUtente = '"+ idUtente + "';");
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "SELECT idLista, nome, dataCreazione, stato, prezzoTotale, idUtente FROM myshopdb.Lista WHERE myshopdb.Lista.stato = '" + stato.toString() + "' AND myshopdb.Lista.idUtente = '"+ idUtente + "';";
+        dbOperation = new ReadDbOperation(sql);
+        rs = (ResultSet) executor.executeOperation(dbOperation);
         plDAO = ProdottiListaDAO.getInstance();
         slDAO = ServiziListaDAO.getInstance();
         uDAO = UtenteDAO.getInstance();
@@ -209,40 +226,52 @@ public class ListaDAO implements IListaDAO {
             // handle any errors
             System.out.println("Resultset: " + e.getMessage());
         } finally {
-            conn.close();
+            executor.closeOperation(dbOperation);
         }
         return null;
     }
 
     @Override
     public int add(Lista lista) {
-        conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("INSERT INTO Lista (nome, dataCreazione, stato, prezzoTotale, idUtente) VALUES ('" + lista.getNomeLista() + "','" + lista.getDataCreazione().toString() + "','" + lista.getStato().toString() + "','" + lista.getPrezzoTotale() + "','" + lista.getUtente().getIdUtente() + "');");
-        conn.close();
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "INSERT INTO Lista (nome, dataCreazione, stato, prezzoTotale, idUtente) VALUES ('" + lista.getNomeLista() + "','" + lista.getDataCreazione().toString() + "','" + lista.getStato().toString() + "','" + lista.getPrezzoTotale() + "','" + lista.getUtente().getIdUtente() + "');";
+        dbOperation = new WriteDbOperation(sql);
+        int rowCount = (int) executor.executeOperation(dbOperation);
+        executor.closeOperation(dbOperation);
         return rowCount;
     }
 
     @Override
     public int removeById(int idLista) {
-        conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("DELETE FROM myshopdb.Lista WHERE idLista = '"+ idLista + "';");
-        conn.close();
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "DELETE FROM myshopdb.Lista WHERE idLista = '"+ idLista + "';";
+        dbOperation = new WriteDbOperation(sql);
+        int rowCount = (int) executor.executeOperation(dbOperation);
+        executor.closeOperation(dbOperation);
         return rowCount;
     }
 
     @Override
     public int update(Lista lista) {
-        conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("UPDATE Lista SET nome = '" + lista.getNomeLista() + "', stato = '" + lista.getStato().toString() + "', prezzoTotale = '" + lista.getPrezzoTotale() + "' WHERE idLista = '" + lista.getIdLista() + "';");
-        conn.close();
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "UPDATE Lista SET nome = '" + lista.getNomeLista() + "', stato = '" + lista.getStato().toString() + "', prezzoTotale = '" + lista.getPrezzoTotale() + "' WHERE idLista = '" + lista.getIdLista() + "';";
+        dbOperation = new WriteDbOperation(sql);
+        int rowCount = (int) executor.executeOperation(dbOperation);
+        executor.closeOperation(dbOperation);
         return rowCount;
     }
 
     @Override
     public int editName(Lista lista) {
-        conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("UPDATE Lista SET nome = '" + lista.getNomeLista() + "' WHERE idLista = '" + lista.getIdLista() + "';");
-        conn.close();
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "UPDATE Lista SET nome = '" + lista.getNomeLista() + "' WHERE idLista = '" + lista.getIdLista() + "';";
+        dbOperation = new WriteDbOperation(sql);
+        int rowCount = (int) executor.executeOperation(dbOperation);
+        executor.closeOperation(dbOperation);
         return rowCount;
     }
 }

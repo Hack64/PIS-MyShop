@@ -1,7 +1,6 @@
 package DAO.Categoria;
 
-import DbInterface.DbConnection;
-import DbInterface.IDbConnection;
+import DbInterface.*;
 import Model.Categoria;
 import Model.ICategoria;
 
@@ -14,8 +13,11 @@ public class CategoriaDAO implements ICategoriaDAO {
     private final static CategoriaDAO instance = new CategoriaDAO();
 
     private static IDbConnection conn;
-
     private ResultSet rs;
+    private DbOperationExecutor executor;
+    private IDbOperation dbOperation;
+    private String sql;
+
     private ArrayList<ICategoria> sottoCategorie = new ArrayList<>();
 
     private CategoriaDAO(){
@@ -32,8 +34,11 @@ public class CategoriaDAO implements ICategoriaDAO {
         if (idCategoria == 0){
             return new Categoria(-1,"null", null);
         }
-        conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT idCategoria, nome, idCategoriaPadre FROM myshopdb.Categoria WHERE myshopdb.Categoria.idCategoria = '" + idCategoria + "';");
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "SELECT idCategoria, nome, idCategoriaPadre FROM myshopdb.Categoria WHERE myshopdb.Categoria.idCategoria = '" + idCategoria + "';";
+        dbOperation = new ReadDbOperation(sql);
+        rs = (ResultSet) executor.executeOperation(dbOperation);
         Categoria categoria = new Categoria();
         int idPadre=0;
         try {
@@ -52,7 +57,7 @@ public class CategoriaDAO implements ICategoriaDAO {
             // handle any errors
             System.out.println("Resultset: " + e.getMessage());
         } finally {
-            conn.close();
+            executor.closeOperation(dbOperation);
         }
         categoria.setCategoriaPadre(this.findByID(idPadre));
         return categoria;
@@ -61,8 +66,11 @@ public class CategoriaDAO implements ICategoriaDAO {
 
     @Override
     public ICategoria findByName(String nome) {
-        conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT idCategoria, nome, idCategoriaPadre FROM myshopdb.Categoria WHERE myshopdb.Categoria.nome = '" + nome + "';");
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "SELECT idCategoria, nome, idCategoriaPadre FROM myshopdb.Categoria WHERE myshopdb.Categoria.nome = '" + nome + "';";
+        dbOperation = new ReadDbOperation(sql);
+        rs = (ResultSet) executor.executeOperation(dbOperation);
         Categoria categoria;
         try {
             rs.next();
@@ -82,15 +90,18 @@ public class CategoriaDAO implements ICategoriaDAO {
             // handle any errors
             System.out.println("Resultset: " + e.getMessage());
         } finally {
-            conn.close();
+            executor.closeOperation(dbOperation);
         }
         return null;
     }
 
     @Override
     public ArrayList<ICategoria> findAll() {
-        conn = DbConnection.getInstance();
-        ResultSet rs2 = conn.executeQuery("SELECT idCategoria, nome, idCategoriaPadre FROM myshopdb.Categoria;");
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "SELECT idCategoria, nome, idCategoriaPadre FROM myshopdb.Categoria;";
+        dbOperation = new ReadDbOperation(sql);
+        ResultSet rs2 = (ResultSet) executor.executeOperation(dbOperation);
         ArrayList<ICategoria> categorie = new ArrayList<>();
         Categoria categoria;
         try {
@@ -111,7 +122,7 @@ public class CategoriaDAO implements ICategoriaDAO {
             // handle any errors
             System.out.println("Resultset: " + e.getMessage());
         } finally {
-            conn.close();
+            executor.closeOperation(dbOperation);
         }
         return null;
     }
@@ -119,17 +130,20 @@ public class CategoriaDAO implements ICategoriaDAO {
     @Override
     public ArrayList<ICategoria> findAllSubcategoriesByCategoryID(int idCategoria) {
         if (idCategoria == 0) {
-            conn.close();
+            executor.closeOperation(dbOperation);
             return sottoCategorie;
         } else {
-            conn = DbConnection.getInstance();
-            rs = conn.executeQuery("SELECT idCategoriaPadre FROM myshopdb.Categoria WHERE myshopdb.Categoria.idCategoria = '" + idCategoria + "';");
+            //conn = DbConnection.getInstance();
+            executor = new DbOperationExecutor();
+            sql = "SELECT idCategoriaPadre FROM myshopdb.Categoria WHERE myshopdb.Categoria.idCategoria = '" + idCategoria + "';";
+            dbOperation = new ReadDbOperation(sql);
+            rs = (ResultSet) executor.executeOperation(dbOperation);
             ICategoria categoria;
             try {
                 rs.next();
                 if (rs.getRow() == 1) {
                     int idCategoriaPadre = rs.getInt("idCategoriaPadre");
-                    conn.close();
+                    executor.closeOperation(dbOperation);
                     categoria = findByID(idCategoriaPadre);
                     sottoCategorie.add(categoria);
                     findAllSubcategoriesByCategoryID(idCategoriaPadre);
@@ -143,7 +157,7 @@ public class CategoriaDAO implements ICategoriaDAO {
                 // handle any errors
                 System.out.println("Resultset: " + e.getMessage());
             } finally {
-                conn.close();
+                executor.closeOperation(dbOperation);
             }
         }
         return null;
@@ -151,31 +165,40 @@ public class CategoriaDAO implements ICategoriaDAO {
 
     @Override
     public int add(ICategoria categoria) {
-        conn = DbConnection.getInstance();
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
         int rowCount;
         if (categoria.getCategoriaPadre() == null) {
-            rowCount = conn.executeUpdate("INSERT INTO Categoria (nome) VALUES ('" + categoria.getNome() + "');");
+            sql = "INSERT INTO Categoria (nome) VALUES ('" + categoria.getNome() + "');";
 
         } else {
-            rowCount = conn.executeUpdate("INSERT INTO Categoria (nome, idCategoriaPadre) VALUES ('" + categoria.getNome() + "','" + categoria.getCategoriaPadre().getIdCategoria() + "');");
+            sql = "INSERT INTO Categoria (nome, idCategoriaPadre) VALUES ('" + categoria.getNome() + "','" + categoria.getCategoriaPadre().getIdCategoria() + "');";
         }
-        conn.close();
+        dbOperation = new WriteDbOperation(sql);
+        rowCount = (int) executor.executeOperation(dbOperation);
+        executor.closeOperation(dbOperation);
         return rowCount;
     }
 
     @Override
     public int removeByID(int idCategoria) {
-        conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("DELETE FROM Categoria WHERE idCategoria = '"+ idCategoria + "';");
-        conn.close();
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "DELETE FROM Categoria WHERE idCategoria = '"+ idCategoria + "';";
+        dbOperation = new WriteDbOperation(sql);
+        int rowCount = (int) executor.executeOperation(dbOperation);
+        executor.closeOperation(dbOperation);
         return rowCount;
     }
 
     @Override
     public int update(ICategoria categoria) {
-        conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("UPDATE Categoria SET nome = '" + categoria.getNome() + "' WHERE idCategoria = '" + categoria.getIdCategoria() + "';" );
-        conn.close();
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "UPDATE Categoria SET nome = '" + categoria.getNome() + "' WHERE idCategoria = '" + categoria.getIdCategoria() + "';";
+        dbOperation = new WriteDbOperation(sql);
+        int rowCount = (int) executor.executeOperation(dbOperation);
+        executor.closeOperation(dbOperation);
         return rowCount;
     }
 }

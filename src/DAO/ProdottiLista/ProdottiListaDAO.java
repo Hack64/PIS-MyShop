@@ -2,8 +2,7 @@ package DAO.ProdottiLista;
 
 import DAO.Lista.ListaDAO;
 import DAO.Prodotto.ProdottoDAO;
-import DbInterface.DbConnection;
-import DbInterface.IDbConnection;
+import DbInterface.*;
 import Model.IProdotto;
 import Model.Lista;
 
@@ -19,8 +18,11 @@ public class ProdottiListaDAO implements IProdottiListaDAO {
     private final static ProdottiListaDAO instance = new ProdottiListaDAO();
 
     private static IDbConnection conn;
-
     private ResultSet rs;
+    private DbOperationExecutor executor;
+    private IDbOperation dbOperation;
+    private String sql;
+
     private ProdottoDAO pDAO;
 
     private ProdottiListaDAO(){
@@ -35,8 +37,11 @@ public class ProdottiListaDAO implements IProdottiListaDAO {
 
     @Override
     public HashMap<IProdotto, Map.Entry<String, Integer>> findAllProductsByListID(int idLista) {
-        conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT idProdotto, idLista, prenotato FROM ProdottoLista WHERE idLista = '" + idLista + "';");
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "SELECT idProdotto, idLista, prenotato FROM ProdottoLista WHERE idLista = '" + idLista + "';";
+        dbOperation = new ReadDbOperation(sql);
+        rs = (ResultSet) executor.executeOperation(dbOperation);
         HashMap<IProdotto, Map.Entry<String, Integer>> prodottiLista = new HashMap<>();
         IProdotto prodotto;
         pDAO = ProdottoDAO.getInstance();
@@ -55,15 +60,18 @@ public class ProdottiListaDAO implements IProdottiListaDAO {
             // handle any errors
             System.out.println("Resultset: " + e.getMessage());
         } finally {
-            conn.close();
+            executor.closeOperation(dbOperation);
         }
         return null;
     }
 
     @Override
     public HashMap<IProdotto, String> findAllProductsByListIDAndState(int idLista, String prenotato) {
-        conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT idProdotto, idLista, prenotato FROM ProdottoLista WHERE idLista = '" + idLista + "' AND prenotato = '" + prenotato + "';");
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "SELECT idProdotto, idLista, prenotato FROM ProdottoLista WHERE idLista = '" + idLista + "' AND prenotato = '" + prenotato + "';";
+        dbOperation = new ReadDbOperation(sql);
+        rs = (ResultSet) executor.executeOperation(dbOperation);
         HashMap<IProdotto, String> prodottiLista = new HashMap<>();
         IProdotto prodotto;
         pDAO = ProdottoDAO.getInstance();
@@ -82,15 +90,18 @@ public class ProdottiListaDAO implements IProdottiListaDAO {
             // handle any errors
             System.out.println("Resultset: " + e.getMessage());
         } finally {
-            conn.close();
+            executor.closeOperation(dbOperation);
         }
         return null;
     }
 
     @Override
     public ArrayList<Lista> findAllListsByProductID(int idProdotto) {
-        conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT idProdotto, idLista, prenotato FROM ProdottoLista WHERE idProdotto = '" + idProdotto + "';");
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "SELECT idProdotto, idLista, prenotato FROM ProdottoLista WHERE idProdotto = '" + idProdotto + "';";
+        dbOperation = new ReadDbOperation(sql);
+        rs = (ResultSet) executor.executeOperation(dbOperation);
         ArrayList<Lista> listeProdotto = new ArrayList<>();
         Lista lista;
         ListaDAO lDAO = ListaDAO.getInstance();
@@ -109,32 +120,41 @@ public class ProdottiListaDAO implements IProdottiListaDAO {
             // handle any errors
             System.out.println("Resultset: " + e.getMessage());
         } finally {
-            conn.close();
+            executor.closeOperation(dbOperation);
         }
         return null;
     }
 
     @Override
     public int add(Lista lista, IProdotto prodotto, String prenotato, int quantita) {
-        conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("INSERT INTO ProdottoLista (idProdotto, idLista, prenotato, quantita) VALUES ('" + prodotto.getIdProdotto() + "','" + lista.getIdLista() + "','" + prenotato + "','" + quantita +"');");
-        conn.close();
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "INSERT INTO ProdottoLista (idProdotto, idLista, prenotato, quantita) VALUES ('" + prodotto.getIdProdotto() + "','" + lista.getIdLista() + "','" + prenotato + "','" + quantita +"');";
+        dbOperation = new WriteDbOperation(sql);
+        int rowCount = (int) executor.executeOperation(dbOperation);
+        executor.closeOperation(dbOperation);
         return rowCount;
     }
 
     @Override
     public int removeByID(int idProdotto, int idLista) {
-        conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("DELETE FROM ProdottoLista WHERE idProdotto = '" + idProdotto + "' AND idLista = '" + idLista + "';");
-        conn.close();
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "DELETE FROM ProdottoLista WHERE idProdotto = '" + idProdotto + "' AND idLista = '" + idLista + "';";
+        dbOperation = new WriteDbOperation(sql);
+        int rowCount = (int) executor.executeOperation(dbOperation);
+        executor.closeOperation(dbOperation);
         return rowCount;
     }
 
     @Override
     public int update(Lista lista, IProdotto prodotto, String prenotato, int quantita) {
-        conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("UPDATE ProdottoLista SET prenotato = '" + prenotato + "', quantita = '" + quantita + "' WHERE idProdotto = '" + prodotto.getIdProdotto() + "' AND idLista = '" + lista.getIdLista() + "';");
-        conn.close();
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "UPDATE ProdottoLista SET prenotato = '" + prenotato + "', quantita = '" + quantita + "' WHERE idProdotto = '" + prodotto.getIdProdotto() + "' AND idLista = '" + lista.getIdLista() + "';";
+        dbOperation = new WriteDbOperation(sql);
+        int rowCount = (int) executor.executeOperation(dbOperation);
+        executor.closeOperation(dbOperation);
         return rowCount;
     }
 }

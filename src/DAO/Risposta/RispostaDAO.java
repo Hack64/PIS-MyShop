@@ -2,8 +2,7 @@ package DAO.Risposta;
 
 import DAO.Feedback.FeedbackDAO;
 import DAO.Utente.UtenteDAO;
-import DbInterface.DbConnection;
-import DbInterface.IDbConnection;
+import DbInterface.*;
 import Model.Risposta;
 
 import java.sql.ResultSet;
@@ -16,8 +15,10 @@ public class RispostaDAO implements IRispostaDAO {
     private final static RispostaDAO instance = new RispostaDAO();
 
     private static IDbConnection conn;
-
     private ResultSet rs;
+    private DbOperationExecutor executor;
+    private IDbOperation dbOperation;
+    private String sql;
     private Risposta risposta;
     private FeedbackDAO fDAO;
     private UtenteDAO uDAO;
@@ -34,8 +35,11 @@ public class RispostaDAO implements IRispostaDAO {
 
     @Override
     public Risposta findByID(int idRisposta) {
-        conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT idRisposta, idFeedback, testo, dataCreazione, idUtente FROM Risposta WHERE Risposta.idRisposta = '" + idRisposta + "';");
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "SELECT idRisposta, idFeedback, testo, dataCreazione, idUtente FROM Risposta WHERE Risposta.idRisposta = '" + idRisposta + "';";
+        dbOperation = new ReadDbOperation(sql);
+        rs = (ResultSet) executor.executeOperation(dbOperation);
         fDAO = FeedbackDAO.getInstance();
         uDAO = UtenteDAO.getInstance();
         try {
@@ -60,15 +64,18 @@ public class RispostaDAO implements IRispostaDAO {
             System.out.println("Resultset: " + e.getMessage());
         }
         finally {
-            conn.close();
+            executor.closeOperation(dbOperation);
         }
         return null;
     }
 
     @Override
     public ArrayList<Risposta> findAll() {
-        conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT idRisposta, idFeedback, testo, dataCreazione, idUtente FROM Risposta;");
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "SELECT idRisposta, idFeedback, testo, dataCreazione, idUtente FROM Risposta;";
+        dbOperation = new ReadDbOperation(sql);
+        rs = (ResultSet) executor.executeOperation(dbOperation);
         ArrayList<Risposta> risposte = new ArrayList<>();
         fDAO = FeedbackDAO.getInstance();
         uDAO = UtenteDAO.getInstance();
@@ -94,15 +101,18 @@ public class RispostaDAO implements IRispostaDAO {
             System.out.println("Resultset: " + e.getMessage());
         }
         finally {
-            conn.close();
+            executor.closeOperation(dbOperation);
         }
         return null;
     }
 
     @Override
     public ArrayList<Risposta> findAllByFeedbackID(int idFeedback) {
-        conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT idRisposta, idFeedback, testo, dataCreazione, idUtente FROM Risposta WHERE Risposta.idFeedback = '" + idFeedback + "';");
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "SELECT idRisposta, idFeedback, testo, dataCreazione, idUtente FROM Risposta WHERE Risposta.idFeedback = '" + idFeedback + "';";
+        dbOperation = new ReadDbOperation(sql);
+        rs = (ResultSet) executor.executeOperation(dbOperation);
         ArrayList<Risposta> risposte = new ArrayList<>();
         fDAO = FeedbackDAO.getInstance();
         uDAO = UtenteDAO.getInstance();
@@ -128,15 +138,18 @@ public class RispostaDAO implements IRispostaDAO {
             System.out.println("Resultset: " + e.getMessage());
         }
         finally {
-            conn.close();
+            executor.closeOperation(dbOperation);
         }
         return null;
     }
 
     @Override
     public ArrayList<Risposta> findAllByUserID(int idUtente) {
-        conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT idRisposta, idFeedback, testo, dataCreazione, idUtente FROM Risposta WHERE Risposta.idUtente = '" + idUtente + "';");
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "SELECT idRisposta, idFeedback, testo, dataCreazione, idUtente FROM Risposta WHERE Risposta.idUtente = '" + idUtente + "';";
+        dbOperation = new ReadDbOperation(sql);
+        rs = (ResultSet) executor.executeOperation(dbOperation);
         ArrayList<Risposta> risposte = new ArrayList<>();
         fDAO = FeedbackDAO.getInstance();
         uDAO = UtenteDAO.getInstance();
@@ -161,32 +174,41 @@ public class RispostaDAO implements IRispostaDAO {
             // handle any errors
             System.out.println("Resultset: " + e.getMessage());
         } finally {
-            conn.close();
+            executor.closeOperation(dbOperation);
         }
         return null;
     }
 
     @Override
     public int add(Risposta risposta) {
-        conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("INSERT INTO Risposta VALUES ('" + risposta.getIdRisposta() + "','" + risposta.getFeedback() + "','" + risposta.getTesto() + "','" + risposta.getDataCreazione().toString() + "','" + risposta.getUtente() + "');");
-        conn.close();
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "INSERT INTO Risposta VALUES ('" + risposta.getIdRisposta() + "','" + risposta.getFeedback() + "','" + risposta.getTesto() + "','" + risposta.getDataCreazione().toString() + "','" + risposta.getUtente() + "');";
+        dbOperation = new WriteDbOperation(sql);
+        int rowCount = (int) executor.executeOperation(dbOperation);
+        executor.closeOperation(dbOperation);
         return rowCount;
     }
 
     @Override
     public int removeByID(int idRisposta) {
-        conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("DELETE FROM Risposta WHERE Risposta.idRisposta = '" + idRisposta + "';");
-        conn.close();
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "DELETE FROM Risposta WHERE Risposta.idRisposta = '" + idRisposta + "';";
+        dbOperation = new WriteDbOperation(sql);
+        int rowCount = (int) executor.executeOperation(dbOperation);
+        executor.closeOperation(dbOperation);
         return rowCount;
     }
 
     @Override
     public int update(Risposta risposta) {
-        conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("UPDATE Risposta SET testo = '" + risposta.getTesto() + "', dataCreazione = '" + risposta.getDataCreazione().toString() + "' WHERE idRisposta = '" + risposta.getIdRisposta() + "';");
-        conn.close();
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "UPDATE Risposta SET testo = '" + risposta.getTesto() + "', dataCreazione = '" + risposta.getDataCreazione().toString() + "' WHERE idRisposta = '" + risposta.getIdRisposta() + "';";
+        dbOperation = new WriteDbOperation(sql);
+        int rowCount = (int) executor.executeOperation(dbOperation);
+        executor.closeOperation(dbOperation);
         return rowCount;
     }
 }

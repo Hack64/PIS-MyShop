@@ -3,8 +3,7 @@ package DAO.ComposizioneProdotto;
 import DAO.Feedback.FeedbackDAO;
 import DAO.Prodotto.ProdottoDAO;
 import DAO.ProdottoCategoria.ProdottoCategoriaDAO;
-import DbInterface.DbConnection;
-import DbInterface.IDbConnection;
+import DbInterface.*;
 import Model.IProdotto;
 import Model.ProdottoComposito;
 
@@ -17,9 +16,14 @@ public class ComposizioneProdottoDAO implements IComposizioneProdottoDAO {
     private final static ComposizioneProdottoDAO instance = new ComposizioneProdottoDAO();
 
     private static IDbConnection conn;
+    private ResultSet rs;
+    private DbOperationExecutor executor;
+    private IDbOperation dbOperation;
+    private String sql;
+
 
     private ComposizioneProdottoDAO(){
-        this.conn = null;
+        conn = null;
     }
 
     public static ComposizioneProdottoDAO getInstance() {
@@ -28,8 +32,11 @@ public class ComposizioneProdottoDAO implements IComposizioneProdottoDAO {
 
     @Override
     public ProdottoComposito findByID(int idProdotto) {
-        conn = DbConnection.getInstance();
-        ResultSet rs = conn.executeQuery("SELECT componente FROM ComposizioneProdotto WHERE composto = '" + idProdotto + "';");
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "SELECT componente FROM ComposizioneProdotto WHERE composto = '" + idProdotto + "';";
+        dbOperation = new ReadDbOperation(sql);
+        rs = (ResultSet) executor.executeOperation(dbOperation);
         IProdotto prodotto;
         ProdottoComposito prodottoComposito = new ProdottoComposito();
         ProdottoDAO pDAO = ProdottoDAO.getInstance();
@@ -61,15 +68,18 @@ public class ComposizioneProdottoDAO implements IComposizioneProdottoDAO {
             // handle any errors
             System.out.println("Resultset: " + e.getMessage());
         } finally {
-            conn.close();
+            executor.closeOperation(dbOperation);
         }
         return null;
     }
 
     @Override
     public ArrayList<IProdotto> findAll() {
-        conn = DbConnection.getInstance();
-        ResultSet rs = conn.executeQuery("SELECT DISTINCT composto FROM ComposizioneProdotto;");
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "SELECT DISTINCT composto FROM ComposizioneProdotto;";
+        dbOperation = new ReadDbOperation(sql);
+        rs = (ResultSet) executor.executeOperation(dbOperation);
         ProdottoComposito pc;
         ArrayList<Integer> ids = new ArrayList<>();
         ArrayList<IProdotto> prodottiCompositi = new ArrayList<>();
@@ -88,15 +98,18 @@ public class ComposizioneProdottoDAO implements IComposizioneProdottoDAO {
             // handle any errors
             System.out.println("Resultset: " + e.getMessage());
         } finally {
-            conn.close();
+            executor.closeOperation(dbOperation);
         }
         return null;
     }
 
     @Override
     public ArrayList<IProdotto> findAllByProducerID(int idProduttore) {
-        conn = DbConnection.getInstance();
-        ResultSet rs = conn.executeQuery("SELECT DISTINCT ComposizioneProdotto.composto FROM ComposizioneProdotto INNER JOIN Prodotto ON ComposizioneProdotto.composto = Prodotto.idProdotto WHERE Prodotto.idProduttore = '" + idProduttore +"';");
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "SELECT DISTINCT ComposizioneProdotto.composto FROM ComposizioneProdotto INNER JOIN Prodotto ON ComposizioneProdotto.composto = Prodotto.idProdotto WHERE Prodotto.idProduttore = '" + idProduttore +"';";
+        dbOperation = new ReadDbOperation(sql);
+        rs = (ResultSet) executor.executeOperation(dbOperation);
         ProdottoComposito pc;
         ArrayList<Integer> ids = new ArrayList<>();
         ArrayList<IProdotto> prodottiCompositi = new ArrayList<>();
@@ -119,15 +132,18 @@ public class ComposizioneProdottoDAO implements IComposizioneProdottoDAO {
             // handle any errors
             System.out.println("Resultset: " + e.getMessage());
         } finally {
-            conn.close();
+            executor.closeOperation(dbOperation);
         }
         return null;
     }
 
     @Override
     public boolean isCompositeProduct(int idProdotto) {
-        conn = DbConnection.getInstance();
-        ResultSet rs = conn.executeQuery("SELECT DISTINCT composto FROM ComposizioneProdotto;");
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql ="SELECT DISTINCT composto FROM ComposizioneProdotto;";
+        dbOperation = new ReadDbOperation(sql);
+        rs = (ResultSet) executor.executeOperation(dbOperation);
         boolean isComposite = false;
         try {
             while(rs.next()){
@@ -145,36 +161,45 @@ public class ComposizioneProdottoDAO implements IComposizioneProdottoDAO {
             // handle any errors
             System.out.println("Resultset: " + e.getMessage());
         } finally {
-            conn.close();
+            executor.closeOperation(dbOperation);
         }
         return false;
     }
 
     @Override
     public int add(IProdotto prodotto) {
-        conn = DbConnection.getInstance();
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
         ArrayList<IProdotto> sottoprodotti = prodotto.getSottoprodotti();
         int rowCount=0;
         for (IProdotto p:sottoprodotti){
-            rowCount = conn.executeUpdate("INSERT INTO ComposizioneProdotto (composto, componente) VALUES ('" +  prodotto.getIdProdotto() + "','" + p.getIdProdotto() + "');");
+            sql = "INSERT INTO ComposizioneProdotto (composto, componente) VALUES ('" +  prodotto.getIdProdotto() + "','" + p.getIdProdotto() + "');";
+            dbOperation = new WriteDbOperation(sql);
+            rowCount = (int) executor.executeOperation(dbOperation);
         }
-        conn.close();
+        executor.closeOperation(dbOperation);
         return rowCount;
     }
 
     @Override
     public int removeById(int idProdotto) {
-        conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("DELETE FROM ComposizioneProdotto WHERE idProdottoComposito = '" + idProdotto + "';");
-        conn.close();
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "DELETE FROM ComposizioneProdotto WHERE idProdottoComposito = '" + idProdotto + "';";
+        dbOperation = new WriteDbOperation(sql);
+        int rowCount = (int) executor.executeOperation(dbOperation);
+        executor.closeOperation(dbOperation);
         return rowCount;
     }
 
     @Override
     public int update(IProdotto prodotto) {
-        conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("DELETE FROM ComposizioneProdotto WHERE composto = '" + prodotto.getIdProdotto() + "';");
-        conn.close();
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "DELETE FROM ComposizioneProdotto WHERE composto = '" + prodotto.getIdProdotto() + "';";
+        dbOperation = new WriteDbOperation(sql);
+        int rowCount = (int) executor.executeOperation(dbOperation);
+        executor.closeOperation(dbOperation);
         this.add(prodotto);
         return rowCount;
     }

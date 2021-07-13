@@ -2,8 +2,7 @@ package DAO.ProdottiMagazzino;
 
 import DAO.Magazzino.MagazzinoDAO;
 import DAO.Prodotto.ProdottoDAO;
-import DbInterface.DbConnection;
-import DbInterface.IDbConnection;
+import DbInterface.*;
 import Model.Disponibilita;
 import Model.Magazzino;
 import Model.Posizione;
@@ -17,8 +16,10 @@ public class ProdottiMagazzinoDAO implements IProdottiMagazzinoDAO {
     private final static ProdottiMagazzinoDAO instance = new ProdottiMagazzinoDAO();
 
     private static IDbConnection conn;
-
     private ResultSet rs;
+    private DbOperationExecutor executor;
+    private IDbOperation dbOperation;
+    private String sql;
 
     private ProdottiMagazzinoDAO(){
         this.conn = null;
@@ -31,8 +32,11 @@ public class ProdottiMagazzinoDAO implements IProdottiMagazzinoDAO {
 
     @Override
     public ArrayList<Disponibilita> findAllProductsByWarehouseID(int idMagazzino) {
-        conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT idMagazzino, idProdotto, scaffale, corsia, quantita FROM ProdottiMagazzino WHERE ProdottiMagazzino.idMagazzino = '" + idMagazzino + "';");
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "SELECT idMagazzino, idProdotto, scaffale, corsia, quantita FROM ProdottiMagazzino WHERE ProdottiMagazzino.idMagazzino = '" + idMagazzino + "';";
+        dbOperation = new ReadDbOperation(sql);
+        rs = (ResultSet) executor.executeOperation(dbOperation);
         ArrayList<Disponibilita> prodottiMagazzino = new ArrayList<>();
         Disponibilita disponibilita = new Disponibilita();
         ProdottoDAO pDAO = ProdottoDAO.getInstance();
@@ -56,15 +60,18 @@ public class ProdottiMagazzinoDAO implements IProdottiMagazzinoDAO {
             // handle any errors
             System.out.println("Resultset: " + e.getMessage());
         } finally {
-            conn.close();
+            executor.closeOperation(dbOperation);
         }
         return null;
     }
 
     @Override
     public ArrayList<Magazzino> findAllWarehousesByProductID(int idProdotto) {
-        conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT idMagazzino, idProdotto, scaffale, corsia, quantita FROM ProdottiMagazzino WHERE ProdottiMagazzino.idProdotto = '" + idProdotto + "';");
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "SELECT idMagazzino, idProdotto, scaffale, corsia, quantita FROM ProdottiMagazzino WHERE ProdottiMagazzino.idProdotto = '" + idProdotto + "';";
+        dbOperation = new ReadDbOperation(sql);
+        rs = (ResultSet) executor.executeOperation(dbOperation);
         ArrayList<Magazzino> magazzini = new ArrayList<>();
         Magazzino magazzino;
         MagazzinoDAO mDAO = MagazzinoDAO.getInstance();
@@ -83,32 +90,41 @@ public class ProdottiMagazzinoDAO implements IProdottiMagazzinoDAO {
             // handle any errors
             System.out.println("Resultset: " + e.getMessage());
         } finally {
-            conn.close();
+            executor.closeOperation(dbOperation);
         }
         return null;
     }
 
     @Override
     public int add(Disponibilita disponibilita) {
-        conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("INSERT INTO ProdottiMagazzino (idMagazzino, idProdotto, scaffale, corsia, quantita) VALUES ('" + disponibilita.getMagazzino().getIdMagazzino() + "','" + disponibilita.getProdotto().getIdProdotto() + "','" + disponibilita.getPosizione().getCorsia() + "','" + disponibilita.getPosizione().getScaffale() + "','" + disponibilita.getQta() + "');");
-        conn.close();
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "INSERT INTO ProdottiMagazzino (idMagazzino, idProdotto, scaffale, corsia, quantita) VALUES ('" + disponibilita.getMagazzino().getIdMagazzino() + "','" + disponibilita.getProdotto().getIdProdotto() + "','" + disponibilita.getPosizione().getCorsia() + "','" + disponibilita.getPosizione().getScaffale() + "','" + disponibilita.getQta() + "');";
+        dbOperation = new WriteDbOperation(sql);
+        int rowCount = (int) executor.executeOperation(dbOperation);
+        executor.closeOperation(dbOperation);
         return rowCount;
     }
 
     @Override
     public int remove(Disponibilita disponibilita) {
-        conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("DELETE FROM ProdottiMagazzino WHERE idMagazzino = '" + disponibilita.getMagazzino().getIdMagazzino() +"', idProdotto = '" + disponibilita.getProdotto().getIdProdotto() +"';");
-        conn.close();
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "DELETE FROM ProdottiMagazzino WHERE idMagazzino = '" + disponibilita.getMagazzino().getIdMagazzino() +"', idProdotto = '" + disponibilita.getProdotto().getIdProdotto() +"';";
+        dbOperation = new WriteDbOperation(sql);
+        int rowCount = (int) executor.executeOperation(dbOperation);
+        executor.closeOperation(dbOperation);
         return rowCount;
     }
 
     @Override
     public int update(Disponibilita disponibilita) {
-        conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("UPDATE ProdottiMagazzino SET scaffale = '" + disponibilita.getPosizione().getScaffale() + "', corsia = '" + disponibilita.getPosizione().getCorsia() + "', quantita = '" + disponibilita.getQta() + "' WHERE idMagazzino = '" + disponibilita.getMagazzino().getIdMagazzino() + "' AND idProdotto = '" + disponibilita.getProdotto().getIdProdotto() + "';");
-        conn.close();
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "UPDATE ProdottiMagazzino SET scaffale = '" + disponibilita.getPosizione().getScaffale() + "', corsia = '" + disponibilita.getPosizione().getCorsia() + "', quantita = '" + disponibilita.getQta() + "' WHERE idMagazzino = '" + disponibilita.getMagazzino().getIdMagazzino() + "' AND idProdotto = '" + disponibilita.getProdotto().getIdProdotto() + "';";
+        dbOperation = new WriteDbOperation(sql);
+        int rowCount = (int) executor.executeOperation(dbOperation);
+        executor.closeOperation(dbOperation);
         return rowCount;
     }
 

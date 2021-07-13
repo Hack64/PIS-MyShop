@@ -1,8 +1,7 @@
 package DAO.Magazzino;
 
 import DAO.ProdottiMagazzino.ProdottiMagazzinoDAO;
-import DbInterface.DbConnection;
-import DbInterface.IDbConnection;
+import DbInterface.*;
 import Model.Magazzino;
 
 import java.sql.ResultSet;
@@ -14,8 +13,12 @@ public class MagazzinoDAO implements IMagazzinoDAO {
     private final static MagazzinoDAO instance = new MagazzinoDAO();
 
     private static IDbConnection conn;
-
     private ResultSet rs;
+    private DbOperationExecutor executor;
+    private IDbOperation dbOperation;
+    private String sql;
+
+
     private Magazzino magazzino;
     private ProdottiMagazzinoDAO pmDAO;
 
@@ -33,8 +36,11 @@ public class MagazzinoDAO implements IMagazzinoDAO {
 
     @Override
     public Magazzino findByID(int idMagazzino) {
-        conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT idMagazzino, via, CAP, citta, numeroScaffali, numeroCorsie, idPuntoVendita FROM myshopdb.Magazzino WHERE myshopdb.Magazzino.idMagazzino = '" + idMagazzino + "';");
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "SELECT idMagazzino, via, CAP, citta, numeroScaffali, numeroCorsie, idPuntoVendita FROM myshopdb.Magazzino WHERE myshopdb.Magazzino.idMagazzino = '" + idMagazzino + "';";
+        dbOperation = new ReadDbOperation(sql);
+        rs = (ResultSet) executor.executeOperation(dbOperation);
         pmDAO = ProdottiMagazzinoDAO.getInstance();
         try {
             rs.next();
@@ -56,7 +62,7 @@ public class MagazzinoDAO implements IMagazzinoDAO {
             // handle any errors
             System.out.println("Resultset: " + e.getMessage());
         } finally {
-            conn.close();
+            executor.closeOperation(dbOperation);
         }
         magazzino.setProdottiDisponibili(pmDAO.findAllProductsByWarehouseID(magazzino.getIdMagazzino()));
         return magazzino;
@@ -64,8 +70,11 @@ public class MagazzinoDAO implements IMagazzinoDAO {
 
     @Override
     public Magazzino findByShopID(int idPuntoVendita) {
-        conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT idMagazzino, via, CAP, citta, numeroScaffali, numeroCorsie, idPuntoVendita FROM myshopdb.Magazzino WHERE idPuntoVendita = '" + idPuntoVendita + "';");
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "SELECT idMagazzino, via, CAP, citta, numeroScaffali, numeroCorsie, idPuntoVendita FROM myshopdb.Magazzino WHERE idPuntoVendita = '" + idPuntoVendita + "';";
+        dbOperation = new ReadDbOperation(sql);
+        rs = (ResultSet) executor.executeOperation(dbOperation);
         pmDAO = ProdottiMagazzinoDAO.getInstance();
         try {
             rs.next();
@@ -87,7 +96,7 @@ public class MagazzinoDAO implements IMagazzinoDAO {
             // handle any errors
             System.out.println("Resultset: " + e.getMessage());
         } finally {
-            conn.close();
+            executor.closeOperation(dbOperation);
         }
         magazzino.setProdottiDisponibili(pmDAO.findAllProductsByWarehouseID(magazzino.getIdMagazzino()));
         return magazzino;
@@ -95,8 +104,11 @@ public class MagazzinoDAO implements IMagazzinoDAO {
 
     @Override
     public ArrayList<Magazzino> findAll() {
-        conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT idMagazzino, via, CAP, citta, numeroScaffali, numeroCorsie, idPuntoVendita FROM myshopdb.Magazzino;");
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "SELECT idMagazzino, via, CAP, citta, numeroScaffali, numeroCorsie, idPuntoVendita FROM myshopdb.Magazzino;";
+        dbOperation = new ReadDbOperation(sql);
+        rs = (ResultSet) executor.executeOperation(dbOperation);
         ArrayList<Magazzino> magazzini = new ArrayList<>();
         pmDAO = ProdottiMagazzinoDAO.getInstance();
         try {
@@ -122,32 +134,41 @@ public class MagazzinoDAO implements IMagazzinoDAO {
             // handle any errors
             System.out.println("Resultset: " + e.getMessage());
         } finally {
-            conn.close();
+            executor.closeOperation(dbOperation);
         }
         return null;
     }
 
     @Override
     public int add(Magazzino magazzino) {
-        conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("INSERT INTO Magazzino (via, CAP, citta, numeroScaffali, numeroCorsie, idPuntoVendita) VALUES ('" + magazzino.getVia() + "','" + magazzino.getCap() + "','" + magazzino.getCitta() + "','" + magazzino.getNumeroScaffali() + "','" + magazzino.getNumeroCorsie() + "','" + magazzino.getPuntoVendita().getIdPuntoVendita() + "');");
-        conn.close();
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "INSERT INTO Magazzino (via, CAP, citta, numeroScaffali, numeroCorsie, idPuntoVendita) VALUES ('" + magazzino.getVia() + "','" + magazzino.getCap() + "','" + magazzino.getCitta() + "','" + magazzino.getNumeroScaffali() + "','" + magazzino.getNumeroCorsie() + "','" + magazzino.getPuntoVendita().getIdPuntoVendita() + "');";
+        dbOperation = new WriteDbOperation(sql);
+        int rowCount = (int) executor.executeOperation(dbOperation);
+        executor.closeOperation(dbOperation);
         return rowCount;
     }
 
     @Override
     public int removeByID(int idMagazzino) {
-        conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("DELETE FROM Magazzino WHERE idMagazzino = '"+ idMagazzino + "';");
-        conn.close();
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "DELETE FROM Magazzino WHERE idMagazzino = '"+ idMagazzino + "';";
+        dbOperation = new WriteDbOperation(sql);
+        int rowCount = (int) executor.executeOperation(dbOperation);
+        executor.closeOperation(dbOperation);
         return rowCount;
     }
 
     @Override
     public int update(Magazzino magazzino) {
-        conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("UPDATE Magazzino SET via = '" + magazzino.getVia() + "', CAP = '" + magazzino.getCap() + "', citta = '" + magazzino.getCitta() + "', numeroScaffali = '" + magazzino.getNumeroScaffali() + "', numeroCorsie = '" + magazzino.getNumeroCorsie() + "' WHERE idMagazzino = '" + magazzino.getIdMagazzino() + "';");
-        conn.close();
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "UPDATE Magazzino SET via = '" + magazzino.getVia() + "', CAP = '" + magazzino.getCap() + "', citta = '" + magazzino.getCitta() + "', numeroScaffali = '" + magazzino.getNumeroScaffali() + "', numeroCorsie = '" + magazzino.getNumeroCorsie() + "' WHERE idMagazzino = '" + magazzino.getIdMagazzino() + "';";
+        dbOperation = new WriteDbOperation(sql);
+        int rowCount = (int) executor.executeOperation(dbOperation);
+        executor.closeOperation(dbOperation);
         return rowCount;
     }
 }

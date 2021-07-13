@@ -1,7 +1,6 @@
 package DAO.Utente;
 
-import DbInterface.DbConnection;
-import DbInterface.IDbConnection;
+import DbInterface.*;
 import Model.Utente;
 import at.favre.lib.crypto.bcrypt.BCrypt;
 
@@ -15,6 +14,9 @@ public class UtenteDAO implements IUtenteDAO {
 
     private Utente utente;
     private static IDbConnection conn;
+    private IDbOperation dbOperation;
+    private DbOperationExecutor executor;
+    private String sql;
 
     private static ResultSet rs;
 
@@ -30,8 +32,11 @@ public class UtenteDAO implements IUtenteDAO {
 
     @Override
     public Utente findByID(int idUtente) {
-        conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT * FROM myshopdb.Utente WHERE myshopdb.Utente.idUtente = '" + idUtente + "';");
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "SELECT * FROM myshopdb.Utente WHERE myshopdb.Utente.idUtente = '" + idUtente + "';" ;
+        dbOperation = new ReadDbOperation(sql);
+        rs = (ResultSet) executor.executeOperation(dbOperation);
         try {
             rs.next();
             if (rs.getRow()==1) {
@@ -61,15 +66,18 @@ public class UtenteDAO implements IUtenteDAO {
             // handle any errors
             System.out.println("Resultset: " + e.getMessage());
         } finally {
-            conn.close();
+            executor.closeOperation(dbOperation);
         }
         return null;
     }
 
     @Override
     public Utente findByEmail(String email) {
-        conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT * FROM myshopdb.Utente WHERE myshopdb.Utente.Email = '" + email + "';");
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "SELECT * FROM myshopdb.Utente WHERE myshopdb.Utente.Email = '" + email + "';";
+        dbOperation = new ReadDbOperation(sql);
+        rs = (ResultSet) executor.executeOperation(dbOperation);
         try {
             rs.next();
             if (rs.getRow()==1) {
@@ -95,15 +103,18 @@ public class UtenteDAO implements IUtenteDAO {
             // handle any errors
             System.out.println("Resultset: " + e.getMessage());
         } finally {
-            conn.close();
+            executor.closeOperation(dbOperation);
         }
         return null;
     }
 
     @Override
     public Utente getByUsername(String username) {
-        conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT * FROM myshopdb.Utente WHERE myshopdb.Utente.Email = '" + username + "';");
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "SELECT * FROM myshopdb.Utente WHERE myshopdb.Utente.Email = '" + username + "';";
+        dbOperation = new ReadDbOperation(sql);
+        rs = (ResultSet) executor.executeOperation(dbOperation);
         try {
             rs.next();
             if (rs.getRow()==1) {
@@ -129,15 +140,18 @@ public class UtenteDAO implements IUtenteDAO {
             // handle any errors
             System.out.println("Resultset: " + e.getMessage());
         } finally {
-            conn.close();
+            executor.closeOperation(dbOperation);
         }
         return null;
     }
 
     @Override
     public ArrayList<Utente> findAllByRole(Utente.Ruoli ruolo) {
-        conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT * FROM Utente WHERE tipo = '" + ruolo.toString() + "';");
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "SELECT * FROM Utente WHERE tipo = '" + ruolo.toString() + "';";
+        dbOperation = new ReadDbOperation(sql);
+        rs = (ResultSet) executor.executeOperation(dbOperation);
         ArrayList<Utente> utenti = new ArrayList<>();
         try {
             while (rs.next()) {
@@ -165,7 +179,7 @@ public class UtenteDAO implements IUtenteDAO {
             // Gestisce le differenti categorie d'errore
             System.out.println("Resultset: " + e.getMessage());
         } finally {
-            conn.close();
+            executor.closeOperation(dbOperation);
         }
         return null;
     }
@@ -173,8 +187,11 @@ public class UtenteDAO implements IUtenteDAO {
     @Override
     public boolean checkCredentials(String username, String password) {
         boolean credentialsOk = false;
-        conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT passwordHash FROM Utente WHERE Utente.email = '" + username + "';");
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "SELECT passwordHash FROM Utente WHERE Utente.email = '" + username + "';";
+        dbOperation = new ReadDbOperation(sql);
+        rs = (ResultSet) executor.executeOperation(dbOperation);
         try {
             rs.next();
             if(rs.getRow()==1){
@@ -192,7 +209,7 @@ public class UtenteDAO implements IUtenteDAO {
             // handle any errors
             System.out.println("Resultset: " + e.getMessage());
         } finally {
-            conn.close();
+            executor.closeOperation(dbOperation);
         }
         return credentialsOk;
     }
@@ -200,8 +217,11 @@ public class UtenteDAO implements IUtenteDAO {
     @Override
     public boolean userExists(String username) {
         boolean userExists = false;
-        conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT count(*) AS C FROM Utente WHERE Utente.email = '" + username + "';");
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "SELECT count(*) AS C FROM Utente WHERE Utente.email = '" + username + "';";
+        dbOperation = new ReadDbOperation(sql);
+        rs = (ResultSet) executor.executeOperation(dbOperation);
         try {
             rs.next();
             if(rs.getRow()==1 && rs.getInt("C")==1)
@@ -215,15 +235,18 @@ public class UtenteDAO implements IUtenteDAO {
             // handle any errors
             System.out.println("Resultset: " + e.getMessage());
         } finally {
-            conn.close();
+            executor.closeOperation(dbOperation);
         }
         return userExists;
     }
 
     @Override
     public ArrayList<Utente> findAll() {
-        conn = DbConnection.getInstance();
-        rs = conn.executeQuery("SELECT * FROM Utente;");
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "SELECT idUtente, nome, cognome, email, passwordHash, residenza, telefono, professione, eta, tipo FROM Utente;";
+        dbOperation = new ReadDbOperation(sql);
+        rs = (ResultSet) executor.executeOperation(dbOperation);
         ArrayList<Utente> utenti = new ArrayList<>();
         try {
             while (rs.next()) {
@@ -251,32 +274,41 @@ public class UtenteDAO implements IUtenteDAO {
             // Gestisce le differenti categorie d'errore
             System.out.println("Resultset: " + e.getMessage());
         } finally {
-            conn.close();
+            executor.closeOperation(dbOperation);
         }
         return null;
     }
 
     @Override
     public int add(Utente utente) {
-        conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("INSERT INTO Utente (email, nome, cognome, passwordHash, residenza, telefono, professione, eta, tipo) VALUES ('" + utente.getEmail() + "','" + utente.getNome() + "','" + utente.getCognome() + "','" + utente.getPasswordHash() + "','" + utente.getResidenza() + "','" + utente.getTelefono() + "','" + utente.getProfessione() + "','" + utente.getEta().toString() + "','" + utente.getRuolo().toString() + "');");
-        conn.close();
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "INSERT INTO Utente (email, nome, cognome, passwordHash, residenza, telefono, professione, eta, tipo) VALUES ('" + utente.getEmail() + "','" + utente.getNome() + "','" + utente.getCognome() + "','" + utente.getPasswordHash() + "','" + utente.getResidenza() + "','" + utente.getTelefono() + "','" + utente.getProfessione() + "','" + utente.getEta().toString() + "','" + utente.getRuolo().toString() + "');";
+        dbOperation = new WriteDbOperation(sql);
+        int rowCount = (int) executor.executeOperation(dbOperation);
+        executor.closeOperation(dbOperation);
         return rowCount;
     }
 
     @Override
     public int removeById(String email) {
-        conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("DELETE FROM Utente WHERE email = '"+ email + "';");
-        conn.close();
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "DELETE FROM Utente WHERE email = '"+ email + "';";
+        dbOperation = new WriteDbOperation(sql);
+        int rowCount = (int) executor.executeOperation(dbOperation);
+        executor.closeOperation(dbOperation);
         return rowCount;
     }
 
     @Override
     public int update(Utente utente) {
-        conn = DbConnection.getInstance();
-        int rowCount = conn.executeUpdate("UPDATE Utente SET nome = '" + utente.getNome() + "', cognome = '" + utente.getCognome() + "', residenza = '" + utente.getResidenza() + "', telefono = '" + utente.getTelefono() + "', professione = '" + utente.getProfessione() + "', eta = '" + utente.getEta() + "', tipo = '" + utente.getRuolo().toString() + "' WHERE Email = '" + utente.getEmail() + "';");
-        conn.close();
+        //conn = DbConnection.getInstance();
+        executor = new DbOperationExecutor();
+        sql = "UPDATE Utente SET nome = '" + utente.getNome() + "', cognome = '" + utente.getCognome() + "', residenza = '" + utente.getResidenza() + "', telefono = '" + utente.getTelefono() + "', professione = '" + utente.getProfessione() + "', eta = '" + utente.getEta() + "', tipo = '" + utente.getRuolo().toString() + "' WHERE Email = '" + utente.getEmail() + "';";
+        dbOperation = new WriteDbOperation(sql);
+        int rowCount = (int) executor.executeOperation(dbOperation);
+        executor.closeOperation(dbOperation);
         return rowCount;
     }
 }
