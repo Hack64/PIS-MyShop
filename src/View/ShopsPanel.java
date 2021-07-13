@@ -2,7 +2,6 @@ package View;
 
 import Business.PuntoVenditaBusiness;
 import Model.PuntoVendita;
-import View.Listener.ServiziPanelListener;
 import View.Listener.ShopsPanelListener;
 import View.TableModels.ShopTableModel;
 

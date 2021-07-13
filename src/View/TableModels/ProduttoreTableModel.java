@@ -1,7 +1,5 @@
 package View.TableModels;
 
-import Model.ICategoria;
-import Model.IProdotto;
 import Model.Produttore;
 
 import javax.swing.table.AbstractTableModel;

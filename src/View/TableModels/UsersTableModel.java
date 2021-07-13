@@ -1,12 +1,9 @@
 package View.TableModels;
 
-import Model.PuntoVendita;
 import Model.Utente;
 
 import javax.swing.table.AbstractTableModel;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 public class UsersTableModel extends AbstractTableModel {
     HashMap<Utente, String> lista;

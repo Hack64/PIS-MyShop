@@ -1,18 +1,14 @@
 package View.Listener;
 
-import Business.*;
-import Model.Fornitore;
-import Model.ICategoria;
-import Model.IProdotto;
-import View.*;
-import org.apache.commons.io.FileUtils;
+import Business.FornitoreBusiness;
+import Business.ProduttoreBusiness;
+import View.AppFrame;
+import View.ImprenditoreOperationDialogView;
+import View.ImprenditoriPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 
 public class ImprenditoreOperationDialogViewListener implements ActionListener {
 

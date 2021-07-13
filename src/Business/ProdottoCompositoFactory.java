@@ -1,6 +1,9 @@
 package Business;
 
-import Model.*;
+import Model.Articolo;
+import Model.CategoriaProdotto;
+import Model.ICategoria;
+import Model.ProdottoComposito;
 
 public class ProdottoCompositoFactory implements ArticoloFactory {
     @Override

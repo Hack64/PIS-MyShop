@@ -2,7 +2,6 @@ package View;
 
 import Model.Lista;
 import View.Listener.ListDialogListener;
-import View.Listener.LoginListener;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;

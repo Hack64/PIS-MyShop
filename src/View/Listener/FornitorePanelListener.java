@@ -1,14 +1,10 @@
 package View.Listener;
 
 import Business.FornitoreBusiness;
-import Business.ProduttoreBusiness;
-import Model.Fornitore;
 import Model.Responses.FornitoreResponse;
-import Model.Responses.ProduttoreResponse;
 import View.AppFrame;
 import View.ImprenditoreOperationDialogView;
 import View.ImprenditoriPanel;
-import View.MainCatalogPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

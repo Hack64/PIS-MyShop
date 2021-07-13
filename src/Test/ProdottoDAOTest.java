@@ -1,13 +1,14 @@
 package Test;
 
-import Business.ProdottoBusiness;
 import DAO.Categoria.CategoriaDAO;
 import DAO.Feedback.FeedbackDAO;
-import DAO.Fornitore.FornitoreDAO;
 import DAO.Prodotto.ProdottoDAO;
 import DAO.Produttore.ProduttoreDAO;
 import DbInterface.DbUser;
-import Model.*;
+import Model.ICategoria;
+import Model.IProdotto;
+import Model.Prodotto;
+import Model.Produttore;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

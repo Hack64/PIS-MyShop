@@ -1,12 +1,9 @@
 package Business;
 
 import DAO.ComposizioneProdotto.ComposizioneProdottoDAO;
-import DAO.Feedback.FeedbackDAO;
 import DAO.Posizione.PosizioneDAO;
 import DAO.ProdottiPuntoVendita.ProdottiPuntoVenditaDAO;
 import DAO.Prodotto.ProdottoDAO;
-import DAO.ProdottoCategoria.ProdottoCategoriaDAO;
-import DAO.Produttore.ProduttoreDAO;
 import Model.*;
 import Model.Responses.ProdottoResponse;
 

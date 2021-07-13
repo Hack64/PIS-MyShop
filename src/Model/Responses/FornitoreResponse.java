@@ -1,7 +1,6 @@
 package Model.Responses;
 
 import Model.Fornitore;
-import Model.Produttore;
 
 public class FornitoreResponse {
 

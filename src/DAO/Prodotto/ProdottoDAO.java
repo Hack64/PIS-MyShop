@@ -1,6 +1,5 @@
 package DAO.Prodotto;
 
-import DAO.ComposizioneProdotto.ComposizioneProdottoDAO;
 import DAO.Feedback.FeedbackDAO;
 import DAO.ProdottoCategoria.ProdottoCategoriaDAO;
 import DAO.Produttore.ProduttoreDAO;

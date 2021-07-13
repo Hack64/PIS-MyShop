@@ -1,7 +1,9 @@
 package View.Listener;
 
 import Business.ListaBusiness;
-import View.*;
+import View.AppFrame;
+import View.ListOperationDialog;
+import View.ListsPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

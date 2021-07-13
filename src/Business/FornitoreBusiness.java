@@ -1,11 +1,8 @@
 package Business;
 
 import DAO.Fornitore.FornitoreDAO;
-import DAO.Produttore.ProduttoreDAO;
 import Model.Fornitore;
-import Model.Produttore;
 import Model.Responses.FornitoreResponse;
-import Model.Responses.ProduttoreResponse;
 
 import java.util.ArrayList;
 

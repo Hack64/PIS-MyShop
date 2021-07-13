@@ -2,14 +2,11 @@ package View;
 
 import Model.Magazzino;
 import Model.PuntoVendita;
-import Model.Utente;
-import View.Listener.ListDialogListener;
 import View.Listener.ShopOperationDialogListener;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.time.LocalDate;
 
 public class ShopOperationDialog extends JDialog {
 

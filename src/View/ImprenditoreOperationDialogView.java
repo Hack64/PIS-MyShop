@@ -1,9 +1,7 @@
 package View;
 
 import Model.Fornitore;
-import Model.IProdotto;
 import Model.Produttore;
-import Model.Servizio;
 import View.Listener.ImprenditoreOperationDialogViewListener;
 
 import javax.swing.*;

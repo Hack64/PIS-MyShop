@@ -6,7 +6,6 @@ import DbInterface.*;
 import Model.CategoriaProdotto;
 import Model.ICategoria;
 import Model.IProdotto;
-import com.google.protobuf.MapEntry;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

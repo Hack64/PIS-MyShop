@@ -1,7 +1,6 @@
 package View;
 
 import Business.FornitoreBusiness;
-import Business.ProduttoreBusiness;
 
 import javax.swing.*;
 import java.util.ArrayList;

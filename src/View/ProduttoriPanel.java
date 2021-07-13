@@ -2,7 +2,6 @@ package View;
 
 import Business.ProduttoreBusiness;
 import Model.Produttore;
-import View.Listener.CatalogPanelListener;
 import View.Listener.ProduttorePanelListener;
 import View.TableModels.ProduttoreTableModel;
 

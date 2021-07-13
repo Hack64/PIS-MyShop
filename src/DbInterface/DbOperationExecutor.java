@@ -1,6 +1,5 @@
 package DbInterface;
 
-import java.sql.ResultSet;
 import java.util.ArrayList;
 
 public class DbOperationExecutor {

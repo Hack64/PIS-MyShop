@@ -1,7 +1,9 @@
 package View.Listener;
 
 import Business.*;
-import Model.*;
+import Model.Fornitore;
+import Model.ICategoria;
+import Model.IProdotto;
 import View.*;
 import org.apache.commons.io.FileUtils;
 

@@ -2,7 +2,10 @@ package View.Listener;
 
 import Business.ProdottoBusiness;
 import Model.Responses.ProdottoResponse;
-import View.*;
+import View.AppFrame;
+import View.CustomOperationDialogView;
+import View.MainCatalogPanel;
+import View.ManageCategoriesPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

@@ -2,7 +2,6 @@ package View;
 
 import Business.ProdottoBusiness;
 import Model.IProdotto;
-import View.Listener.CategoriesChooserDialogListener;
 import View.Listener.ShopProductsChooserDialogListener;
 
 import javax.swing.*;

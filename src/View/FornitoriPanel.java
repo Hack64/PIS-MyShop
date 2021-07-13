@@ -3,7 +3,6 @@ package View;
 import Business.FornitoreBusiness;
 import Model.Fornitore;
 import View.Listener.FornitorePanelListener;
-import View.Listener.ProduttorePanelListener;
 import View.TableModels.FornitoreTableModel;
 
 import javax.swing.*;

@@ -1,7 +1,6 @@
 package View;
 
 import Business.SessionManager;
-import Model.PuntoVendita;
 import Model.Utente;
 import View.Listener.LoginButtonListener;
 

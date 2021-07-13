@@ -1,10 +1,10 @@
 package View.Listener;
 
 import Business.PuntoVenditaBusiness;
-import Business.ServizioBusiness;
 import Model.Responses.PuntoVenditaResponse;
-import Model.Responses.ServizioResponse;
-import View.*;
+import View.AppFrame;
+import View.ShopOperationDialog;
+import View.ShopsPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

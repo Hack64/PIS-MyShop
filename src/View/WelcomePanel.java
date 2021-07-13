@@ -1,11 +1,9 @@
 package View;
 
 import Business.PuntoVenditaBusiness;
-import Model.PuntoVendita;
 import View.Listener.WelcomePanelListener;
 
 import javax.swing.*;
-import javax.swing.border.EtchedBorder;
 import java.awt.*;
 import java.util.ArrayList;
 
