@@ -48,7 +48,7 @@ public class CustomOperationDialogViewListener implements ActionListener {
                     }
                 }
                 categoriesChooserDialog.dispose();
-                int statusProd = ProdottoBusiness.getInstance().addNew(operationDialogView.getTxtNome(), img, operationDialogView.getTxtDescrizione(), Float.parseFloat(operationDialogView.getTxtPrezzo()), ProduttoreBusiness.getInstance().findByName(operationDialogView.getProduttore().toString()), categorie);
+                int statusProd = ProdottoBusiness.getInstance().addNew(operationDialogView.getTxtNome(), img, operationDialogView.getTxtDescrizione(), Float.parseFloat(operationDialogView.getTxtPrezzo()), ProduttoreBusiness.getInstance().findByName(operationDialogView.getProduttore().toString()).getProduttore(), categorie);
                 if (statusProd == 2){
                     String esit = "Prodotto aggiunto con successo!";
                     JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
@@ -74,7 +74,7 @@ public class CustomOperationDialogViewListener implements ActionListener {
                     }
                 }
                 subProductChooserDialog.dispose();
-                int statusCompProd = ProdottoBusiness.getInstance().addNewComp(operationDialogView.getTxtNome(), img, operationDialogView.getTxtDescrizione(), Float.parseFloat(operationDialogView.getTxtPrezzo()), ProduttoreBusiness.getInstance().findByName((String)operationDialogView.getProduttore()), categorieComp, sottoprodotti);
+                int statusCompProd = ProdottoBusiness.getInstance().addNewComp(operationDialogView.getTxtNome(), img, operationDialogView.getTxtDescrizione(), Float.parseFloat(operationDialogView.getTxtPrezzo()), ProduttoreBusiness.getInstance().findByName((String)operationDialogView.getProduttore()).getProduttore(), categorieComp, sottoprodotti);
                 if (statusCompProd == 3){
                     String esit = "Prodotto composito aggiunto con successo!";
                     JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
@@ -136,7 +136,7 @@ public class CustomOperationDialogViewListener implements ActionListener {
                     }
                 }
                 categoriesChooserDialog.dispose();
-                int statusServ = ServizioBusiness.getInstance().addNew(operationDialogView.getTxtNome(), img, operationDialogView.getTxtDescrizione(), Float.parseFloat(operationDialogView.getTxtPrezzo()), FornitoreBusiness.getInstance().findByName((String)operationDialogView.getProduttore()), categorieS);
+                int statusServ = ServizioBusiness.getInstance().addNew(operationDialogView.getTxtNome(), img, operationDialogView.getTxtDescrizione(), Float.parseFloat(operationDialogView.getTxtPrezzo()), FornitoreBusiness.getInstance().findByName((String)operationDialogView.getProduttore()).getFornitore(), categorieS);
                 if (statusServ == 2){
                     String esit = "Servizio aggiunto con successo!";
                     JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
@@ -149,7 +149,7 @@ public class CustomOperationDialogViewListener implements ActionListener {
                 }
                 break;
             case BTN_EDIT_SERVICE:
-                Fornitore fo = FornitoreBusiness.getInstance().findByName((String) operationDialogView.getProduttore());
+                Fornitore fo = FornitoreBusiness.getInstance().findByName((String) operationDialogView.getProduttore()).getFornitore();
                 if (img == null){
                     String esit = "Coglione imposta l'immagine";
                     JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);

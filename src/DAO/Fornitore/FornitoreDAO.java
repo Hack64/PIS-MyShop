@@ -162,7 +162,7 @@ public class FornitoreDAO implements IFornitoreDAO {
     public int add(Fornitore fornitore) {
         //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
-        sql = "INSERT INTO Fornitore VALUES ('" + fornitore.getIdFornitore() + "','" + fornitore.getNome() + "','" + fornitore.getSito() + "','" + fornitore.getCitta() + "','" + fornitore.getNazione() + "');";
+        sql = "INSERT INTO Fornitore (nome, sito, citta, nazione) VALUES ('" + fornitore.getNome() + "','" + fornitore.getSito() + "','" + fornitore.getCitta() + "','" + fornitore.getNazione() + "');";
         dbOperation = new WriteDbOperation(sql);
         int rowCount = (int) executor.executeOperation(dbOperation);
         executor.closeOperation(dbOperation);
@@ -173,7 +173,7 @@ public class FornitoreDAO implements IFornitoreDAO {
     public int removeById(int idFornitore) {
         //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
-        sql = "DELETE FROM Fornitore WHERE Fornitore.idFornitore = '" + fornitore + "';";
+        sql = "DELETE FROM Fornitore WHERE Fornitore.idFornitore = '" + idFornitore + "';";
         dbOperation = new WriteDbOperation(sql);
         int rowCount = (int) executor.executeOperation(dbOperation);
         executor.closeOperation(dbOperation);

@@ -21,6 +21,7 @@ public class ShopOperationDialog extends JDialog {
     JButton btnAnnulla;
     JButton btnProducts;
     JButton btnManager;
+    JButton btnNewManager;
 
     JLabel lblShopVia;
     JLabel lblShopCAP;
@@ -55,7 +56,7 @@ public class ShopOperationDialog extends JDialog {
         form.setBorder(new EmptyBorder(15, 10, 10, 10));
         GridBagConstraints c = new GridBagConstraints();
 
-        setSize(365,470);
+        setSize(385,470);
 
         lblShopVia = new JLabel("Via P.V.: ");
         lblShopCAP = new JLabel("CAP P.V.: ");
@@ -94,6 +95,9 @@ public class ShopOperationDialog extends JDialog {
         btnManager = new JButton("Assegna");
         btnManager.setActionCommand("btnManager");
         btnManager.addActionListener(shopOperationDialogListener);
+        btnNewManager = new JButton("+");
+        btnNewManager.setActionCommand("btnAddManager");
+        btnNewManager.addActionListener(shopOperationDialogListener);
 
         c.insets = i;
         c.gridx=0;
@@ -142,6 +146,10 @@ public class ShopOperationDialog extends JDialog {
         form.add(lblManager, c);
         c.gridx=1;
         form.add(btnManager, c);
+        c.gridx=2;
+        c.insets = new Insets(0,0,0,0);
+        form.add(btnNewManager, c);
+        c.insets = new Insets(5,2,5,2);
         c.gridx=0;
         c.gridy++;
         form.add(lblProducts, c);

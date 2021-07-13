@@ -18,6 +18,7 @@ public class ShopOperationDialogListener implements ActionListener {
     public final static String BTN_ADD_SHOP = "btnAdd";
     public final static String BTN_EDIT_SHOP = "btnEdit";
     public final static String BTN_MANAGER = "btnManager";
+    public final static String BTN_ADD_MANAGER = "btnAddManager";
     public final static String BTN_PRODUCTS = "btnProducts";
 
 
@@ -67,6 +68,8 @@ public class ShopOperationDialogListener implements ActionListener {
             case BTN_PRODUCTS:
                 shopProductsChooserDialog = new ShopProductsChooserDialog(appFrame);
                 break;
+            case BTN_ADD_MANAGER:
+                new ManagerRegistrationDialog(appFrame);
         }
     }
 }

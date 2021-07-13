@@ -15,10 +15,13 @@ public class AmministratoreMenuDecorator extends CustomMenuDecorator {
         pulsanti.addAll(this.menu.getPulsanti());
         JButton shops = new JButton("Gestisci P.Vendita");
         JButton catalog = new JButton("Gestisci Catalogo");
+        JButton imprenditori = new JButton("Gestisci imprenditori");
         shops.setActionCommand("btnShops");
         catalog.setActionCommand("btnCatalog");
+        imprenditori.setActionCommand("btnImprenditori");
         pulsanti.add(catalog);
         pulsanti.add(shops);
+        pulsanti.add(imprenditori);
         return pulsanti;
     }
 }

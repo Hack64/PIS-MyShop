@@ -46,7 +46,7 @@ public class ShopsPanelListener implements ActionListener {
                 if (i==1){
                     esit = "Punto Vendita eliminato con successo!";
                     JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
-                    appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame));
+                    appFrame.setCurrentMainPanel(new ShopsPanel(appFrame));
                 } else{
                     esit = "Errore durante l'eliminazione del punto vendita";
                     JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);

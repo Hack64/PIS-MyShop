@@ -170,7 +170,7 @@ public class ProduttoreDAO implements IProduttoreDAO {
     public int add(Produttore produttore) {
         //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
-        sql = "INSERT INTO Produttore VALUES ('" + produttore.getIdProduttore() + "','" + produttore.getNome() + "','" + produttore.getSito() + "','" + produttore.getCitta() + "','" + produttore.getNazione() + "');";
+        sql = "INSERT INTO Produttore (nome, sito, citta, nazione) VALUES ('" + produttore.getNome() + "','" + produttore.getSito() + "','" + produttore.getCitta() + "','" + produttore.getNazione() + "');";
         dbOperation = new WriteDbOperation(sql);
         int rowCount = (int) executor.executeOperation(dbOperation);
         executor.closeOperation(dbOperation);
@@ -181,7 +181,7 @@ public class ProduttoreDAO implements IProduttoreDAO {
     public int removeById(int idProduttore) {
         //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
-        sql = "DELETE FROM Produttore WHERE Produttore.idProduttore = '" + produttore + "';";
+        sql = "DELETE FROM Produttore WHERE Produttore.idProduttore = '" + idProduttore + "';";
         dbOperation = new WriteDbOperation(sql);
         int rowCount = (int) executor.executeOperation(dbOperation);
         executor.closeOperation(dbOperation);
@@ -192,7 +192,7 @@ public class ProduttoreDAO implements IProduttoreDAO {
     public int update(Produttore produttore) {
         //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
-        sql = "UPDATE Produttore SET nome = '" + produttore.getNome() + "', sito = '" + produttore.getSito() + "', citta = '" + produttore.getCitta() + "', nazione = '" + produttore.getNazione() + "' WHERE idProduttore = '" + produttore.getIdProduttore() + "';'";
+        sql = "UPDATE Produttore SET nome = '" + produttore.getNome() + "', sito = '" + produttore.getSito() + "', citta = '" + produttore.getCitta() + "', nazione = '" + produttore.getNazione() + "' WHERE idProduttore = '" + produttore.getIdProduttore() + "';";
         dbOperation = new WriteDbOperation(sql);
         int rowCount = (int) executor.executeOperation(dbOperation);
         executor.closeOperation(dbOperation);

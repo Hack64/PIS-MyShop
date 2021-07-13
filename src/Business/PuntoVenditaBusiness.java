@@ -64,6 +64,7 @@ public class PuntoVenditaBusiness {
         } else {
             //TODO: trova un modo di capire quando il manager è già assignato e di dirlo all'utente
             //TODO: finisci la modifica dei punti vendita
+            //TODO: quando fai l'update, cancella il precedente manager!
             System.out.println(manager.getNome() + " è già un manager!!!");
         }
         for (IProdotto pr:prodotti){

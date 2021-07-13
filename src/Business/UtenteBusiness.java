@@ -63,7 +63,7 @@ public class UtenteBusiness {
         return res;
     }
 
-    public UtenteResponse registration(String nome, String cognome, String email, String password, String confermaPassword, String residenza, String telefono, String professione, String eta){
+    public UtenteResponse registration(String nome, String cognome, String email, String password, String confermaPassword, String residenza, String telefono, String professione, String eta, Utente.Ruoli ruolo){
         UtenteResponse res = new UtenteResponse();
         res.setMessage("Errore non definito.");
 
@@ -100,7 +100,7 @@ public class UtenteBusiness {
         u.setTelefono(telefono);
         u.setProfessione(professione);
         u.setEta(LocalDate.parse(eta));
-        u.setRuolo(Utente.Ruoli.ute);
+        u.setRuolo(ruolo);
 
         if (uDAO.add(u) == 1){
             res.setUtente(u);

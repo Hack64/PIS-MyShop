@@ -14,6 +14,7 @@ public class SideMenuListener implements ActionListener {
     public final static String BTN_WAREHOUSES = "btnWarehouses";
     public final static String BTN_SHOPS = "btnShops";
     public final static String BTN_CATALOG = "btnCatalog";
+    public final static String BTN_IMPRENDITORI = "btnImprenditori";
 
     public SideMenuListener(AppFrame appFrame) {
         this.appFrame = appFrame;
@@ -43,6 +44,9 @@ public class SideMenuListener implements ActionListener {
             case BTN_USERS:
                 System.out.println("Premuto utenti");
                 appFrame.setCurrentMainPanel(new UsersPanel(appFrame));
+            case BTN_IMPRENDITORI:
+                System.out.println("Premuto imprenditori");
+                appFrame.setCurrentMainPanel(new ImprenditoriPanel(appFrame));
         }
 
     }

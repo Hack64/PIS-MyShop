@@ -19,6 +19,7 @@ public class RegistrationDialog extends JDialog {
     JTextField txtTelefono;
     JTextField txtProfessione;
     JFormattedTextField txtEta;
+    JButton btnRegister;
 
     public RegistrationDialog(AppFrame appFrame){
         super(appFrame, "Registrati");
@@ -42,7 +43,7 @@ public class RegistrationDialog extends JDialog {
         JLabel lblEta = new JLabel("Data di nascita: ");
 
 
-        JButton btnRegister = new JButton("Registrati");
+        btnRegister = new JButton("Registrati");
 
         txtNome = new JTextField(10);
         txtCognome = new JTextField(10);
