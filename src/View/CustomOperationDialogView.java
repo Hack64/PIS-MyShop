@@ -1,6 +1,8 @@
 package View;
 
+import Business.PosizioneBusiness;
 import Model.IProdotto;
+import Model.Posizione;
 import Model.Servizio;
 import View.Listener.CustomOperationDialogViewListener;
 
@@ -103,16 +105,18 @@ public class CustomOperationDialogView extends JDialog {
         add(operationDialog.getButtons().get(0), c);
         c.gridy++;
         c.gridx=0;
-        add(operationDialog.getLabels().get(6), c);
-        c.gridx=1;
-        add(operationDialog.getFields().get(2),c);
-        c.gridy++;
-        c.gridx=0;
-        add(operationDialog.getLabels().get(7), c);
-        c.gridx=1;
-        add(operationDialog.getFields().get(3), c);
-        c.gridy++;
-        c.gridx=0;
+        if (isProduct){
+            add(operationDialog.getLabels().get(6), c);
+            c.gridx=1;
+            add(operationDialog.getFields().get(2),c);
+            c.gridy++;
+            c.gridx=0;
+            add(operationDialog.getLabels().get(7), c);
+            c.gridx=1;
+            add(operationDialog.getFields().get(3), c);
+            c.gridy++;
+            c.gridx=0;
+        }
         c.insets =  new Insets(30,0,5,0);
         add(operationDialog.getButtons().get(3), c);
         c.gridx=1;
@@ -143,8 +147,7 @@ public class CustomOperationDialogView extends JDialog {
     }
 
     public void setServiceFields(){
-        //TODO: Crea posizionebusiness per settare i campi
-        //PosizioneBusiness
+
         operationDialog.getFields().get(0).setText(s.getNome());
         operationDialog.getFields().get(1).setText(Float.toString(s.getCosto()));
         operationDialog.getjTextArea().setText(s.getDescrizione());
@@ -152,6 +155,10 @@ public class CustomOperationDialogView extends JDialog {
     }
 
     public void setProductFields(){
+        //TODO: Crea posizionebusiness per settare i campi
+        Posizione posizione = PosizioneBusiness.getInstance().findPositionByProductID(p.getIdProdotto());
+        operationDialog.getFields().get(2).setText(Integer.toString(posizione.getScaffale()));
+        operationDialog.getFields().get(3).setText(Integer.toString(posizione.getCorsia()));
         operationDialog.getFields().get(0).setText(p.getNome());
         operationDialog.getFields().get(1).setText(Float.toString(p.getCosto()));
         operationDialog.getjTextArea().setText(p.getDescrizione());

@@ -29,7 +29,7 @@ public class RegistrationListener implements ActionListener {
 
         if(BTN_REGISTER.equals(cmd)) {
             // chiamare la classe di business per fare registrazione
-            UtenteResponse res = UtenteBusiness.getInstance().registration(registrationDialog.getNome(), registrationDialog.getCognome(), registrationDialog.getUsername(), registrationDialog.getPassword(), registrationDialog.getPassword2(), registrationDialog.getResidenza(), registrationDialog.getTelefono(), registrationDialog.getProfessione(), registrationDialog.getEta(), Utente.Ruoli.ute);
+            UtenteResponse res = UtenteBusiness.getInstance().registration(registrationDialog.getNome(), registrationDialog.getCognome(), registrationDialog.getUsername(), registrationDialog.getPassword(), registrationDialog.getPassword2(), registrationDialog.getResidenza(), registrationDialog.getTelefono(), registrationDialog.getProfessione(), registrationDialog.getEta(), Utente.Ruoli.ute, appFrame.getPuntoVendita());
             registrationDialog.clearFields();
             Utente u = res.getUtente(); //potrebbe essere null in caso di login fallito
 
@@ -56,7 +56,7 @@ public class RegistrationListener implements ActionListener {
         }
         if (BTN_REGISTER_MANAGER.equals(cmd)){
             // chiamare la classe di business per fare registrazione
-            UtenteResponse res = UtenteBusiness.getInstance().registration(registrationDialog.getNome(), registrationDialog.getCognome(), registrationDialog.getUsername(), registrationDialog.getPassword(), registrationDialog.getPassword2(), registrationDialog.getResidenza(), registrationDialog.getTelefono(), registrationDialog.getProfessione(), registrationDialog.getEta(), Utente.Ruoli.man);
+            UtenteResponse res = UtenteBusiness.getInstance().registration(registrationDialog.getNome(), registrationDialog.getCognome(), registrationDialog.getUsername(), registrationDialog.getPassword(), registrationDialog.getPassword2(), registrationDialog.getResidenza(), registrationDialog.getTelefono(), registrationDialog.getProfessione(), registrationDialog.getEta(), Utente.Ruoli.man, null);
             registrationDialog.clearFields();
             Utente u = res.getUtente(); //potrebbe essere null in caso di login fallito
 

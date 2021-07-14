@@ -1,6 +1,7 @@
 package Business;
 
 import DAO.Magazzino.MagazzinoDAO;
+import DAO.ProdottiMagazzino.ProdottiMagazzinoDAO;
 import DAO.ProdottiPuntoVendita.ProdottiPuntoVenditaDAO;
 import DAO.PuntoVendita.PuntoVenditaDAO;
 import DAO.UtentiPuntoVendita.UtentiPuntoVenditaDAO;
@@ -100,7 +101,10 @@ public class PuntoVenditaBusiness {
 
     public int updateShopAndWarehouse(int idPuntoVendita, String viaPV, String capPV, String cittaPV, String viaM, String cittaM, String capM, Utente manager, ArrayList<IProdotto> prodotti){
         puntoVenditaDAO = PuntoVenditaDAO.getInstance();
+        ProdottiMagazzinoDAO prodottiMagazzinoDAO = ProdottiMagazzinoDAO.getInstance();
         MagazzinoDAO magazzinoDAO = MagazzinoDAO.getInstance();
+        UtentiPuntoVenditaDAO utentiPuntoVenditaDAO = UtentiPuntoVenditaDAO.getInstance();
+        ProdottiPuntoVenditaDAO prodottiPuntoVenditaDAO = ProdottiPuntoVenditaDAO.getInstance();
 
         PuntoVendita p = new PuntoVendita();
         Magazzino m;
@@ -122,7 +126,11 @@ public class PuntoVenditaBusiness {
         p = puntoVenditaDAO.findByAddress(cittaPV, viaPV);
         m.setPuntoVendita(p);
         st+=magazzinoDAO.update(m);
-
+        st+=utentiPuntoVenditaDAO.updateManager(manager, p);
+        prodottiPuntoVenditaDAO.removeAllPrductsByShopID(p.getIdPuntoVendita());
+        for (IProdotto pr:prodotti){
+            st+=prodottiPuntoVenditaDAO.add(p, pr);
+        }
         return st;
     }
 

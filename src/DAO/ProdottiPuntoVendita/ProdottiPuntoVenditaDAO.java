@@ -86,6 +86,16 @@ public class ProdottiPuntoVenditaDAO implements IProdottiPuntoVenditaDAO {
     }
 
     @Override
+    public int removeAllPrductsByShopID(int idPuntoVendita) {
+        executor = new DbOperationExecutor();
+        sql = "DELETE FROM ProdottiPuntoVendita WHERE idPuntoVendita = '" + idPuntoVendita + "';";
+        dbOperation = new WriteDbOperation(sql);
+        int rowCount = (int) executor.executeOperation(dbOperation);
+        executor.closeOperation(dbOperation);
+        return rowCount;
+    }
+
+    @Override
     public int add(PuntoVendita puntoVendita, IProdotto prodotto) {
         //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
@@ -106,4 +116,5 @@ public class ProdottiPuntoVenditaDAO implements IProdottiPuntoVenditaDAO {
         executor.closeOperation(dbOperation);
         return rowCount;
     }
+
 }

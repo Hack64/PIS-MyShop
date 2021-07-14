@@ -25,7 +25,7 @@ public class UtenteBusiness {
 
     private UtenteBusiness() {}
 
-    public UtenteResponse login(String username, String password) {
+    public UtenteResponse login(String username, String password, PuntoVendita puntoVendita) {
 
         UtenteResponse res = new UtenteResponse();
         res.setMessage("Errore non definito.");
@@ -50,7 +50,7 @@ public class UtenteBusiness {
         //alternativa: restituire istanza specifica di Cliente, Manager o Amministratore
 
         // 4. dati corretti ma utente bandito
-        if (utentiPuntoVenditaDAO.isUserBanned(u.getIdUtente(), 1)){
+        if (utentiPuntoVenditaDAO.isUserBanned(u.getIdUtente(), puntoVendita.getIdPuntoVendita())){
             res.setMessage("Sei stato bandito da questo punto vendita!");
             return res;
         }
@@ -63,7 +63,7 @@ public class UtenteBusiness {
         return res;
     }
 
-    public UtenteResponse registration(String nome, String cognome, String email, String password, String confermaPassword, String residenza, String telefono, String professione, String eta, Utente.Ruoli ruolo){
+    public UtenteResponse registration(String nome, String cognome, String email, String password, String confermaPassword, String residenza, String telefono, String professione, String eta, Utente.Ruoli ruolo, PuntoVendita puntoVendita){
         //TODO: aggiungi l'utente appena creato in utentepuntovendita
         UtenteResponse res = new UtenteResponse();
         res.setMessage("Errore non definito.");
@@ -106,6 +106,11 @@ public class UtenteBusiness {
         if (uDAO.add(u) == 1){
             res.setUtente(u);
             res.setMessage("Registrazione eseguita con successo!");
+            if (puntoVendita != null){
+                UtentiPuntoVenditaDAO utentiPuntoVenditaDAO = UtentiPuntoVenditaDAO.getInstance();
+                Utente u2 = uDAO.findByEmail(u.getEmail());
+                utentiPuntoVenditaDAO.add(u2,puntoVendita, 0, 0);
+            }
             return res;
         } else {
             res.setMessage("Errore nell'inserimento dei dati nel database!");

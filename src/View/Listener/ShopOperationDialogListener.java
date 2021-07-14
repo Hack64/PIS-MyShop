@@ -50,7 +50,11 @@ public class ShopOperationDialogListener implements ActionListener {
                 }
                 break;
             case BTN_EDIT_SHOP:
-                int st_e = PuntoVenditaBusiness.getInstance().updateShopAndWarehouse(shopOperationDialog.getID(), shopOperationDialog.getTxtShopVia(), shopOperationDialog.getTxtShopCAP(), shopOperationDialog.getTxtShopCitta(), shopOperationDialog.getTxtMagVia(), shopOperationDialog.getTxtMagCitta(), shopOperationDialog.getTxtMagCAP(), shopManagerChooserDialog.getSelectedUser(), null);
+                ArrayList<IProdotto> prodottiM = new ArrayList<>();
+                for (String s:shopProductsChooserDialog.getSelectedProducts()){
+                    prodottiM.add(ProdottoBusiness.getInstance().findByName(s).getProdotto());
+                }
+                int st_e = PuntoVenditaBusiness.getInstance().updateShopAndWarehouse(shopOperationDialog.getID(), shopOperationDialog.getTxtShopVia(), shopOperationDialog.getTxtShopCAP(), shopOperationDialog.getTxtShopCitta(), shopOperationDialog.getTxtMagVia(), shopOperationDialog.getTxtMagCitta(), shopOperationDialog.getTxtMagCAP(), shopManagerChooserDialog.getSelectedUser(), prodottiM);
                 if (st_e == 2){
                     String esit = "Punto vendita e magazzino modificati con successo!";
                     JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
