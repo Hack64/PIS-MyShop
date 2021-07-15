@@ -6,6 +6,7 @@ import Model.Magazzino;
 import java.util.ArrayList;
 
 public interface IProdottiMagazzinoDAO {
+    Disponibilita findByProductAndWarehouseID(int idProdotto, int idMagazzino);
     ArrayList<Disponibilita> findAllProductsByWarehouseID(int idMagazzino);
     ArrayList<Magazzino> findAllWarehousesByProductID(int idProdotto);
     int add(Disponibilita disponibilita);

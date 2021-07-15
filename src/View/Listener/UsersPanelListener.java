@@ -1,8 +1,10 @@
 package View.Listener;
 
 import Business.ServizioBusiness;
+import Business.SessionManager;
 import Business.UtenteBusiness;
 import Model.Responses.ServizioResponse;
+import Model.Utente;
 import View.AppFrame;
 import View.CustomOperationDialogView;
 import View.UsersPanel;
@@ -16,7 +18,7 @@ public class UsersPanelListener implements ActionListener {
     private AppFrame appFrame;
     private JTable table;
 
-    public final static String BTN_EDIT_USER = "btnEdit";
+    public final static String BTN_DISABLE_USER = "btnDisable";
     public final static String BTN_DELETE_USER = "btnDelete";
 
     public UsersPanelListener(AppFrame appFrame, JTable table){
@@ -29,12 +31,33 @@ public class UsersPanelListener implements ActionListener {
         String cmd = e.getActionCommand();
         String esit;
         switch (cmd){
-            case BTN_EDIT_USER:
+            case BTN_DISABLE_USER:
                 if(table.getSelectedRowCount()==1){
                     int rowToEdit = table.getSelectedRow();
                     int colToEdit = 0;
-                    ServizioResponse sr = ServizioBusiness.getInstance().find(Integer.parseInt(table.getModel().getValueAt(rowToEdit, colToEdit).toString()));
-                    new CustomOperationDialogView(appFrame, sr.getServizio(), false);
+                    Utente u = UtenteBusiness.getInstance().findByID((Integer)(table.getModel().getValueAt(rowToEdit, colToEdit))).getUtente();
+                    Utente currentUser = (Utente)SessionManager.getInstance().getSession().get("loggedUser");
+                    System.out.println(table.getModel().getValueAt(rowToEdit, 8));
+                    if (u.getIdUtente() != currentUser.getIdUtente()){
+                        if (Integer.parseInt(table.getModel().getValueAt(rowToEdit, 8).toString()) == 0){
+                            int res = UtenteBusiness.getInstance().disableUser(u, appFrame.getPuntoVendita());
+                            if (res == 1){
+                                esit = "Utente disabilitato!";
+                                JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
+                                appFrame.setCurrentMainPanel(new UsersPanel(appFrame));
+                            }
+                        } else {
+                            int res = UtenteBusiness.getInstance().enableUser(u, appFrame.getPuntoVendita());
+                            if (res == 1){
+                                esit = "Utente abilitato!";
+                                JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
+                                appFrame.setCurrentMainPanel(new UsersPanel(appFrame));
+                            }
+                        }
+                    } else {
+                        esit = "Non puoi bannarti da solo!";
+                        JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
+                    }
                 }else{
                     esit = "Devi selezionare un elemento per modificarlo";
                     JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);

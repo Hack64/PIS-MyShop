@@ -178,4 +178,33 @@ public class UtenteBusiness {
 
         return res;
     }
+
+    public UtenteResponse findByID(int idUtente){
+        IUtenteDAO utenteDAO = UtenteDAO.getInstance();
+        UtenteResponse res = new UtenteResponse();
+
+        res.setMessage("Errore non definito");
+        Utente u = utenteDAO.findByID(idUtente);
+        if (u!=null){
+            res.setUtente(u);
+            res.setMessage("Utente trovato");
+        } else {
+            res.setMessage("Errore durante la ricerca dell'utente");
+            return res;
+        }
+
+        return res;
+    }
+
+    public int disableUser(Utente u, PuntoVendita pv){
+        IUtentiPuntoVenditaDAO utentiPuntoVenditaDAO = UtentiPuntoVenditaDAO.getInstance();
+
+        return utentiPuntoVenditaDAO.update(u, pv, 1,0);
+    }
+
+    public int enableUser(Utente u, PuntoVendita pv){
+        IUtentiPuntoVenditaDAO utentiPuntoVenditaDAO = UtentiPuntoVenditaDAO.getInstance();
+
+        return utentiPuntoVenditaDAO.update(u, pv, 0,0);
+    }
 }

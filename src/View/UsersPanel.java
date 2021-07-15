@@ -30,10 +30,10 @@ public class UsersPanel extends JPanel {
         JPanel operazionitabella = new JPanel();
         operazionitabella.setLayout(new FlowLayout());
 
-        JButton btnEdit = new JButton("Modifica Utente");
+        JButton btnEdit = new JButton("Abilita / Disabilita Utente");
         JButton btnDelete = new JButton("Elimina Utente");
 
-        btnEdit.setActionCommand("btnEdit");
+        btnEdit.setActionCommand("btnDisable");
         btnDelete.setActionCommand("btnDelete");
 
         UsersPanelListener usersPanelListener = new UsersPanelListener(appFrame, tabellaUtenti);

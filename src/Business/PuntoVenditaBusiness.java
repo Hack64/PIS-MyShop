@@ -6,6 +6,8 @@ import DAO.ProdottiMagazzino.IProdottiMagazzinoDAO;
 import DAO.ProdottiMagazzino.ProdottiMagazzinoDAO;
 import DAO.ProdottiPuntoVendita.IProdottiPuntoVenditaDAO;
 import DAO.ProdottiPuntoVendita.ProdottiPuntoVenditaDAO;
+import DAO.Prodotto.IProdottoDAO;
+import DAO.Prodotto.ProdottoDAO;
 import DAO.PuntoVendita.IPuntoVenditaDAO;
 import DAO.PuntoVendita.PuntoVenditaDAO;
 import DAO.ServiziPuntoVendita.IServiziPuntoVenditaDAO;
@@ -42,6 +44,7 @@ public class PuntoVenditaBusiness {
     public int addNewShop(String viaPV, String capPV, String cittaPV, String viaM, String cittaM, String capM, Utente manager, ArrayList<IProdotto> prodotti, ArrayList<Servizio> servizi) {
         puntoVenditaDAO = PuntoVenditaDAO.getInstance();
         IMagazzinoDAO magazzinoDAO = MagazzinoDAO.getInstance();
+        IProdottiMagazzinoDAO prodottiMagazzinoDAO = ProdottiMagazzinoDAO.getInstance();
         IProdottiPuntoVenditaDAO prodottiPuntoVenditaDAO = ProdottiPuntoVenditaDAO.getInstance();
         IUtentiPuntoVenditaDAO utentiPuntoVenditaDAO = UtentiPuntoVenditaDAO.getInstance();
         IServiziPuntoVenditaDAO serviziPuntoVenditaDAO = ServiziPuntoVenditaDAO.getInstance();
@@ -63,6 +66,7 @@ public class PuntoVenditaBusiness {
         p = puntoVenditaDAO.findByAddress(cittaPV, viaPV);
         m.setPuntoVendita(p);
         st+=magazzinoDAO.add(m);
+        m=magazzinoDAO.findByShopID(p.getIdPuntoVendita());
         if (!utentiPuntoVenditaDAO.isUserShopManagerSomewhere(manager.getIdUtente())){
             st+=utentiPuntoVenditaDAO.add(manager, p, 0, 1);
         } else {
@@ -76,6 +80,14 @@ public class PuntoVenditaBusiness {
         }
         for (Servizio s:servizi){
             st+= serviziPuntoVenditaDAO.add(s, p);
+        }
+
+        for (IProdotto pr:prodotti){
+            Disponibilita d = new Disponibilita();
+            d.setMagazzino(m);
+            d.setProdotto(pr);
+            d.setQta(0);
+            st+=prodottiMagazzinoDAO.add(d);
         }
         return st;
     }
@@ -114,6 +126,7 @@ public class PuntoVenditaBusiness {
         IUtentiPuntoVenditaDAO utentiPuntoVenditaDAO = UtentiPuntoVenditaDAO.getInstance();
         IProdottiPuntoVenditaDAO prodottiPuntoVenditaDAO = ProdottiPuntoVenditaDAO.getInstance();
         IServiziPuntoVenditaDAO serviziPuntoVenditaDAO = ServiziPuntoVenditaDAO.getInstance();
+        IProdottoDAO prodottoDAO = ProdottoDAO.getInstance();
 
         PuntoVendita p = new PuntoVendita();
         Magazzino m;
@@ -135,15 +148,44 @@ public class PuntoVenditaBusiness {
         p = puntoVenditaDAO.findByAddress(cittaPV, viaPV);
         m.setPuntoVendita(p);
         st+=magazzinoDAO.update(m);
-        /*int idPC = utentiPuntoVenditaDAO.findShopByShopManagerID(manager.getIdUtente()).getIdPuntoVendita();
-        if (idPC!=0){
-            utentiPuntoVenditaDAO.removeByID(manager.getIdUtente(), idPC);
-        }*/
+        m=magazzinoDAO.findByShopID(p.getIdPuntoVendita());
+
         st+=utentiPuntoVenditaDAO.updateManager(manager, p);
         prodottiPuntoVenditaDAO.removeAllPrductsByShopID(p.getIdPuntoVendita());
         for (IProdotto pr:prodotti){
             st+=prodottiPuntoVenditaDAO.add(p, pr);
         }
+
+        /* Costruisco arraylist create dalle intersezioni e opero su queste per mantenere i dati che mi servono nel db e rimuovere/aggiungere gli altri */
+        ArrayList<Integer> idProdottiAttuali = new ArrayList<>();
+        for (Disponibilita d:prodottiMagazzinoDAO.findAllProductsByWarehouseID(m.getIdMagazzino())){
+            idProdottiAttuali.add(d.getProdotto().getIdProdotto());
+        }
+
+        ArrayList<Integer> idProdottiNuovi = new ArrayList<>();
+        for (IProdotto prod:prodotti){
+            idProdottiNuovi.add(prod.getIdProdotto());
+        }
+
+        ArrayList<Integer> backup = new ArrayList<>(idProdottiNuovi);
+        idProdottiNuovi.removeAll(idProdottiAttuali);
+        for (int i:idProdottiNuovi){
+            Disponibilita d = new Disponibilita();
+            d.setProdotto(prodottoDAO.findByID(i));
+            d.setQta(0);
+            d.setMagazzino(m);
+            prodottiMagazzinoDAO.add(d);
+        }
+
+        idProdottiNuovi = new ArrayList<>(backup);
+        idProdottiAttuali.removeAll(idProdottiNuovi);
+        for (int i:idProdottiAttuali){
+            Disponibilita d = new Disponibilita();
+            d.setProdotto(prodottoDAO.findByID(i));
+            d.setMagazzino(m);
+            prodottiMagazzinoDAO.remove(d);
+        }
+
         serviziPuntoVenditaDAO.removeAllServicesByShopID(p.getIdPuntoVendita());
         for (Servizio s:servizi){
             st+= serviziPuntoVenditaDAO.add(s, p);
@@ -179,5 +221,23 @@ public class PuntoVenditaBusiness {
         }
 
         return pvr;
+    }
+
+    public PuntoVenditaResponse findShopByManagerID(int idManager){
+        IUtentiPuntoVenditaDAO utentiPuntoVenditaDAO = UtentiPuntoVenditaDAO.getInstance();
+
+        PuntoVenditaResponse res = new PuntoVenditaResponse();
+        res.setMessage("Errore non definito");
+        res.setPuntoVendita(utentiPuntoVenditaDAO.findShopByShopManagerID(idManager));
+
+        if (res.getPuntoVendita() != null){
+            res.setMessage("Punto vendita trovato con successo");
+        } else
+        {
+            res.setMessage("Errore durante la ricerca del punto vendita");
+            return res;
+        }
+
+        return res;
     }
 }

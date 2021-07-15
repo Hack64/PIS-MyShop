@@ -36,18 +36,55 @@ public class ProdottiMagazzinoDAO implements IProdottiMagazzinoDAO {
     }
 
     @Override
+    public Disponibilita findByProductAndWarehouseID(int idProdotto, int idMagazzino) {
+        executor = new DbOperationExecutor();
+        sql = "SELECT idMagazzino, idProdotto, quantita FROM ProdottiMagazzino WHERE ProdottiMagazzino.idMagazzino = '" + idMagazzino + "' AND idProdotto = '" + idProdotto + "';";
+        dbOperation = new ReadDbOperation(sql);
+        rs = (ResultSet) executor.executeOperation(dbOperation);
+        Disponibilita disponibilita = new Disponibilita();
+        IProdottoDAO prodottoDAO = ProdottoDAO.getInstance();
+        IPosizioneDAO posizioneDAO = PosizioneDAO.getInstance();
+        IMagazzinoDAO magazzinoDAO = MagazzinoDAO.getInstance();
+        int idPr = -1;
+        int idMag = -1;
+        try{
+            rs.next();
+            if (rs.getRow()==1){
+                disponibilita.setQta(rs.getInt("quantita"));
+                idPr = rs.getInt("idProdotto");
+                idMag = rs.getInt("idMagazzino");
+            }
+        } catch (SQLException e) {
+            // handle any errors
+            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("VendorError: " + e.getErrorCode());
+        } catch (NullPointerException e) {
+            // handle any errors
+            System.out.println("Resultset: " + e.getMessage());
+        } finally {
+            executor.closeOperation(dbOperation);
+        }
+        disponibilita.setProdotto(prodottoDAO.findByID(idPr));
+        disponibilita.setMagazzino(magazzinoDAO.findByID(idMag));
+        disponibilita.setPosizione(posizioneDAO.findByProductID(idPr));
+        return disponibilita;
+    }
+
+    @Override
     public ArrayList<Disponibilita> findAllProductsByWarehouseID(int idMagazzino) {
         executor = new DbOperationExecutor();
         sql = "SELECT idMagazzino, idProdotto, quantita FROM ProdottiMagazzino WHERE ProdottiMagazzino.idMagazzino = '" + idMagazzino + "';";
         dbOperation = new ReadDbOperation(sql);
         rs = (ResultSet) executor.executeOperation(dbOperation);
         ArrayList<Disponibilita> prodottiMagazzino = new ArrayList<>();
-        Disponibilita disponibilita = new Disponibilita();
+        Disponibilita disponibilita;
         IProdottoDAO pDAO = ProdottoDAO.getInstance();
         IPosizioneDAO posizioneDAO = PosizioneDAO.getInstance();
         Posizione posizione;
         try {
             while(rs.next()){
+                disponibilita = new Disponibilita();
                 posizione = posizioneDAO.findByProductID(rs.getInt("idProdotto"));
                 disponibilita.setQta(rs.getInt("quantita"));
                 disponibilita.setPosizione(posizione);
@@ -112,7 +149,7 @@ public class ProdottiMagazzinoDAO implements IProdottiMagazzinoDAO {
     @Override
     public int remove(Disponibilita disponibilita) {
         executor = new DbOperationExecutor();
-        sql = "DELETE FROM ProdottiMagazzino WHERE idMagazzino = '" + disponibilita.getMagazzino().getIdMagazzino() +"', idProdotto = '" + disponibilita.getProdotto().getIdProdotto() +"';";
+        sql = "DELETE FROM ProdottiMagazzino WHERE idMagazzino = '" + disponibilita.getMagazzino().getIdMagazzino() +"' AND idProdotto = '" + disponibilita.getProdotto().getIdProdotto() +"';";
         dbOperation = new WriteDbOperation(sql);
         int rowCount = (int) executor.executeOperation(dbOperation);
         executor.closeOperation(dbOperation);

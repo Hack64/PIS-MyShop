@@ -49,6 +49,9 @@ public class SideMenuListener implements ActionListener {
                 System.out.println("Premuto imprenditori");
                 appFrame.setCurrentMainPanel(new ImprenditoriPanel(appFrame));
                 break;
+            case BTN_WAREHOUSES:
+                System.out.println("Premuto magazzino");
+                appFrame.setCurrentMainPanel(new WarehousesPanel(appFrame));
         }
 
     }
