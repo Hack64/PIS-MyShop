@@ -2,7 +2,9 @@ package View.Listener;
 
 import Business.ProdottoBusiness;
 import Business.PuntoVenditaBusiness;
+import Business.ServizioBusiness;
 import Model.IProdotto;
+import Model.Servizio;
 import View.*;
 
 import javax.swing.*;
@@ -15,11 +17,13 @@ public class ShopOperationDialogListener implements ActionListener {
     private ShopOperationDialog shopOperationDialog;
     private ShopManagerChooserDialog shopManagerChooserDialog;
     private ShopProductsChooserDialog shopProductsChooserDialog;
+    private ShopServicesChooserDialog shopServicesChooserDialog;
     public final static String BTN_ADD_SHOP = "btnAdd";
     public final static String BTN_EDIT_SHOP = "btnEdit";
     public final static String BTN_MANAGER = "btnManager";
     public final static String BTN_ADD_MANAGER = "btnAddManager";
     public final static String BTN_PRODUCTS = "btnProducts";
+    public final static String BTN_SERVICES = "btnServices";
 
 
     public ShopOperationDialogListener(AppFrame appFrame, ShopOperationDialog dialog){
@@ -34,10 +38,14 @@ public class ShopOperationDialogListener implements ActionListener {
         switch (cmd){
             case BTN_ADD_SHOP:
                 ArrayList<IProdotto> prodotti = new ArrayList<>();
+                ArrayList<Servizio> servizi = new ArrayList<>();
                 for (String s:shopProductsChooserDialog.getSelectedProducts()){
                     prodotti.add(ProdottoBusiness.getInstance().findByName(s).getProdotto());
                 }
-                int st = PuntoVenditaBusiness.getInstance().addNewShop(shopOperationDialog.getTxtShopVia(), shopOperationDialog.getTxtShopCAP(), shopOperationDialog.getTxtShopCitta(), shopOperationDialog.getTxtMagVia(), shopOperationDialog.getTxtMagCitta(), shopOperationDialog.getTxtMagCAP(), shopManagerChooserDialog.getSelectedUser(), prodotti);
+                for (String s:shopServicesChooserDialog.getSelectedServices()){
+                    servizi.add(ServizioBusiness.getInstance().findByName(s).getServizio());
+                }
+                int st = PuntoVenditaBusiness.getInstance().addNewShop(shopOperationDialog.getTxtShopVia(), shopOperationDialog.getTxtShopCAP(), shopOperationDialog.getTxtShopCitta(), shopOperationDialog.getTxtMagVia(), shopOperationDialog.getTxtMagCitta(), shopOperationDialog.getTxtMagCAP(), shopManagerChooserDialog.getSelectedUser(), prodotti, servizi);
                 if (st == 4) {
                     String esit = "Punto Vendita e magazzino creato con successo!";
                     JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
@@ -51,10 +59,14 @@ public class ShopOperationDialogListener implements ActionListener {
                 break;
             case BTN_EDIT_SHOP:
                 ArrayList<IProdotto> prodottiM = new ArrayList<>();
+                ArrayList<Servizio> serviziM = new ArrayList<>();
                 for (String s:shopProductsChooserDialog.getSelectedProducts()){
                     prodottiM.add(ProdottoBusiness.getInstance().findByName(s).getProdotto());
                 }
-                int st_e = PuntoVenditaBusiness.getInstance().updateShopAndWarehouse(shopOperationDialog.getID(), shopOperationDialog.getTxtShopVia(), shopOperationDialog.getTxtShopCAP(), shopOperationDialog.getTxtShopCitta(), shopOperationDialog.getTxtMagVia(), shopOperationDialog.getTxtMagCitta(), shopOperationDialog.getTxtMagCAP(), shopManagerChooserDialog.getSelectedUser(), prodottiM);
+                for (String s:shopServicesChooserDialog.getSelectedServices()){
+                    serviziM.add(ServizioBusiness.getInstance().findByName(s).getServizio());
+                }
+                int st_e = PuntoVenditaBusiness.getInstance().updateShopAndWarehouse(shopOperationDialog.getID(), shopOperationDialog.getTxtShopVia(), shopOperationDialog.getTxtShopCAP(), shopOperationDialog.getTxtShopCitta(), shopOperationDialog.getTxtMagVia(), shopOperationDialog.getTxtMagCitta(), shopOperationDialog.getTxtMagCAP(), shopManagerChooserDialog.getSelectedUser(), prodottiM, serviziM);
                 if (st_e == 2){
                     String esit = "Punto vendita e magazzino modificati con successo!";
                     JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
@@ -72,8 +84,12 @@ public class ShopOperationDialogListener implements ActionListener {
             case BTN_PRODUCTS:
                 shopProductsChooserDialog = new ShopProductsChooserDialog(appFrame);
                 break;
+            case BTN_SERVICES:
+                shopServicesChooserDialog = new ShopServicesChooserDialog(appFrame);
+                break;
             case BTN_ADD_MANAGER:
                 new ManagerRegistrationDialog(appFrame);
+                break;
         }
     }
 }

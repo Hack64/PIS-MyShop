@@ -48,6 +48,7 @@ public class ServizioDAO implements IServizioDAO {
         dbOperation = new ReadDbOperation(sql);
         rs = (ResultSet) executor.executeOperation(dbOperation);
         fDAO = FornitoreDAO.getInstance();
+        scDAO = ServizioCategoriaDAO.getInstance();
         int idFornitore = -1;
         try {
             rs.next();
@@ -128,6 +129,31 @@ public class ServizioDAO implements IServizioDAO {
         boolean serviceExists = false;
         executor = new DbOperationExecutor();
         sql = "SELECT count(*) AS C FROM Servizio WHERE Servizio.idServizio = '" + idServizio + "';";
+        dbOperation = new ReadDbOperation(sql);
+        rs = (ResultSet) executor.executeOperation(dbOperation);
+        try {
+            rs.next();
+            if(rs.getRow()==1 && rs.getInt("C")==1)
+                serviceExists = true;
+        } catch (SQLException e) {
+            // handle any errors
+            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("VendorError: " + e.getErrorCode());
+        } catch (NullPointerException e) {
+            // handle any errors
+            System.out.println("Resultset: " + e.getMessage());
+        } finally {
+            executor.closeOperation(dbOperation);
+        }
+        return serviceExists;
+    }
+
+    @Override
+    public boolean serviceExists(String nomeServizio) {
+        boolean serviceExists = false;
+        executor = new DbOperationExecutor();
+        sql = "SELECT count(*) AS C FROM Servizio WHERE Servizio.nome = '" + nomeServizio + "';";
         dbOperation = new ReadDbOperation(sql);
         rs = (ResultSet) executor.executeOperation(dbOperation);
         try {

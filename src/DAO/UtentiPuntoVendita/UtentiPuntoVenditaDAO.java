@@ -276,10 +276,11 @@ public class UtentiPuntoVenditaDAO implements IUtentiPuntoVenditaDAO {
         int currentManagerID = this.findShopManagerByShopID(puntoVendita.getIdPuntoVendita()).getIdUtente();
         int rowCount = -1;
         if (utente.getIdUtente() != currentManagerID){
-            sql = "UPDATE UtentePuntoVendita SET isManager = 0 WHERE idUtente = '" + this.findShopManagerByShopID(puntoVendita.getIdPuntoVendita()).getIdUtente() + "' AND idPuntoVendita = '" + puntoVendita.getIdPuntoVendita() + "';";
+            rowCount = this.removeByID(currentManagerID, puntoVendita.getIdPuntoVendita());
+            sql = "UPDATE UtentePuntoVendita SET idPuntoVendita = '" + puntoVendita.getIdPuntoVendita()  + "' WHERE idUtente = '" + utente.getIdUtente() + "';";
             dbOperation = new WriteDbOperation(sql);
-            rowCount = (int)executor.executeOperation(dbOperation);
-            rowCount += this.add(utente, puntoVendita, 0, 1);
+            rowCount += (int) executor.executeOperation(dbOperation);
+            executor.closeOperation(dbOperation);
         }
         return rowCount;
     }

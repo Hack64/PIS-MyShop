@@ -37,6 +37,23 @@ public class ServizioBusiness {
         return res;
     }
 
+    public ServizioResponse findByName(String nomeServizio){
+        servizioDAO = ServizioDAO.getInstance();
+        ServizioResponse res = new ServizioResponse();
+        res.setMessage("Errore non definito");
+
+        if (!servizioDAO.serviceExists(nomeServizio)){
+            res.setMessage("Servizio non trovato");
+            return res;
+        }
+
+        res.setServizio(servizioDAO.getByName(nomeServizio));
+        res.setMessage("Servizio trovato con successo");
+
+        return res;
+    }
+
+
     public ArrayList<Servizio> findAllServices(){
         servizioDAO = ServizioDAO.getInstance();
 

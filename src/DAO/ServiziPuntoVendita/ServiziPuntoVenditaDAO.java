@@ -86,6 +86,16 @@ public class ServiziPuntoVenditaDAO implements IServiziPuntoVenditaDAO {
     }
 
     @Override
+    public int removeAllServicesByShopID(int idPuntoVendita) {
+        executor = new DbOperationExecutor();
+        sql = "DELETE FROM ServiziPuntoVendita WHERE idPuntoVendita = '" + idPuntoVendita + "';";
+        dbOperation = new WriteDbOperation(sql);
+        int rowCount = (int) executor.executeOperation(dbOperation);
+        executor.closeOperation(dbOperation);
+        return rowCount;
+    }
+
+    @Override
     public int add(Servizio servizio, PuntoVendita puntoVendita) {
         executor = new DbOperationExecutor();
         sql = "INSERT INTO ServiziPuntoVendita VALUES ('" + servizio.getIdServizio() + "','" + puntoVendita.getIdPuntoVendita() + "');";

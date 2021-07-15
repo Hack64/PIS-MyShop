@@ -13,6 +13,5 @@ public class FactoryProvider {
         else if(TipoFactory.SERVIZIO.equals(choice))
             return new ServizioFactory();
         return null;
-
     }
 }

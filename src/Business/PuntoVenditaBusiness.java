@@ -8,13 +8,12 @@ import DAO.ProdottiPuntoVendita.IProdottiPuntoVenditaDAO;
 import DAO.ProdottiPuntoVendita.ProdottiPuntoVenditaDAO;
 import DAO.PuntoVendita.IPuntoVenditaDAO;
 import DAO.PuntoVendita.PuntoVenditaDAO;
+import DAO.ServiziPuntoVendita.IServiziPuntoVenditaDAO;
+import DAO.ServiziPuntoVendita.ServiziPuntoVenditaDAO;
 import DAO.UtentiPuntoVendita.IUtentiPuntoVenditaDAO;
 import DAO.UtentiPuntoVendita.UtentiPuntoVenditaDAO;
-import Model.IProdotto;
-import Model.Magazzino;
-import Model.PuntoVendita;
+import Model.*;
 import Model.Responses.PuntoVenditaResponse;
-import Model.Utente;
 
 import java.util.ArrayList;
 
@@ -40,11 +39,12 @@ public class PuntoVenditaBusiness {
         return puntoVenditaDAO.removeById(idPuntoVendita);
     }
 
-    public int addNewShop(String viaPV, String capPV, String cittaPV, String viaM, String cittaM, String capM, Utente manager, ArrayList<IProdotto> prodotti) {
+    public int addNewShop(String viaPV, String capPV, String cittaPV, String viaM, String cittaM, String capM, Utente manager, ArrayList<IProdotto> prodotti, ArrayList<Servizio> servizi) {
         puntoVenditaDAO = PuntoVenditaDAO.getInstance();
         IMagazzinoDAO magazzinoDAO = MagazzinoDAO.getInstance();
         IProdottiPuntoVenditaDAO prodottiPuntoVenditaDAO = ProdottiPuntoVenditaDAO.getInstance();
         IUtentiPuntoVenditaDAO utentiPuntoVenditaDAO = UtentiPuntoVenditaDAO.getInstance();
+        IServiziPuntoVenditaDAO serviziPuntoVenditaDAO = ServiziPuntoVenditaDAO.getInstance();
 
         PuntoVendita p = new PuntoVendita();
         Magazzino m = new Magazzino();
@@ -73,6 +73,9 @@ public class PuntoVenditaBusiness {
         }
         for (IProdotto pr:prodotti){
             st+= prodottiPuntoVenditaDAO.add(p, pr);
+        }
+        for (Servizio s:servizi){
+            st+= serviziPuntoVenditaDAO.add(s, p);
         }
         return st;
     }
@@ -104,12 +107,13 @@ public class PuntoVenditaBusiness {
         return res;
     }
 
-    public int updateShopAndWarehouse(int idPuntoVendita, String viaPV, String capPV, String cittaPV, String viaM, String cittaM, String capM, Utente manager, ArrayList<IProdotto> prodotti){
+    public int updateShopAndWarehouse(int idPuntoVendita, String viaPV, String capPV, String cittaPV, String viaM, String cittaM, String capM, Utente manager, ArrayList<IProdotto> prodotti, ArrayList<Servizio> servizi){
         puntoVenditaDAO = PuntoVenditaDAO.getInstance();
         IProdottiMagazzinoDAO prodottiMagazzinoDAO = ProdottiMagazzinoDAO.getInstance();
         IMagazzinoDAO magazzinoDAO = MagazzinoDAO.getInstance();
         IUtentiPuntoVenditaDAO utentiPuntoVenditaDAO = UtentiPuntoVenditaDAO.getInstance();
         IProdottiPuntoVenditaDAO prodottiPuntoVenditaDAO = ProdottiPuntoVenditaDAO.getInstance();
+        IServiziPuntoVenditaDAO serviziPuntoVenditaDAO = ServiziPuntoVenditaDAO.getInstance();
 
         PuntoVendita p = new PuntoVendita();
         Magazzino m;
@@ -131,11 +135,20 @@ public class PuntoVenditaBusiness {
         p = puntoVenditaDAO.findByAddress(cittaPV, viaPV);
         m.setPuntoVendita(p);
         st+=magazzinoDAO.update(m);
+        /*int idPC = utentiPuntoVenditaDAO.findShopByShopManagerID(manager.getIdUtente()).getIdPuntoVendita();
+        if (idPC!=0){
+            utentiPuntoVenditaDAO.removeByID(manager.getIdUtente(), idPC);
+        }*/
         st+=utentiPuntoVenditaDAO.updateManager(manager, p);
         prodottiPuntoVenditaDAO.removeAllPrductsByShopID(p.getIdPuntoVendita());
         for (IProdotto pr:prodotti){
             st+=prodottiPuntoVenditaDAO.add(p, pr);
         }
+        serviziPuntoVenditaDAO.removeAllServicesByShopID(p.getIdPuntoVendita());
+        for (Servizio s:servizi){
+            st+= serviziPuntoVenditaDAO.add(s, p);
+        }
+
         return st;
     }
 
@@ -146,7 +159,6 @@ public class PuntoVenditaBusiness {
             String indirizzo =  p.getVia() + " , " + p.getCitta();
             indirizzi.add(indirizzo);
         }
-
         return indirizzi;
     }
 

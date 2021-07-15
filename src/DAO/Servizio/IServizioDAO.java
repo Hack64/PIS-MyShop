@@ -9,6 +9,7 @@ public interface IServizioDAO {
     Servizio findByID(int idServizio);
     Servizio getByName(String nomeServizio);
     boolean serviceExists(int idServizio);
+    boolean serviceExists(String nomeServizio);
     ArrayList<Servizio> findAll();
     ArrayList<Servizio> findAllBySupplier(Fornitore fornitore);
     int add(Servizio servizio);

@@ -17,6 +17,7 @@ public class ShopOperationDialog extends JDialog {
     JButton btnOK;
     JButton btnAnnulla;
     JButton btnProducts;
+    JButton btnServices;
     JButton btnManager;
     JButton btnNewManager;
 
@@ -28,6 +29,7 @@ public class ShopOperationDialog extends JDialog {
     JLabel lblMagCitta;
     JLabel lblManager;
     JLabel lblProducts;
+    JLabel lblServices;
 
     JTextField txtShopVia;
     JTextField txtShopCAP;
@@ -59,6 +61,7 @@ public class ShopOperationDialog extends JDialog {
         lblMagCitta = new JLabel("Città magazzino: ");
         lblManager = new JLabel("Assegna un manager: ");
         lblProducts = new JLabel("Scegli prodotti: ");
+        lblServices = new JLabel("Scegli servizi: ");
 
         btnAnnulla = new JButton("Annulla");
         btnAnnulla.addActionListener(e -> dispose());
@@ -75,6 +78,9 @@ public class ShopOperationDialog extends JDialog {
         btnProducts = new JButton("Scegli...");
         btnProducts.setActionCommand("btnProducts");
         btnProducts.addActionListener(shopOperationDialogListener);
+        btnServices = new JButton("Scegli...");
+        btnServices.setActionCommand("btnServices");
+        btnServices.addActionListener(shopOperationDialogListener);
         btnManager = new JButton("Assegna");
         btnManager.setActionCommand("btnManager");
         btnManager.addActionListener(shopOperationDialogListener);
@@ -128,6 +134,11 @@ public class ShopOperationDialog extends JDialog {
         form.add(lblProducts, c);
         c.gridx=1;
         form.add(btnProducts, c);
+        c.gridx=0;
+        c.gridy++;
+        form.add(lblServices, c);
+        c.gridx=1;
+        form.add(btnServices, c);
 
         if (editMode){
             setFields();
