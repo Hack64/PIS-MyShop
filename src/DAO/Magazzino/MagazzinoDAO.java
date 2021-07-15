@@ -1,5 +1,6 @@
 package DAO.Magazzino;
 
+import DAO.ProdottiMagazzino.IProdottiMagazzinoDAO;
 import DAO.ProdottiMagazzino.ProdottiMagazzinoDAO;
 import DbInterface.*;
 import Model.Magazzino;
@@ -12,21 +13,21 @@ public class MagazzinoDAO implements IMagazzinoDAO {
 
     private final static MagazzinoDAO instance = new MagazzinoDAO();
 
-    private static IDbConnection conn;
     private ResultSet rs;
     private DbOperationExecutor executor;
     private IDbOperation dbOperation;
     private String sql;
 
-
     private Magazzino magazzino;
-    private ProdottiMagazzinoDAO pmDAO;
+    private IProdottiMagazzinoDAO pmDAO;
 
     private MagazzinoDAO(){
-        conn = null;
-        rs = null;
-        magazzino = null;
-        pmDAO = null;
+        this.rs = null;
+        this.dbOperation = null;
+        this.executor = null;
+        this.sql = null;
+        this.magazzino = null;
+        this.pmDAO = null;
     }
 
     public static MagazzinoDAO getInstance(){
@@ -36,7 +37,6 @@ public class MagazzinoDAO implements IMagazzinoDAO {
 
     @Override
     public Magazzino findByID(int idMagazzino) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "SELECT idMagazzino, via, CAP, citta, idPuntoVendita FROM myshopdb.Magazzino WHERE myshopdb.Magazzino.idMagazzino = '" + idMagazzino + "';";
         dbOperation = new ReadDbOperation(sql);
@@ -68,7 +68,6 @@ public class MagazzinoDAO implements IMagazzinoDAO {
 
     @Override
     public Magazzino findByShopID(int idPuntoVendita) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "SELECT idMagazzino, via, CAP, citta, idPuntoVendita FROM myshopdb.Magazzino WHERE idPuntoVendita = '" + idPuntoVendita + "';";
         dbOperation = new ReadDbOperation(sql);
@@ -100,7 +99,6 @@ public class MagazzinoDAO implements IMagazzinoDAO {
 
     @Override
     public ArrayList<Magazzino> findAll() {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "SELECT idMagazzino, via, CAP, citta, idPuntoVendita FROM myshopdb.Magazzino;";
         dbOperation = new ReadDbOperation(sql);
@@ -135,7 +133,6 @@ public class MagazzinoDAO implements IMagazzinoDAO {
 
     @Override
     public int add(Magazzino magazzino) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "INSERT INTO Magazzino (via, CAP, citta, idPuntoVendita) VALUES ('" + magazzino.getVia() + "','" + magazzino.getCap() + "','" + magazzino.getCitta() + "','" + magazzino.getPuntoVendita().getIdPuntoVendita() + "');";
         dbOperation = new WriteDbOperation(sql);
@@ -146,7 +143,6 @@ public class MagazzinoDAO implements IMagazzinoDAO {
 
     @Override
     public int removeByID(int idMagazzino) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "DELETE FROM Magazzino WHERE idMagazzino = '"+ idMagazzino + "';";
         dbOperation = new WriteDbOperation(sql);
@@ -157,7 +153,6 @@ public class MagazzinoDAO implements IMagazzinoDAO {
 
     @Override
     public int update(Magazzino magazzino) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "UPDATE Magazzino SET via = '" + magazzino.getVia() + "', CAP = '" + magazzino.getCap() + "', citta = '" + magazzino.getCitta() + "' WHERE idMagazzino = '" + magazzino.getIdMagazzino() + "';";
         dbOperation = new WriteDbOperation(sql);

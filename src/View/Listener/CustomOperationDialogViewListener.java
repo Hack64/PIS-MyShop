@@ -16,12 +16,13 @@ import java.util.ArrayList;
 
 public class CustomOperationDialogViewListener implements ActionListener {
 
-    AppFrame appFrame;
-    CustomOperationDialogView operationDialogView;
-    CategoriesChooserDialog categoriesChooserDialog;
-    SubProductChooserDialog subProductChooserDialog;
-    File img;
-    JFileChooser fileChooser;
+    private AppFrame appFrame;
+    private CustomOperationDialogView operationDialogView;
+    private CategoriesChooserDialog categoriesChooserDialog;
+    private SubProductChooserDialog subProductChooserDialog;
+    private File img;
+    private JFileChooser fileChooser;
+
     public final static String BTN_ADD_PRODUCT = "btnAddProduct";
     public final static String BTN_ADD_COMP_PRODUCT = "btnAddCompProduct";
     public final static String BTN_ADD_SERVICE = "btnAddService";

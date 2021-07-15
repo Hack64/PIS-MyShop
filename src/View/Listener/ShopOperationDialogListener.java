@@ -11,10 +11,10 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class ShopOperationDialogListener implements ActionListener {
-    AppFrame appFrame;
-    ShopOperationDialog shopOperationDialog;
-    ShopManagerChooserDialog shopManagerChooserDialog;
-    ShopProductsChooserDialog shopProductsChooserDialog;
+    private AppFrame appFrame;
+    private ShopOperationDialog shopOperationDialog;
+    private ShopManagerChooserDialog shopManagerChooserDialog;
+    private ShopProductsChooserDialog shopProductsChooserDialog;
     public final static String BTN_ADD_SHOP = "btnAdd";
     public final static String BTN_EDIT_SHOP = "btnEdit";
     public final static String BTN_MANAGER = "btnManager";

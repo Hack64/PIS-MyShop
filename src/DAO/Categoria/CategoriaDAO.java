@@ -12,7 +12,6 @@ public class CategoriaDAO implements ICategoriaDAO {
 
     private final static CategoriaDAO instance = new CategoriaDAO();
 
-    private static IDbConnection conn;
     private ResultSet rs;
     private DbOperationExecutor executor;
     private IDbOperation dbOperation;
@@ -21,8 +20,10 @@ public class CategoriaDAO implements ICategoriaDAO {
     private ArrayList<ICategoria> sottoCategorie = new ArrayList<>();
 
     private CategoriaDAO(){
-        this.conn = null;
         this.rs = null;
+        this.dbOperation = null;
+        this.executor = null;
+        this.sql = null;
     }
 
     public static CategoriaDAO getInstance() {
@@ -34,13 +35,12 @@ public class CategoriaDAO implements ICategoriaDAO {
         if (idCategoria == 0){
             return new Categoria(-1,"null", null);
         }
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "SELECT idCategoria, nome, idCategoriaPadre FROM myshopdb.Categoria WHERE myshopdb.Categoria.idCategoria = '" + idCategoria + "';";
         dbOperation = new ReadDbOperation(sql);
         rs = (ResultSet) executor.executeOperation(dbOperation);
         Categoria categoria = new Categoria();
-        int idPadre=0;
+        int idPadre=-1;
         try {
             rs.next();
             if (rs.getRow()==1) {
@@ -61,25 +61,23 @@ public class CategoriaDAO implements ICategoriaDAO {
         }
         categoria.setCategoriaPadre(this.findByID(idPadre));
         return categoria;
-        //return null;
     }
 
     @Override
     public ICategoria findByName(String nome) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "SELECT idCategoria, nome, idCategoriaPadre FROM myshopdb.Categoria WHERE myshopdb.Categoria.nome = '" + nome + "';";
         dbOperation = new ReadDbOperation(sql);
         rs = (ResultSet) executor.executeOperation(dbOperation);
-        Categoria categoria;
+        Categoria categoria = new Categoria();
+        int idPadre = -1;
         try {
             rs.next();
             if (rs.getRow()==1) {
                 categoria = new Categoria();
                 categoria.setIdCategoria(rs.getInt("idCategoria"));
                 categoria.setNome(rs.getString("nome"));
-                categoria.setCategoriaPadre(this.findByID(rs.getInt("idCategoriaPadre")));
-                return categoria;
+                idPadre = rs.getInt("idCategoriaPadre");
             }
         } catch (SQLException e) {
             // handle any errors
@@ -92,12 +90,12 @@ public class CategoriaDAO implements ICategoriaDAO {
         } finally {
             executor.closeOperation(dbOperation);
         }
-        return null;
+        categoria.setCategoriaPadre(this.findByID(idPadre));
+        return categoria;
     }
 
     @Override
     public ArrayList<ICategoria> findAll() {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "SELECT idCategoria, nome, idCategoriaPadre FROM myshopdb.Categoria;";
         dbOperation = new ReadDbOperation(sql);
@@ -133,7 +131,6 @@ public class CategoriaDAO implements ICategoriaDAO {
             executor.closeOperation(dbOperation);
             return sottoCategorie;
         } else {
-            //conn = DbConnection.getInstance();
             executor = new DbOperationExecutor();
             sql = "SELECT idCategoriaPadre FROM myshopdb.Categoria WHERE myshopdb.Categoria.idCategoria = '" + idCategoria + "';";
             dbOperation = new ReadDbOperation(sql);
@@ -165,7 +162,6 @@ public class CategoriaDAO implements ICategoriaDAO {
 
     @Override
     public int add(ICategoria categoria) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         int rowCount;
         if (categoria.getCategoriaPadre() == null) {
@@ -182,7 +178,6 @@ public class CategoriaDAO implements ICategoriaDAO {
 
     @Override
     public int removeByID(int idCategoria) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "DELETE FROM Categoria WHERE idCategoria = '"+ idCategoria + "';";
         dbOperation = new WriteDbOperation(sql);
@@ -193,7 +188,6 @@ public class CategoriaDAO implements ICategoriaDAO {
 
     @Override
     public int update(ICategoria categoria) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "UPDATE Categoria SET nome = '" + categoria.getNome() + "' WHERE idCategoria = '" + categoria.getIdCategoria() + "';";
         dbOperation = new WriteDbOperation(sql);

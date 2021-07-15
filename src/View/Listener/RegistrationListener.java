@@ -13,8 +13,8 @@ import java.awt.event.ActionListener;
 
 public class RegistrationListener implements ActionListener {
 
-    AppFrame appFrame;
-    RegistrationDialog registrationDialog;
+    private AppFrame appFrame;
+    private RegistrationDialog registrationDialog;
     public final static String BTN_REGISTER = "btnRegister";
     public final static String BTN_REGISTER_MANAGER = "btnRegisterManager";
 

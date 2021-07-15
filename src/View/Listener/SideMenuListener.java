@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 
 public class SideMenuListener implements ActionListener {
 
-    AppFrame appFrame;
+    private AppFrame appFrame;
     public final static String BTN_BROWSE = "btnBrowse";
     public final static String BTN_LISTS = "btnLists";
     public final static String BTN_USERS = "btnUsers";

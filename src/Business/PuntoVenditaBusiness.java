@@ -1,9 +1,14 @@
 package Business;
 
+import DAO.Magazzino.IMagazzinoDAO;
 import DAO.Magazzino.MagazzinoDAO;
+import DAO.ProdottiMagazzino.IProdottiMagazzinoDAO;
 import DAO.ProdottiMagazzino.ProdottiMagazzinoDAO;
+import DAO.ProdottiPuntoVendita.IProdottiPuntoVenditaDAO;
 import DAO.ProdottiPuntoVendita.ProdottiPuntoVenditaDAO;
+import DAO.PuntoVendita.IPuntoVenditaDAO;
 import DAO.PuntoVendita.PuntoVenditaDAO;
+import DAO.UtentiPuntoVendita.IUtentiPuntoVenditaDAO;
 import DAO.UtentiPuntoVendita.UtentiPuntoVenditaDAO;
 import Model.IProdotto;
 import Model.Magazzino;
@@ -15,7 +20,7 @@ import java.util.ArrayList;
 
 public class PuntoVenditaBusiness {
     private static PuntoVenditaBusiness instance;
-    private PuntoVenditaDAO puntoVenditaDAO;
+    private IPuntoVenditaDAO puntoVenditaDAO;
 
     public static synchronized PuntoVenditaBusiness getInstance() {
         if(instance == null) instance = new PuntoVenditaBusiness();
@@ -37,9 +42,9 @@ public class PuntoVenditaBusiness {
 
     public int addNewShop(String viaPV, String capPV, String cittaPV, String viaM, String cittaM, String capM, Utente manager, ArrayList<IProdotto> prodotti) {
         puntoVenditaDAO = PuntoVenditaDAO.getInstance();
-        MagazzinoDAO magazzinoDAO = MagazzinoDAO.getInstance();
-        ProdottiPuntoVenditaDAO prodottiPuntoVenditaDAO = ProdottiPuntoVenditaDAO.getInstance();
-        UtentiPuntoVenditaDAO utentiPuntoVenditaDAO = UtentiPuntoVenditaDAO.getInstance();
+        IMagazzinoDAO magazzinoDAO = MagazzinoDAO.getInstance();
+        IProdottiPuntoVenditaDAO prodottiPuntoVenditaDAO = ProdottiPuntoVenditaDAO.getInstance();
+        IUtentiPuntoVenditaDAO utentiPuntoVenditaDAO = UtentiPuntoVenditaDAO.getInstance();
 
         PuntoVendita p = new PuntoVendita();
         Magazzino m = new Magazzino();
@@ -74,7 +79,7 @@ public class PuntoVenditaBusiness {
 
     public PuntoVenditaResponse findByID(int idPuntoVendita){
         puntoVenditaDAO = PuntoVenditaDAO.getInstance();
-        MagazzinoDAO magazzinoDAO = MagazzinoDAO.getInstance();
+        IMagazzinoDAO magazzinoDAO = MagazzinoDAO.getInstance();
 
         PuntoVenditaResponse res = new PuntoVenditaResponse();
         res.setMessage("Errore non definito");
@@ -101,10 +106,10 @@ public class PuntoVenditaBusiness {
 
     public int updateShopAndWarehouse(int idPuntoVendita, String viaPV, String capPV, String cittaPV, String viaM, String cittaM, String capM, Utente manager, ArrayList<IProdotto> prodotti){
         puntoVenditaDAO = PuntoVenditaDAO.getInstance();
-        ProdottiMagazzinoDAO prodottiMagazzinoDAO = ProdottiMagazzinoDAO.getInstance();
-        MagazzinoDAO magazzinoDAO = MagazzinoDAO.getInstance();
-        UtentiPuntoVenditaDAO utentiPuntoVenditaDAO = UtentiPuntoVenditaDAO.getInstance();
-        ProdottiPuntoVenditaDAO prodottiPuntoVenditaDAO = ProdottiPuntoVenditaDAO.getInstance();
+        IProdottiMagazzinoDAO prodottiMagazzinoDAO = ProdottiMagazzinoDAO.getInstance();
+        IMagazzinoDAO magazzinoDAO = MagazzinoDAO.getInstance();
+        IUtentiPuntoVenditaDAO utentiPuntoVenditaDAO = UtentiPuntoVenditaDAO.getInstance();
+        IProdottiPuntoVenditaDAO prodottiPuntoVenditaDAO = ProdottiPuntoVenditaDAO.getInstance();
 
         PuntoVendita p = new PuntoVendita();
         Magazzino m;

@@ -1,5 +1,6 @@
 package Business;
 
+import DAO.Lista.IListaDAO;
 import DAO.Lista.ListaDAO;
 import Model.Lista;
 import Model.Responses.ListaResponse;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 
 public class ListaBusiness {
     private static ListaBusiness instance;
-    private ListaDAO listaDAO;
+    private IListaDAO listaDAO;
 
     public static synchronized ListaBusiness getInstance() {
         if(instance == null) instance = new ListaBusiness();

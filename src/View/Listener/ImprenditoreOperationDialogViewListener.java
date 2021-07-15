@@ -12,8 +12,9 @@ import java.awt.event.ActionListener;
 
 public class ImprenditoreOperationDialogViewListener implements ActionListener {
 
-    AppFrame appFrame;
-    ImprenditoreOperationDialogView operationDialogView;
+    private AppFrame appFrame;
+    private ImprenditoreOperationDialogView operationDialogView;
+
     public final static String BTN_ADD_PRODUCER = "btnAddProducer";
     public final static String BTN_ADD_SUPPLIER = "btnAddSupplier";
     public final static String BTN_EDIT_PRODUCER = "btnEditProducer";

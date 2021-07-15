@@ -11,8 +11,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ShopsPanelListener implements ActionListener {
-    AppFrame appFrame;
-    JTable table;
+    private AppFrame appFrame;
+    private JTable table;
 
     public final static String BTN_ADD_SHOP = "btnAdd";
     public final static String BTN_EDIT_SHOP = "btnEdit";
@@ -38,12 +38,13 @@ public class ShopsPanelListener implements ActionListener {
                     PuntoVenditaResponse pvr = PuntoVenditaBusiness.getInstance().findByID(Integer.parseInt(table.getModel().getValueAt(rowToEdit, colToEdit).toString()));
                     new ShopOperationDialog(appFrame, true, pvr.getPuntoVendita(), pvr.getMagazzino());
                 } else {
-                    esit = "Devi selezionare un elemento per eliminarlo o modificarlo";
+                    esit = "Devi selezionare un elemento per modificarlo";
                     JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
                 }
                 break;
             case BTN_DELETE_SHOP:
-                if (table.getSelectedRow() == 1) {
+
+                if (table.getSelectedRowCount()==1) {
                     int rowToDelete = table.getSelectedRow();
                     int colToDelete = 0;
                     int idToDelete = Integer.parseInt(table.getModel().getValueAt(rowToDelete, colToDelete).toString());
@@ -57,7 +58,7 @@ public class ShopsPanelListener implements ActionListener {
                         JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
                     }
                 } else {
-                    esit = "Devi selezionare un elemento per eliminarlo o modificarlo";
+                    esit = "Devi selezionare un elemento per eliminarlo";
                     JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
                 }
                 break;

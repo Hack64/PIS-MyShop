@@ -10,8 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ListDialogListener implements ActionListener {
-    AppFrame appFrame;
-    ListOperationDialog listOperationDialog;
+    private AppFrame appFrame;
+    private ListOperationDialog listOperationDialog;
     public final static String BTN_ADD_LIST = "btnAdd";
     public final static String BTN_EDIT_LIST = "btnEdit";
 

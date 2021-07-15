@@ -11,8 +11,8 @@ import java.awt.event.ActionListener;
 
 public class WelcomePanelListener implements ActionListener {
 
-    AppFrame appFrame;
-    WelcomePanel panel;
+    private AppFrame appFrame;
+    private WelcomePanel panel;
     public final static String BTN_SET_SHOP = "btnOk";
 
     public WelcomePanelListener(AppFrame appFrame, WelcomePanel panel){

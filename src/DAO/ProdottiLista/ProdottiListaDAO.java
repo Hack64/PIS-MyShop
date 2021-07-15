@@ -1,6 +1,8 @@
 package DAO.ProdottiLista;
 
+import DAO.Lista.IListaDAO;
 import DAO.Lista.ListaDAO;
+import DAO.Prodotto.IProdottoDAO;
 import DAO.Prodotto.ProdottoDAO;
 import DbInterface.*;
 import Model.IProdotto;
@@ -17,17 +19,18 @@ public class ProdottiListaDAO implements IProdottiListaDAO {
 
     private final static ProdottiListaDAO instance = new ProdottiListaDAO();
 
-    private static IDbConnection conn;
     private ResultSet rs;
     private DbOperationExecutor executor;
     private IDbOperation dbOperation;
     private String sql;
 
-    private ProdottoDAO pDAO;
+    private IProdottoDAO pDAO;
 
     private ProdottiListaDAO(){
-        this.conn = null;
         this.rs = null;
+        this.dbOperation = null;
+        this.executor = null;
+        this.sql = null;
         this.pDAO = null;
     }
 
@@ -37,7 +40,6 @@ public class ProdottiListaDAO implements IProdottiListaDAO {
 
     @Override
     public HashMap<IProdotto, Map.Entry<String, Integer>> findAllProductsByListID(int idLista) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "SELECT idProdotto, idLista, prenotato FROM ProdottoLista WHERE idLista = '" + idLista + "';";
         dbOperation = new ReadDbOperation(sql);
@@ -67,7 +69,6 @@ public class ProdottiListaDAO implements IProdottiListaDAO {
 
     @Override
     public HashMap<IProdotto, String> findAllProductsByListIDAndState(int idLista, String prenotato) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "SELECT idProdotto, idLista, prenotato FROM ProdottoLista WHERE idLista = '" + idLista + "' AND prenotato = '" + prenotato + "';";
         dbOperation = new ReadDbOperation(sql);
@@ -97,14 +98,13 @@ public class ProdottiListaDAO implements IProdottiListaDAO {
 
     @Override
     public ArrayList<Lista> findAllListsByProductID(int idProdotto) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "SELECT idProdotto, idLista, prenotato FROM ProdottoLista WHERE idProdotto = '" + idProdotto + "';";
         dbOperation = new ReadDbOperation(sql);
         rs = (ResultSet) executor.executeOperation(dbOperation);
         ArrayList<Lista> listeProdotto = new ArrayList<>();
         Lista lista;
-        ListaDAO lDAO = ListaDAO.getInstance();
+        IListaDAO lDAO = ListaDAO.getInstance();
         try {
             while (rs.next()) {
                 lista = lDAO.findByID(rs.getInt("idLista"));
@@ -127,7 +127,6 @@ public class ProdottiListaDAO implements IProdottiListaDAO {
 
     @Override
     public int add(Lista lista, IProdotto prodotto, String prenotato, int quantita) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "INSERT INTO ProdottoLista (idProdotto, idLista, prenotato, quantita) VALUES ('" + prodotto.getIdProdotto() + "','" + lista.getIdLista() + "','" + prenotato + "','" + quantita +"');";
         dbOperation = new WriteDbOperation(sql);
@@ -138,7 +137,6 @@ public class ProdottiListaDAO implements IProdottiListaDAO {
 
     @Override
     public int removeByID(int idProdotto, int idLista) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "DELETE FROM ProdottoLista WHERE idProdotto = '" + idProdotto + "' AND idLista = '" + idLista + "';";
         dbOperation = new WriteDbOperation(sql);
@@ -149,7 +147,6 @@ public class ProdottiListaDAO implements IProdottiListaDAO {
 
     @Override
     public int update(Lista lista, IProdotto prodotto, String prenotato, int quantita) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "UPDATE ProdottoLista SET prenotato = '" + prenotato + "', quantita = '" + quantita + "' WHERE idProdotto = '" + prodotto.getIdProdotto() + "' AND idLista = '" + lista.getIdLista() + "';";
         dbOperation = new WriteDbOperation(sql);

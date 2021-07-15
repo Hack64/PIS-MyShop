@@ -11,8 +11,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class CategoriesOperationDialogListener implements ActionListener {
-    AppFrame appFrame;
-    CategoriesOperationDialog categoriesOperationDialog;
+    private AppFrame appFrame;
+    private CategoriesOperationDialog categoriesOperationDialog;
 
     public final static String BTN_ADD = "btnAdd";
     public final static String BTN_ADD_SUB = "btnAddSub";

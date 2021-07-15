@@ -7,8 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ShopManagerChooserDialogListener implements ActionListener {
-    AppFrame appFrame;
-    ShopManagerChooserDialog shopManagerChooserDialog;
+    private AppFrame appFrame;
+    private ShopManagerChooserDialog shopManagerChooserDialog;
 
     public final static String BTN_ADD_MANAGER = "btnOk";
 

@@ -14,8 +14,8 @@ import java.awt.event.ActionListener;
 
 public class LoginListener implements ActionListener {
 
-    AppFrame appFrame;
-    LoginDialog loginDialog;
+    private AppFrame appFrame;
+    private LoginDialog loginDialog;
     public final static String BTN_LOGIN = "btnLogin";
 
 

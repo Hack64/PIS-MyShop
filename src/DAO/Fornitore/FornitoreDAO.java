@@ -12,8 +12,8 @@ public class FornitoreDAO implements IFornitoreDAO {
 
     private final static FornitoreDAO instance = new FornitoreDAO();
 
-    private ServizioDAO sDAO = ServizioDAO.getInstance();
-    private static IDbConnection conn;
+    private final ServizioDAO sDAO = ServizioDAO.getInstance();
+
     private ResultSet rs;
     private DbOperationExecutor executor;
     private IDbOperation dbOperation;
@@ -22,9 +22,11 @@ public class FornitoreDAO implements IFornitoreDAO {
     private Fornitore fornitore;
 
     private FornitoreDAO(){
-        conn=null;
-        rs=null;
-        fornitore=null;
+        this.rs = null;
+        this.dbOperation = null;
+        this.executor = null;
+        this.sql = null;
+        this.fornitore = null;
     }
 
     public static FornitoreDAO getInstance(){
@@ -33,7 +35,6 @@ public class FornitoreDAO implements IFornitoreDAO {
 
     @Override
     public Fornitore findByID(int idFornitore) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "SELECT idFornitore, nome, sito, citta, nazione FROM myshopdb.Fornitore WHERE myshopdb.Fornitore.idFornitore = '" + idFornitore + "';";
         dbOperation = new ReadDbOperation(sql);
@@ -66,7 +67,6 @@ public class FornitoreDAO implements IFornitoreDAO {
 
     @Override
     public Fornitore getByName(String nomeFornitore) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "SELECT idFornitore, nome, sito, citta, nazione FROM myshopdb.Fornitore WHERE myshopdb.Fornitore.nome = '" + nomeFornitore + "';";
         dbOperation = new ReadDbOperation(sql);
@@ -100,7 +100,6 @@ public class FornitoreDAO implements IFornitoreDAO {
     @Override
     public boolean supplierExists(String nomeFornitore) {
         boolean supplierExists = false;
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "SELECT count(*) AS C FROM Utente WHERE Fornitore.nome = '" + nomeFornitore + "';";
         dbOperation = new ReadDbOperation(sql);
@@ -125,7 +124,6 @@ public class FornitoreDAO implements IFornitoreDAO {
 
     @Override
     public ArrayList<Fornitore> findAll() {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "SELECT idFornitore, nome, sito, citta, nazione FROM myshopdb.Fornitore;";
         dbOperation = new ReadDbOperation(sql);
@@ -160,7 +158,6 @@ public class FornitoreDAO implements IFornitoreDAO {
 
     @Override
     public int add(Fornitore fornitore) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "INSERT INTO Fornitore (nome, sito, citta, nazione) VALUES ('" + fornitore.getNome() + "','" + fornitore.getSito() + "','" + fornitore.getCitta() + "','" + fornitore.getNazione() + "');";
         dbOperation = new WriteDbOperation(sql);
@@ -171,7 +168,6 @@ public class FornitoreDAO implements IFornitoreDAO {
 
     @Override
     public int removeById(int idFornitore) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "DELETE FROM Fornitore WHERE Fornitore.idFornitore = '" + idFornitore + "';";
         dbOperation = new WriteDbOperation(sql);
@@ -182,7 +178,6 @@ public class FornitoreDAO implements IFornitoreDAO {
 
     @Override
     public int update(Fornitore fornitore) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "UPDATE Fornitore SET nome = '" + fornitore.getNome() + "', sito = '" + fornitore.getSito() + "', citta = '" + fornitore.getCitta() + "', nazione = '" + fornitore.getNazione() + "' WHERE idFornitore = '" + fornitore.getIdFornitore() + "';";
         dbOperation = new WriteDbOperation(sql);

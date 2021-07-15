@@ -1,6 +1,8 @@
 package DAO.ProdottiPuntoVendita;
 
+import DAO.Prodotto.IProdottoDAO;
 import DAO.Prodotto.ProdottoDAO;
+import DAO.PuntoVendita.IPuntoVenditaDAO;
 import DAO.PuntoVendita.PuntoVenditaDAO;
 import DbInterface.*;
 import Model.IProdotto;
@@ -14,15 +16,16 @@ public class ProdottiPuntoVenditaDAO implements IProdottiPuntoVenditaDAO {
 
     private final static ProdottiPuntoVenditaDAO instance = new ProdottiPuntoVenditaDAO();
 
-    private static IDbConnection conn;
     private ResultSet rs;
     private DbOperationExecutor executor;
     private IDbOperation dbOperation;
     private String sql;
 
     private ProdottiPuntoVenditaDAO(){
-        conn=null;
-        rs=null;
+        this.rs = null;
+        this.dbOperation = null;
+        this.executor = null;
+        this.sql = null;
     }
 
     public static ProdottiPuntoVenditaDAO getInstance(){
@@ -31,13 +34,12 @@ public class ProdottiPuntoVenditaDAO implements IProdottiPuntoVenditaDAO {
 
     @Override
     public ArrayList<IProdotto> findProductsByShopID(int idPuntoVendita) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "SELECT idProdotto FROM myshopdb.ProdottiPuntoVendita WHERE idPuntoVendita = '" + idPuntoVendita + "';";
         dbOperation = new ReadDbOperation(sql);
         rs = (ResultSet) executor.executeOperation(dbOperation);
         ArrayList<IProdotto> prodottiPuntoVendita = new ArrayList<>();
-        ProdottoDAO pDAO = ProdottoDAO.getInstance();
+        IProdottoDAO pDAO = ProdottoDAO.getInstance();
         try {
             while (rs.next()){
                 prodottiPuntoVendita.add(pDAO.findByID(rs.getInt("idProdotto")));
@@ -59,13 +61,12 @@ public class ProdottiPuntoVenditaDAO implements IProdottiPuntoVenditaDAO {
 
     @Override
     public ArrayList<PuntoVendita> findShopsByProductID(int idProdotto) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "SELECT idPuntoVendita FROM myshopdb.ProdottiPuntoVendita WHERE idProdotto = '" + idProdotto + "';";
         dbOperation = new ReadDbOperation(sql);
         rs = (ResultSet) executor.executeOperation(dbOperation);
         ArrayList<PuntoVendita> puntiVenditaProdotto = new ArrayList<>();
-        PuntoVenditaDAO pvDAO = PuntoVenditaDAO.getInstance();
+        IPuntoVenditaDAO pvDAO = PuntoVenditaDAO.getInstance();
         try {
             while (rs.next()){
                 puntiVenditaProdotto.add(pvDAO.findByID(rs.getInt("idPuntoVendita")));
@@ -97,7 +98,6 @@ public class ProdottiPuntoVenditaDAO implements IProdottiPuntoVenditaDAO {
 
     @Override
     public int add(PuntoVendita puntoVendita, IProdotto prodotto) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "INSERT INTO ProdottiPuntoVendita (idPuntoVendita, idProdotto) VALUES ('" + puntoVendita.getIdPuntoVendita() + "','" + prodotto.getIdProdotto() + "');";
         dbOperation = new WriteDbOperation(sql);
@@ -108,7 +108,6 @@ public class ProdottiPuntoVenditaDAO implements IProdottiPuntoVenditaDAO {
 
     @Override
     public int removeByID(int idProdotto, int idPuntoVendita) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "DELETE FROM ProdottiPuntoVendita WHERE idProdotto = '" + idProdotto + "' AND idPuntoVendita = '" + idPuntoVendita + "';";
         dbOperation = new WriteDbOperation(sql);

@@ -7,8 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ShopProductsChooserDialogListener implements ActionListener {
-    AppFrame appFrame;
-    ShopProductsChooserDialog shopProductsChooserDialog;
+    private AppFrame appFrame;
+    private ShopProductsChooserDialog shopProductsChooserDialog;
 
     public final static String BTN_ADD_PRODUCTS = "btnOk";
 

@@ -13,17 +13,17 @@ public class UtenteDAO implements IUtenteDAO {
     private final static UtenteDAO instance = new UtenteDAO();
 
     private Utente utente;
-    private static IDbConnection conn;
     private IDbOperation dbOperation;
     private DbOperationExecutor executor;
     private String sql;
-
-    private static ResultSet rs;
+    private ResultSet rs;
 
     private UtenteDAO(){
-        utente = null;
-        conn = null;
-        rs = null;
+        this.rs = null;
+        this.dbOperation = null;
+        this.executor = null;
+        this.sql = null;
+        this.utente = null;
     }
 
     public static UtenteDAO getInstance(){
@@ -32,7 +32,6 @@ public class UtenteDAO implements IUtenteDAO {
 
     @Override
     public Utente findByID(int idUtente) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "SELECT * FROM myshopdb.Utente WHERE myshopdb.Utente.idUtente = '" + idUtente + "';" ;
         dbOperation = new ReadDbOperation(sql);
@@ -73,7 +72,6 @@ public class UtenteDAO implements IUtenteDAO {
 
     @Override
     public Utente findByEmail(String email) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "SELECT * FROM myshopdb.Utente WHERE myshopdb.Utente.Email = '" + email + "';";
         dbOperation = new ReadDbOperation(sql);
@@ -110,7 +108,6 @@ public class UtenteDAO implements IUtenteDAO {
 
     @Override
     public Utente getByUsername(String username) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "SELECT * FROM myshopdb.Utente WHERE myshopdb.Utente.Email = '" + username + "';";
         dbOperation = new ReadDbOperation(sql);
@@ -147,7 +144,6 @@ public class UtenteDAO implements IUtenteDAO {
 
     @Override
     public ArrayList<Utente> findAllByRole(Utente.Ruoli ruolo) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "SELECT * FROM Utente WHERE tipo = '" + ruolo.toString() + "';";
         dbOperation = new ReadDbOperation(sql);
@@ -187,7 +183,6 @@ public class UtenteDAO implements IUtenteDAO {
     @Override
     public boolean checkCredentials(String username, String password) {
         boolean credentialsOk = false;
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "SELECT passwordHash FROM Utente WHERE Utente.email = '" + username + "';";
         dbOperation = new ReadDbOperation(sql);
@@ -217,7 +212,6 @@ public class UtenteDAO implements IUtenteDAO {
     @Override
     public boolean userExists(String username) {
         boolean userExists = false;
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "SELECT count(*) AS C FROM Utente WHERE Utente.email = '" + username + "';";
         dbOperation = new ReadDbOperation(sql);
@@ -242,7 +236,6 @@ public class UtenteDAO implements IUtenteDAO {
 
     @Override
     public ArrayList<Utente> findAll() {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "SELECT idUtente, nome, cognome, email, passwordHash, residenza, telefono, professione, eta, tipo FROM Utente;";
         dbOperation = new ReadDbOperation(sql);
@@ -281,7 +274,6 @@ public class UtenteDAO implements IUtenteDAO {
 
     @Override
     public int add(Utente utente) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "INSERT INTO Utente (email, nome, cognome, passwordHash, residenza, telefono, professione, eta, tipo) VALUES ('" + utente.getEmail() + "','" + utente.getNome() + "','" + utente.getCognome() + "','" + utente.getPasswordHash() + "','" + utente.getResidenza() + "','" + utente.getTelefono() + "','" + utente.getProfessione() + "','" + utente.getEta().toString() + "','" + utente.getRuolo().toString() + "');";
         dbOperation = new WriteDbOperation(sql);
@@ -292,7 +284,6 @@ public class UtenteDAO implements IUtenteDAO {
 
     @Override
     public int removeById(String email) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "DELETE FROM Utente WHERE email = '"+ email + "';";
         dbOperation = new WriteDbOperation(sql);
@@ -303,7 +294,6 @@ public class UtenteDAO implements IUtenteDAO {
 
     @Override
     public int update(Utente utente) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "UPDATE Utente SET nome = '" + utente.getNome() + "', cognome = '" + utente.getCognome() + "', residenza = '" + utente.getResidenza() + "', telefono = '" + utente.getTelefono() + "', professione = '" + utente.getProfessione() + "', eta = '" + utente.getEta() + "', tipo = '" + utente.getRuolo().toString() + "' WHERE Email = '" + utente.getEmail() + "';";
         dbOperation = new WriteDbOperation(sql);

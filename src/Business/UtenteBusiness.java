@@ -1,6 +1,8 @@
 package Business;
 
+import DAO.Utente.IUtenteDAO;
 import DAO.Utente.UtenteDAO;
+import DAO.UtentiPuntoVendita.IUtentiPuntoVenditaDAO;
 import DAO.UtentiPuntoVendita.UtentiPuntoVenditaDAO;
 import Model.PuntoVendita;
 import Model.Responses.UtenteResponse;
@@ -25,28 +27,28 @@ public class UtenteBusiness {
 
     private UtenteBusiness() {}
 
-    public UtenteResponse login(String username, String password, PuntoVendita puntoVendita) {
+    public UtenteResponse login(String email, String password, PuntoVendita puntoVendita) {
 
         UtenteResponse res = new UtenteResponse();
         res.setMessage("Errore non definito.");
 
-        UtenteDAO uDAO = UtenteDAO.getInstance();
-        UtentiPuntoVenditaDAO utentiPuntoVenditaDAO = UtentiPuntoVenditaDAO.getInstance();
+        IUtenteDAO uDAO = UtenteDAO.getInstance();
+        IUtentiPuntoVenditaDAO utentiPuntoVenditaDAO = UtentiPuntoVenditaDAO.getInstance();
 
-        // 1. username non esistente
-        if(!uDAO.userExists(username)) {
+        // 1. email non esistente
+        if(!uDAO.userExists(email)) {
             res.setMessage("L'utente indicato non esiste.");
             return res;
         }
 
-        // 2. username corretto, ma la pw è sbagliata
-        if(!uDAO.checkCredentials(username, password)) {
+        // 2. email corretta, ma la pw è sbagliata
+        if(!uDAO.checkCredentials(email, password)) {
             res.setMessage("La password è errata.");
             return res;
         }
 
         // 3. ottenere i dati dell'utente
-        Utente u = uDAO.getByUsername(username);
+        Utente u = uDAO.getByUsername(email);
         //alternativa: restituire istanza specifica di Cliente, Manager o Amministratore
 
         // 4. dati corretti ma utente bandito
@@ -68,7 +70,7 @@ public class UtenteBusiness {
         UtenteResponse res = new UtenteResponse();
         res.setMessage("Errore non definito.");
 
-        UtenteDAO uDAO = UtenteDAO.getInstance();
+        IUtenteDAO uDAO = UtenteDAO.getInstance();
 
         if (uDAO.userExists(email)){
             res.setMessage("Esiste già un utente con questa email");
@@ -119,7 +121,7 @@ public class UtenteBusiness {
     }
 
     public boolean userCan(Utente u, Privilegio p, PuntoVendita pv) {
-        UtentiPuntoVenditaDAO utentiPuntoVenditaDAO = UtentiPuntoVenditaDAO.getInstance();
+        IUtentiPuntoVenditaDAO utentiPuntoVenditaDAO = UtentiPuntoVenditaDAO.getInstance();
 
         //TODO: cercare di capire come passare il punto vendita
 
@@ -142,26 +144,26 @@ public class UtenteBusiness {
     }
 
     public HashMap<Utente, String> findAllUsersByShopManager(Utente u){
-        UtentiPuntoVenditaDAO utentiPuntoVenditaDAO = UtentiPuntoVenditaDAO.getInstance();
+        IUtentiPuntoVenditaDAO utentiPuntoVenditaDAO = UtentiPuntoVenditaDAO.getInstance();
         PuntoVendita pv = utentiPuntoVenditaDAO.findShopByShopManagerID(u.getIdUtente());
 
         return utentiPuntoVenditaDAO.findUsersByShopID(pv.getIdPuntoVendita());
     }
 
     public int deleteByIDFromShop(int idUtente, int idPuntoVendita){
-        UtentiPuntoVenditaDAO utentiPuntoVenditaDAO = UtentiPuntoVenditaDAO.getInstance();
+        IUtentiPuntoVenditaDAO utentiPuntoVenditaDAO = UtentiPuntoVenditaDAO.getInstance();
 
         return utentiPuntoVenditaDAO.removeByID(idUtente, idPuntoVendita);
     }
 
     public ArrayList<Utente> findAllManagers(){
-        UtenteDAO utenteDAO = UtenteDAO.getInstance();
+        IUtenteDAO utenteDAO = UtenteDAO.getInstance();
 
         return utenteDAO.findAllByRole(Utente.Ruoli.man);
     }
 
     public UtenteResponse findByEmail(String email){
-        UtenteDAO utenteDAO = UtenteDAO.getInstance();
+        IUtenteDAO utenteDAO = UtenteDAO.getInstance();
         UtenteResponse res = new UtenteResponse();
 
         res.setMessage("Errore non definito");

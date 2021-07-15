@@ -7,8 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class SubProductChooserDialogListener implements ActionListener {
-    AppFrame appFrame;
-    SubProductChooserDialog subProductChooserDialog;
+    private AppFrame appFrame;
+    private SubProductChooserDialog subProductChooserDialog;
 
     public final static String BTN_ADD_CATEGORIES = "btnOk";
 

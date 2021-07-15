@@ -1,6 +1,8 @@
 package DAO.Servizio;
 
 import DAO.Fornitore.FornitoreDAO;
+import DAO.Fornitore.IFornitoreDAO;
+import DAO.ServizioCategoria.IServizioCategoriaDAO;
 import DAO.ServizioCategoria.ServizioCategoriaDAO;
 import DbInterface.*;
 import Model.Fornitore;
@@ -14,20 +16,25 @@ import java.util.ArrayList;
 public class ServizioDAO implements IServizioDAO {
     private final static ServizioDAO instance = new ServizioDAO();
 
-    private Servizio servizio;
-    private static IDbConnection conn;
-    private static ResultSet rs;
-    private File file;
-    private FornitoreDAO fDAO;
-    private ServizioCategoriaDAO scDAO;
+    private ResultSet rs;
     private DbOperationExecutor executor;
     private IDbOperation dbOperation;
     private String sql;
 
+    private Servizio servizio;
+    private File file;
+    private IFornitoreDAO fDAO;
+    private IServizioCategoriaDAO scDAO;
+
     private ServizioDAO(){
-        servizio = null;
-        conn = null;
-        rs = null;
+        this.rs = null;
+        this.dbOperation = null;
+        this.executor = null;
+        this.sql = null;
+        this.fDAO = null;
+        this.file = null;
+        this.scDAO = null;
+        this.servizio = null;
     }
 
     public static ServizioDAO getInstance(){
@@ -36,12 +43,12 @@ public class ServizioDAO implements IServizioDAO {
 
     @Override
     public Servizio findByID(int idServizio) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "SELECT idServizio, nome, immagine, descrizione, numeroCommenti, costo, mediaValutazioni, idFornitore FROM Servizio WHERE idServizio = '" + idServizio + "';";
         dbOperation = new ReadDbOperation(sql);
         rs = (ResultSet) executor.executeOperation(dbOperation);
         fDAO = FornitoreDAO.getInstance();
+        int idFornitore = -1;
         try {
             rs.next();
             if (rs.getRow()==1) {
@@ -55,10 +62,8 @@ public class ServizioDAO implements IServizioDAO {
                 servizio.setNumeroCommenti(rs.getInt("numeroCommenti"));
                 servizio.setCosto(rs.getFloat("costo"));
                 servizio.setMediaValutazione(rs.getFloat("mediaValutazioni"));
-                servizio.setFornitore(fDAO.findByID(rs.getInt("idFornitore")));
-                servizio.setCategorie(scDAO.getCategoriesByServiceID(servizio.getIdServizio()));
+                idFornitore = rs.getInt("idFornitore");
 
-                return servizio;
             }
         } catch (SQLException e) {
             // handle any errors
@@ -71,17 +76,20 @@ public class ServizioDAO implements IServizioDAO {
         } finally {
             executor.closeOperation(dbOperation);
         }
-        return null;
+        servizio.setFornitore(fDAO.findByID(idFornitore));
+        servizio.setCategorie(scDAO.getCategoriesByServiceID(servizio.getIdServizio()));
+
+        return servizio;
     }
 
     @Override
     public Servizio getByName(String nomeServizio) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "SELECT idServizio, nome, immagine, descrizione, numeroCommenti, costo, mediaValutazioni, idFornitore FROM myshopdb.Servizio WHERE Servizio.nome = '" + nomeServizio + "';";
         dbOperation = new ReadDbOperation(sql);
         rs = (ResultSet) executor.executeOperation(dbOperation);
         fDAO = FornitoreDAO.getInstance();
+        int idFornitore = -1;
         try {
             rs.next();
             if (rs.getRow()==1) {
@@ -95,10 +103,8 @@ public class ServizioDAO implements IServizioDAO {
                 servizio.setNumeroCommenti(rs.getInt("numeroCommenti"));
                 servizio.setCosto(rs.getFloat("costo"));
                 servizio.setMediaValutazione(rs.getFloat("mediaValutazioni"));
-                servizio.setFornitore(fDAO.findByID(rs.getInt("idFornitore")));
-                servizio.setCategorie(scDAO.getCategoriesByServiceID(servizio.getIdServizio()));
+                idFornitore = rs.getInt("idFornitore");
 
-                return servizio;
             }
         } catch (SQLException e) {
             // handle any errors
@@ -111,13 +117,15 @@ public class ServizioDAO implements IServizioDAO {
         } finally {
             executor.closeOperation(dbOperation);
         }
-        return null;
+        servizio.setFornitore(fDAO.findByID(idFornitore));
+        servizio.setCategorie(scDAO.getCategoriesByServiceID(servizio.getIdServizio()));
+
+        return servizio;
     }
 
     @Override
     public boolean serviceExists(int idServizio) {
         boolean serviceExists = false;
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "SELECT count(*) AS C FROM Servizio WHERE Servizio.idServizio = '" + idServizio + "';";
         dbOperation = new ReadDbOperation(sql);
@@ -142,7 +150,6 @@ public class ServizioDAO implements IServizioDAO {
 
     @Override
     public ArrayList<Servizio> findAll() {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "SELECT idServizio, nome, immagine, descrizione, numeroCommenti, costo, mediaValutazioni, idFornitore FROM myshopdb.Servizio;";
         dbOperation = new ReadDbOperation(sql);
@@ -184,7 +191,6 @@ public class ServizioDAO implements IServizioDAO {
 
     @Override
     public ArrayList<Servizio> findAllBySupplier(Fornitore fornitore) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "SELECT idServizio, nome, immagine, descrizione, numeroCommenti, costo, mediaValutazioni, idFornitore FROM Servizio WHERE Servizio.idFornitore = '"+ fornitore.getIdFornitore() + "';";
         dbOperation = new ReadDbOperation(sql);
@@ -225,7 +231,6 @@ public class ServizioDAO implements IServizioDAO {
 
     @Override
     public int add(Servizio servizio) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "INSERT INTO Servizio (nome, immagine, descrizione, numeroCommenti, costo, mediaValutazioni, idFornitore) VALUES ('" + servizio.getNome() + "','" + servizio.getImmagine().getName() + "','" + servizio.getDescrizione() + "','" + servizio.getNumeroCommenti() + "','" + servizio.getCosto() + "','" + servizio.getMediaValutazione() + "','" + servizio.getFornitore().getIdFornitore() + "');";
         dbOperation = new WriteDbOperation(sql);
@@ -236,7 +241,6 @@ public class ServizioDAO implements IServizioDAO {
 
     @Override
     public int removeById(int idServizio) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "DELETE FROM Servizio WHERE idServizio = '"+ idServizio + "';";
         dbOperation = new WriteDbOperation(sql);
@@ -247,7 +251,6 @@ public class ServizioDAO implements IServizioDAO {
 
     @Override
     public int update(Servizio servizio) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "UPDATE Servizio SET nome = '" + servizio.getNome() + "', immagine = '" + servizio.getImmagine().getName() + "', descrizione = '" + servizio.getDescrizione() + "', numeroCommenti = '" + servizio.getNumeroCommenti() + "', costo = '" + servizio.getCosto() + "', mediaValutazioni = '" + servizio.getMediaValutazione() + "' WHERE idServizio = '" + servizio.getIdServizio() + "'; ";
         dbOperation = new WriteDbOperation(sql);

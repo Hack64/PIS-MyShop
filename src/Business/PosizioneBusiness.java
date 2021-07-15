@@ -1,11 +1,12 @@
 package Business;
 
+import DAO.Posizione.IPosizioneDAO;
 import DAO.Posizione.PosizioneDAO;
 import Model.Posizione;
 
 public class PosizioneBusiness {
     private static PosizioneBusiness instance;
-    private PosizioneDAO posizioneDAO;
+    private IPosizioneDAO posizioneDAO;
 
     public static synchronized PosizioneBusiness getInstance() {
         if(instance == null) instance = new PosizioneBusiness();

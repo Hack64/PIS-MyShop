@@ -1,5 +1,6 @@
 package Business;
 
+import DAO.Servizio.IServizioDAO;
 import DAO.Servizio.ServizioDAO;
 import Model.Fornitore;
 import Model.ICategoria;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 
 public class ServizioBusiness {
     private static ServizioBusiness instance;
-    private ServizioDAO servizioDAO;
+    private IServizioDAO servizioDAO;
 
     public static synchronized ServizioBusiness getInstance() {
         if(instance == null) instance = new ServizioBusiness();

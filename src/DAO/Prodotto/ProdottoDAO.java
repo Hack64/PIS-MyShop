@@ -1,7 +1,10 @@
 package DAO.Prodotto;
 
 import DAO.Feedback.FeedbackDAO;
+import DAO.Feedback.IFeedbackDAO;
+import DAO.ProdottoCategoria.IProdottoCategoriaDAO;
 import DAO.ProdottoCategoria.ProdottoCategoriaDAO;
+import DAO.Produttore.IProduttoreDAO;
 import DAO.Produttore.ProduttoreDAO;
 import DbInterface.*;
 import Model.IProdotto;
@@ -17,21 +20,27 @@ public class ProdottoDAO implements IProdottoDAO {
 
     private final static ProdottoDAO instance = new ProdottoDAO();
 
-    private Prodotto prodotto;
-    private static IDbConnection conn;
-    private static ResultSet rs;
+    private ResultSet rs;
     private DbOperationExecutor executor;
     private IDbOperation dbOperation;
     private String sql;
+
+    private Prodotto prodotto;
     private File file;
-    private FeedbackDAO fDAO;
-    private ProduttoreDAO pDAO;
-    private ProdottoCategoriaDAO pcDAO;
+    private IFeedbackDAO fDAO;
+    private IProduttoreDAO pDAO;
+    private IProdottoCategoriaDAO pcDAO;
 
     private ProdottoDAO(){
-        prodotto = null;
-        conn = null;
-        rs = null;
+        this.rs = null;
+        this.dbOperation = null;
+        this.executor = null;
+        this.sql = null;
+        this.prodotto = null;
+        this.file = null;
+        this.pcDAO = null;
+        this.fDAO = null;
+        this.pDAO = null;
     }
 
     public static ProdottoDAO getInstance(){
@@ -40,7 +49,6 @@ public class ProdottoDAO implements IProdottoDAO {
 
     @Override
     public IProdotto findByID(int idProdotto) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "SELECT idProdotto, nome, immagine, descrizione, numeroCommenti, costo, mediaValutazioni, idProduttore FROM myshopdb.Prodotto WHERE myshopdb.Prodotto.idProdotto = '" + idProdotto + "';";
         dbOperation = new ReadDbOperation(sql);
@@ -48,7 +56,7 @@ public class ProdottoDAO implements IProdottoDAO {
         fDAO = FeedbackDAO.getInstance();
         pDAO = ProduttoreDAO.getInstance();
         pcDAO = ProdottoCategoriaDAO.getInstance();
-        int idProduttore=0;
+        int idProduttore = -1;
         try {
             rs.next();
             if (rs.getRow()==1) {
@@ -84,7 +92,6 @@ public class ProdottoDAO implements IProdottoDAO {
 
     @Override
     public IProdotto getByName(String nomeProdotto) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "SELECT idProdotto, nome, immagine, descrizione, numeroCommenti, costo, mediaValutazioni, idProduttore FROM myshopdb.Prodotto WHERE myshopdb.Prodotto.nome = '" + nomeProdotto + "';";
         dbOperation = new ReadDbOperation(sql);
@@ -92,6 +99,7 @@ public class ProdottoDAO implements IProdottoDAO {
         fDAO = FeedbackDAO.getInstance();
         pDAO = ProduttoreDAO.getInstance();
         pcDAO = ProdottoCategoriaDAO.getInstance();
+        int idProduttore = -1;
         try {
             rs.next();
             if (rs.getRow()==1) {
@@ -105,10 +113,8 @@ public class ProdottoDAO implements IProdottoDAO {
                 prodotto.setNumeroCommenti(rs.getInt("numeroCommenti"));
                 prodotto.setCosto(rs.getFloat("costo"));
                 prodotto.setMediaValutazione(rs.getFloat("mediaValutazioni"));
-                prodotto.setProduttore(pDAO.findByID(rs.getInt("idProduttore")));
-                prodotto.setListaFeedback(fDAO.findAllByProductID(prodotto.getIdProdotto()));
-                prodotto.setCategorie(pcDAO.getCategoriesByProductID(prodotto.getIdProdotto()));
-                return prodotto;
+                idProduttore = rs.getInt("idProduttore");
+
             }
         } catch (SQLException e) {
             // handle any errors
@@ -121,13 +127,15 @@ public class ProdottoDAO implements IProdottoDAO {
         } finally {
             executor.closeOperation(dbOperation);
         }
-        return null;
+        prodotto.setProduttore(pDAO.findByID(idProduttore));
+        prodotto.setListaFeedback(fDAO.findAllByProductID(prodotto.getIdProdotto()));
+        prodotto.setCategorie(pcDAO.getCategoriesByProductID(prodotto.getIdProdotto()));
+        return prodotto;
     }
 
     @Override
     public boolean productExists(int idProdotto) {
         boolean productExists = false;
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "SELECT count(*) AS C FROM Prodotto WHERE idProdotto = '" + idProdotto + "';";
         dbOperation = new ReadDbOperation(sql);
@@ -153,7 +161,6 @@ public class ProdottoDAO implements IProdottoDAO {
     @Override
     public boolean productExists(String nomeProdotto) {
         boolean productExists = false;
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "SELECT count(*) AS C FROM Prodotto WHERE nome = '" + nomeProdotto + "';";
         dbOperation = new ReadDbOperation(sql);
@@ -178,7 +185,6 @@ public class ProdottoDAO implements IProdottoDAO {
 
     @Override
     public ArrayList<IProdotto> findAll() {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "SELECT idProdotto, nome, immagine, descrizione, numeroCommenti, costo, mediaValutazioni, idProduttore FROM myshopdb.Prodotto;";
         dbOperation = new ReadDbOperation(sql);
@@ -221,7 +227,6 @@ public class ProdottoDAO implements IProdottoDAO {
 
     @Override
     public ArrayList<IProdotto> findAllByProducer(Produttore produttore) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "SELECT idProdotto, nome, immagine, descrizione, numeroCommenti, costo, mediaValutazioni, idProduttore FROM myshopdb.Prodotto WHERE Prodotto.idProduttore = '"+ produttore.getIdProduttore() + "';";
         dbOperation = new ReadDbOperation(sql);
@@ -264,7 +269,6 @@ public class ProdottoDAO implements IProdottoDAO {
 
     @Override
     public int add(IProdotto prodotto) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "INSERT INTO Prodotto (nome, immagine, descrizione, numeroCommenti, costo, mediaValutazioni, idProduttore) VALUES ('"+ prodotto.getNome() + "','" + prodotto.getImmagine().getName() + "','" + prodotto.getDescrizione() + "','" + prodotto.getNumeroCommenti() + "','" + prodotto.getCosto() + "','" + prodotto.getMediaValutazione() + "','" + prodotto.getProduttore().getIdProduttore() + "');";
         dbOperation = new WriteDbOperation(sql);
@@ -275,7 +279,6 @@ public class ProdottoDAO implements IProdottoDAO {
 
     @Override
     public int removeById(int idProdotto) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "DELETE FROM Prodotto WHERE idProdotto = '"+ idProdotto + "';";
         dbOperation = new WriteDbOperation(sql);
@@ -286,7 +289,6 @@ public class ProdottoDAO implements IProdottoDAO {
 
     @Override
     public int update(IProdotto prodotto) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "UPDATE Prodotto SET nome = '" + prodotto.getNome() + "', immagine = '" + prodotto.getImmagine().getName() + "', descrizione = '" + prodotto.getDescrizione() + "', numeroCommenti = '" + prodotto.getNumeroCommenti() + "', costo = '" + prodotto.getCosto() + "', mediaValutazioni = '" + prodotto.getMediaValutazione() + "' WHERE idProdotto = '" + prodotto.getIdProdotto() + "';";
         dbOperation = new WriteDbOperation(sql);

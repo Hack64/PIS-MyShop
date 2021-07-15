@@ -1,5 +1,6 @@
 package Business;
 
+import DAO.Produttore.IProduttoreDAO;
 import DAO.Produttore.ProduttoreDAO;
 import Model.Produttore;
 import Model.Responses.ProduttoreResponse;
@@ -8,7 +9,7 @@ import java.util.ArrayList;
 
 public class ProduttoreBusiness {
     private static ProduttoreBusiness instance;
-    private ProduttoreDAO produttoreDAO;
+    private IProduttoreDAO produttoreDAO;
 
     public static synchronized ProduttoreBusiness getInstance() {
         if(instance == null) instance = new ProduttoreBusiness();

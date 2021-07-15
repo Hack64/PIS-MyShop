@@ -1,7 +1,10 @@
 package DAO.ComposizioneProdotto;
 
 import DAO.Feedback.FeedbackDAO;
+import DAO.Feedback.IFeedbackDAO;
+import DAO.Prodotto.IProdottoDAO;
 import DAO.Prodotto.ProdottoDAO;
+import DAO.ProdottoCategoria.IProdottoCategoriaDAO;
 import DAO.ProdottoCategoria.ProdottoCategoriaDAO;
 import DbInterface.*;
 import Model.IProdotto;
@@ -15,7 +18,6 @@ public class ComposizioneProdottoDAO implements IComposizioneProdottoDAO {
 
     private final static ComposizioneProdottoDAO instance = new ComposizioneProdottoDAO();
 
-    private static IDbConnection conn;
     private ResultSet rs;
     private DbOperationExecutor executor;
     private IDbOperation dbOperation;
@@ -23,7 +25,10 @@ public class ComposizioneProdottoDAO implements IComposizioneProdottoDAO {
 
 
     private ComposizioneProdottoDAO(){
-        conn = null;
+        this.rs = null;
+        this.dbOperation = null;
+        this.executor = null;
+        this.sql = null;
     }
 
     public static ComposizioneProdottoDAO getInstance() {
@@ -32,16 +37,15 @@ public class ComposizioneProdottoDAO implements IComposizioneProdottoDAO {
 
     @Override
     public ProdottoComposito findByID(int idProdotto) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "SELECT componente FROM ComposizioneProdotto WHERE composto = '" + idProdotto + "';";
         dbOperation = new ReadDbOperation(sql);
         rs = (ResultSet) executor.executeOperation(dbOperation);
         IProdotto prodotto;
         ProdottoComposito prodottoComposito = new ProdottoComposito();
-        ProdottoDAO pDAO = ProdottoDAO.getInstance();
-        ProdottoCategoriaDAO pcDAO = ProdottoCategoriaDAO.getInstance();
-        FeedbackDAO fDAO = FeedbackDAO.getInstance();
+        IProdottoDAO pDAO = ProdottoDAO.getInstance();
+        IProdottoCategoriaDAO pcDAO = ProdottoCategoriaDAO.getInstance();
+        IFeedbackDAO fDAO = FeedbackDAO.getInstance();
         try {
             while(rs.next()){
                 prodotto = pDAO.findByID(rs.getInt("componente"));
@@ -75,7 +79,6 @@ public class ComposizioneProdottoDAO implements IComposizioneProdottoDAO {
 
     @Override
     public ArrayList<IProdotto> findAll() {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "SELECT DISTINCT composto FROM ComposizioneProdotto;";
         dbOperation = new ReadDbOperation(sql);
@@ -105,7 +108,6 @@ public class ComposizioneProdottoDAO implements IComposizioneProdottoDAO {
 
     @Override
     public ArrayList<IProdotto> findAllByProducerID(int idProduttore) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "SELECT DISTINCT ComposizioneProdotto.composto FROM ComposizioneProdotto INNER JOIN Prodotto ON ComposizioneProdotto.composto = Prodotto.idProdotto WHERE Prodotto.idProduttore = '" + idProduttore +"';";
         dbOperation = new ReadDbOperation(sql);
@@ -139,7 +141,6 @@ public class ComposizioneProdottoDAO implements IComposizioneProdottoDAO {
 
     @Override
     public boolean isCompositeProduct(int idProdotto) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql ="SELECT DISTINCT composto FROM ComposizioneProdotto;";
         dbOperation = new ReadDbOperation(sql);
@@ -168,7 +169,6 @@ public class ComposizioneProdottoDAO implements IComposizioneProdottoDAO {
 
     @Override
     public int add(IProdotto prodotto) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         ArrayList<IProdotto> sottoprodotti = prodotto.getSottoprodotti();
         int rowCount=0;
@@ -183,7 +183,6 @@ public class ComposizioneProdottoDAO implements IComposizioneProdottoDAO {
 
     @Override
     public int removeById(int idProdotto) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "DELETE FROM ComposizioneProdotto WHERE idProdottoComposito = '" + idProdotto + "';";
         dbOperation = new WriteDbOperation(sql);
@@ -194,7 +193,6 @@ public class ComposizioneProdottoDAO implements IComposizioneProdottoDAO {
 
     @Override
     public int update(IProdotto prodotto) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "DELETE FROM ComposizioneProdotto WHERE composto = '" + prodotto.getIdProdotto() + "';";
         dbOperation = new WriteDbOperation(sql);

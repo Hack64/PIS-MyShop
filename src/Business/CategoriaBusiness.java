@@ -2,7 +2,9 @@ package Business;
 
 import DAO.Categoria.CategoriaDAO;
 import DAO.Categoria.ICategoriaDAO;
+import DAO.ProdottoCategoria.IProdottoCategoriaDAO;
 import DAO.ProdottoCategoria.ProdottoCategoriaDAO;
+import DAO.ServizioCategoria.IServizioCategoriaDAO;
 import DAO.ServizioCategoria.ServizioCategoriaDAO;
 import Model.Categoria;
 import Model.ICategoria;
@@ -15,8 +17,6 @@ public class CategoriaBusiness {
 
     private static CategoriaBusiness instance;
     private ICategoriaDAO categoriaDAO;
-    private ProdottoCategoriaDAO prodottoCategoriaDAO;
-    private ServizioCategoriaDAO servizioCategoriaDAO;
 
     public static synchronized CategoriaBusiness getInstance() {
         if(instance == null) instance = new CategoriaBusiness();
@@ -39,7 +39,7 @@ public class CategoriaBusiness {
 
     public int addCategoriesToProduct(IProdotto p, ArrayList<ICategoria> categorie){
         categoriaDAO = CategoriaDAO.getInstance();
-        prodottoCategoriaDAO = ProdottoCategoriaDAO.getInstance();
+        IProdottoCategoriaDAO prodottoCategoriaDAO = ProdottoCategoriaDAO.getInstance();
         int rowCount = 0;
         for (ICategoria c:categorie){
              rowCount = prodottoCategoriaDAO.add(c, p);
@@ -49,7 +49,7 @@ public class CategoriaBusiness {
 
     public int addCategoryToService(Servizio s, ArrayList<ICategoria> categorie){
         categoriaDAO = CategoriaDAO.getInstance();
-        servizioCategoriaDAO = ServizioCategoriaDAO.getInstance();
+        IServizioCategoriaDAO servizioCategoriaDAO = ServizioCategoriaDAO.getInstance();
         int rowCount = 0;
         for (ICategoria c:categorie){
             rowCount = servizioCategoriaDAO.add(c, s);

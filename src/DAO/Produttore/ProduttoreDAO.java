@@ -1,5 +1,6 @@
 package DAO.Produttore;
 
+import DAO.Prodotto.IProdottoDAO;
 import DAO.Prodotto.ProdottoDAO;
 import DbInterface.*;
 import Model.Produttore;
@@ -12,21 +13,22 @@ public class ProduttoreDAO implements IProduttoreDAO {
 
     private final static ProduttoreDAO instance = new ProduttoreDAO();
 
-    private static IDbConnection conn;
     private ResultSet rs;
     private DbOperationExecutor executor;
     private IDbOperation dbOperation;
     private String sql;
 
-    private ProdottoDAO pDAO;
+    private IProdottoDAO pDAO;
     //private ProdottoCompositoDAO pCompDAO = ProdottoCompositoDAO.getInstance();
     private Produttore produttore;
 
     private ProduttoreDAO(){
-        pDAO=null;
-        conn=null;
-        rs=null;
-        produttore=null;
+        this.rs = null;
+        this.dbOperation = null;
+        this.executor = null;
+        this.sql = null;
+        this.produttore = null;
+        this.pDAO = null;
     }
 
     public static ProduttoreDAO getInstance(){
@@ -36,7 +38,6 @@ public class ProduttoreDAO implements IProduttoreDAO {
 
     @Override
     public Produttore findByID(int idProduttore) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "SELECT idProduttore, nome, sito, citta, nazione FROM myshopdb.Produttore WHERE myshopdb.Produttore.idProduttore = '" + idProduttore + "';";
         dbOperation = new ReadDbOperation(sql);
@@ -70,7 +71,6 @@ public class ProduttoreDAO implements IProduttoreDAO {
 
     @Override
     public Produttore getByName(String nomeProduttore) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "SELECT idProduttore, nome, sito, citta, nazione FROM myshopdb.Produttore WHERE myshopdb.Produttore.nome = '" + nomeProduttore + "';";
         dbOperation = new ReadDbOperation(sql);
@@ -107,7 +107,6 @@ public class ProduttoreDAO implements IProduttoreDAO {
     @Override
     public boolean producerExists(String nomeProduttore) {
         boolean producerExists = false;
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "SELECT count(*) AS C FROM Utente WHERE Produttore.nome = '" + nomeProduttore + "';";
         dbOperation = new ReadDbOperation(sql);
@@ -132,7 +131,6 @@ public class ProduttoreDAO implements IProduttoreDAO {
 
     @Override
     public ArrayList<Produttore> findAll() {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "SELECT idProduttore, nome, sito, citta, nazione FROM myshopdb.Produttore;";
         dbOperation = new ReadDbOperation(sql);
@@ -168,7 +166,6 @@ public class ProduttoreDAO implements IProduttoreDAO {
 
     @Override
     public int add(Produttore produttore) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "INSERT INTO Produttore (nome, sito, citta, nazione) VALUES ('" + produttore.getNome() + "','" + produttore.getSito() + "','" + produttore.getCitta() + "','" + produttore.getNazione() + "');";
         dbOperation = new WriteDbOperation(sql);
@@ -179,7 +176,6 @@ public class ProduttoreDAO implements IProduttoreDAO {
 
     @Override
     public int removeById(int idProduttore) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "DELETE FROM Produttore WHERE Produttore.idProduttore = '" + idProduttore + "';";
         dbOperation = new WriteDbOperation(sql);
@@ -190,7 +186,6 @@ public class ProduttoreDAO implements IProduttoreDAO {
 
     @Override
     public int update(Produttore produttore) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "UPDATE Produttore SET nome = '" + produttore.getNome() + "', sito = '" + produttore.getSito() + "', citta = '" + produttore.getCitta() + "', nazione = '" + produttore.getNazione() + "' WHERE idProduttore = '" + produttore.getIdProduttore() + "';";
         dbOperation = new WriteDbOperation(sql);

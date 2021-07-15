@@ -1,5 +1,6 @@
 package DAO.ProdottiMagazzino;
 
+import DAO.Magazzino.IMagazzinoDAO;
 import DAO.Magazzino.MagazzinoDAO;
 import DAO.Posizione.IPosizioneDAO;
 import DAO.Posizione.PosizioneDAO;
@@ -18,15 +19,16 @@ public class ProdottiMagazzinoDAO implements IProdottiMagazzinoDAO {
 
     private final static ProdottiMagazzinoDAO instance = new ProdottiMagazzinoDAO();
 
-    private static IDbConnection conn;
     private ResultSet rs;
     private DbOperationExecutor executor;
     private IDbOperation dbOperation;
     private String sql;
 
     private ProdottiMagazzinoDAO(){
-        this.conn = null;
         this.rs = null;
+        this.dbOperation = null;
+        this.executor = null;
+        this.sql = null;
     }
 
     public static ProdottiMagazzinoDAO getInstance() {
@@ -35,7 +37,6 @@ public class ProdottiMagazzinoDAO implements IProdottiMagazzinoDAO {
 
     @Override
     public ArrayList<Disponibilita> findAllProductsByWarehouseID(int idMagazzino) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "SELECT idMagazzino, idProdotto, quantita FROM ProdottiMagazzino WHERE ProdottiMagazzino.idMagazzino = '" + idMagazzino + "';";
         dbOperation = new ReadDbOperation(sql);
@@ -71,14 +72,13 @@ public class ProdottiMagazzinoDAO implements IProdottiMagazzinoDAO {
 
     @Override
     public ArrayList<Magazzino> findAllWarehousesByProductID(int idProdotto) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "SELECT idMagazzino, idProdotto, quantita FROM ProdottiMagazzino WHERE ProdottiMagazzino.idProdotto = '" + idProdotto + "';";
         dbOperation = new ReadDbOperation(sql);
         rs = (ResultSet) executor.executeOperation(dbOperation);
         ArrayList<Magazzino> magazzini = new ArrayList<>();
         Magazzino magazzino;
-        MagazzinoDAO mDAO = MagazzinoDAO.getInstance();
+        IMagazzinoDAO mDAO = MagazzinoDAO.getInstance();
         try {
             while(rs.next()){
                 magazzino = mDAO.findByID(rs.getInt("idMagazzino"));
@@ -101,7 +101,6 @@ public class ProdottiMagazzinoDAO implements IProdottiMagazzinoDAO {
 
     @Override
     public int add(Disponibilita disponibilita) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "INSERT INTO ProdottiMagazzino (idMagazzino, idProdotto, quantita) VALUES ('" + disponibilita.getMagazzino().getIdMagazzino() + "','" + disponibilita.getProdotto().getIdProdotto() + "','" + disponibilita.getQta() + "');";
         dbOperation = new WriteDbOperation(sql);
@@ -112,7 +111,6 @@ public class ProdottiMagazzinoDAO implements IProdottiMagazzinoDAO {
 
     @Override
     public int remove(Disponibilita disponibilita) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "DELETE FROM ProdottiMagazzino WHERE idMagazzino = '" + disponibilita.getMagazzino().getIdMagazzino() +"', idProdotto = '" + disponibilita.getProdotto().getIdProdotto() +"';";
         dbOperation = new WriteDbOperation(sql);
@@ -123,7 +121,6 @@ public class ProdottiMagazzinoDAO implements IProdottiMagazzinoDAO {
 
     @Override
     public int update(Disponibilita disponibilita) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "UPDATE ProdottiMagazzino SET quantita = '" + disponibilita.getQta() + "' WHERE idMagazzino = '" + disponibilita.getMagazzino().getIdMagazzino() + "' AND idProdotto = '" + disponibilita.getProdotto().getIdProdotto() + "';";
         dbOperation = new WriteDbOperation(sql);

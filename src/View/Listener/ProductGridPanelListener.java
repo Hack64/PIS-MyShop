@@ -11,7 +11,7 @@ import java.awt.event.MouseListener;
 
 public class ProductGridPanelListener implements MouseListener {
 
-    AppFrame appFrame;
+    private AppFrame appFrame;
     public ProductGridPanelListener(AppFrame appFrame){
         this.appFrame = appFrame;
     }

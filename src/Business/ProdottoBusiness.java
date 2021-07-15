@@ -1,8 +1,11 @@
 package Business;
 
 import DAO.ComposizioneProdotto.ComposizioneProdottoDAO;
+import DAO.ComposizioneProdotto.IComposizioneProdottoDAO;
+import DAO.Posizione.IPosizioneDAO;
 import DAO.Posizione.PosizioneDAO;
 import DAO.ProdottiPuntoVendita.ProdottiPuntoVenditaDAO;
+import DAO.Prodotto.IProdottoDAO;
 import DAO.Prodotto.ProdottoDAO;
 import Model.*;
 import Model.Responses.ProdottoResponse;
@@ -12,9 +15,9 @@ import java.util.ArrayList;
 
 public class ProdottoBusiness {
     private static ProdottoBusiness instance;
-    private ProdottoDAO prodottoDAO;
-    private PosizioneDAO posizioneDAO;
-    private ComposizioneProdottoDAO composizioneProdottoDAO;
+    private IProdottoDAO prodottoDAO;
+    private IPosizioneDAO posizioneDAO;
+    private IComposizioneProdottoDAO composizioneProdottoDAO;
 
     public static synchronized ProdottoBusiness getInstance() {
         if(instance == null) instance = new ProdottoBusiness();

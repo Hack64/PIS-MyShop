@@ -1,8 +1,12 @@
 package DAO.PuntoVendita;
 
+import DAO.Magazzino.IMagazzinoDAO;
 import DAO.Magazzino.MagazzinoDAO;
+import DAO.ProdottiPuntoVendita.IProdottiPuntoVenditaDAO;
 import DAO.ProdottiPuntoVendita.ProdottiPuntoVenditaDAO;
+import DAO.ServiziPuntoVendita.IServiziPuntoVenditaDAO;
 import DAO.ServiziPuntoVendita.ServiziPuntoVenditaDAO;
+import DAO.UtentiPuntoVendita.IUtentiPuntoVenditaDAO;
 import DAO.UtentiPuntoVendita.UtentiPuntoVenditaDAO;
 import DbInterface.*;
 import Model.PuntoVendita;
@@ -15,21 +19,27 @@ public class PuntoVenditaDAO implements IPuntoVenditaDAO {
 
     private final static PuntoVenditaDAO instance = new PuntoVenditaDAO();
 
-    private static IDbConnection conn;
     private ResultSet rs;
     private DbOperationExecutor executor;
     private IDbOperation dbOperation;
     private String sql;
+
     private PuntoVendita puntoVendita;
-    private ProdottiPuntoVenditaDAO ppvDAO;
-    private ServiziPuntoVenditaDAO spvDAO;
-    private UtentiPuntoVenditaDAO upvDAO;
-    private MagazzinoDAO mDAO;
+    private IProdottiPuntoVenditaDAO ppvDAO;
+    private IServiziPuntoVenditaDAO spvDAO;
+    private IUtentiPuntoVenditaDAO upvDAO;
+    private IMagazzinoDAO mDAO;
 
     private PuntoVenditaDAO(){
-        conn=null;
-        rs=null;
-        puntoVendita=null;
+        this.rs = null;
+        this.dbOperation = null;
+        this.executor = null;
+        this.sql = null;
+        this.puntoVendita=null;
+        this.mDAO = null;
+        this.spvDAO = null;
+        this.upvDAO = null;
+        this.ppvDAO = null;
     }
 
     public static PuntoVenditaDAO getInstance(){
@@ -38,7 +48,6 @@ public class PuntoVenditaDAO implements IPuntoVenditaDAO {
 
     @Override
     public PuntoVendita findByID(int idPuntoVendita) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "SELECT idPuntoVendita, via, CAP, citta FROM myshopdb.PuntoVendita WHERE myshopdb.PuntoVendita.idPuntoVendita = '" + idPuntoVendita + "';";
         dbOperation = new ReadDbOperation(sql);
@@ -57,12 +66,6 @@ public class PuntoVenditaDAO implements IPuntoVenditaDAO {
                 puntoVendita.setCap(rs.getString("CAP"));
                 puntoVendita.setCitta(rs.getString("citta"));
                 //puntoVendita.setMagazzino(mDAO.findByID(rs.getInt("idMagazzino")));
-                puntoVendita.setManager(upvDAO.findShopManagerByShopID(puntoVendita.getIdPuntoVendita()));
-                puntoVendita.setCatalogoProdottiPuntoVendita(ppvDAO.findProductsByShopID(puntoVendita.getIdPuntoVendita()));
-                puntoVendita.setCatalogoServiziPuntoVendita(spvDAO.findServicesByShopID(puntoVendita.getIdPuntoVendita()));
-                puntoVendita.setClienti(upvDAO.findUsersByShopID(puntoVendita.getIdPuntoVendita()));
-
-                return puntoVendita;
             }
         } catch (SQLException e) {
             // handle any errors
@@ -75,12 +78,16 @@ public class PuntoVenditaDAO implements IPuntoVenditaDAO {
         } finally {
             executor.closeOperation(dbOperation);
         }
-        return null;
+        puntoVendita.setManager(upvDAO.findShopManagerByShopID(puntoVendita.getIdPuntoVendita()));
+        puntoVendita.setCatalogoProdottiPuntoVendita(ppvDAO.findProductsByShopID(puntoVendita.getIdPuntoVendita()));
+        puntoVendita.setCatalogoServiziPuntoVendita(spvDAO.findServicesByShopID(puntoVendita.getIdPuntoVendita()));
+        puntoVendita.setClienti(upvDAO.findUsersByShopID(puntoVendita.getIdPuntoVendita()));
+
+        return puntoVendita;
     }
 
     @Override
     public PuntoVendita findByAddress(String citta, String via) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "SELECT idPuntoVendita, via, CAP, citta FROM myshopdb.PuntoVendita WHERE via = '" + via + "' AND citta = '"+ citta +"';";
         dbOperation = new ReadDbOperation(sql);
@@ -99,12 +106,6 @@ public class PuntoVenditaDAO implements IPuntoVenditaDAO {
                 puntoVendita.setCap(rs.getString("CAP"));
                 puntoVendita.setCitta(rs.getString("citta"));
                 //puntoVendita.setMagazzino(mDAO.findByID(rs.getInt("idMagazzino")));
-                puntoVendita.setManager(upvDAO.findShopManagerByShopID(puntoVendita.getIdPuntoVendita()));
-                puntoVendita.setCatalogoProdottiPuntoVendita(ppvDAO.findProductsByShopID(puntoVendita.getIdPuntoVendita()));
-                puntoVendita.setCatalogoServiziPuntoVendita(spvDAO.findServicesByShopID(puntoVendita.getIdPuntoVendita()));
-                puntoVendita.setClienti(upvDAO.findUsersByShopID(puntoVendita.getIdPuntoVendita()));
-
-                return puntoVendita;
             }
         } catch (SQLException e) {
             // handle any errors
@@ -117,12 +118,16 @@ public class PuntoVenditaDAO implements IPuntoVenditaDAO {
         } finally {
             executor.closeOperation(dbOperation);
         }
-        return null;
+        puntoVendita.setManager(upvDAO.findShopManagerByShopID(puntoVendita.getIdPuntoVendita()));
+        puntoVendita.setCatalogoProdottiPuntoVendita(ppvDAO.findProductsByShopID(puntoVendita.getIdPuntoVendita()));
+        puntoVendita.setCatalogoServiziPuntoVendita(spvDAO.findServicesByShopID(puntoVendita.getIdPuntoVendita()));
+        puntoVendita.setClienti(upvDAO.findUsersByShopID(puntoVendita.getIdPuntoVendita()));
+
+        return puntoVendita;
     }
 
     @Override
     public ArrayList<PuntoVendita> findAll() {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "SELECT idPuntoVendita, via, CAP, citta FROM myshopdb.PuntoVendita;";
         dbOperation = new ReadDbOperation(sql);
@@ -165,7 +170,6 @@ public class PuntoVenditaDAO implements IPuntoVenditaDAO {
 
     @Override
     public int add(PuntoVendita puntoVendita) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "INSERT INTO PuntoVendita (via, CAP, citta) VALUES ('" + puntoVendita.getVia() + "','" + puntoVendita.getCap() + "','" + puntoVendita.getCitta() + "');";
         dbOperation = new WriteDbOperation(sql);
@@ -176,7 +180,6 @@ public class PuntoVenditaDAO implements IPuntoVenditaDAO {
 
     @Override
     public int removeById(int idPuntoVendita) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "DELETE FROM PuntoVendita WHERE PuntoVendita.idPuntoVendita = '" + idPuntoVendita + "';";
         dbOperation = new WriteDbOperation(sql);
@@ -187,7 +190,6 @@ public class PuntoVenditaDAO implements IPuntoVenditaDAO {
 
     @Override
     public int update(PuntoVendita puntoVendita) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "UPDATE PuntoVendita SET via = '" + puntoVendita.getVia() + "', CAP = '" + puntoVendita.getCap() + "', citta = '" + puntoVendita.getCitta() + "' WHERE idPuntoVendita = '" + puntoVendita.getIdPuntoVendita() + "';";
         dbOperation = new WriteDbOperation(sql);

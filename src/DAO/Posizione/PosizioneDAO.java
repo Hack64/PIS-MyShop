@@ -21,10 +21,10 @@ public class PosizioneDAO implements IPosizioneDAO {
     private ResultSet rs;
 
     private PosizioneDAO(){
-        executor = null;
-        dbOperation = null;
-        sql = null;
-        rs = null;
+        this.rs = null;
+        this.dbOperation = null;
+        this.executor = null;
+        this.sql = null;
     }
 
     public static PosizioneDAO getInstance() {

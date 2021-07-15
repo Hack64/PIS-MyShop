@@ -1,6 +1,8 @@
 package DAO.ProdottoCategoria;
 
 import DAO.Categoria.CategoriaDAO;
+import DAO.Categoria.ICategoriaDAO;
+import DAO.Prodotto.IProdottoDAO;
 import DAO.Prodotto.ProdottoDAO;
 import DbInterface.*;
 import Model.CategoriaProdotto;
@@ -17,15 +19,16 @@ public class ProdottoCategoriaDAO implements IProdottoCategoriaDAO {
 
     private final static ProdottoCategoriaDAO instance = new ProdottoCategoriaDAO();
 
-    private static IDbConnection conn;
     private ResultSet rs;
     private DbOperationExecutor executor;
     private IDbOperation dbOperation;
     private String sql;
 
     private ProdottoCategoriaDAO(){
-        conn=null;
-        rs=null;
+        this.rs = null;
+        this.dbOperation = null;
+        this.executor = null;
+        this.sql = null;
     }
 
     public static ProdottoCategoriaDAO getInstance(){
@@ -34,13 +37,12 @@ public class ProdottoCategoriaDAO implements IProdottoCategoriaDAO {
 
     @Override
     public ArrayList<IProdotto> getProductsByCategoryID(int idCategoria) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "SELECT idProdotto FROM myshopdb.ProdottoCategoria WHERE idCategoria = '" + idCategoria + "';";
         dbOperation = new ReadDbOperation(sql);
         rs = (ResultSet) executor.executeOperation(dbOperation);
         ArrayList<IProdotto> prodottiCategoria = new ArrayList<>();
-        ProdottoDAO pDAO = ProdottoDAO.getInstance();
+        IProdottoDAO pDAO = ProdottoDAO.getInstance();
         try {
             while (rs.next()){
                 prodottiCategoria.add(pDAO.findByID(rs.getInt("idProdotto")));
@@ -62,14 +64,13 @@ public class ProdottoCategoriaDAO implements IProdottoCategoriaDAO {
 
     @Override
     public ArrayList<ICategoria> getCategoriesByProductID(int idProdotto) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "SELECT Categoria.idCategoria, Categoria.idCategoriaPadre FROM myshopdb.Categoria INNER JOIN myshopdb.ProdottoCategoria ON Categoria.idCategoria = ProdottoCategoria.idCategoria WHERE ProdottoCategoria.idProdotto = '" + idProdotto + "';";
         dbOperation = new ReadDbOperation(sql);
         rs = (ResultSet) executor.executeOperation(dbOperation);
         ArrayList<ICategoria> categorieProdotto = new ArrayList<>();
         HashMap<Integer, Integer> idCategorie = new HashMap<>();
-        CategoriaDAO cDAO = CategoriaDAO.getInstance();
+        ICategoriaDAO cDAO = CategoriaDAO.getInstance();
         try {
             while (rs.next()){
                 idCategorie.put(rs.getInt("idCategoria"), rs.getInt("idCategoriaPadre"));
@@ -99,7 +100,6 @@ public class ProdottoCategoriaDAO implements IProdottoCategoriaDAO {
 
     @Override
     public int add(ICategoria categoriaProdotto, IProdotto prodotto) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "INSERT INTO ProdottoCategoria (idProdotto, idCategoria) VALUES ('" + prodotto.getIdProdotto() + "','" + categoriaProdotto.getIdCategoria() + "');";
         dbOperation = new WriteDbOperation(sql);
@@ -110,7 +110,6 @@ public class ProdottoCategoriaDAO implements IProdottoCategoriaDAO {
 
     @Override
     public int removeByID(int idProdottoCategoria) {
-        //conn = DbConnection.getInstance();
         executor = new DbOperationExecutor();
         sql = "DELETE FROM ProdottoCategoria WHERE idProdottiCategoria = '" + idProdottoCategoria + "';";
         dbOperation = new WriteDbOperation(sql);

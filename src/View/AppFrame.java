@@ -29,7 +29,7 @@ public class AppFrame extends JFrame {
         setSize(1400, 800);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setCurrentMainPanel(new WelcomePanel(this));
-        setResizable(false);
+        setResizable(true);
         setVisible(true);
     }
 
