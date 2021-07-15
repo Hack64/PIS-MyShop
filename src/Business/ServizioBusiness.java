@@ -1,5 +1,7 @@
 package Business;
 
+import DAO.ServiziPuntoVendita.IServiziPuntoVenditaDAO;
+import DAO.ServiziPuntoVendita.ServiziPuntoVenditaDAO;
 import DAO.Servizio.IServizioDAO;
 import DAO.Servizio.ServizioDAO;
 import Model.Fornitore;
@@ -58,6 +60,12 @@ public class ServizioBusiness {
         servizioDAO = ServizioDAO.getInstance();
 
         return servizioDAO.findAll();
+    }
+
+    public ArrayList<Servizio> findAllServicesByShopID(int idPuntoVendita){
+        IServiziPuntoVenditaDAO serviziPuntoVenditaDAO = ServiziPuntoVenditaDAO.getInstance();
+
+        return serviziPuntoVenditaDAO.findServicesByShopID(idPuntoVendita);
     }
 
     public int deleteByID(int id){

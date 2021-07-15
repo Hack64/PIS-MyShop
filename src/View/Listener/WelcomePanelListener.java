@@ -4,6 +4,7 @@ import Business.PuntoVenditaBusiness;
 import Model.PuntoVendita;
 import View.AppFrame;
 import View.BrowsePanel;
+import View.BrowseProductsPanel;
 import View.WelcomePanel;
 
 import java.awt.event.ActionEvent;

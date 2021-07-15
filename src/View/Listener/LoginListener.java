@@ -6,6 +6,7 @@ import Model.Responses.UtenteResponse;
 import Model.Utente;
 import View.AppFrame;
 import View.BrowsePanel;
+import View.BrowseProductsPanel;
 import View.LoginDialog;
 
 import javax.swing.*;
