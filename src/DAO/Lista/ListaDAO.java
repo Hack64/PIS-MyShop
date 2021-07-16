@@ -7,12 +7,14 @@ import DbInterface.DbOperationExecutor;
 import DbInterface.IDbOperation;
 import DbInterface.ReadDbOperation;
 import DbInterface.WriteDbOperation;
+import Model.IProdotto;
 import Model.Lista;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class ListaDAO implements IListaDAO {
 
@@ -236,6 +238,31 @@ public class ListaDAO implements IListaDAO {
             executor.closeOperation(dbOperation);
         }
         return null;
+    }
+
+    @Override
+    public float getListPrice(int idLista) {
+        executor = new DbOperationExecutor();
+        sql = "SELECT prezzoTotale FROM myshopdb.Lista WHERE myshopdb.Lista.idLista = '" + idLista + "';";
+        dbOperation = new ReadDbOperation(sql);
+        rs = (ResultSet) executor.executeOperation(dbOperation);
+        try {
+            rs.next();
+            if (rs.getRow()==1) {
+                return rs.getInt("prezzoTotale");
+            }
+        } catch (SQLException e) {
+            // handle any errors
+            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("VendorError: " + e.getErrorCode());
+        } catch (NullPointerException e) {
+            // handle any errors
+            System.out.println("Resultset: " + e.getMessage());
+        } finally {
+            executor.closeOperation(dbOperation);
+        }
+        return -1;
     }
 
     @Override

@@ -3,7 +3,9 @@ package View.Listener;
 import Business.MagazzinoBusiness;
 import Business.ProdottiMagazzinoBusiness;
 import Business.ProdottoBusiness;
+import Business.SessionManager;
 import Model.Disponibilita;
+import Model.PuntoVendita;
 import Model.Responses.ProdottoResponse;
 import View.AppFrame;
 import View.Dialog.QuantityEditorDialog;
@@ -27,13 +29,14 @@ public class WarehousePanelListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String cmd = e.getActionCommand();
         String esit;
+        PuntoVendita p = (PuntoVendita) SessionManager.getInstance().getSession().get("currentShop");
         if (BTN_EDIT_QUANTITY.equals(cmd)) {
             System.out.println("Qui");
             if (table.getSelectedRowCount() == 1) {
                 int rowToEdit = table.getSelectedRow();
                 int colToEdit = 0;
                 ProdottoResponse pr = ProdottoBusiness.getInstance().findByName(table.getModel().getValueAt(rowToEdit, colToEdit).toString());
-                int idMagazzino = MagazzinoBusiness.getInstance().findWarehouseByShopID(appFrame.getPuntoVendita().getIdPuntoVendita()).getIdMagazzino();
+                int idMagazzino = MagazzinoBusiness.getInstance().findWarehouseByShopID(p.getIdPuntoVendita()).getIdMagazzino();
                 Disponibilita d = ProdottiMagazzinoBusiness.getInstance().findByProductAndWarehouse(pr.getProdotto().getIdProdotto(), idMagazzino);
                 new QuantityEditorDialog(appFrame, d);
             } else {

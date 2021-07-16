@@ -2,6 +2,7 @@ package View.Listener;
 
 import Business.SessionManager;
 import Business.UtenteBusiness;
+import Model.PuntoVendita;
 import Model.Responses.UtenteResponse;
 import Model.Utente;
 import View.AppFrame;
@@ -31,8 +32,8 @@ public class LoginListener implements ActionListener {
 
         if(BTN_LOGIN.equals(cmd)) {
             // chiamare la classe di business per fare login
-
-            UtenteResponse res = UtenteBusiness.getInstance().login(loginDialog.getUsername(), loginDialog.getPassword(), appFrame.getPuntoVendita());
+            PuntoVendita p = (PuntoVendita) SessionManager.getInstance().getSession().get("currentShop");
+            UtenteResponse res = UtenteBusiness.getInstance().login(loginDialog.getUsername(), loginDialog.getPassword(), p);
             loginDialog.clearFields();
             Utente u = res.getUtente(); //potrebbe essere null in caso di login fallito
 

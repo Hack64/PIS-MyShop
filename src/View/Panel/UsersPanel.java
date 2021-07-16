@@ -1,6 +1,8 @@
 package View.Panel;
 
+import Business.SessionManager;
 import Business.UtenteBusiness;
+import Model.PuntoVendita;
 import Model.Utente;
 import View.AppFrame;
 import View.Listener.UsersPanelListener;
@@ -18,7 +20,8 @@ public class UsersPanel extends JPanel {
         setLayout(new BorderLayout());
 
         //TODO: trova un modo di cercare gli utenti per idPuntoVendita
-        HashMap<Utente, String> utentiPuntoVendita = UtenteBusiness.getInstance().findAllUsersByShop(appFrame.getPuntoVendita());
+        PuntoVendita p = (PuntoVendita) SessionManager.getInstance().getSession().get("currentShop");
+        HashMap<Utente, String> utentiPuntoVendita = UtenteBusiness.getInstance().findAllUsersByShop(p);
 
         JTable tabellaUtenti = new JTable(new UsersTableModel(utentiPuntoVendita));
 

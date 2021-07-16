@@ -2,9 +2,16 @@ package Business;
 
 import DAO.Lista.IListaDAO;
 import DAO.Lista.ListaDAO;
-import Model.Lista;
+import DAO.Magazzino.IMagazzinoDAO;
+import DAO.Magazzino.MagazzinoDAO;
+import DAO.ProdottiLista.IProdottiListaDAO;
+import DAO.ProdottiLista.ProdottiListaDAO;
+import DAO.ProdottiMagazzino.IProdottiMagazzinoDAO;
+import DAO.ProdottiMagazzino.ProdottiMagazzinoDAO;
+import DAO.ServiziLista.IServiziListaDAO;
+import DAO.ServiziLista.ServiziListaDAO;
+import Model.*;
 import Model.Responses.ListaResponse;
-import Model.Utente;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -44,6 +51,12 @@ public class ListaBusiness {
         return listaDAO.findAllByUserID(u.getIdUtente());
     }
 
+    public ArrayList<Lista> findAllListsByUserAndState(Utente u, Lista.Stato stato){
+        listaDAO = ListaDAO.getInstance();
+
+        return listaDAO.findAllByUserAndState(u.getIdUtente(), stato);
+    }
+
     public int deleteByID(int idLista){
         listaDAO = ListaDAO.getInstance();
 
@@ -74,4 +87,46 @@ public class ListaBusiness {
         l.setNomeLista(nome);
         return listaDAO.editName(l);
     }
+
+    public int addProductToList(Lista lista, IProdotto prodotto, int quantita){
+        listaDAO = ListaDAO.getInstance();
+        IProdottiListaDAO prodottiListaDAO = ProdottiListaDAO.getInstance();
+        IProdottiMagazzinoDAO prodottiMagazzinoDAO = ProdottiMagazzinoDAO.getInstance();
+        IMagazzinoDAO magazzinoDAO = MagazzinoDAO.getInstance();
+        PuntoVendita p = (PuntoVendita)SessionManager.getInstance().getSession().get("currentShop");
+        Disponibilita disp = prodottiMagazzinoDAO.findByProductAndWarehouseID(prodotto.getIdProdotto(), magazzinoDAO.findByShopID(p.getIdPuntoVendita()).getIdMagazzino());
+        int st=0;
+        if (disp.getQta()<quantita){
+            if (prodottiMagazzinoDAO.isProductAlreadyInList(prodotto.getIdProdotto(), lista.getIdLista())) {
+                st+=prodottiListaDAO.update(lista, prodotto, "SI", quantita);
+            } else
+                st+=prodottiListaDAO.add(lista, prodotto, "SI", quantita);
+        } else {
+            if (prodottiMagazzinoDAO.isProductAlreadyInList(prodotto.getIdProdotto(), lista.getIdLista())) {
+                st+=prodottiListaDAO.update(lista, prodotto, "NO", quantita);
+            } else
+                st+=prodottiListaDAO.add(lista, prodotto, "NO", quantita);
+        }
+        lista.setPrezzoTotale(prodotto.getCosto()*quantita+listaDAO.getListPrice(lista.getIdLista()));
+        st+=listaDAO.update(lista);
+
+        return st;
+    }
+
+    public int addServiceToList(Lista lista, Servizio servizio){
+        IServiziListaDAO serviziListaDAO = ServiziListaDAO.getInstance();
+        listaDAO = ListaDAO.getInstance();
+
+        int st=0;
+        if (!serviziListaDAO.isServiceAlreadyInList(lista.getIdLista(), servizio.getIdServizio())){
+            st+=serviziListaDAO.add(lista, servizio);
+            lista.setPrezzoTotale(servizio.getCosto()+listaDAO.getListPrice(lista.getIdLista()));
+            st+=listaDAO.update(lista);
+            return st;
+        } else {
+            return -1;
+        }
+    }
+
+
 }

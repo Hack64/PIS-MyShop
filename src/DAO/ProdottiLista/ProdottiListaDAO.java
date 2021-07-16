@@ -44,7 +44,7 @@ public class ProdottiListaDAO implements IProdottiListaDAO {
     @Override
     public HashMap<IProdotto, Map.Entry<String, Integer>> findAllProductsByListID(int idLista) {
         executor = new DbOperationExecutor();
-        sql = "SELECT idProdotto, idLista, prenotato FROM ProdottoLista WHERE idLista = '" + idLista + "';";
+        sql = "SELECT idProdotto, idLista, prenotato, quantita FROM ProdottoLista WHERE idLista = '" + idLista + "';";
         dbOperation = new ReadDbOperation(sql);
         rs = (ResultSet) executor.executeOperation(dbOperation);
         HashMap<IProdotto, Map.Entry<String, Integer>> prodottiLista = new HashMap<>();

@@ -1,6 +1,7 @@
 package View;
 
 import Business.SessionManager;
+import Model.PuntoVendita;
 import Model.Utente;
 import View.Listener.LoginButtonListener;
 
@@ -71,13 +72,14 @@ public class Header extends JPanel {
     public void refresh() {
         // 1. prendere l'utente loggato u
         Utente u = (Utente) SessionManager.getInstance().getSession().get("loggedUser");
+        PuntoVendita p = (PuntoVendita) SessionManager.getInstance().getSession().get("currentShop");
 
         if (!this.isVisible()){
             this.setVisible(true);
         }
 
         if (lblNegozio == null){
-            lblNegozio = new JLabel("Sei nel punto vendita di " + appFrame.getPuntoVendita().getVia() + ", " + appFrame.getPuntoVendita().getCitta());
+            lblNegozio = new JLabel("Sei nel punto vendita di " + p.getVia() + ", " + p.getCitta());
             infoPanel.add(lblNegozio);
         }
 

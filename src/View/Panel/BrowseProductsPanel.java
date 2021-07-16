@@ -1,7 +1,9 @@
 package View.Panel;
 
 import Business.ProdottoBusiness;
+import Business.SessionManager;
 import Model.IProdotto;
+import Model.PuntoVendita;
 import View.AppFrame;
 import View.Listener.GridPanelListener;
 
@@ -15,11 +17,12 @@ public class BrowseProductsPanel extends JPanel {
         setLayout(new BorderLayout());
         JPanel panel = new JPanel();
         JScrollPane scrollPane;
-        ArrayList<IProdotto> prodotti = ProdottoBusiness.getInstance().findAllProductsByShop(appFrame.getPuntoVendita());
+        PuntoVendita p = (PuntoVendita) SessionManager.getInstance().getSession().get("currentShop");
+        ArrayList<IProdotto> prodotti = ProdottoBusiness.getInstance().findAllProductsByShop(p);
         panel.setLayout(new GridLayout(0,5, 4, 4));
         GridPanelListener gpl = new GridPanelListener(appFrame, false);
-        for (IProdotto p:prodotti) {
-            panel.add(new GridImagePanel(p.getImmagine(), p.getNome(), p.getIdProdotto(), gpl));
+        for (IProdotto pr:prodotti) {
+            panel.add(new GridImagePanel(pr.getImmagine(), pr.getNome(), pr.getIdProdotto(), gpl, appFrame));
         }
         scrollPane = new JScrollPane(panel);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);

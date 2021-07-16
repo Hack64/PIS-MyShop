@@ -28,10 +28,10 @@ public class GridPanelListener implements MouseListener {
         System.out.println(panel.getIdProdotto());
         if (isService){
             ServizioResponse res = ServizioBusiness.getInstance().find(panel.getIdProdotto());
-            appFrame.setCurrentMainPanel(new ProductPanel(panel.getIcon(),null, res.getServizio()));
+            appFrame.setCurrentMainPanel(new ProductPanel(appFrame, panel.getIcon(),null, res.getServizio()));
         }else {
             ProdottoResponse res = ProdottoBusiness.getInstance().find(panel.getIdProdotto());
-            appFrame.setCurrentMainPanel(new ProductPanel(panel.getIcon(), res.getProdotto(), null));
+            appFrame.setCurrentMainPanel(new ProductPanel(appFrame, panel.getIcon(), res.getProdotto(), null));
         }
 
     }

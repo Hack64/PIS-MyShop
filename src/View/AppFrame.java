@@ -10,10 +10,8 @@ import java.awt.*;
 
 public class AppFrame extends JFrame {
     private JPanel currentPanel;
-    private JScrollPane currentScrollPane;
     private SideMenu sideMenu;
     private Header header;
-    private PuntoVendita puntoVendita;
 
     public AppFrame(){
         super("Finestra");
@@ -37,7 +35,6 @@ public class AppFrame extends JFrame {
     public void setCurrentMainPanel(JPanel panel) {
         // 1. togliere quello che c'era prima nel CENTER
         if(currentPanel!=null) remove(currentPanel);
-        if(currentScrollPane!=null) remove(currentScrollPane);
 
         //2. aggiungere nuovo panel
         add(panel, BorderLayout.CENTER);
@@ -57,11 +54,4 @@ public class AppFrame extends JFrame {
         return this.sideMenu;
     }
 
-    public PuntoVendita getPuntoVendita() {
-        return puntoVendita;
-    }
-
-    public void setPuntoVendita(PuntoVendita puntoVendita){
-        this.puntoVendita = puntoVendita;
-    }
 }

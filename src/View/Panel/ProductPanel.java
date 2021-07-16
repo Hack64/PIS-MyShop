@@ -1,8 +1,12 @@
 package View.Panel;
 
+import Business.SessionManager;
 import Model.ICategoria;
 import Model.IProdotto;
 import Model.Servizio;
+import Model.Utente;
+import View.AppFrame;
+import View.Listener.ProductPanelListener;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -13,7 +17,7 @@ import java.util.ArrayList;
 
 public class ProductPanel extends JPanel {
 
-    public ProductPanel(Icon img, IProdotto prodotto, Servizio servizio){
+    public ProductPanel(AppFrame appFrame, Icon img, IProdotto prodotto, Servizio servizio){
         setLayout(new BorderLayout());
 
         JLabel lblNomeProdotto = null;
@@ -46,7 +50,9 @@ public class ProductPanel extends JPanel {
         productDescriptionPanel.setBorder(new LineBorder(Color.GREEN));*/
 
         //ProductDetails
+        ProductPanelListener productPanelListener;
         if (servizio == null){
+            productPanelListener = new ProductPanelListener(appFrame, prodotto.getIdProdotto());
             ArrayList<String> categorie = new ArrayList<>();
             for (ICategoria c1:prodotto.getCategorie()){
                 categorie.add(c1.getNome());
@@ -59,10 +65,14 @@ public class ProductPanel extends JPanel {
             btnCommenti = new JButton("Visualizza commenti");
             btnAggiungi = new JButton("Aggiungi a una lista");
 
+            btnAggiungi.setActionCommand("btnAddProduct");
+            btnAggiungi.addActionListener(productPanelListener);
+
 
             //ProductDescription
             txtAreaDescrizione = new JTextArea(prodotto.getDescrizione(), 7, 1);
         }else if(prodotto == null){
+            productPanelListener = new ProductPanelListener(appFrame, servizio.getIdServizio());
             ArrayList<String> categorie = new ArrayList<>();
             for (ICategoria c1:servizio.getCategorie()){
                 categorie.add(c1.getNome());
@@ -75,10 +85,14 @@ public class ProductPanel extends JPanel {
             btnCommenti = new JButton("Visualizza commenti");
             btnAggiungi = new JButton("Aggiungi a una lista");
 
+            btnAggiungi.setActionCommand("btnAddService");
+            btnAggiungi.addActionListener(productPanelListener);
+
 
             //ProductDescription
             txtAreaDescrizione = new JTextArea(servizio.getDescrizione(), 7, 1);
         }
+
         txtAreaDescrizione.setLineWrap(true);
         txtAreaDescrizione.setWrapStyleWord(true);
         TitledBorder title;

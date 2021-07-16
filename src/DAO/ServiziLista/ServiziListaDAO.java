@@ -94,9 +94,35 @@ public class ServiziListaDAO implements IServiziListaDAO {
     }
 
     @Override
+    public boolean isServiceAlreadyInList(int idLista, int idServizio) {
+        executor = new DbOperationExecutor();
+        sql = "SELECT count(*) AS C FROM ServizioLista WHERE idServizio = '" + idServizio + "' AND idLista = '" + idLista + "';";
+        dbOperation = new ReadDbOperation(sql);
+        rs = (ResultSet) executor.executeOperation(dbOperation);
+        boolean inList = false;
+        try {
+            rs.next();
+            if (rs.getRow() == 1 && rs.getInt("C") == 1){
+                inList = true;
+            }
+        } catch (SQLException e) {
+            // handle any errors
+            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("VendorError: " + e.getErrorCode());
+        } catch (NullPointerException e) {
+            // handle any errors
+            System.out.println("Resultset: " + e.getMessage());
+        } finally {
+            executor.closeOperation(dbOperation);
+        }
+        return inList;
+    }
+
+    @Override
     public int add(Lista lista, Servizio servizio) {
         executor = new DbOperationExecutor();
-        sql = "INSERT INTO ServizioLista (idServizio, idLista) VALUES ('" + servizio.getIdServizio() + "','" + lista.getIdLista() + "';";
+        sql = "INSERT INTO ServizioLista (idServizio, idLista) VALUES ('" + servizio.getIdServizio() + "','" + lista.getIdLista() + "');";
         dbOperation = new WriteDbOperation(sql);
         int rowCount = (int) executor.executeOperation(dbOperation);
         executor.closeOperation(dbOperation);

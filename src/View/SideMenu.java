@@ -2,6 +2,7 @@ package View;
 
 import Business.SessionManager;
 import Business.UtenteBusiness;
+import Model.PuntoVendita;
 import Model.Utente;
 import View.Decorator.*;
 import View.Decorator.Menu;
@@ -46,10 +47,10 @@ public class SideMenu extends JPanel {
 
         if(u != null) {
             menu = new ClienteMenuDecorator(menu);
-
-            if(UtenteBusiness.getInstance().userCan(u, UtenteBusiness.Privilegio.MANAGE_SHOP, appFrame.getPuntoVendita())) //manager
+            PuntoVendita p = (PuntoVendita) SessionManager.getInstance().getSession().get("currentShop");
+            if(UtenteBusiness.getInstance().userCan(u, UtenteBusiness.Privilegio.MANAGE_SHOP, p)) //manager
                 menu = new ManagerMenuDecorator(menu);
-            if(UtenteBusiness.getInstance().userCan(u, UtenteBusiness.Privilegio.ADMIN_SYSTEM, appFrame.getPuntoVendita())) //amministratore
+            if(UtenteBusiness.getInstance().userCan(u, UtenteBusiness.Privilegio.ADMIN_SYSTEM, p)) //amministratore
                 menu = new AmministratoreMenuDecorator(menu);
         }
 

@@ -2,6 +2,7 @@ package View.Listener;
 
 import Business.SessionManager;
 import Business.UtenteBusiness;
+import Model.PuntoVendita;
 import Model.Responses.UtenteResponse;
 import Model.Utente;
 import View.AppFrame;
@@ -26,10 +27,10 @@ public class RegistrationListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String cmd = e.getActionCommand();
-
+        PuntoVendita p = (PuntoVendita) SessionManager.getInstance().getSession().get("currentShop");
         if(BTN_REGISTER.equals(cmd)) {
             // chiamare la classe di business per fare registrazione
-            UtenteResponse res = UtenteBusiness.getInstance().registration(registrationDialog.getNome(), registrationDialog.getCognome(), registrationDialog.getUsername(), registrationDialog.getPassword(), registrationDialog.getPassword2(), registrationDialog.getResidenza(), registrationDialog.getTelefono(), registrationDialog.getProfessione(), registrationDialog.getEta(), Utente.Ruoli.ute, appFrame.getPuntoVendita());
+            UtenteResponse res = UtenteBusiness.getInstance().registration(registrationDialog.getNome(), registrationDialog.getCognome(), registrationDialog.getUsername(), registrationDialog.getPassword(), registrationDialog.getPassword2(), registrationDialog.getResidenza(), registrationDialog.getTelefono(), registrationDialog.getProfessione(), registrationDialog.getEta(), Utente.Ruoli.ute, p);
             registrationDialog.clearFields();
             Utente u = res.getUtente(); //potrebbe essere null in caso di login fallito
 

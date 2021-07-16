@@ -1,5 +1,6 @@
 package View.Panel;
 
+import View.AppFrame;
 import View.Listener.GridPanelListener;
 
 import javax.imageio.ImageIO;
@@ -12,11 +13,12 @@ import java.io.IOException;
 
 public class GridImagePanel extends JPanel {
 
+    private AppFrame appFrame;
     private JLabel label;
     private JLabel idProdotto;
 
-    public GridImagePanel(File img, String nome, int id, GridPanelListener gpl){
-
+    public GridImagePanel(File img, String nome, int id, GridPanelListener gpl, AppFrame appFrame){
+        this.appFrame = appFrame;
         setLayout(new FlowLayout());
         try {
             BufferedImage bufferedImage = ImageIO.read(img);

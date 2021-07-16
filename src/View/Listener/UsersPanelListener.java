@@ -2,6 +2,7 @@ package View.Listener;
 
 import Business.SessionManager;
 import Business.UtenteBusiness;
+import Model.PuntoVendita;
 import Model.Utente;
 import View.AppFrame;
 import View.Dialog.EmailDialog;
@@ -29,6 +30,7 @@ public class UsersPanelListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String cmd = e.getActionCommand();
         String esit;
+        PuntoVendita p = (PuntoVendita) SessionManager.getInstance().getSession().get("currentShop");
         switch (cmd){
             case BTN_DISABLE_USER:
                 if(table.getSelectedRowCount()==1){
@@ -39,14 +41,14 @@ public class UsersPanelListener implements ActionListener {
                     System.out.println(table.getModel().getValueAt(rowToEdit, 8));
                     if (u.getIdUtente() != currentUser.getIdUtente()){
                         if (Integer.parseInt(table.getModel().getValueAt(rowToEdit, 8).toString()) == 0){
-                            int res = UtenteBusiness.getInstance().disableUser(u, appFrame.getPuntoVendita());
+                            int res = UtenteBusiness.getInstance().disableUser(u, p);
                             if (res == 1){
                                 esit = "Utente disabilitato!";
                                 JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
                                 appFrame.setCurrentMainPanel(new UsersPanel(appFrame));
                             }
                         } else {
-                            int res = UtenteBusiness.getInstance().enableUser(u, appFrame.getPuntoVendita());
+                            int res = UtenteBusiness.getInstance().enableUser(u, p);
                             if (res == 1){
                                 esit = "Utente abilitato!";
                                 JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
@@ -67,7 +69,7 @@ public class UsersPanelListener implements ActionListener {
                     int rowToDelete = table.getSelectedRow();
                     int colToDelete = 0;
                     int idToDelete = Integer.parseInt(table.getModel().getValueAt(rowToDelete, colToDelete).toString());
-                    int i = UtenteBusiness.getInstance().deleteByIDFromShop(idToDelete, appFrame.getPuntoVendita().getIdPuntoVendita());
+                    int i = UtenteBusiness.getInstance().deleteByIDFromShop(idToDelete, p.getIdPuntoVendita());
                     if (i==1){
                         esit = "Utente eliminato con successo!";
                         JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);

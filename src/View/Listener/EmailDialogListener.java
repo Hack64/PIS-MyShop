@@ -2,7 +2,9 @@ package View.Listener;
 
 import Business.ComunicazioneEmail;
 import Business.EmailSenderAPI;
+import Business.SessionManager;
 import Business.UtenteBusiness;
+import Model.PuntoVendita;
 import Model.Utente;
 import View.AppFrame;
 import View.Dialog.EmailDialog;
@@ -28,7 +30,7 @@ public class EmailDialogListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String cmd = e.getActionCommand();
-
+        PuntoVendita p = (PuntoVendita) SessionManager.getInstance().getSession().get("currentShop");
         if (BTN_SEND.equals(cmd)){
             ComunicazioneEmail email = new ComunicazioneEmail(dialog.getEmail(), dialog.getOggetto(), dialog.getTesto(), new EmailSenderAPI());
             int status = email.invia();
@@ -40,7 +42,7 @@ public class EmailDialogListener implements ActionListener {
             dialog.dispose();
         } else if (BTN_SEND_ALL.equals(cmd)){
             int status=0;
-            for(Map.Entry<Utente, String> entry:UtenteBusiness.getInstance().findAllUsersByShop(appFrame.getPuntoVendita()).entrySet()){
+            for(Map.Entry<Utente, String> entry:UtenteBusiness.getInstance().findAllUsersByShop(p).entrySet()){
                 if (entry.getValue().equals("0")){
                     ComunicazioneEmail email = new ComunicazioneEmail(entry.getKey().getEmail(), dialog.getOggetto(), dialog.getTesto(), new EmailSenderAPI());
                     status += email.invia();

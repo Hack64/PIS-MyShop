@@ -140,6 +140,32 @@ public class ProdottiMagazzinoDAO implements IProdottiMagazzinoDAO {
     }
 
     @Override
+    public boolean isProductAlreadyInList(int idProdotto, int idLista) {
+        executor = new DbOperationExecutor();
+        sql = "SELECT count(*) AS C FROM ProdottoLista WHERE idProdotto = '" + idProdotto + "' AND idLista = '" + idLista + "';";
+        dbOperation = new ReadDbOperation(sql);
+        rs = (ResultSet) executor.executeOperation(dbOperation);
+        boolean inList = false;
+        try {
+            rs.next();
+            if (rs.getRow() == 1 && rs.getInt("C") == 1){
+                inList = true;
+            }
+        } catch (SQLException e) {
+            // handle any errors
+            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("VendorError: " + e.getErrorCode());
+        } catch (NullPointerException e) {
+            // handle any errors
+            System.out.println("Resultset: " + e.getMessage());
+        } finally {
+            executor.closeOperation(dbOperation);
+        }
+        return inList;
+    }
+
+    @Override
     public int add(Disponibilita disponibilita) {
         executor = new DbOperationExecutor();
         sql = "INSERT INTO ProdottiMagazzino (idMagazzino, idProdotto, quantita) VALUES ('" + disponibilita.getMagazzino().getIdMagazzino() + "','" + disponibilita.getProdotto().getIdProdotto() + "','" + disponibilita.getQta() + "');";

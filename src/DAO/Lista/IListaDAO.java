@@ -11,6 +11,7 @@ public interface IListaDAO {
     ArrayList<Lista> findAllByUserID(int idUtente);
     ArrayList<Lista> findAllByState(Lista.Stato stato);
     ArrayList<Lista> findAllByUserAndState(int idUtente, Lista.Stato stato);
+    float getListPrice(int idLista);
     int add(Lista lista);
     int removeById(int idLista);
     int update(Lista lista);

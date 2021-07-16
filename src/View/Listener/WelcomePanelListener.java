@@ -1,6 +1,7 @@
 package View.Listener;
 
 import Business.PuntoVenditaBusiness;
+import Business.SessionManager;
 import Model.PuntoVendita;
 import View.AppFrame;
 import View.Panel.BrowsePanel;
@@ -26,7 +27,7 @@ public class WelcomePanelListener implements ActionListener {
 
         if (BTN_SET_SHOP.equals(cmd)){
             PuntoVendita p = PuntoVenditaBusiness.getInstance().findShopByAddress(panel.getSelectedPuntoVendita()).getPuntoVendita();
-            appFrame.setPuntoVendita(p);
+            SessionManager.getInstance().getSession().put("currentShop", p);
             appFrame.getHeader().refresh();
             appFrame.getSideMenu().refresh();
             appFrame.setCurrentMainPanel(new BrowsePanel(appFrame));
