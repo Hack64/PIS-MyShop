@@ -3,8 +3,8 @@ package View.Listener;
 import Business.CategoriaBusiness;
 import Model.ICategoria;
 import View.AppFrame;
-import View.CategoriesOperationDialog;
-import View.ManageCategoriesPanel;
+import View.Dialog.CategoriesOperationDialog;
+import View.Panel.ManageCategoriesPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

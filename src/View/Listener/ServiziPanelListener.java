@@ -3,9 +3,9 @@ package View.Listener;
 import Business.ServizioBusiness;
 import Model.Responses.ServizioResponse;
 import View.AppFrame;
-import View.CustomOperationDialogView;
-import View.MainCatalogPanel;
-import View.ManageCategoriesPanel;
+import View.Dialog.CustomOperationDialogView;
+import View.Panel.MainCatalogPanel;
+import View.Panel.ManageCategoriesPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

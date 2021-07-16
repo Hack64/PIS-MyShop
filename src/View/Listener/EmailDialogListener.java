@@ -5,7 +5,7 @@ import Business.EmailSenderAPI;
 import Business.UtenteBusiness;
 import Model.Utente;
 import View.AppFrame;
-import View.EmailDialog;
+import View.Dialog.EmailDialog;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

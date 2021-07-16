@@ -5,8 +5,8 @@ import Business.ServizioBusiness;
 import Model.Responses.ProdottoResponse;
 import Model.Responses.ServizioResponse;
 import View.AppFrame;
-import View.GridImagePanel;
-import View.ProductPanel;
+import View.Panel.GridImagePanel;
+import View.Panel.ProductPanel;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;

@@ -3,6 +3,8 @@ package View;
 import Business.SessionManager;
 import Business.UtenteBusiness;
 import Model.Utente;
+import View.Decorator.*;
+import View.Decorator.Menu;
 import View.Listener.SideMenuListener;
 
 import javax.swing.*;
@@ -24,7 +26,7 @@ public class SideMenu extends JPanel {
 
         this.listener = listener;
 
-        Menu menu = new GuestMenu();
+        View.Decorator.Menu menu = new GuestMenu();
         for(JButton btn:menu.getPulsanti()) {
             btn.addActionListener(listener);
             add(btn);

@@ -6,7 +6,7 @@ import Business.ProdottoBusiness;
 import Model.Disponibilita;
 import Model.Responses.ProdottoResponse;
 import View.AppFrame;
-import View.QuantityEditorDialog;
+import View.Dialog.QuantityEditorDialog;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

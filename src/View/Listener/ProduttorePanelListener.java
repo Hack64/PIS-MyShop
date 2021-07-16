@@ -3,8 +3,8 @@ package View.Listener;
 import Business.ProduttoreBusiness;
 import Model.Responses.ProduttoreResponse;
 import View.AppFrame;
-import View.ImprenditoreOperationDialogView;
-import View.ImprenditoriPanel;
+import View.Dialog.ImprenditoreOperationDialogView;
+import View.Panel.ImprenditoriPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

@@ -5,7 +5,7 @@ import Business.UtenteBusiness;
 import Model.Responses.UtenteResponse;
 import Model.Utente;
 import View.AppFrame;
-import View.RegistrationDialog;
+import View.Dialog.RegistrationDialog;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

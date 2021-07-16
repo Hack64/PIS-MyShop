@@ -5,8 +5,8 @@ import Business.UtenteBusiness;
 import Model.Responses.UtenteResponse;
 import Model.Utente;
 import View.AppFrame;
-import View.BrowsePanel;
-import View.LoginDialog;
+import View.Panel.BrowsePanel;
+import View.Dialog.LoginDialog;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

@@ -3,8 +3,8 @@ package View.Listener;
 import Business.ProdottiMagazzinoBusiness;
 import Model.Disponibilita;
 import View.AppFrame;
-import View.QuantityEditorDialog;
-import View.WarehousesPanel;
+import View.Dialog.QuantityEditorDialog;
+import View.Panel.WarehousesPanel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

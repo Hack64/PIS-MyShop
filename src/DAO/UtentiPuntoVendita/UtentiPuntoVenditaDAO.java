@@ -274,15 +274,26 @@ public class UtentiPuntoVenditaDAO implements IUtentiPuntoVenditaDAO {
     }
 
     @Override
-    public int updateManager(Utente utente, PuntoVendita puntoVendita) {
+    public int updateManager(Utente utente, PuntoVendita puntoVendita, boolean isNew) {
         executor = new DbOperationExecutor();
-        int currentManagerID = this.findShopManagerByShopID(puntoVendita.getIdPuntoVendita()).getIdUtente();
-        int rowCount = -1;
+        int currentManagerID = -1;
+        if (!isNew) {
+            try {
+                currentManagerID = this.findShopManagerByShopID(puntoVendita.getIdPuntoVendita()).getIdUtente();
+            } catch (NullPointerException e){
+                currentManagerID = 0;
+            }
+        }
+        int rowCount = 0;
         if (utente.getIdUtente() != currentManagerID){
-            rowCount = this.removeByID(currentManagerID, puntoVendita.getIdPuntoVendita());
-            sql = "UPDATE UtentePuntoVendita SET idPuntoVendita = '" + puntoVendita.getIdPuntoVendita()  + "' WHERE idUtente = '" + utente.getIdUtente() + "';";
+            this.removeByID(currentManagerID, puntoVendita.getIdPuntoVendita());
+            if (this.isUserShopManagerSomewhere(utente.getIdUtente())){
+                sql = "UPDATE UtentePuntoVendita SET idPuntoVendita = '" + puntoVendita.getIdPuntoVendita()  + "', isManager = '1' WHERE idUtente = '" + utente.getIdUtente() + "';";
+            } else {
+                sql = "INSERT INTO UtentePuntoVendita VALUES ('" + puntoVendita.getIdPuntoVendita() + "','" + utente.getIdUtente() + "','0','1');";
+            }
             dbOperation = new WriteDbOperation(sql);
-            rowCount += (int) executor.executeOperation(dbOperation);
+            rowCount = (int) executor.executeOperation(dbOperation);
             executor.closeOperation(dbOperation);
         }
         return rowCount;

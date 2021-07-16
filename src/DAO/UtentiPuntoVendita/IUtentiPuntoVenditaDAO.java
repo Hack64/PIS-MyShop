@@ -17,5 +17,5 @@ public interface IUtentiPuntoVenditaDAO {
     int add(Utente utente, PuntoVendita puntoVendita, int disattivato, int isManager);
     int removeByID(int idUtente, int idPuntoVendita);
     int update(Utente utente, PuntoVendita puntoVendita, int disattivato, int isManager);
-    int updateManager(Utente utente, PuntoVendita puntoVendita);
+    int updateManager(Utente utente, PuntoVendita puntoVendita, boolean isNew);
 }

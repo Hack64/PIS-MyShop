@@ -1,7 +1,7 @@
 package View.Listener;
 
 import View.AppFrame;
-import View.ShopServicesChooserDialog;
+import View.Dialog.ShopServicesChooserDialog;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

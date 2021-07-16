@@ -4,8 +4,8 @@ import Business.SessionManager;
 import Business.UtenteBusiness;
 import Model.Utente;
 import View.AppFrame;
-import View.EmailDialog;
-import View.UsersPanel;
+import View.Dialog.EmailDialog;
+import View.Panel.UsersPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

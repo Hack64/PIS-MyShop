@@ -3,8 +3,8 @@ package View.Listener;
 import Business.PuntoVenditaBusiness;
 import Model.Responses.PuntoVenditaResponse;
 import View.AppFrame;
-import View.ShopOperationDialog;
-import View.ShopsPanel;
+import View.Dialog.ShopOperationDialog;
+import View.Panel.ShopsPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

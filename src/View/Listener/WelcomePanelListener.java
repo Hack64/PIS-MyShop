@@ -3,8 +3,8 @@ package View.Listener;
 import Business.PuntoVenditaBusiness;
 import Model.PuntoVendita;
 import View.AppFrame;
-import View.BrowsePanel;
-import View.WelcomePanel;
+import View.Panel.BrowsePanel;
+import View.Panel.WelcomePanel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

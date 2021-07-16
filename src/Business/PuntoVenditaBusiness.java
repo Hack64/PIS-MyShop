@@ -62,18 +62,16 @@ public class PuntoVenditaBusiness {
 
         int st=0;
 
-        st=puntoVenditaDAO.add(p);
+        st=puntoVenditaDAO.add(p); //1
         p = puntoVenditaDAO.findByAddress(cittaPV, viaPV);
         m.setPuntoVendita(p);
-        st+=magazzinoDAO.add(m);
+        st+=magazzinoDAO.add(m); //2
         m=magazzinoDAO.findByShopID(p.getIdPuntoVendita());
         if (!utentiPuntoVenditaDAO.isUserShopManagerSomewhere(manager.getIdUtente())){
-            st+=utentiPuntoVenditaDAO.add(manager, p, 0, 1);
+            st+=utentiPuntoVenditaDAO.add(manager, p, 0, 1); //3
         } else {
             //TODO: trova un modo di capire quando il manager è già assignato e di dirlo all'utente
-            //TODO: finisci la modifica dei punti vendita
-            //TODO: quando fai l'update, cancella il precedente manager!
-            System.out.println(manager.getNome() + " è già un manager!!!");
+            st+=utentiPuntoVenditaDAO.updateManager(manager, p, true);
         }
         for (IProdotto pr:prodotti){
             st+= prodottiPuntoVenditaDAO.add(p, pr);
@@ -144,16 +142,16 @@ public class PuntoVenditaBusiness {
 
         int st=0;
 
-        st=puntoVenditaDAO.update(p);
+        st=puntoVenditaDAO.update(p); //1
         p = puntoVenditaDAO.findByAddress(cittaPV, viaPV);
         m.setPuntoVendita(p);
-        st+=magazzinoDAO.update(m);
+        st+=magazzinoDAO.update(m); //2
         m=magazzinoDAO.findByShopID(p.getIdPuntoVendita());
 
-        st+=utentiPuntoVenditaDAO.updateManager(manager, p);
+        st+=utentiPuntoVenditaDAO.updateManager(manager, p, false); //3
         prodottiPuntoVenditaDAO.removeAllPrductsByShopID(p.getIdPuntoVendita());
         for (IProdotto pr:prodotti){
-            st+=prodottiPuntoVenditaDAO.add(p, pr);
+            st+=prodottiPuntoVenditaDAO.add(p, pr); //3+prodotti.size()
         }
 
         /* Costruisco arraylist create dalle intersezioni e opero su queste per mantenere i dati che mi servono nel db e rimuovere/aggiungere gli altri */
@@ -188,7 +186,7 @@ public class PuntoVenditaBusiness {
 
         serviziPuntoVenditaDAO.removeAllServicesByShopID(p.getIdPuntoVendita());
         for (Servizio s:servizi){
-            st+= serviziPuntoVenditaDAO.add(s, p);
+            st+= serviziPuntoVenditaDAO.add(s, p); //3+prodotti.size()+servizi.size()
         }
 
         return st;

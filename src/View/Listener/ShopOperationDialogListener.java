@@ -6,6 +6,8 @@ import Business.ServizioBusiness;
 import Model.IProdotto;
 import Model.Servizio;
 import View.*;
+import View.Dialog.*;
+import View.Panel.ShopsPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -46,7 +48,7 @@ public class ShopOperationDialogListener implements ActionListener {
                     servizi.add(ServizioBusiness.getInstance().findByName(s).getServizio());
                 }
                 int st = PuntoVenditaBusiness.getInstance().addNewShop(shopOperationDialog.getTxtShopVia(), shopOperationDialog.getTxtShopCAP(), shopOperationDialog.getTxtShopCitta(), shopOperationDialog.getTxtMagVia(), shopOperationDialog.getTxtMagCitta(), shopOperationDialog.getTxtMagCAP(), shopManagerChooserDialog.getSelectedUser(), prodotti, servizi);
-                if (st == 4) {
+                if (st >= 2+(prodotti.size()*2)+servizi.size()) {
                     String esit = "Punto Vendita e magazzino creato con successo!";
                     JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
                     shopOperationDialog.dispose();
@@ -67,7 +69,7 @@ public class ShopOperationDialogListener implements ActionListener {
                     serviziM.add(ServizioBusiness.getInstance().findByName(s).getServizio());
                 }
                 int st_e = PuntoVenditaBusiness.getInstance().updateShopAndWarehouse(shopOperationDialog.getID(), shopOperationDialog.getTxtShopVia(), shopOperationDialog.getTxtShopCAP(), shopOperationDialog.getTxtShopCitta(), shopOperationDialog.getTxtMagVia(), shopOperationDialog.getTxtMagCitta(), shopOperationDialog.getTxtMagCAP(), shopManagerChooserDialog.getSelectedUser(), prodottiM, serviziM);
-                if (st_e == 2){
+                if (st_e >= 2+prodottiM.size()+serviziM.size()){
                     String esit = "Punto vendita e magazzino modificati con successo!";
                     JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
                     shopOperationDialog.dispose();

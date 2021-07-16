@@ -3,8 +3,8 @@ package View.Listener;
 import Business.ListaBusiness;
 import Model.Lista;
 import View.AppFrame;
-import View.ListOperationDialog;
-import View.ListsPanel;
+import View.Dialog.ListOperationDialog;
+import View.Panel.ListsPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
