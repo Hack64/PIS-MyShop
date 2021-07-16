@@ -7,6 +7,7 @@ import Model.Responses.ServizioResponse;
 import Model.Utente;
 import View.AppFrame;
 import View.CustomOperationDialogView;
+import View.EmailDialog;
 import View.UsersPanel;
 
 import javax.swing.*;
@@ -20,6 +21,7 @@ public class UsersPanelListener implements ActionListener {
 
     public final static String BTN_DISABLE_USER = "btnDisable";
     public final static String BTN_DELETE_USER = "btnDelete";
+    public final static String BTN_SEND_EMAIL = "btnSend";
 
     public UsersPanelListener(AppFrame appFrame, JTable table){
         this.appFrame = appFrame;
@@ -81,7 +83,16 @@ public class UsersPanelListener implements ActionListener {
                     esit = "Devi selezionare un elemento per eliminarlo";
                     JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
                 }
-
+                break;
+            case BTN_SEND_EMAIL:
+                if (table.getSelectedRowCount() == 1){
+                    int row = table.getSelectedRow();
+                    int col = 3;
+                    String email = table.getModel().getValueAt(row, col).toString();
+                    new EmailDialog(appFrame, email);
+                } else {
+                    new EmailDialog(appFrame, null);
+                }
                 break;
         }
     }

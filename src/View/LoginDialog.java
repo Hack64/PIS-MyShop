@@ -21,7 +21,7 @@ public class LoginDialog extends JDialog {
 
         setSize(275,250);
 
-        JLabel lblUsername = new JLabel("Username: ");
+        JLabel lblUsername = new JLabel("Email: ");
         JLabel lblPassword = new JLabel("Password: ");
 
         JButton btnLogin = new JButton("Accedi");

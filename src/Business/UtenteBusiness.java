@@ -143,11 +143,10 @@ public class UtenteBusiness {
         return result;
     }
 
-    public HashMap<Utente, String> findAllUsersByShopManager(Utente u){
+    public HashMap<Utente, String> findAllUsersByShop(PuntoVendita puntoVendita){
         IUtentiPuntoVenditaDAO utentiPuntoVenditaDAO = UtentiPuntoVenditaDAO.getInstance();
-        PuntoVendita pv = utentiPuntoVenditaDAO.findShopByShopManagerID(u.getIdUtente());
 
-        return utentiPuntoVenditaDAO.findUsersByShopID(pv.getIdPuntoVendita());
+        return utentiPuntoVenditaDAO.findUsersByShopID(puntoVendita.getIdPuntoVendita());
     }
 
     public int deleteByIDFromShop(int idUtente, int idPuntoVendita){

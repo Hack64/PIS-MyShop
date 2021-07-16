@@ -18,7 +18,7 @@ public class UsersPanel extends JPanel {
         setLayout(new BorderLayout());
 
         //TODO: trova un modo di cercare gli utenti per idPuntoVendita
-        HashMap<Utente, String> utentiPuntoVendita = UtenteBusiness.getInstance().findAllUsersByShopManager((Utente)SessionManager.getInstance().getSession().get("loggedUser"));
+        HashMap<Utente, String> utentiPuntoVendita = UtenteBusiness.getInstance().findAllUsersByShop(appFrame.getPuntoVendita());
 
         JTable tabellaUtenti = new JTable(new UsersTableModel(utentiPuntoVendita));
 
@@ -32,16 +32,20 @@ public class UsersPanel extends JPanel {
 
         JButton btnEdit = new JButton("Abilita / Disabilita Utente");
         JButton btnDelete = new JButton("Elimina Utente");
+        JButton btnSendEmail = new JButton("Invia comunicazione");
 
         btnEdit.setActionCommand("btnDisable");
         btnDelete.setActionCommand("btnDelete");
+        btnSendEmail.setActionCommand("btnSend");
 
         UsersPanelListener usersPanelListener = new UsersPanelListener(appFrame, tabellaUtenti);
         btnEdit.addActionListener(usersPanelListener);
         btnDelete.addActionListener(usersPanelListener);
+        btnSendEmail.addActionListener(usersPanelListener);
 
         operazionitabella.add(btnEdit);
         operazionitabella.add(btnDelete);
+        operazionitabella.add(btnSendEmail);
 
         add(operazionitabella, BorderLayout.SOUTH);
     }

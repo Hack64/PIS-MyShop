@@ -9,16 +9,15 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 public class RegistrationDialog extends JDialog {
-    private JPanel form;
-    private JTextField txtNome;
-    private JTextField txtCognome;
-    private JTextField txtUsername;
-    private JPasswordField txtPassword;
-    private JPasswordField txtPassword2;
-    private JTextField txtResidenza;
-    private JTextField txtTelefono;
-    private JTextField txtProfessione;
-    private JFormattedTextField txtEta;
+    private final JTextField txtNome;
+    private final JTextField txtCognome;
+    private final JTextField txtUsername;
+    private final JPasswordField txtPassword;
+    private final JPasswordField txtPassword2;
+    private final JTextField txtResidenza;
+    private final JTextField txtTelefono;
+    private final JTextField txtProfessione;
+    private final JFormattedTextField txtEta;
     protected JButton btnRegister;
 
     public RegistrationDialog(AppFrame appFrame){
@@ -26,7 +25,7 @@ public class RegistrationDialog extends JDialog {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Insets i = new Insets(5,2,5,2);
         setLayout(new FlowLayout());
-        form = new JPanel(new GridBagLayout());
+        JPanel form = new JPanel(new GridBagLayout());
         form.setBorder(new EmptyBorder(20, 10, 10, 10));
         GridBagConstraints c = new GridBagConstraints();
 
@@ -34,7 +33,7 @@ public class RegistrationDialog extends JDialog {
 
         JLabel lblNome = new JLabel("Nome: ");
         JLabel lblCognome = new JLabel("Cognome: ");
-        JLabel lblUsername = new JLabel("Username: ");
+        JLabel lblUsername = new JLabel("Email: ");
         JLabel lblPassword = new JLabel("Password: ");
         JLabel lblPassword2 = new JLabel("Ripeti password: ");
         JLabel lblResidenza = new JLabel("Residenza: ");

@@ -1,5 +1,9 @@
 package View;
 
+import Business.ComunicazioneEmail;
+import Business.EmailSenderAPI;
+import Business.IEmailSenderAPI;
+
 import javax.swing.*;
 import java.time.LocalDate;
 
@@ -28,6 +32,8 @@ public class MainClass {
             // handle exception
         }
 
+        /*ComunicazioneEmail email = new ComunicazioneEmail("marco.rizzo.00@outlook.com","Test", "Mail di prova", new EmailSenderAPI());
+        email.invia();*/
         new AppFrame();
     }
 }

@@ -13,5 +13,7 @@
     <orderEntry type="library" name="commons-validator-1.7" level="project" />
     <orderEntry type="library" name="bytes-1.5.0" level="project" />
     <orderEntry type="library" name="commons-io-2.10.0" level="project" />
+    <orderEntry type="library" name="javax.mail" level="project" />
+    <orderEntry type="library" name="javax.activation" level="project" />
   </component>
 </module>
