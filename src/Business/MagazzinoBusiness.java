@@ -1,10 +1,7 @@
 package Business;
 
 import DAO.Magazzino.MagazzinoDAO;
-import Model.Disponibilita;
 import Model.Magazzino;
-
-import java.util.ArrayList;
 
 public class MagazzinoBusiness {
     private static MagazzinoBusiness instance;

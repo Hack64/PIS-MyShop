@@ -2,13 +2,8 @@ package View;
 
 import Business.MagazzinoBusiness;
 import Business.ProdottiMagazzinoBusiness;
-import Business.PuntoVenditaBusiness;
-import Business.SessionManager;
 import Model.Disponibilita;
 import Model.Magazzino;
-import Model.PuntoVendita;
-import Model.Utente;
-import View.Listener.CatalogPanelListener;
 import View.Listener.WarehousePanelListener;
 import View.TableModels.MagazzinoTableModel;
 

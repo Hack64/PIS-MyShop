@@ -2,7 +2,10 @@ package DAO.Magazzino;
 
 import DAO.ProdottiMagazzino.IProdottiMagazzinoDAO;
 import DAO.ProdottiMagazzino.ProdottiMagazzinoDAO;
-import DbInterface.*;
+import DbInterface.DbOperationExecutor;
+import DbInterface.IDbOperation;
+import DbInterface.ReadDbOperation;
+import DbInterface.WriteDbOperation;
 import Model.Magazzino;
 
 import java.sql.ResultSet;

@@ -1,8 +1,6 @@
 package View;
 
-import Business.MagazzinoBusiness;
 import Model.Disponibilita;
-import Model.Magazzino;
 import View.Listener.QuantityEditorDialogListener;
 
 import javax.swing.*;

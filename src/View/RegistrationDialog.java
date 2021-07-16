@@ -11,7 +11,7 @@ import java.text.SimpleDateFormat;
 public class RegistrationDialog extends JDialog {
     private final JTextField txtNome;
     private final JTextField txtCognome;
-    private final JTextField txtUsername;
+    private final JTextField txtEmail;
     private final JPasswordField txtPassword;
     private final JPasswordField txtPassword2;
     private final JTextField txtResidenza;
@@ -33,7 +33,7 @@ public class RegistrationDialog extends JDialog {
 
         JLabel lblNome = new JLabel("Nome: ");
         JLabel lblCognome = new JLabel("Cognome: ");
-        JLabel lblUsername = new JLabel("Email: ");
+        JLabel lblEmail = new JLabel("Email: ");
         JLabel lblPassword = new JLabel("Password: ");
         JLabel lblPassword2 = new JLabel("Ripeti password: ");
         JLabel lblResidenza = new JLabel("Residenza: ");
@@ -46,7 +46,7 @@ public class RegistrationDialog extends JDialog {
 
         txtNome = new JTextField(10);
         txtCognome = new JTextField(10);
-        txtUsername = new JTextField(10);
+        txtEmail = new JTextField(10);
         txtPassword = new JPasswordField(10);
         txtPassword2 = new JPasswordField(10);
         txtResidenza = new JTextField(10);
@@ -70,9 +70,9 @@ public class RegistrationDialog extends JDialog {
         form.add(txtCognome, c);
         c.gridy = 2;
         c.gridx = 0;
-        form.add(lblUsername, c);
+        form.add(lblEmail, c);
         c.gridx = 1;
-        form.add(txtUsername, c);
+        form.add(txtEmail, c);
         c.gridy = 3;
         c.gridx = 0;
         form.add(lblPassword, c);
@@ -135,7 +135,7 @@ public class RegistrationDialog extends JDialog {
     }
 
     public String getUsername(){
-        return this.txtUsername.getText();
+        return this.txtEmail.getText();
     }
 
     public String getPassword(){
@@ -153,7 +153,7 @@ public class RegistrationDialog extends JDialog {
     public void clearFields() {
         txtNome.setText("");
         txtCognome.setText("");
-        txtUsername.setText("");
+        txtEmail.setText("");
         txtPassword.setText("");
         txtPassword2.setText("");
         txtResidenza.setText("");

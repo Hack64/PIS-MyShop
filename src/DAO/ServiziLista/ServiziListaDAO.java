@@ -4,7 +4,10 @@ import DAO.Lista.IListaDAO;
 import DAO.Lista.ListaDAO;
 import DAO.Servizio.IServizioDAO;
 import DAO.Servizio.ServizioDAO;
-import DbInterface.*;
+import DbInterface.DbOperationExecutor;
+import DbInterface.IDbOperation;
+import DbInterface.ReadDbOperation;
+import DbInterface.WriteDbOperation;
 import Model.Lista;
 import Model.Servizio;
 

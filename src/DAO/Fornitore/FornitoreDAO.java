@@ -1,7 +1,10 @@
 package DAO.Fornitore;
 
 import DAO.Servizio.ServizioDAO;
-import DbInterface.*;
+import DbInterface.DbOperationExecutor;
+import DbInterface.IDbOperation;
+import DbInterface.ReadDbOperation;
+import DbInterface.WriteDbOperation;
 import Model.Fornitore;
 
 import java.sql.ResultSet;

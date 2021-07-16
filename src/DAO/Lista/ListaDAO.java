@@ -3,7 +3,10 @@ package DAO.Lista;
 import DAO.ProdottiLista.ProdottiListaDAO;
 import DAO.ServiziLista.ServiziListaDAO;
 import DAO.Utente.UtenteDAO;
-import DbInterface.*;
+import DbInterface.DbOperationExecutor;
+import DbInterface.IDbOperation;
+import DbInterface.ReadDbOperation;
+import DbInterface.WriteDbOperation;
 import Model.Lista;
 
 import java.sql.ResultSet;

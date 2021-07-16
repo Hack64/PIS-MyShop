@@ -1,12 +1,9 @@
 package View.Listener;
 
-import Business.ServizioBusiness;
 import Business.SessionManager;
 import Business.UtenteBusiness;
-import Model.Responses.ServizioResponse;
 import Model.Utente;
 import View.AppFrame;
-import View.CustomOperationDialogView;
 import View.EmailDialog;
 import View.UsersPanel;
 

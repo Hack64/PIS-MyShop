@@ -1,6 +1,9 @@
 package DAO.Categoria;
 
-import DbInterface.*;
+import DbInterface.DbOperationExecutor;
+import DbInterface.IDbOperation;
+import DbInterface.ReadDbOperation;
+import DbInterface.WriteDbOperation;
 import Model.Categoria;
 import Model.ICategoria;
 

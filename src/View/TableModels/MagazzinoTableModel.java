@@ -1,10 +1,8 @@
 package View.TableModels;
 
 import Model.Disponibilita;
-import Model.PuntoVendita;
 
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableModel;
 import java.util.ArrayList;
 
 public class MagazzinoTableModel extends AbstractTableModel {

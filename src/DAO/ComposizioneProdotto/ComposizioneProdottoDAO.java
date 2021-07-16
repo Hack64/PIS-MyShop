@@ -6,7 +6,10 @@ import DAO.Prodotto.IProdottoDAO;
 import DAO.Prodotto.ProdottoDAO;
 import DAO.ProdottoCategoria.IProdottoCategoriaDAO;
 import DAO.ProdottoCategoria.ProdottoCategoriaDAO;
-import DbInterface.*;
+import DbInterface.DbOperationExecutor;
+import DbInterface.IDbOperation;
+import DbInterface.ReadDbOperation;
+import DbInterface.WriteDbOperation;
 import Model.IProdotto;
 import Model.ProdottoComposito;
 

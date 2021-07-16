@@ -3,14 +3,10 @@ package View.Listener;
 import Business.MagazzinoBusiness;
 import Business.ProdottiMagazzinoBusiness;
 import Business.ProdottoBusiness;
-import Business.PuntoVenditaBusiness;
 import Model.Disponibilita;
 import Model.Responses.ProdottoResponse;
-import Model.Responses.PuntoVenditaResponse;
 import View.AppFrame;
 import View.QuantityEditorDialog;
-import View.ShopOperationDialog;
-import View.ShopsPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

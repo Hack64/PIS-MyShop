@@ -1,9 +1,5 @@
 package View;
 
-import Business.ComunicazioneEmail;
-import Business.EmailSenderAPI;
-import Business.IEmailSenderAPI;
-
 import javax.swing.*;
 import java.time.LocalDate;
 

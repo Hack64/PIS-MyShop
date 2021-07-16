@@ -1,6 +1,5 @@
 package Business;
 
-import DAO.Lista.IListaDAO;
 import DAO.ProdottiMagazzino.IProdottiMagazzinoDAO;
 import DAO.ProdottiMagazzino.ProdottiMagazzinoDAO;
 import Model.Disponibilita;

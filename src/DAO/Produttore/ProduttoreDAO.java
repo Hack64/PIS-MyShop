@@ -2,7 +2,10 @@ package DAO.Produttore;
 
 import DAO.Prodotto.IProdottoDAO;
 import DAO.Prodotto.ProdottoDAO;
-import DbInterface.*;
+import DbInterface.DbOperationExecutor;
+import DbInterface.IDbOperation;
+import DbInterface.ReadDbOperation;
+import DbInterface.WriteDbOperation;
 import Model.Produttore;
 
 import java.sql.ResultSet;

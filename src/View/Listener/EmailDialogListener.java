@@ -1,7 +1,6 @@
 package View.Listener;
 
 import Business.ComunicazioneEmail;
-import Business.Email;
 import Business.EmailSenderAPI;
 import Business.UtenteBusiness;
 import Model.Utente;

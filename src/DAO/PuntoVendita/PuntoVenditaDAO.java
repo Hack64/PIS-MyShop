@@ -8,7 +8,10 @@ import DAO.ServiziPuntoVendita.IServiziPuntoVenditaDAO;
 import DAO.ServiziPuntoVendita.ServiziPuntoVenditaDAO;
 import DAO.UtentiPuntoVendita.IUtentiPuntoVenditaDAO;
 import DAO.UtentiPuntoVendita.UtentiPuntoVenditaDAO;
-import DbInterface.*;
+import DbInterface.DbOperationExecutor;
+import DbInterface.IDbOperation;
+import DbInterface.ReadDbOperation;
+import DbInterface.WriteDbOperation;
 import Model.PuntoVendita;
 
 import java.sql.ResultSet;

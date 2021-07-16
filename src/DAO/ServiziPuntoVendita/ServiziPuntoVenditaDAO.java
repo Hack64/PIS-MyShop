@@ -4,7 +4,10 @@ import DAO.PuntoVendita.IPuntoVenditaDAO;
 import DAO.PuntoVendita.PuntoVenditaDAO;
 import DAO.Servizio.IServizioDAO;
 import DAO.Servizio.ServizioDAO;
-import DbInterface.*;
+import DbInterface.DbOperationExecutor;
+import DbInterface.IDbOperation;
+import DbInterface.ReadDbOperation;
+import DbInterface.WriteDbOperation;
 import Model.PuntoVendita;
 import Model.Servizio;
 

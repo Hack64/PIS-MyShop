@@ -1,6 +1,5 @@
 package View;
 
-import Business.SessionManager;
 import Business.UtenteBusiness;
 import Model.Utente;
 import View.Listener.UsersPanelListener;
