@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class FornitoriPanel extends JPanel {
 
-    AppFrame appFrame;
+    private AppFrame appFrame;
 
     public FornitoriPanel(AppFrame appFrame){
 

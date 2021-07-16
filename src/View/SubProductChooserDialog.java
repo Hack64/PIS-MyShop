@@ -10,9 +10,9 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class SubProductChooserDialog extends JDialog {
-    JButton btnExit;
-    JButton btnOk;
-    ArrayList<JCheckBox> boxes;
+    private JButton btnExit;
+    private JButton btnOk;
+    private ArrayList<JCheckBox> boxes;
 
     public SubProductChooserDialog(AppFrame appFrame){
         super(appFrame, "Sottoprodotti");

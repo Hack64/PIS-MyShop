@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class CatalogPanel extends JPanel {
 
-    AppFrame appFrame;
+    private AppFrame appFrame;
 
     public CatalogPanel(AppFrame appFrame, boolean compositeMode){
 

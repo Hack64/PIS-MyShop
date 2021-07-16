@@ -8,11 +8,11 @@ import javax.swing.*;
 import java.awt.*;
 
 public class AppFrame extends JFrame {
-    JPanel currentPanel;
-    JScrollPane currentScrollPane;
-    SideMenu sideMenu;
-    Header header;
-    PuntoVendita puntoVendita;
+    private JPanel currentPanel;
+    private JScrollPane currentScrollPane;
+    private SideMenu sideMenu;
+    private Header header;
+    private PuntoVendita puntoVendita;
 
     public AppFrame(){
         super("Finestra");

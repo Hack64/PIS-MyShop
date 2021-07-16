@@ -10,20 +10,20 @@ import java.util.ArrayList;
 
 public class CategoriesOperationDialog extends JDialog {
 
-    ArrayList<String> producers;
+    private ArrayList<String> producers;
 
-    JPanel form;
+    private JPanel form;
 
-    JLabel lblNome;
-    JLabel lblPadre;
+    private JLabel lblNome;
+    private JLabel lblPadre;
 
-    JTextField txtNome;
+    private JTextField txtNome;
 
-    JButton btnOk;
-    JButton btnAnnulla;
+    private JButton btnOk;
+    private JButton btnAnnulla;
 
-    boolean editMode;
-    boolean subCategory;
+    private boolean editMode;
+    private boolean subCategory;
     ICategoria categoria;
 
     public CategoriesOperationDialog(AppFrame appFrame, boolean editMode, boolean subCategory, ICategoria categoria) {

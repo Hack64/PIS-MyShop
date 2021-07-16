@@ -10,36 +10,36 @@ import java.awt.*;
 
 public class ShopOperationDialog extends JDialog {
 
-    AppFrame appFrame;
+    private AppFrame appFrame;
 
-    JPanel form;
+    private JPanel form;
 
-    JButton btnOK;
-    JButton btnAnnulla;
-    JButton btnProducts;
-    JButton btnServices;
-    JButton btnManager;
-    JButton btnNewManager;
+    private JButton btnOK;
+    private JButton btnAnnulla;
+    private JButton btnProducts;
+    private JButton btnServices;
+    private JButton btnManager;
+    private JButton btnNewManager;
 
-    JLabel lblShopVia;
-    JLabel lblShopCAP;
-    JLabel lblShopCitta;
-    JLabel lblMagVia;
-    JLabel lblMagCAP;
-    JLabel lblMagCitta;
-    JLabel lblManager;
-    JLabel lblProducts;
-    JLabel lblServices;
+    private JLabel lblShopVia;
+    private JLabel lblShopCAP;
+    private JLabel lblShopCitta;
+    private JLabel lblMagVia;
+    private JLabel lblMagCAP;
+    private JLabel lblMagCitta;
+    private JLabel lblManager;
+    private JLabel lblProducts;
+    private JLabel lblServices;
 
-    JTextField txtShopVia;
-    JTextField txtShopCAP;
-    JTextField txtShopCitta;
-    JTextField txtMagVia;
-    JTextField txtMagCAP;
-    JTextField txtMagCitta;
+    private JTextField txtShopVia;
+    private JTextField txtShopCAP;
+    private JTextField txtShopCitta;
+    private JTextField txtMagVia;
+    private JTextField txtMagCAP;
+    private JTextField txtMagCitta;
 
-    PuntoVendita p;
-    Magazzino m;
+    private PuntoVendita p;
+    private Magazzino m;
 
     public ShopOperationDialog(AppFrame appFrame, boolean editMode, PuntoVendita p, Magazzino m){
         super(appFrame, "Aggiungi");

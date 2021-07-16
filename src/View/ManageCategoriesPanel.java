@@ -10,7 +10,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class ManageCategoriesPanel extends JPanel {
-    AppFrame appFrame;
+    private AppFrame appFrame;
 
     public ManageCategoriesPanel(AppFrame appFrame){
 

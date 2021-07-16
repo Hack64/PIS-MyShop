@@ -10,7 +10,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class ShopsPanel extends JPanel {
-    AppFrame appFrame;
+    private AppFrame appFrame;
 
     public ShopsPanel(AppFrame appFrame){
         this.appFrame = appFrame;

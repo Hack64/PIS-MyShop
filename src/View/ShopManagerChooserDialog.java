@@ -12,9 +12,9 @@ import java.util.Collections;
 
 public class ShopManagerChooserDialog extends JDialog{
 
-    JButton btnExit;
-    JButton btnOk;
-    ButtonGroup radioButtons;
+    private JButton btnExit;
+    private JButton btnOk;
+    private ButtonGroup radioButtons;
 
     public ShopManagerChooserDialog(AppFrame appFrame){
         super(appFrame, "Manager");

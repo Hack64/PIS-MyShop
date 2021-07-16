@@ -11,9 +11,9 @@ import java.util.ArrayList;
 
 public class CategoriesChooserDialog extends JDialog {
 
-    JButton btnExit;
-    JButton btnOk;
-    ArrayList<JCheckBox> boxes;
+    private JButton btnExit;
+    private JButton btnOk;
+    private ArrayList<JCheckBox> boxes;
 
     public CategoriesChooserDialog(AppFrame appFrame){
         super(appFrame, "Categorie");

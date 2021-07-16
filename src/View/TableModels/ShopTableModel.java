@@ -49,4 +49,5 @@ public class ShopTableModel extends AbstractTableModel {
     public ArrayList<PuntoVendita> getLista() {
         return lista;
     }
+
 }

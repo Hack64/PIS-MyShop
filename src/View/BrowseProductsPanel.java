@@ -2,7 +2,7 @@ package View;
 
 import Business.ProdottoBusiness;
 import Model.IProdotto;
-import View.Listener.ProductGridPanelListener;
+import View.Listener.GridPanelListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,9 +16,9 @@ public class BrowseProductsPanel extends JPanel {
         JScrollPane scrollPane;
         ArrayList<IProdotto> prodotti = ProdottoBusiness.getInstance().findAllProductsByShop(appFrame.getPuntoVendita());
         panel.setLayout(new GridLayout(0,5, 4, 4));
-        ProductGridPanelListener ppl = new ProductGridPanelListener(appFrame);
+        GridPanelListener gpl = new GridPanelListener(appFrame, false);
         for (IProdotto p:prodotti) {
-            panel.add(new GridImagePanel(p.getImmagine(), p.getNome(), p.getIdProdotto(), ppl));
+            panel.add(new GridImagePanel(p.getImmagine(), p.getNome(), p.getIdProdotto(), gpl));
         }
         scrollPane = new JScrollPane(panel);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);

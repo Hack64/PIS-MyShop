@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class ProduttoriPanel extends JPanel {
 
-    AppFrame appFrame;
+    private AppFrame appFrame;
 
     public ProduttoriPanel(AppFrame appFrame){
 
@@ -51,4 +51,5 @@ public class ProduttoriPanel extends JPanel {
 
         add(operazionitabella, BorderLayout.SOUTH);
     }
+
 }

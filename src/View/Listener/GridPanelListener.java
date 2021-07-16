@@ -11,11 +11,14 @@ import View.ProductPanel;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class ServiceGridPanelListener implements MouseListener {
+public class GridPanelListener implements MouseListener {
 
     private AppFrame appFrame;
-    public ServiceGridPanelListener(AppFrame appFrame){
+    private boolean isService;
+
+    public GridPanelListener(AppFrame appFrame, boolean isService){
         this.appFrame = appFrame;
+        this.isService = isService;
     }
 
     @Override
@@ -23,9 +26,14 @@ public class ServiceGridPanelListener implements MouseListener {
         GridImagePanel panel = (GridImagePanel) e.getSource();
         System.out.println("Hai cliccato il pannello");
         System.out.println(panel.getIdProdotto());
-        ServizioResponse res = ServizioBusiness.getInstance().find(panel.getIdProdotto());
-        System.out.println(res.getMessage());
-        appFrame.setCurrentMainPanel(new ProductPanel(panel.getIcon(), res.getServizio()));
+        if (isService){
+            ServizioResponse res = ServizioBusiness.getInstance().find(panel.getIdProdotto());
+            appFrame.setCurrentMainPanel(new ProductPanel(panel.getIcon(),null, res.getServizio()));
+        }else {
+            ProdottoResponse res = ProdottoBusiness.getInstance().find(panel.getIdProdotto());
+            appFrame.setCurrentMainPanel(new ProductPanel(panel.getIcon(), res.getProdotto(), null));
+        }
+
     }
 
     @Override

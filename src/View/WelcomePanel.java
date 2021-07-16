@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class WelcomePanel extends JPanel {
 
-    JComboBox puntiVenditaBox;
+    private JComboBox puntiVenditaBox;
 
     public WelcomePanel(AppFrame appFrame) {
         setLayout(new GridBagLayout());

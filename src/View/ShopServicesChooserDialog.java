@@ -11,9 +11,9 @@ import java.util.ArrayList;
 
 public class ShopServicesChooserDialog extends JDialog{
 
-    JButton btnExit;
-    JButton btnOk;
-    ArrayList<JCheckBox> boxes;
+    private JButton btnExit;
+    private JButton btnOk;
+    private ArrayList<JCheckBox> boxes;
 
     public ShopServicesChooserDialog(AppFrame appFrame){
         super(appFrame, "Servizi");

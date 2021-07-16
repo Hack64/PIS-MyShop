@@ -1,7 +1,6 @@
 package View;
 
-import View.Listener.ProductGridPanelListener;
-import View.Listener.ServiceGridPanelListener;
+import View.Listener.GridPanelListener;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -13,10 +12,11 @@ import java.io.IOException;
 
 public class GridImagePanel extends JPanel {
 
-    JLabel label;
-    JLabel idProdotto;
+    private JLabel label;
+    private JLabel idProdotto;
 
-    public GridImagePanel(File img, String nome, int id, ProductGridPanelListener ppl){
+    public GridImagePanel(File img, String nome, int id, GridPanelListener gpl){
+
         setLayout(new FlowLayout());
         try {
             BufferedImage bufferedImage = ImageIO.read(img);
@@ -34,7 +34,8 @@ public class GridImagePanel extends JPanel {
         idProdotto.setVerticalTextPosition(JLabel.BOTTOM);
         idProdotto.setHorizontalTextPosition(JLabel.CENTER);
 
-        addMouseListener(ppl);
+        addMouseListener(gpl);
+
         setBorder(new EtchedBorder());
         add(label);
         add(idProdotto);
@@ -42,31 +43,6 @@ public class GridImagePanel extends JPanel {
         setVisible(true);
     }
 
-    public GridImagePanel(File img, String nome, int id, ServiceGridPanelListener spl){
-        setLayout(new FlowLayout());
-        try {
-            BufferedImage bufferedImage = ImageIO.read(img);
-            Image resized = bufferedImage.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
-            ImageIcon imgIcon = new ImageIcon(resized);
-            label = new JLabel(nome, imgIcon, SwingConstants.CENTER);
-            idProdotto = new JLabel(Integer.toString(id));
-        } catch (IOException e){
-            e.printStackTrace();
-        }
-
-        label.setVerticalTextPosition(JLabel.BOTTOM);
-        label.setHorizontalTextPosition(JLabel.CENTER);
-
-        idProdotto.setVerticalTextPosition(JLabel.BOTTOM);
-        idProdotto.setHorizontalTextPosition(JLabel.CENTER);
-
-        addMouseListener(spl);
-        setBorder(new EtchedBorder());
-        add(label);
-        add(idProdotto);
-        idProdotto.setVisible(false);
-        setVisible(true);
-    }
 
     public String getNomeProdotto(){
         return label.getText();

@@ -10,11 +10,11 @@ import java.awt.*;
 
 public class QuantityEditorDialog extends JDialog {
 
-    JLabel lblQuantita;
+    private JLabel lblQuantita;
 
-    JSpinner spinQta;
+    private JSpinner spinQta;
 
-    JButton btnOK;
+    private JButton btnOK;
     private Disponibilita d;
 
     public QuantityEditorDialog(AppFrame appFrame, Disponibilita d){

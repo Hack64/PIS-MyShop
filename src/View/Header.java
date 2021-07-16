@@ -11,13 +11,13 @@ import java.awt.*;
 
 public class Header extends JPanel {
 
-    JPanel loggedIn = new JPanel();
-    JPanel loggedOut = new JPanel();
-    JPanel userPanel = new JPanel();
-    JPanel infoPanel = new JPanel();
-    JLabel welcome;
-    JLabel lblNegozio;
-    AppFrame appFrame;
+    private JPanel loggedIn = new JPanel();
+    private JPanel loggedOut = new JPanel();
+    private JPanel userPanel = new JPanel();
+    private JPanel infoPanel = new JPanel();
+    private JLabel welcome;
+    private JLabel lblNegozio;
+    private AppFrame appFrame;
 
 
     public Header(LoginButtonListener list, AppFrame appFrame) {

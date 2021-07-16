@@ -9,17 +9,17 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 public class RegistrationDialog extends JDialog {
-    JPanel form;
-    JTextField txtNome;
-    JTextField txtCognome;
-    JTextField txtUsername;
-    JPasswordField txtPassword;
-    JPasswordField txtPassword2;
-    JTextField txtResidenza;
-    JTextField txtTelefono;
-    JTextField txtProfessione;
-    JFormattedTextField txtEta;
-    JButton btnRegister;
+    private JPanel form;
+    private JTextField txtNome;
+    private JTextField txtCognome;
+    private JTextField txtUsername;
+    private JPasswordField txtPassword;
+    private JPasswordField txtPassword2;
+    private JTextField txtResidenza;
+    private JTextField txtTelefono;
+    private JTextField txtProfessione;
+    private JFormattedTextField txtEta;
+    protected JButton btnRegister;
 
     public RegistrationDialog(AppFrame appFrame){
         super(appFrame, "Registrati");

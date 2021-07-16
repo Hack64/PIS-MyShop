@@ -11,7 +11,7 @@ import java.awt.*;
 import java.util.HashMap;
 
 public class UsersPanel extends JPanel {
-    AppFrame appFrame;
+    private AppFrame appFrame;
 
     public UsersPanel(AppFrame appFrame){
         this.appFrame = appFrame;

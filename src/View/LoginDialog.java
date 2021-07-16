@@ -7,9 +7,9 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class LoginDialog extends JDialog {
-    JPanel form;
-    JTextField txtUsername;
-    JPasswordField txtPassword;
+    private JPanel form;
+    private JTextField txtUsername;
+    private JPasswordField txtPassword;
 
     public LoginDialog(AppFrame appFrame){
         super(appFrame, "Accedi");

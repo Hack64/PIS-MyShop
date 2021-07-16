@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class ServiziPanel extends JPanel {
 
-    AppFrame appFrame;
+    private AppFrame appFrame;
 
     public ServiziPanel(AppFrame appFrame) {
 
