@@ -96,18 +96,22 @@ public class ListaBusiness {
         PuntoVendita p = (PuntoVendita)SessionManager.getInstance().getSession().get("currentShop");
         Disponibilita disp = prodottiMagazzinoDAO.findByProductAndWarehouseID(prodotto.getIdProdotto(), magazzinoDAO.findByShopID(p.getIdPuntoVendita()).getIdMagazzino());
         int st=0;
+        int qta = prodottiListaDAO.isProductAlreadyInList(prodotto.getIdProdotto(), lista.getIdLista());
+        float oldPrice = 0;
         if (disp.getQta()<quantita){
-            if (prodottiMagazzinoDAO.isProductAlreadyInList(prodotto.getIdProdotto(), lista.getIdLista())) {
+            if ( qta > 0) {
+                oldPrice = qta*prodotto.getCosto();
                 st+=prodottiListaDAO.update(lista, prodotto, "SI", quantita);
             } else
                 st+=prodottiListaDAO.add(lista, prodotto, "SI", quantita);
         } else {
-            if (prodottiMagazzinoDAO.isProductAlreadyInList(prodotto.getIdProdotto(), lista.getIdLista())) {
+            if (qta > 0) {
+                oldPrice = qta*prodotto.getCosto();
                 st+=prodottiListaDAO.update(lista, prodotto, "NO", quantita);
             } else
                 st+=prodottiListaDAO.add(lista, prodotto, "NO", quantita);
         }
-        lista.setPrezzoTotale(prodotto.getCosto()*quantita+listaDAO.getListPrice(lista.getIdLista()));
+        lista.setPrezzoTotale((listaDAO.getListPrice(lista.getIdLista()) - oldPrice) + prodotto.getCosto()*quantita);
         st+=listaDAO.update(lista);
 
         return st;
@@ -126,6 +130,12 @@ public class ListaBusiness {
         } else {
             return -1;
         }
+    }
+
+    public int setListPaymentStatus(Lista l, Lista.Stato stato){
+        listaDAO = ListaDAO.getInstance();
+
+        return listaDAO.setListPayment(l.getIdLista(), stato);
     }
 
 

@@ -159,7 +159,6 @@ public class CustomOperationDialogView extends JDialog {
     }
 
     public void setProductFields(){
-        //TODO: Crea posizionebusiness per settare i campi
         Posizione posizione = PosizioneBusiness.getInstance().findPositionByProductID(p.getIdProdotto());
         operationDialog.getFields().get(2).setText(Integer.toString(posizione.getScaffale()));
         operationDialog.getFields().get(3).setText(Integer.toString(posizione.getCorsia()));

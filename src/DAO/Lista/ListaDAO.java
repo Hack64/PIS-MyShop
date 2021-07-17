@@ -266,6 +266,16 @@ public class ListaDAO implements IListaDAO {
     }
 
     @Override
+    public int setListPayment(int idLista, Lista.Stato stato) {
+        executor = new DbOperationExecutor();
+        sql = "UPDATE Lista SET stato = '" + stato + "' WHERE idLista = '" + idLista +"';";
+        dbOperation = new WriteDbOperation(sql);
+        int rowCount = (int)executor.executeOperation(dbOperation);
+        executor.closeOperation(dbOperation);
+        return rowCount;
+    }
+
+    @Override
     public int add(Lista lista) {
         executor = new DbOperationExecutor();
         sql = "INSERT INTO Lista (nome, dataCreazione, stato, prezzoTotale, idUtente) VALUES ('" + lista.getNomeLista() + "','" + lista.getDataCreazione().toString() + "','" + lista.getStato().toString() + "','" + lista.getPrezzoTotale() + "','" + lista.getUtente().getIdUtente() + "');";

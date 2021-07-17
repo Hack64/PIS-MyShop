@@ -129,6 +129,31 @@ public class ProdottiListaDAO implements IProdottiListaDAO {
     }
 
     @Override
+    public int isProductAlreadyInList(int idProdotto, int idLista) {
+        executor = new DbOperationExecutor();
+        sql = "SELECT quantita FROM ProdottoLista WHERE idProdotto = '" + idProdotto + "' AND idLista = '" + idLista + "';";
+        dbOperation = new ReadDbOperation(sql);
+        rs = (ResultSet) executor.executeOperation(dbOperation);
+        try {
+            rs.next();
+            if (rs.getRow() == 1 && rs.getInt("quantita") >= 1){
+                return rs.getInt("quantita");
+            }
+        } catch (SQLException e) {
+            // handle any errors
+            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("VendorError: " + e.getErrorCode());
+        } catch (NullPointerException e) {
+            // handle any errors
+            System.out.println("Resultset: " + e.getMessage());
+        } finally {
+            executor.closeOperation(dbOperation);
+        }
+        return 0;
+    }
+
+    @Override
     public int add(Lista lista, IProdotto prodotto, String prenotato, int quantita) {
         executor = new DbOperationExecutor();
         sql = "INSERT INTO ProdottoLista (idProdotto, idLista, prenotato, quantita) VALUES ('" + prodotto.getIdProdotto() + "','" + lista.getIdLista() + "','" + prenotato + "','" + quantita +"');";

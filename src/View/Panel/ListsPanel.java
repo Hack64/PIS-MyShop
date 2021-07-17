@@ -14,10 +14,16 @@ import java.util.ArrayList;
 
 public class ListsPanel extends JPanel {
 
-    public ListsPanel(AppFrame appFrame){
+    public ListsPanel(AppFrame appFrame, boolean systemView, Utente utente){
         setLayout(new BorderLayout());
 
-        ArrayList<Lista> listeUtente = ListaBusiness.getInstance().findAllListsByUser((Utente)SessionManager.getInstance().getSession().get("loggedUser"));
+        ArrayList<Lista> listeUtente;
+
+        if (systemView) {
+            listeUtente = ListaBusiness.getInstance().findAllListsByUserAndState(utente, Lista.Stato.NON_PAGATA);
+        } else {
+            listeUtente = ListaBusiness.getInstance().findAllListsByUser((Utente) SessionManager.getInstance().getSession().get("loggedUser"));
+        }
 
         JTable tabellaListe = new JTable(new ListaTableModel(listeUtente));
 
@@ -35,15 +41,23 @@ public class ListsPanel extends JPanel {
         btnEdit.setActionCommand("btnEdit");
         JButton btnDelete = new JButton("Elimina Lista");
         btnDelete.setActionCommand("btnDelete");
+        JButton btnPay = new JButton("Imposta come pagata");
+        btnPay.setActionCommand("btnPay");
 
         ListPanelListener listPanelListener = new ListPanelListener(appFrame, tabellaListe);
         btnAdd.addActionListener(listPanelListener);
         btnDelete.addActionListener(listPanelListener);
         btnEdit.addActionListener(listPanelListener);
+        btnPay.addActionListener(listPanelListener);
 
-        operazionitabella.add(btnAdd);
-        operazionitabella.add(btnEdit);
-        operazionitabella.add(btnDelete);
+        if (!systemView){
+            operazionitabella.add(btnAdd);
+            operazionitabella.add(btnEdit);
+            operazionitabella.add(btnDelete);
+        } else {
+            operazionitabella.add(btnPay);
+        }
+
 
         add(operazionitabella, BorderLayout.SOUTH);
     }

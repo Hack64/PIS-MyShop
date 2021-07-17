@@ -6,6 +6,7 @@ import Model.PuntoVendita;
 import Model.Utente;
 import View.AppFrame;
 import View.Dialog.EmailDialog;
+import View.Panel.ListsPanel;
 import View.Panel.UsersPanel;
 
 import javax.swing.*;
@@ -20,6 +21,7 @@ public class UsersPanelListener implements ActionListener {
     public final static String BTN_DISABLE_USER = "btnDisable";
     public final static String BTN_DELETE_USER = "btnDelete";
     public final static String BTN_SEND_EMAIL = "btnSend";
+    public final static String BTN_SHOW_LISTS = "btnShow";
 
     public UsersPanelListener(AppFrame appFrame, JTable table){
         this.appFrame = appFrame;
@@ -93,6 +95,20 @@ public class UsersPanelListener implements ActionListener {
                     new EmailDialog(appFrame, null);
                 }
                 break;
+            case BTN_SHOW_LISTS:
+                if (table.getSelectedRowCount() == 1){
+                    int row = table.getSelectedRow();
+                    int col = 0;
+                    int idUtente = (Integer)table.getModel().getValueAt(row, col);
+                    Utente currentUser = (Utente)SessionManager.getInstance().getSession().get("loggedUser");
+                    if (idUtente != currentUser.getIdUtente()) {
+                        appFrame.setCurrentMainPanel(new ListsPanel(appFrame, true, UtenteBusiness.getInstance().findByID(idUtente).getUtente()));
+                    } else {
+                        JOptionPane.showMessageDialog(appFrame, "Per visualizzare le tue liste, usa l'apposito tasto del menu laterale", "Errore", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(appFrame, "Devi selezionare un elemento per visualizzarne le liste", "Errore", JOptionPane.ERROR_MESSAGE);
+                }
         }
     }
 }

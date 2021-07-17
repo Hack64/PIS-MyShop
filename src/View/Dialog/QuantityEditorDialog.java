@@ -32,6 +32,7 @@ public class QuantityEditorDialog extends JDialog {
         Component spinnerEditor = spinQta.getEditor();
         JFormattedTextField jftf = ((JSpinner.DefaultEditor) spinnerEditor).getTextField();
         jftf.setColumns(5);
+        spinQta.setModel(new SpinnerNumberModel(0,0,Integer.MAX_VALUE,1));
         spinQta.setValue(d.getQta());
 
         JButton btnAnnulla = new JButton("Annulla");

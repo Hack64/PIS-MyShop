@@ -54,6 +54,7 @@ public class ListChooserDialog extends JDialog {
             spinnerQta = new JSpinner();
             Component spinnerEditor = spinnerQta.getEditor();
             JFormattedTextField jftf = ((JSpinner.DefaultEditor) spinnerEditor).getTextField();
+            spinnerQta.setModel(new SpinnerNumberModel(1,1, 99999, 1)); //99999 e non Integer.MAX_VALUE perché altrimenti il textfield diventa troppo largo
             jftf.setColumns(5);
             form.add(lblQuantita, c);
             c.gridx=1;

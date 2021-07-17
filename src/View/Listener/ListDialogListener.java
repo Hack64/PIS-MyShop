@@ -32,11 +32,11 @@ public class ListDialogListener implements ActionListener {
                     String esit = "Lista creata con successo!";
                     JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
                     listOperationDialog.dispose();
-                    appFrame.setCurrentMainPanel(new ListsPanel(appFrame));
+                    appFrame.setCurrentMainPanel(new ListsPanel(appFrame, false, null));
                 } else {
                     String esit = "Errore durante la creazione della lsita!";
                     JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
-                    appFrame.setCurrentMainPanel(new ListsPanel(appFrame));
+                    appFrame.setCurrentMainPanel(new ListsPanel(appFrame, false, null));
                 }
                 break;
             case BTN_EDIT_LIST:
@@ -45,11 +45,11 @@ public class ListDialogListener implements ActionListener {
                     String esit = "Lista modificata con successo!";
                     JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
                     listOperationDialog.dispose();
-                    appFrame.setCurrentMainPanel(new ListsPanel(appFrame));
+                    appFrame.setCurrentMainPanel(new ListsPanel(appFrame, false, null));
                 } else {
                     String esit = "Errore durante la modifica della lsita!";
                     JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
-                    appFrame.setCurrentMainPanel(new ListsPanel(appFrame));
+                    appFrame.setCurrentMainPanel(new ListsPanel(appFrame, false, null));
                 }
                 break;
         }
