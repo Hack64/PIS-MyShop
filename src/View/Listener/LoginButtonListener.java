@@ -33,6 +33,8 @@ public class LoginButtonListener implements ActionListener {
                 break;
             case BTN_LOGOUT:
                 SessionManager.getInstance().getSession().remove("loggedUser");
+                SessionManager.getInstance().getSession().remove("paidProducts");
+                SessionManager.getInstance().getSession().remove("paidServices");
                 appFrame.setCurrentMainPanel(new BrowsePanel(appFrame));
                 appFrame.getHeader().refresh();
                 appFrame.getSideMenu().refresh();

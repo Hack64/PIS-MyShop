@@ -1,10 +1,10 @@
 package View.Listener;
 
+import Business.ListaBusiness;
 import Business.SessionManager;
 import Business.UtenteBusiness;
-import Model.PuntoVendita;
+import Model.*;
 import Model.Responses.UtenteResponse;
-import Model.Utente;
 import View.AppFrame;
 import View.Panel.BrowsePanel;
 import View.Dialog.LoginDialog;
@@ -12,6 +12,8 @@ import View.Dialog.LoginDialog;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Map;
 
 public class LoginListener implements ActionListener {
 
@@ -34,6 +36,7 @@ public class LoginListener implements ActionListener {
             // chiamare la classe di business per fare login
             PuntoVendita p = (PuntoVendita) SessionManager.getInstance().getSession().get("currentShop");
             UtenteResponse res = UtenteBusiness.getInstance().login(loginDialog.getUsername(), loginDialog.getPassword(), p);
+
             loginDialog.clearFields();
             Utente u = res.getUtente(); //potrebbe essere null in caso di login fallito
 
@@ -52,7 +55,14 @@ public class LoginListener implements ActionListener {
                 //login ok
                 JOptionPane.showMessageDialog(appFrame, reason, "Login avvenuto", JOptionPane.INFORMATION_MESSAGE);
                 System.out.println("Login ok!");
+
+                ArrayList<Integer> idProdottiPagati = UtenteBusiness.getInstance().getPaidProducts(u);
+                ArrayList<Integer> idServiziPagati = UtenteBusiness.getInstance().getPaidServices(u);
+
                 SessionManager.getInstance().getSession().put("loggedUser", u);
+                SessionManager.getInstance().getSession().put("paidProducts", idProdottiPagati);
+                SessionManager.getInstance().getSession().put("paidServices", idServiziPagati);
+
                 loginDialog.setVisible(false);
                 appFrame.setCurrentMainPanel(new BrowsePanel(appFrame));
                 appFrame.getHeader().refresh();

@@ -1,14 +1,18 @@
 package View.Dialog;
 
+import Utils.DocumentSizeFilter;
+import View.Listener.MyDocumentListener;
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
+import javax.swing.text.DefaultStyledDocument;
 import java.awt.*;
 
 public class ItemOperationDialog extends OperationDialog{
 
     public ItemOperationDialog(){
         JLabel lblNome = new JLabel("Nome: ");
-        JLabel lblDescrizione = new JLabel("Descrizione: ");
+        JLabel lblDescrizione = new JLabel("Descrizione (max 255 caratteri): ");
         JLabel lblPrezzo = new JLabel("Prezzo: ");
         JLabel lblImgChooser = new JLabel("Immagine: ");
         JLabel lblCategorie = new JLabel("Categorie: ");
@@ -16,6 +20,9 @@ public class ItemOperationDialog extends OperationDialog{
         JTextArea txtDescrizione = new JTextArea(10, 20);
         txtDescrizione.setWrapStyleWord(true);
         txtDescrizione.setLineWrap(true);
+        DefaultStyledDocument document = new DefaultStyledDocument();
+        document.setDocumentFilter(new DocumentSizeFilter(255));
+        txtDescrizione.setDocument(document);
         JScrollPane scrollPane = new JScrollPane(txtDescrizione);
         scrollPane.setBorder(new LineBorder(Color.DARK_GRAY));
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);

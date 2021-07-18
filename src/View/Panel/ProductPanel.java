@@ -27,6 +27,7 @@ public class ProductPanel extends JPanel {
 
         JButton btnAggiungi = null;
         JButton btnCommenti = null;
+        JButton btnFeedback = null;
 
         JTextArea txtAreaDescrizione = null;
 
@@ -64,9 +65,14 @@ public class ProductPanel extends JPanel {
 
             btnCommenti = new JButton("Visualizza commenti");
             btnAggiungi = new JButton("Aggiungi a una lista");
+            btnFeedback = new JButton("Lascia Feedback");
 
             btnAggiungi.setActionCommand("btnAddProduct");
             btnAggiungi.addActionListener(productPanelListener);
+            btnCommenti.setActionCommand("btnShowProductFeedbacks");
+            btnCommenti.addActionListener(productPanelListener);
+            btnFeedback.setActionCommand("btnAddProductFeedback");
+            btnFeedback.addActionListener(productPanelListener);
 
 
             //ProductDescription
@@ -84,10 +90,14 @@ public class ProductPanel extends JPanel {
 
             btnCommenti = new JButton("Visualizza commenti");
             btnAggiungi = new JButton("Aggiungi a una lista");
+            btnFeedback = new JButton("Lascia Feedback");
 
             btnAggiungi.setActionCommand("btnAddService");
             btnAggiungi.addActionListener(productPanelListener);
-
+            btnCommenti.setActionCommand("btnShowServiceFeedbacks");
+            btnCommenti.addActionListener(productPanelListener);
+            btnFeedback.setActionCommand("btnAddServiceFeedback");
+            btnFeedback.addActionListener(productPanelListener);
 
             //ProductDescription
             txtAreaDescrizione = new JTextArea(servizio.getDescrizione(), 7, 1);
@@ -116,6 +126,8 @@ public class ProductPanel extends JPanel {
         productButtonsPanel.add(btnAggiungi,c);
         c.gridx=1;
         productButtonsPanel.add(btnCommenti,c);
+        c.gridx=2;
+        productButtonsPanel.add(btnFeedback, c);
 
         productDescriptionPanel.add(txtAreaDescrizione);
 
