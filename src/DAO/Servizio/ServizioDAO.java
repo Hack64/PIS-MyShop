@@ -53,10 +53,10 @@ public class ServizioDAO implements IServizioDAO {
         fDAO = FornitoreDAO.getInstance();
         scDAO = ServizioCategoriaDAO.getInstance();
         int idFornitore = -1;
+        servizio = new Servizio();
         try {
             rs.next();
             if (rs.getRow()==1) {
-                servizio = new Servizio();
                 servizio.setIdServizio(rs.getInt("idServizio"));
                 servizio.setNome(rs.getString("nome"));
                 String imgName = rs.getString("immagine");

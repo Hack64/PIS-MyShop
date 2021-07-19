@@ -3,12 +3,11 @@ package Business;
 import DAO.Feedback.FeedbackDAO;
 import DAO.Feedback.IFeedbackDAO;
 import DAO.Fornitore.IFornitoreDAO;
-import Model.Feedback;
-import Model.IProdotto;
-import Model.Servizio;
-import Model.Utente;
+import DAO.Risposta.RispostaDAO;
+import Model.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class FeedbackBusiness {
     private static FeedbackBusiness instance;
@@ -46,5 +45,35 @@ public class FeedbackBusiness {
             }
         }
         return st;
+    }
+
+    public List<Feedback> getAllListsByProductID(int idProdotto){
+        feedbackDAO = FeedbackDAO.getInstance();
+
+        return feedbackDAO.findAllByProductID(idProdotto);
+    }
+
+    public List<Feedback> getAllListsByServiceID(int idServizio){
+        feedbackDAO = FeedbackDAO.getInstance();
+
+        return feedbackDAO.findAllByServiceID(idServizio);
+    }
+
+    public Risposta findReplyByFeedbackID(int idFeedback){
+        RispostaDAO rispostaDAO = RispostaDAO.getInstance();
+
+        return rispostaDAO.findByFeedbackID(idFeedback);
+    }
+
+    public Feedback findByID(int idFeedback){
+        feedbackDAO = FeedbackDAO.getInstance();
+
+        return feedbackDAO.findByID(idFeedback);
+    }
+
+    public int addNewRisposta(Risposta r){
+        RispostaDAO rispostaDAO = RispostaDAO.getInstance();
+
+        return rispostaDAO.add(r);
     }
 }

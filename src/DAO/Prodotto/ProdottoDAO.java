@@ -60,10 +60,10 @@ public class ProdottoDAO implements IProdottoDAO {
         pDAO = ProduttoreDAO.getInstance();
         pcDAO = ProdottoCategoriaDAO.getInstance();
         int idProduttore = -1;
+        prodotto = new Prodotto();
         try {
             rs.next();
             if (rs.getRow()==1) {
-                prodotto = new Prodotto();
                 prodotto.setIdProdotto(rs.getInt("idProdotto"));
                 prodotto.setNome(rs.getString("nome"));
                 String imgName = rs.getString("immagine");

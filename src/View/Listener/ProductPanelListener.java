@@ -1,17 +1,18 @@
 package View.Listener;
 
+import Business.FeedbackBusiness;
 import Business.SessionManager;
-import Model.IProdotto;
-import Model.Servizio;
-import Model.Utente;
+import Model.Feedback;
 import View.AppFrame;
 import View.Dialog.FeedbackDialog;
 import View.Dialog.ListChooserDialog;
+import View.Panel.FeedbacksPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ProductPanelListener implements ActionListener {
 
@@ -49,10 +50,12 @@ public class ProductPanelListener implements ActionListener {
                 }
                 break;
             case BTN_SHOW_PRODUCT_COMMENTS:
-                System.out.println("Commenti prodotto");
+                List<Feedback> productsFeedbackList = FeedbackBusiness.getInstance().getAllListsByProductID(idArticolo);
+                appFrame.setCurrentMainPanel(new FeedbacksPanel(appFrame, productsFeedbackList));
                 break;
             case BTN_SHOW_SERVICE_COMMENTS:
-                System.out.println("Commenti servizio");
+                List<Feedback> servicesFeedbackList = FeedbackBusiness.getInstance().getAllListsByServiceID(idArticolo);
+                appFrame.setCurrentMainPanel(new FeedbacksPanel(appFrame, servicesFeedbackList));
                 break;
             case BTN_ADD_PRODUCT_FEEDBACK:
                 ArrayList<Integer> idProdottiPagati = (ArrayList<Integer>) SessionManager.getInstance().getSession().get("paidProducts");

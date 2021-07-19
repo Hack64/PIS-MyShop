@@ -118,7 +118,7 @@ public class RispostaDAO implements IRispostaDAO {
     }
 
     @Override
-    public ArrayList<Risposta> findAllByFeedbackID(int idFeedback) {
+    public Risposta findByFeedbackID(int idFeedback) {
         executor = new DbOperationExecutor();
         sql = "SELECT idRisposta, idFeedback, testo, dataCreazione, idUtente FROM Risposta WHERE Risposta.idFeedback = '" + idFeedback + "';";
         dbOperation = new ReadDbOperation(sql);
@@ -127,17 +127,16 @@ public class RispostaDAO implements IRispostaDAO {
         fDAO = FeedbackDAO.getInstance();
         uDAO = UtenteDAO.getInstance();
         try {
-            while(rs.next()){
+            rs.next();
+            if (rs.getRow() == 1) {
                 risposta = new Risposta();
                 risposta.setIdRisposta(rs.getInt("idRisposta"));
                 risposta.setFeedback(fDAO.findByID(rs.getInt("idFeedback")));
                 risposta.setTesto(rs.getString("testo"));
                 risposta.setDataCreazione(LocalDate.parse(rs.getString("dataCreazione")));
                 risposta.setUtente(uDAO.findByID(rs.getInt("idUtente")));
-
-                risposte.add(risposta);
+                return risposta;
             }
-            return risposte;
         } catch (SQLException e) {
             // handle any errors
             System.out.println("SQLException: " + e.getMessage());
@@ -191,7 +190,7 @@ public class RispostaDAO implements IRispostaDAO {
     @Override
     public int add(Risposta risposta) {
         executor = new DbOperationExecutor();
-        sql = "INSERT INTO Risposta VALUES ('" + risposta.getIdRisposta() + "','" + risposta.getFeedback() + "','" + risposta.getTesto() + "','" + risposta.getDataCreazione().toString() + "','" + risposta.getUtente() + "');";
+        sql = "INSERT INTO Risposta (idFeedback, testo, dataCreazione, idUtente) VALUES ('" + risposta.getFeedback().getIdFeedback() + "','" + risposta.getTesto() + "','" + risposta.getDataCreazione().toString() + "','" + risposta.getUtente().getIdUtente() + "');";
         dbOperation = new WriteDbOperation(sql);
         int rowCount = (int) executor.executeOperation(dbOperation);
         executor.closeOperation(dbOperation);
