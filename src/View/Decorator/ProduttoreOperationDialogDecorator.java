@@ -1,7 +1,5 @@
 package View.Decorator;
 
-import View.Dialog.OperationDialog;
-
 import javax.swing.*;
 import java.util.ArrayList;
 

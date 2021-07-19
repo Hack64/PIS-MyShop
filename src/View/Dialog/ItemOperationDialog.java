@@ -1,14 +1,14 @@
 package View.Dialog;
 
 import Utils.DocumentSizeFilter;
-import View.Listener.MyDocumentListener;
+import View.Decorator.OperationDialog;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.text.DefaultStyledDocument;
 import java.awt.*;
 
-public class ItemOperationDialog extends OperationDialog{
+public class ItemOperationDialog extends OperationDialog {
 
     public ItemOperationDialog(){
         JLabel lblNome = new JLabel("Nome: ");

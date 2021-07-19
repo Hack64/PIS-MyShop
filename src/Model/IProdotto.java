@@ -15,5 +15,4 @@ public interface IProdotto {
     ArrayList<IProdotto> getSottoprodotti();
     int getNumeroCommenti();
     float getMediaValutazione();
-    List<Feedback> getListaFeedback();
 }

@@ -1,5 +1,7 @@
 package View.Dialog;
 
+import View.Decorator.OperationDialog;
+
 import javax.swing.*;
 
 public class ImprenditoreOperationDialog extends OperationDialog {

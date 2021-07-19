@@ -64,7 +64,6 @@ public class ComposizioneProdottoDAO implements IComposizioneProdottoDAO {
             prodottoComposito.setCosto(prodotto.getCosto());
             prodottoComposito.setNumeroCommenti(prodotto.getNumeroCommenti());
             prodottoComposito.setMediaValutazione(prodotto.getMediaValutazione());
-            prodottoComposito.setListaFeedback(fDAO.findAllByProductID(prodotto.getIdProdotto()));
             return prodottoComposito;
         } catch (SQLException e) {
             // handle any errors

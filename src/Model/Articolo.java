@@ -13,8 +13,6 @@ public abstract class Articolo {
     private int numeroCommenti;
     private float mediaValutazione;
 
-    private List<Feedback> listaFeedback;
-
     public void setNome(String nome) {
         this.nome = nome;
     }
@@ -55,19 +53,11 @@ public abstract class Articolo {
         this.mediaValutazione = mediaValutazione;
     }
 
-    public void setListaFeedback(List<Feedback> listaFeedback) {
-        this.listaFeedback = listaFeedback;
-    }
-
     public int getNumeroCommenti() {
         return numeroCommenti;
     }
 
     public float getMediaValutazione() {
         return mediaValutazione;
-    }
-
-    public List<Feedback> getListaFeedback() {
-        return this.listaFeedback;
     }
 }

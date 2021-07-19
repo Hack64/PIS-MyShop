@@ -2,6 +2,7 @@ package View.Dialog;
 
 import Utils.DocumentSizeFilter;
 import View.AppFrame;
+import View.Listener.FeedbackDialogListener;
 import View.Listener.MyDocumentListener;
 
 import javax.swing.*;
@@ -14,11 +15,17 @@ import java.time.LocalDate;
 
 public class FeedbackDialog extends JDialog {
 
+    private JTextArea txtCommento;
+    private JSpinner spinnerVoto;
+    private int idArticolo;
+
     public FeedbackDialog(AppFrame appFrame, int idArticolo, boolean isProduct){
         super(appFrame, "Lascia feedback");
 
         setLayout(new BorderLayout());
         setSize(400, 300);
+
+        this.idArticolo = idArticolo;
 
         JPanel form = new JPanel(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
@@ -31,7 +38,7 @@ public class FeedbackDialog extends JDialog {
 
         JTextField txtData = new JTextField(LocalDate.now().toString());
         txtData.setEnabled(false);
-        JTextArea txtCommento = new JTextArea(4,20);
+        txtCommento = new JTextArea(4,20);
         txtCommento.setWrapStyleWord(true);
         txtCommento.setLineWrap(true);
         txtCommento.setBorder(new LineBorder(Color.BLACK));
@@ -42,12 +49,13 @@ public class FeedbackDialog extends JDialog {
         doc.addDocumentListener(new MyDocumentListener(doc, remaningLabel, 150));
         txtCommento.setDocument(doc);
 
-        JSpinner spinnerVoto = new JSpinner(new SpinnerNumberModel(1,1,5,1));
+        spinnerVoto = new JSpinner(new SpinnerNumberModel(1,1,5,1));
         Component spinnerEditor = spinnerVoto.getEditor();
         JFormattedTextField jftf = ((JSpinner.DefaultEditor) spinnerEditor).getTextField();
         jftf.setColumns(5);
         jftf.setEditable(false);
 
+        FeedbackDialogListener feedbackDialogListener = new FeedbackDialogListener(appFrame, this);
         JButton btnOK = new JButton("Ok");
 
         if (isProduct){
@@ -58,6 +66,7 @@ public class FeedbackDialog extends JDialog {
 
         JButton btnAnnulla = new JButton("Annulla");
 
+        btnOK.addActionListener(feedbackDialogListener);
         btnAnnulla.addActionListener(e->dispose());
 
         c.gridx=0;
@@ -87,6 +96,18 @@ public class FeedbackDialog extends JDialog {
         add(tasti, BorderLayout.SOUTH);
 
         setVisible(true);
+    }
+
+    public String getCommento(){
+        return txtCommento.getText();
+    }
+
+    public int getVoto(){
+        return (Integer)spinnerVoto.getValue();
+    }
+
+    public int getIdArticolo(){
+        return idArticolo;
     }
 
 

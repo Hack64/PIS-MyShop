@@ -6,6 +6,7 @@ import Model.Posizione;
 import Model.Servizio;
 import View.AppFrame;
 import View.Decorator.CompositeProductOperationDialogDecorator;
+import View.Decorator.OperationDialog;
 import View.Decorator.ProductOperationDialogDecorator;
 import View.Decorator.ServiceOperationDialogDecorator;
 import View.Listener.CustomOperationDialogViewListener;

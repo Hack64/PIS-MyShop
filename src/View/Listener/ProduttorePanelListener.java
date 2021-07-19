@@ -31,7 +31,7 @@ public class ProduttorePanelListener implements ActionListener {
         switch (cmd){
             case BTN_ADD_PRODUCER:
                 System.out.println("Aggiungi produttore");
-                new ImprenditoreOperationDialogView(appFrame, true);
+                new ImprenditoreOperationDialogView(appFrame, null, true);
                 break;
             case BTN_EDIT_PRODUCER:
                 if (table.getSelectedRowCount()==1){

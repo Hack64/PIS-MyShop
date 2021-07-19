@@ -31,7 +31,7 @@ public class FornitorePanelListener implements ActionListener {
         switch (cmd){
             case BTN_ADD_SUPPLIER:
                 System.out.println("Aggiungi FORNITORE");
-                new ImprenditoreOperationDialogView(appFrame, false);
+                new ImprenditoreOperationDialogView(appFrame, null, false);
                 break;
             case BTN_EDIT_SUPPLIER:
                 if (table.getSelectedRowCount()==1){

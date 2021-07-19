@@ -87,7 +87,6 @@ public class ProdottoDAO implements IProdottoDAO {
             executor.closeOperation(dbOperation);
         }
         prodotto.setProduttore(pDAO.findByID(idProduttore));
-        prodotto.setListaFeedback(fDAO.findAllByProductID(prodotto.getIdProdotto()));
         prodotto.setCategorie(pcDAO.getCategoriesByProductID(prodotto.getIdProdotto()));
         return prodotto;
         //return null;
@@ -131,7 +130,6 @@ public class ProdottoDAO implements IProdottoDAO {
             executor.closeOperation(dbOperation);
         }
         prodotto.setProduttore(pDAO.findByID(idProduttore));
-        prodotto.setListaFeedback(fDAO.findAllByProductID(prodotto.getIdProdotto()));
         prodotto.setCategorie(pcDAO.getCategoriesByProductID(prodotto.getIdProdotto()));
         return prodotto;
     }
@@ -209,7 +207,6 @@ public class ProdottoDAO implements IProdottoDAO {
                 prodotto.setCosto(rs.getFloat("costo"));
                 prodotto.setMediaValutazione(rs.getFloat("mediaValutazioni"));
                 prodotto.setProduttore(pDAO.findByID(rs.getInt("idProduttore")));
-                prodotto.setListaFeedback(fDAO.findAllByProductID(prodotto.getIdProdotto()));
                 prodotto.setCategorie(pcDAO.getCategoriesByProductID(prodotto.getIdProdotto()));
                 prodotti.add(prodotto);
             }
@@ -251,7 +248,6 @@ public class ProdottoDAO implements IProdottoDAO {
                 prodotto.setCosto(rs.getFloat("costo"));
                 prodotto.setMediaValutazione(rs.getFloat("mediaValutazioni"));
                 prodotto.setProduttore(pDAO.findByID(rs.getInt("idProduttore")));
-                prodotto.setListaFeedback(fDAO.findAllByProductID(prodotto.getIdProdotto()));
                 prodotto.setCategorie(pcDAO.getCategoriesByProductID(prodotto.getIdProdotto()));
                 prodotti.add(prodotto);
             }

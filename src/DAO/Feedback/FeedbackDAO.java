@@ -181,8 +181,7 @@ public class FeedbackDAO implements IFeedbackDAO {
                 feedback.setIdFeedback(rs.getInt("idFeedback"));
                 feedback.setDataCreazione(LocalDate.parse(rs.getString("dataCreazione")));
                 feedback.setCommento(rs.getString("commento"));
-                feedback.setValutazione(rs.getInt("valutazione")); // da verificare il funzionamento!
-                executor.closeOperation(dbOperation);
+                feedback.setValutazione(rs.getInt("valutazione")); //TODO: da verificare il funzionamento!
                 feedback.setUtente(uDAO.findByID(rs.getInt("idUtente")));
                 feedback.setServizio(sDAO.findByID(rs.getInt("idServizio")));
                 feedback.setProdotto(pDAO.findByID(rs.getInt("idProdotto")));
@@ -243,9 +242,44 @@ public class FeedbackDAO implements IFeedbackDAO {
     }
 
     @Override
+    public float findAverageScore(int idArticolo, boolean isProduct) {
+        executor = new DbOperationExecutor();
+        if (isProduct){
+            sql = "SELECT AVG(valutazione) AS avg FROM Feedback WHERE idProdotto = '" + idArticolo + "';";
+        } else {
+            sql = "SELECT AVG(valutazione) AS avg FROM Feedback WHERE idServizio = '" + idArticolo + "';";
+        }
+        IDbOperation dbOperation = new ReadDbOperation(sql);
+        ResultSet rs = (ResultSet)executor.executeOperation(dbOperation);
+        float media=0.0f;
+        try{
+            rs.next();
+            if (rs.getRow() == 1){
+                 media = rs.getFloat("avg");
+            }
+        } catch (SQLException e) {
+            // handle any errors
+            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("VendorError: " + e.getErrorCode());
+        } catch (NullPointerException e) {
+            // handle any errors
+            System.out.println("Resultset: " + e.getMessage());
+        } finally {
+            executor.closeOperation(dbOperation);
+        }
+        executor.closeOperation(dbOperation);
+        return media;
+    }
+
+    @Override
     public int add(Feedback feedback) {
         executor = new DbOperationExecutor();
-        sql = "INSERT INTO Feedback VALUES ('" + feedback.getIdFeedback() + "','" + feedback.getDataCreazione().toString() + "','" + feedback.getCommento() + "','" + feedback.getValutazione() + "','" + feedback.getUtente().getIdUtente() + "','" + feedback.getServizio().getIdServizio() + "','" + feedback.getProdotto().getIdProdotto() + "');";
+        if (feedback.getProdotto() == null && feedback.getServizio() != null) {
+            sql = "INSERT INTO Feedback (dataCreazione, commento, valutazione, idUtente, idServizio) VALUES ('" + feedback.getDataCreazione().toString() + "','" + feedback.getCommento() + "','" + feedback.getValutazione() + "','" + feedback.getUtente().getIdUtente() + "','" + feedback.getServizio().getIdServizio() + "');";
+        } else if (feedback.getProdotto() != null && feedback.getServizio() == null) {
+            sql = "INSERT INTO Feedback (dataCreazione, commento, valutazione, idUtente, idProdotto) VALUES ('" + feedback.getDataCreazione().toString() + "','" + feedback.getCommento() + "','" + feedback.getValutazione() + "','" + feedback.getUtente().getIdUtente() + "','" + feedback.getProdotto().getIdProdotto() + "');";
+        }
         dbOperation = new WriteDbOperation(sql);
         int rowCount = (int) executor.executeOperation(dbOperation);
         executor.closeOperation(dbOperation);

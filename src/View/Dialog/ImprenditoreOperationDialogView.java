@@ -1,9 +1,11 @@
 package View.Dialog;
 
 import Model.Fornitore;
+import Model.Imprenditore;
 import Model.Produttore;
 import View.AppFrame;
 import View.Decorator.FornitoreOperationDialogDecorator;
+import View.Decorator.OperationDialog;
 import View.Decorator.ProduttoreOperationDialogDecorator;
 import View.Listener.ImprenditoreOperationDialogViewListener;
 
@@ -18,32 +20,24 @@ public class ImprenditoreOperationDialogView extends JDialog {
     private boolean isProducer;
     private OperationDialog operationDialog;
 
-    public ImprenditoreOperationDialogView(AppFrame appFrame, Produttore p, boolean isProducer) {
+    public ImprenditoreOperationDialogView(AppFrame appFrame, Imprenditore i, boolean isProducer) {
         super(appFrame, "Aggiungi");
-        this.p = p;
-        f = null;
         this.isProducer = isProducer;
+        if (isProducer){
+            this.p = (Produttore) i;
+            this.f = null;
+        }else {
+            this.p = null;
+            this.f = (Fornitore) i;
+        }
+        if (i == null){
+            this.p = null;
+            this.f = null;
+        }
         this.appFrame = appFrame;
         setUp();
     }
 
-    public ImprenditoreOperationDialogView(AppFrame appFrame, Fornitore f, boolean isProducer){
-        super(appFrame, "Aggiungi");
-        this.f = f;
-        p = null;
-        this.isProducer = isProducer;
-        this.appFrame = appFrame;
-        setUp();
-    }
-
-    public ImprenditoreOperationDialogView(AppFrame appFrame, boolean isProducer) {
-        super(appFrame, "Aggiungi");
-        p = null;
-        f = null;
-        this.isProducer = isProducer;
-        this.appFrame = appFrame;
-        setUp();
-    }
 
     public void setUp(){
         ImprenditoreOperationDialogViewListener imprenditoreOperationDialogViewListener = new ImprenditoreOperationDialogViewListener(appFrame, this);
