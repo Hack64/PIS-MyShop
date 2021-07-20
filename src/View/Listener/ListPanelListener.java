@@ -1,7 +1,10 @@
 package View.Listener;
 
 import Business.ListaBusiness;
-import Model.Lista;
+import Business.MagazzinoBusiness;
+import Business.ProdottiMagazzinoBusiness;
+import Business.SessionManager;
+import Model.*;
 import View.AppFrame;
 import View.Dialog.ListOperationDialog;
 import View.Panel.ListsPanel;
@@ -11,6 +14,7 @@ import View.Panel.UsersPanel;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Map;
 
 public class ListPanelListener implements ActionListener {
 
@@ -49,8 +53,15 @@ public class ListPanelListener implements ActionListener {
                 if (table.getSelectedRowCount()==1){
                     int row = table.getSelectedRow();
                     int col = 0;
-                    int idToDelete = Integer.parseInt(table.getModel().getValueAt(row, col).toString());
-                    int i = ListaBusiness.getInstance().deleteByID(idToDelete);
+                    Lista l = ListaBusiness.getInstance().find((Integer)table.getModel().getValueAt(row, col)).getLista();
+                    PuntoVendita pv = (PuntoVendita) SessionManager.getInstance().getSession().get("currentShop");
+                    Magazzino m = MagazzinoBusiness.getInstance().findWarehouseByShopID(pv.getIdPuntoVendita());
+                    for (Map.Entry<IProdotto, Map.Entry<String, Integer>> entry : l.getProdotti().entrySet()){
+                        Disponibilita d = ProdottiMagazzinoBusiness.getInstance().findByProductAndWarehouse(entry.getKey().getIdProdotto(), m.getIdMagazzino());
+                        d.setQta(d.getQta()+entry.getValue().getValue());
+                        ProdottiMagazzinoBusiness.getInstance().update(d);
+                    }
+                    int i = ListaBusiness.getInstance().deleteByID(l.getIdLista());
                     if (i==1){
                         esit = "Lista eliminata con successo!";
                         JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);

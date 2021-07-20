@@ -16,4 +16,5 @@ public interface IProdottoDAO {
     int removeById(int idProdotto);
     int update(IProdotto prodotto);
     int updateScore(float media, IProdotto prodotto);
+    int updateComments(int commenti, IProdotto prodotto);
 }

@@ -8,8 +8,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public interface IProdottiListaDAO {
-    //TODO: carica tutte le liste pagate e trova tutti i prodotti delle liste
-    //TODO: trova un modo di caricare i prodotti univocamente
     HashMap<IProdotto, Map.Entry<String, Integer>> findAllProductsByListID(int idLista);
     HashMap<IProdotto, String> findAllProductsByListIDAndState(int idLista, String prenotato);
     ArrayList<Lista> findAllListsByProductID(int idProdotto);

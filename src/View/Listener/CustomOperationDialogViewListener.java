@@ -55,16 +55,21 @@ public class CustomOperationDialogViewListener implements ActionListener {
                     }
                 }
                 categoriesChooserDialog.dispose();
-                int statusProd = ProdottoBusiness.getInstance().addNew(operationDialogView.getTxtNome(), img, operationDialogView.getTxtDescrizione(), Float.parseFloat(operationDialogView.getTxtPrezzo()), ProduttoreBusiness.getInstance().findByName(operationDialogView.getProduttore().toString()).getProduttore(), categorie, operationDialogView.getScaffale(), operationDialogView.getCorsia());
-                if (statusProd == 2){
-                    String esit = "Prodotto aggiunto con successo!";
-                    JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
-                    operationDialogView.dispose();
-                    appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame, null));
+                if (Integer.parseInt(operationDialogView.getTxtPrezzo()) >= 0 && operationDialogView.getScaffale() >=0 && operationDialogView.getCorsia() >= 0) {
+                    int statusProd = ProdottoBusiness.getInstance().addNew(operationDialogView.getTxtNome(), img, operationDialogView.getTxtDescrizione(), Float.parseFloat(operationDialogView.getTxtPrezzo()), ProduttoreBusiness.getInstance().findByName(operationDialogView.getProduttore().toString()).getProduttore(), categorie, operationDialogView.getScaffale(), operationDialogView.getCorsia());
+                    if (statusProd == 2){
+                        String esit = "Prodotto aggiunto con successo!";
+                        JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
+                        operationDialogView.dispose();
+                        appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame, null));
+                    } else {
+                        String esit = "Errore durante l'aggiunta del prodotto!";
+                        JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
+                        appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame, null));
+                    }
                 } else {
-                    String esit = "Errore durante l'aggiunta del prodotto!";
-                    JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
-                    appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame, null));
+                    JOptionPane.showMessageDialog(appFrame, "Il prezzo non può essere negativo", "Errore", JOptionPane.ERROR_MESSAGE);
+                    //TODO: clear fields
                 }
                 break;
             case BTN_ADD_COMP_PRODUCT:
@@ -81,23 +86,28 @@ public class CustomOperationDialogViewListener implements ActionListener {
                     }
                 }
                 subProductChooserDialog.dispose();
-                int statusCompProd = ProdottoBusiness.getInstance().addNewComp(operationDialogView.getTxtNome(), img, operationDialogView.getTxtDescrizione(), Float.parseFloat(operationDialogView.getTxtPrezzo()), ProduttoreBusiness.getInstance().findByName((String)operationDialogView.getProduttore()).getProduttore(), categorieComp, sottoprodotti, operationDialogView.getScaffale(), operationDialogView.getCorsia());
-                if (statusCompProd == 3){
-                    String esit = "Prodotto composito aggiunto con successo!";
-                    JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
-                    operationDialogView.dispose();
-                    appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame, null));
+                if (Integer.parseInt(operationDialogView.getTxtPrezzo()) >= 0 && operationDialogView.getScaffale() >=0 && operationDialogView.getCorsia() >= 0) {
+                    int statusCompProd = ProdottoBusiness.getInstance().addNewComp(operationDialogView.getTxtNome(), img, operationDialogView.getTxtDescrizione(), Float.parseFloat(operationDialogView.getTxtPrezzo()), ProduttoreBusiness.getInstance().findByName((String) operationDialogView.getProduttore()).getProduttore(), categorieComp, sottoprodotti, operationDialogView.getScaffale(), operationDialogView.getCorsia());
+                    if (statusCompProd == 3) {
+                        String esit = "Prodotto composito aggiunto con successo!";
+                        JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
+                        operationDialogView.dispose();
+                        appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame, null));
+                    } else {
+                        String esit = "Errore durante l'aggiunta del prodotto composito!";
+                        JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
+                        appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame, null));
+                    }
                 } else {
-                    String esit = "Errore durante l'aggiunta del prodotto composito!";
-                    JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
-                    appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame, null));
+                    JOptionPane.showMessageDialog(appFrame, "Il prezzo non può essere negativo", "Errore", JOptionPane.ERROR_MESSAGE);
+                    //TODO: clear fields
                 }
                 break;
             case BTN_EDIT_PRODUCT:
                 if (img == null){
                     String esit = "Imposta l'immagine";
                     JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
-                } else {
+                } else if (Integer.parseInt(operationDialogView.getTxtPrezzo()) >= 0 && operationDialogView.getScaffale() >=0 && operationDialogView.getCorsia() >= 0) {
                     int st = ProdottoBusiness.getInstance().update(operationDialogView.getTxtNome(), img, operationDialogView.getTxtDescrizione(), Float.parseFloat(operationDialogView.getTxtPrezzo()), operationDialogView.getID(), operationDialogView.getScaffale(), operationDialogView.getCorsia());
                     if (st == 1) {
                         String esit = "Prodotto modificato con successo!";
@@ -109,6 +119,9 @@ public class CustomOperationDialogViewListener implements ActionListener {
                         JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
                         appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame, null));
                     }
+                } else {
+                    JOptionPane.showMessageDialog(appFrame, "Il prezzo non può essere negativo", "Errore", JOptionPane.ERROR_MESSAGE);
+                    //TODO: clear fields
                 }
                 break;
             case BTN_EDIT_COMP_PRODUCT:
@@ -121,7 +134,7 @@ public class CustomOperationDialogViewListener implements ActionListener {
                 if (img == null){
                     String esit = "Imposta l'immagine";
                     JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
-                } else {
+                } else if (Integer.parseInt(operationDialogView.getTxtPrezzo()) >= 0 && operationDialogView.getScaffale() >=0 && operationDialogView.getCorsia() >= 0) {
                     int st = ProdottoBusiness.getInstance().updateComposite(operationDialogView.getTxtNome(), img, operationDialogView.getTxtDescrizione(), Float.parseFloat(operationDialogView.getTxtPrezzo()), operationDialogView.getID(), sottoprodotti_edit, operationDialogView.getScaffale(), operationDialogView.getCorsia());
                     if (st == 3) {
                             String esit = "Prodotto composito modificato con successo!";
@@ -133,6 +146,9 @@ public class CustomOperationDialogViewListener implements ActionListener {
                         JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
                         appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame, null));
                     }
+                } else {
+                    JOptionPane.showMessageDialog(appFrame, "Il prezzo non può essere negativo", "Errore", JOptionPane.ERROR_MESSAGE);
+                    //TODO: clear fields
                 }
                 break;
             case BTN_ADD_SERVICE:
@@ -143,16 +159,21 @@ public class CustomOperationDialogViewListener implements ActionListener {
                     }
                 }
                 categoriesChooserDialog.dispose();
-                int statusServ = ServizioBusiness.getInstance().addNew(operationDialogView.getTxtNome(), img, operationDialogView.getTxtDescrizione(), Float.parseFloat(operationDialogView.getTxtPrezzo()), FornitoreBusiness.getInstance().findByName((String)operationDialogView.getProduttore()).getFornitore(), categorieS);
-                if (statusServ == 2){
-                    String esit = "Servizio aggiunto con successo!";
-                    JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
-                    operationDialogView.dispose();
-                    appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame, null));
+                if (Integer.parseInt(operationDialogView.getTxtPrezzo()) >= 0 && operationDialogView.getScaffale() >=0 && operationDialogView.getCorsia() >= 0) {
+                    int statusServ = ServizioBusiness.getInstance().addNew(operationDialogView.getTxtNome(), img, operationDialogView.getTxtDescrizione(), Float.parseFloat(operationDialogView.getTxtPrezzo()), FornitoreBusiness.getInstance().findByName((String) operationDialogView.getProduttore()).getFornitore(), categorieS);
+                    if (statusServ == 2) {
+                        String esit = "Servizio aggiunto con successo!";
+                        JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
+                        operationDialogView.dispose();
+                        appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame, null));
+                    } else {
+                        String esit = "Errore durante l'aggiunta del servizio!";
+                        JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
+                        appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame, null));
+                    }
                 } else {
-                    String esit = "Errore durante l'aggiunta del servizio!";
-                    JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
-                    appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame, null));
+                    JOptionPane.showMessageDialog(appFrame, "Il prezzo non può essere negativo", "Errore", JOptionPane.ERROR_MESSAGE);
+                    //TODO: clear fields
                 }
                 break;
             case BTN_EDIT_SERVICE:
@@ -160,7 +181,7 @@ public class CustomOperationDialogViewListener implements ActionListener {
                 if (img == null){
                     String esit = "Coglione imposta l'immagine";
                     JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
-                } else {
+                } else if (Integer.parseInt(operationDialogView.getTxtPrezzo()) >= 0 && operationDialogView.getScaffale() >=0 && operationDialogView.getCorsia() >= 0) {
                     int st = ServizioBusiness.getInstance().update(operationDialogView.getTxtNome(), img, operationDialogView.getTxtDescrizione(), Float.parseFloat(operationDialogView.getTxtPrezzo()), fo, operationDialogView.getID());
                     if (st == 1) {
                         String esit = "Servizio modificato con successo!";
@@ -172,6 +193,9 @@ public class CustomOperationDialogViewListener implements ActionListener {
                         JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
                         appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame, null));
                     }
+                } else {
+                    JOptionPane.showMessageDialog(appFrame, "Il prezzo non può essere negativo", "Errore", JOptionPane.ERROR_MESSAGE);
+                    //TODO: clear fields
                 }
                 break;
             case BTN_IMG_CHOOSER:

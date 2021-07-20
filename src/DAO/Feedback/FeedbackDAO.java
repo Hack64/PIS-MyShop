@@ -181,7 +181,7 @@ public class FeedbackDAO implements IFeedbackDAO {
                 feedback.setIdFeedback(rs.getInt("idFeedback"));
                 feedback.setDataCreazione(LocalDate.parse(rs.getString("dataCreazione")));
                 feedback.setCommento(rs.getString("commento"));
-                feedback.setValutazione(rs.getInt("valutazione")); //TODO: da verificare il funzionamento!
+                feedback.setValutazione(rs.getInt("valutazione"));
                 feedback.setUtente(uDAO.findByID(rs.getInt("idUtente")));
                 feedback.setServizio(sDAO.findByID(rs.getInt("idServizio")));
                 feedback.setProdotto(pDAO.findByID(rs.getInt("idProdotto")));
@@ -257,6 +257,7 @@ public class FeedbackDAO implements IFeedbackDAO {
             if (rs.getRow() == 1){
                  media = rs.getFloat("avg");
             }
+            return media;
         } catch (SQLException e) {
             // handle any errors
             System.out.println("SQLException: " + e.getMessage());
@@ -269,7 +270,39 @@ public class FeedbackDAO implements IFeedbackDAO {
             executor.closeOperation(dbOperation);
         }
         executor.closeOperation(dbOperation);
-        return media;
+        return 0.0f;
+    }
+
+    @Override
+    public int findNumberOfFeedbacks(int idArticolo, boolean isProduct) {
+        int count = 0;
+        executor = new DbOperationExecutor();
+        if (isProduct){
+            sql = "SELECT COUNT(*) AS C FROM Feedback WHERE idProdotto = '" + idArticolo + "';";
+        } else {
+            sql = "SELECT COUNT(*) AS C FROM Feedback WHERE idServizio = '" + idArticolo + "';";
+        }
+        IDbOperation dbOperation = new ReadDbOperation(sql);
+        rs = (ResultSet) executor.executeOperation(dbOperation);
+        try{
+            rs.next();
+            if (rs.getRow() == 1){
+                count = rs.getInt("C");
+            }
+            return count;
+        } catch (SQLException e) {
+            // handle any errors
+            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("VendorError: " + e.getErrorCode());
+        } catch (NullPointerException e) {
+            // handle any errors
+            System.out.println("Resultset: " + e.getMessage());
+        } finally {
+            executor.closeOperation(dbOperation);
+        }
+        executor.closeOperation(dbOperation);
+        return 0;
     }
 
     @Override

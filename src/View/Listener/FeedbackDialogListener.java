@@ -35,6 +35,7 @@ public class FeedbackDialogListener implements ActionListener {
                 status=FeedbackBusiness.getInstance().addNewFeedback(feedbackDialog.getCommento(), feedbackDialog.getVoto(), (Utente) SessionManager.getInstance().getSession().get("loggedUser"), ProdottoBusiness.getInstance().find(feedbackDialog.getIdArticolo()).getProdotto(), null);
                 if (status == 1){
                     JOptionPane.showMessageDialog(appFrame, "Feedback aggiunto con successo", "Successo", JOptionPane.INFORMATION_MESSAGE);
+                    feedbackDialog.dispose();
                 } else {
                     JOptionPane.showMessageDialog(appFrame, "Errore durante l'aggiunta del feedback", "Errore", JOptionPane.ERROR_MESSAGE);
                 }
@@ -43,6 +44,7 @@ public class FeedbackDialogListener implements ActionListener {
                 status=FeedbackBusiness.getInstance().addNewFeedback(feedbackDialog.getCommento(), feedbackDialog.getVoto(), (Utente) SessionManager.getInstance().getSession().get("loggedUser"), null, ServizioBusiness.getInstance().find(feedbackDialog.getIdArticolo()).getServizio());
                 if (status == 1){
                     JOptionPane.showMessageDialog(appFrame, "Feedback aggiunto con successo", "Successo", JOptionPane.INFORMATION_MESSAGE);
+                    feedbackDialog.dispose();
                 } else {
                     JOptionPane.showMessageDialog(appFrame, "Errore durante l'aggiunta del feedback", "Errore", JOptionPane.ERROR_MESSAGE);
                 }

@@ -169,6 +169,10 @@ public class CustomOperationDialogView extends JDialog {
         operationDialog.getComboBox().setSelectedItem(p.getProduttore().getNome());
     }
 
+    public void clearFields(){
+
+    }
+
     public String getTxtNome() {
         return operationDialog.getFields().get(0).getText();
     }

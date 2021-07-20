@@ -297,4 +297,14 @@ public class ServizioDAO implements IServizioDAO {
         executor.closeOperation(dbOperation);
         return rowCount;
     }
+
+    @Override
+    public int updateComments(int commenti, Servizio servizio) {
+        executor = new DbOperationExecutor();
+        sql = "UPDATE Servizio SET numeroCommenti = '" + commenti + "' WHERE idServizio = '" + servizio.getIdServizio() + "';";
+        dbOperation = new WriteDbOperation(sql);
+        int rowCount = (int) executor.executeOperation(dbOperation);
+        executor.closeOperation(dbOperation);
+        return rowCount;
+    }
 }

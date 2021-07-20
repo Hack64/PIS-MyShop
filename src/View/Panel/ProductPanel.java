@@ -63,7 +63,7 @@ public class ProductPanel extends JPanel {
             }
             lblNomeProdotto = new JLabel(prodotto.getNome());
             lblCostoProdotto = new JLabel("Costo:      €" + prodotto.getCosto());
-            lblMediaValutazioni = new JLabel("Media Valutazioni:      " + prodotto.getMediaValutazione());
+            lblMediaValutazioni = new JLabel("Media Valutazioni: " + prodotto.getMediaValutazione() + " | Commenti: " + prodotto.getNumeroCommenti());
             lblCategorieProdotti = new JLabel("Categorie: " + categorie);
             lblQuantitaMagazzino = new JLabel("Disponibili: " + d.getQta());
 
@@ -90,7 +90,7 @@ public class ProductPanel extends JPanel {
             }
             lblNomeProdotto = new JLabel(servizio.getNome());
             lblCostoProdotto = new JLabel("Costo:      €" + servizio.getCosto());
-            lblMediaValutazioni = new JLabel("Media Valutazioni:      " + servizio.getMediaValutazione());
+            lblMediaValutazioni = new JLabel("Media Valutazioni: " + servizio.getMediaValutazione() + " | Commenti: " + servizio.getNumeroCommenti());
             lblCategorieProdotti = new JLabel("Categorie: " + categorie);
 
             btnCommenti = new JButton("Visualizza commenti");

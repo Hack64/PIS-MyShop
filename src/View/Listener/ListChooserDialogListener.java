@@ -33,12 +33,11 @@ public class ListChooserDialogListener implements ActionListener {
                 IProdotto prodotto = ProdottoBusiness.getInstance().find(listChooserDialog.getIdArticolo()).getProdotto();
                 int old_qta = ListaBusiness.getInstance().isProductAlreadyInList(listChooserDialog.getSelectedList().getLista(), prodotto);
                 st = ListaBusiness.getInstance().addProductToList(listChooserDialog.getSelectedList().getLista(), prodotto, listChooserDialog.getQuantita());
-                if (st > 0){
+                if (st == 2){
                     PuntoVendita pv = (PuntoVendita) SessionManager.getInstance().getSession().get("currentShop");
                     Disponibilita d = ProdottiMagazzinoBusiness.getInstance().findByProductAndWarehouse(prodotto.getIdProdotto(), MagazzinoBusiness.getInstance().findWarehouseByShopID(pv.getIdPuntoVendita()).getIdMagazzino());
                     d.setQta(d.getQta() - listChooserDialog.getQuantita() + old_qta);
                     ProdottiMagazzinoBusiness.getInstance().update(d);
-                    //TODO: fai come per il prezzo
                     JOptionPane.showMessageDialog(appFrame, "Prodotto aggiunto alla lista con successo!", "Successo", JOptionPane.INFORMATION_MESSAGE);
                     listChooserDialog.dispose();
                 } else{

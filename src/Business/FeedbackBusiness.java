@@ -44,10 +44,15 @@ public class FeedbackBusiness {
         if (st == 1){
             if (p != null && s == null){
                 float mediaValutazioni = feedbackDAO.findAverageScore(f.getProdotto().getIdProdotto(), true);
+                int nCommenti = feedbackDAO.findNumberOfFeedbacks(f.getProdotto().getIdProdotto(), true);
+
                 prodottoDAO.updateScore(mediaValutazioni, p);
+                prodottoDAO.updateComments(nCommenti, p);
             } else if (p == null && s != null){
                 float mediaValutazioni = feedbackDAO.findAverageScore(f.getServizio().getIdServizio(), false);
+                int nCommenti = feedbackDAO.findNumberOfFeedbacks(f.getServizio().getIdServizio(), false);
                 servizioDAO.updateScore(mediaValutazioni, s);
+                servizioDAO.updateComments(nCommenti, s);
             }
         }
         return st;

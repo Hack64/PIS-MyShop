@@ -101,7 +101,7 @@ public class ListaBusiness {
         if (disp.getQta()<quantita){
             if ( qta > 0) {
                 oldPrice = qta*prodotto.getCosto();
-                st+=prodottiListaDAO.update(lista, prodotto, "SI", quantita);
+                st+=prodottiListaDAO.update(lista, prodotto, "SI", quantita); //1
             } else
                 st+=prodottiListaDAO.add(lista, prodotto, "SI", quantita);
         } else {

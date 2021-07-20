@@ -5,7 +5,6 @@ import Model.Lista;
 import java.util.ArrayList;
 
 public interface IListaDAO {
-    //TODO: fornire un metodo al manager per poter impostare le liste come pagate
     Lista findByID(int idLista);
     ArrayList<Lista> findAll();
     ArrayList<Lista> findAllByUserID(int idUtente);
