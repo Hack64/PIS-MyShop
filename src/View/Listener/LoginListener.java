@@ -1,19 +1,18 @@
 package View.Listener;
 
-import Business.ListaBusiness;
 import Business.SessionManager;
 import Business.UtenteBusiness;
-import Model.*;
+import Model.PuntoVendita;
 import Model.Responses.UtenteResponse;
+import Model.Utente;
 import View.AppFrame;
-import View.Panel.BrowsePanel;
 import View.Dialog.LoginDialog;
+import View.Panel.BrowsePanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Map;
 
 public class LoginListener implements ActionListener {
 

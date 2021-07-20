@@ -7,14 +7,12 @@ import DbInterface.DbOperationExecutor;
 import DbInterface.IDbOperation;
 import DbInterface.ReadDbOperation;
 import DbInterface.WriteDbOperation;
-import Model.IProdotto;
 import Model.Lista;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Map;
 
 public class ListaDAO implements IListaDAO {
 

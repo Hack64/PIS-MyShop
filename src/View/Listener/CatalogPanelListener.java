@@ -6,7 +6,6 @@ import Model.Responses.ProdottoResponse;
 import View.AppFrame;
 import View.Dialog.CustomOperationDialogView;
 import View.Panel.CatalogPanel;
-import View.Panel.ListsPanel;
 import View.Panel.MainCatalogPanel;
 import View.Panel.ManageCategoriesPanel;
 

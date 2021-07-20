@@ -4,7 +4,7 @@ import Business.*;
 import Model.Fornitore;
 import Model.ICategoria;
 import Model.IProdotto;
-import View.*;
+import View.AppFrame;
 import View.Dialog.CategoriesChooserDialog;
 import View.Dialog.CustomOperationDialogView;
 import View.Dialog.SubProductChooserDialog;

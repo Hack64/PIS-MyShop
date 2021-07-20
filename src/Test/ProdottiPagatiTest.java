@@ -1,6 +1,5 @@
 package Test;
 
-import Business.ProdottoBusiness;
 import DAO.Lista.ListaDAO;
 import DAO.ProdottiLista.ProdottiListaDAO;
 import DbInterface.DbUser;

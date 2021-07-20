@@ -5,7 +5,7 @@ import Business.PuntoVenditaBusiness;
 import Business.ServizioBusiness;
 import Model.IProdotto;
 import Model.Servizio;
-import View.*;
+import View.AppFrame;
 import View.Dialog.*;
 import View.Panel.ShopsPanel;
 

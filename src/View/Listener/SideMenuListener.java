@@ -1,6 +1,6 @@
 package View.Listener;
 
-import View.*;
+import View.AppFrame;
 import View.Panel.*;
 
 import java.awt.event.ActionEvent;

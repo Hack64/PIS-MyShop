@@ -1,6 +1,5 @@
 package View;
 
-import Model.PuntoVendita;
 import View.Listener.LoginButtonListener;
 import View.Listener.SideMenuListener;
 import View.Panel.WelcomePanel;

@@ -1,10 +1,8 @@
 package View.TableModels;
 
 import Model.Feedback;
-import Model.Utente;
 
 import javax.swing.table.AbstractTableModel;
-import java.util.HashMap;
 import java.util.List;
 
 public class FeedbackTableModel extends AbstractTableModel {

@@ -2,9 +2,9 @@ package View.Listener;
 
 import Business.SessionManager;
 import View.AppFrame;
-import View.Panel.BrowsePanel;
 import View.Dialog.LoginDialog;
 import View.Dialog.RegistrationDialog;
+import View.Panel.BrowsePanel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

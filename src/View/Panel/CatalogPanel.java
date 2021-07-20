@@ -1,7 +1,6 @@
 package View.Panel;
 
 import Business.ProdottoBusiness;
-import Model.Articolo;
 import Model.IProdotto;
 import Model.Lista;
 import View.AppFrame;

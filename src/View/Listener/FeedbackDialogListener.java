@@ -4,7 +4,6 @@ import Business.FeedbackBusiness;
 import Business.ProdottoBusiness;
 import Business.ServizioBusiness;
 import Business.SessionManager;
-import Model.Feedback;
 import Model.Utente;
 import View.AppFrame;
 import View.Dialog.FeedbackDialog;

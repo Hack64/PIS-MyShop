@@ -4,7 +4,6 @@ import Business.FeedbackBusiness;
 import Model.Risposta;
 import View.AppFrame;
 import View.Dialog.ReplyDialog;
-import View.Panel.FeedbacksPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

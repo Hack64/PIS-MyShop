@@ -2,7 +2,6 @@ package Business;
 
 import DAO.Feedback.FeedbackDAO;
 import DAO.Feedback.IFeedbackDAO;
-import DAO.Fornitore.IFornitoreDAO;
 import DAO.Prodotto.IProdottoDAO;
 import DAO.Prodotto.ProdottoDAO;
 import DAO.Risposta.RispostaDAO;

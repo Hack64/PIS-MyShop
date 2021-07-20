@@ -1,7 +1,5 @@
 package View.Decorator;
 
-import View.Decorator.Menu;
-
 import javax.swing.*;
 
 public class GuestMenu extends Menu {
