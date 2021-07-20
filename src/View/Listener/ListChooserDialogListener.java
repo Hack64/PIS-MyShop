@@ -1,8 +1,9 @@
 package View.Listener;
 
-import Business.ListaBusiness;
-import Business.ProdottoBusiness;
-import Business.ServizioBusiness;
+import Business.*;
+import Model.Disponibilita;
+import Model.IProdotto;
+import Model.PuntoVendita;
 import View.AppFrame;
 import View.Dialog.ListChooserDialog;
 
@@ -26,12 +27,18 @@ public class ListChooserDialogListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String cmd = e.getActionCommand();
-
         int st;
         switch(cmd){
             case BTN_ADD_PRODUCT:
-                st = ListaBusiness.getInstance().addProductToList(listChooserDialog.getSelectedList().getLista(), ProdottoBusiness.getInstance().find(listChooserDialog.getIdArticolo()).getProdotto(), listChooserDialog.getQuantita());
-                if (st == 1){
+                IProdotto prodotto = ProdottoBusiness.getInstance().find(listChooserDialog.getIdArticolo()).getProdotto();
+                int old_qta = ListaBusiness.getInstance().isProductAlreadyInList(listChooserDialog.getSelectedList().getLista(), prodotto);
+                st = ListaBusiness.getInstance().addProductToList(listChooserDialog.getSelectedList().getLista(), prodotto, listChooserDialog.getQuantita());
+                if (st > 0){
+                    PuntoVendita pv = (PuntoVendita) SessionManager.getInstance().getSession().get("currentShop");
+                    Disponibilita d = ProdottiMagazzinoBusiness.getInstance().findByProductAndWarehouse(prodotto.getIdProdotto(), MagazzinoBusiness.getInstance().findWarehouseByShopID(pv.getIdPuntoVendita()).getIdMagazzino());
+                    d.setQta(d.getQta() - listChooserDialog.getQuantita() + old_qta);
+                    ProdottiMagazzinoBusiness.getInstance().update(d);
+                    //TODO: fai come per il prezzo
                     JOptionPane.showMessageDialog(appFrame, "Prodotto aggiunto alla lista con successo!", "Successo", JOptionPane.INFORMATION_MESSAGE);
                     listChooserDialog.dispose();
                 } else{

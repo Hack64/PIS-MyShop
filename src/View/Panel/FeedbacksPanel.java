@@ -36,7 +36,7 @@ public class FeedbacksPanel extends JPanel{
         JPanel operazionitabella = new JPanel();
         operazionitabella.setLayout(new FlowLayout());
 
-        JButton btnShow = new JButton("Visualizza Risposte");
+        JButton btnShow = new JButton("Visualizza Risposta");
         JButton btnReply = new JButton("Rispondi");
 
         btnShow.setActionCommand("btnShowReply");

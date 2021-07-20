@@ -1,6 +1,7 @@
 package View.Panel;
 
 import Business.ServizioBusiness;
+import Model.Lista;
 import Model.Servizio;
 import View.AppFrame;
 import View.Listener.ServiziPanelListener;
@@ -14,12 +15,17 @@ public class ServiziPanel extends JPanel {
 
     private AppFrame appFrame;
 
-    public ServiziPanel(AppFrame appFrame) {
+    public ServiziPanel(AppFrame appFrame, Lista l) {
 
         this.appFrame = appFrame;
         setLayout(new BorderLayout());
+        ArrayList<Servizio> serviziCatalogo;
 
-        ArrayList<Servizio> serviziCatalogo = ServizioBusiness.getInstance().findAllServices();
+        if (l != null){
+            serviziCatalogo = l.getServizi();
+        } else {
+           serviziCatalogo = ServizioBusiness.getInstance().findAllServices();
+        }
 
         JTable tabellaServizi = new JTable(new ServizioTableModel(serviziCatalogo));
 
@@ -38,7 +44,11 @@ public class ServiziPanel extends JPanel {
 
         btnAdd.setActionCommand("btnAdd");
         btnEdit.setActionCommand("btnEdit");
-        btnDelete.setActionCommand("btnDelete");
+        if (l != null) {
+            btnDelete.setActionCommand("btnDelete");
+        } else {
+            btnDelete.setActionCommand("btnDeleteFromList");
+        }
         btnCategories.setActionCommand("btnCategories");
 
         ServiziPanelListener serviziPanelListener = new ServiziPanelListener(appFrame, tabellaServizi);
@@ -47,9 +57,11 @@ public class ServiziPanel extends JPanel {
         btnDelete.addActionListener(serviziPanelListener);
         btnCategories.addActionListener(serviziPanelListener);
 
-        operazionitabella.add(btnCategories);
-        operazionitabella.add(btnAdd);
-        operazionitabella.add(btnEdit);
+        if (l == null) {
+            operazionitabella.add(btnCategories);
+            operazionitabella.add(btnAdd);
+            operazionitabella.add(btnEdit);
+        }
         operazionitabella.add(btnDelete);
 
         add(operazionitabella, BorderLayout.SOUTH);

@@ -61,6 +61,9 @@ public class UtenteBusiness {
         if (u != null) {
             res.setMessage("Benvenuto " + u.getNome() + "!");
             res.setUtente(u);
+            if (!utentiPuntoVenditaDAO.isUserRegisteredInShop(u.getIdUtente(), puntoVendita.getIdPuntoVendita())){
+                utentiPuntoVenditaDAO.add(u, puntoVendita, 0,0,0);
+            }
         }
 
         return res;
@@ -111,7 +114,7 @@ public class UtenteBusiness {
             if (puntoVendita != null) {
                 UtentiPuntoVenditaDAO utentiPuntoVenditaDAO = UtentiPuntoVenditaDAO.getInstance();
                 Utente u2 = uDAO.findByEmail(u.getEmail());
-                utentiPuntoVenditaDAO.add(u2, puntoVendita, 0, 0);
+                utentiPuntoVenditaDAO.add(u2, puntoVendita, 0, 0, 1);
             }
             return res;
         } else {
@@ -197,14 +200,25 @@ public class UtenteBusiness {
     //TODO: è il caso di unire questi metodi?
     public int disableUser(Utente u, PuntoVendita pv) {
         IUtentiPuntoVenditaDAO utentiPuntoVenditaDAO = UtentiPuntoVenditaDAO.getInstance();
-
-        return utentiPuntoVenditaDAO.update(u, pv, 1, 0);
+        int preferito;
+        if (utentiPuntoVenditaDAO.isUserPreferredShop(u.getIdUtente(), pv.getIdPuntoVendita())){
+            preferito = 1;
+        } else {
+            preferito = 0;
+        }
+        return utentiPuntoVenditaDAO.update(u, pv, 1, 0, preferito);
     }
 
     public int enableUser(Utente u, PuntoVendita pv) {
         IUtentiPuntoVenditaDAO utentiPuntoVenditaDAO = UtentiPuntoVenditaDAO.getInstance();
+        int preferito;
+        if (utentiPuntoVenditaDAO.isUserPreferredShop(u.getIdUtente(), pv.getIdPuntoVendita())){
+            preferito = 1;
+        } else {
+            preferito = 0;
+        }
 
-        return utentiPuntoVenditaDAO.update(u, pv, 0, 0);
+        return utentiPuntoVenditaDAO.update(u, pv, 0, 0, preferito);
     }
 
     public ArrayList<Integer> getPaidProducts(Utente u) {

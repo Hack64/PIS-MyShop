@@ -287,4 +287,14 @@ public class ServizioDAO implements IServizioDAO {
         executor.closeOperation(dbOperation);
         return rowCount;
     }
+
+    @Override
+    public int updateScore(float media, Servizio servizio) {
+        executor = new DbOperationExecutor();
+        sql = "UPDATE Servizio SET mediaValutazioni = '" + media + "' WHERE idServizio = '" + servizio.getIdServizio() + "';";
+        dbOperation = new WriteDbOperation(sql);
+        int rowCount = (int) executor.executeOperation(dbOperation);
+        executor.closeOperation(dbOperation);
+        return rowCount;
+    }
 }

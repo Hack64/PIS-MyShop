@@ -55,7 +55,7 @@ public class ServiziPanelListener implements ActionListener {
                     if (i==1){
                         esit = "Servizio eliminato con successo!";
                         JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
-                        appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame));
+                        appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame, null));
                     } else{
                         esit = "Errore durante l'eliminazione";
                         JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);

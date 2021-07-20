@@ -138,5 +138,17 @@ public class ListaBusiness {
         return listaDAO.setListPayment(l.getIdLista(), stato);
     }
 
+    public int deleteProductFromList(Lista l, IProdotto p){
+        IProdottiListaDAO prodottiListaDAO = ProdottiListaDAO.getInstance();
+
+        return prodottiListaDAO.removeByID(p.getIdProdotto(), l.getIdLista());
+    }
+
+    public int isProductAlreadyInList(Lista l, IProdotto p){
+        IProdottiListaDAO prodottiListaDAO = ProdottiListaDAO.getInstance();
+
+        return prodottiListaDAO.isProductAlreadyInList(p.getIdProdotto(), l.getIdLista());
+    }
+
 
 }

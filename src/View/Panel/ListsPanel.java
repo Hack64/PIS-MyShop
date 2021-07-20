@@ -41,14 +41,18 @@ public class ListsPanel extends JPanel {
         btnEdit.setActionCommand("btnEdit");
         JButton btnDelete = new JButton("Elimina Lista");
         btnDelete.setActionCommand("btnDelete");
+        JButton btnShowProducts = new JButton("Visualizza prodotti");
+        btnShowProducts.setActionCommand("btnShowProducts");
         JButton btnPay = new JButton("Imposta come pagata");
         btnPay.setActionCommand("btnPay");
+
 
         ListPanelListener listPanelListener = new ListPanelListener(appFrame, tabellaListe);
         btnAdd.addActionListener(listPanelListener);
         btnDelete.addActionListener(listPanelListener);
         btnEdit.addActionListener(listPanelListener);
         btnPay.addActionListener(listPanelListener);
+        btnShowProducts.addActionListener(listPanelListener);
 
         if (!systemView){
             operazionitabella.add(btnAdd);
@@ -57,7 +61,7 @@ public class ListsPanel extends JPanel {
         } else {
             operazionitabella.add(btnPay);
         }
-
+        operazionitabella.add(btnShowProducts);
 
         add(operazionitabella, BorderLayout.SOUTH);
     }

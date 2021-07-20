@@ -3,7 +3,11 @@ package Business;
 import DAO.Feedback.FeedbackDAO;
 import DAO.Feedback.IFeedbackDAO;
 import DAO.Fornitore.IFornitoreDAO;
+import DAO.Prodotto.IProdottoDAO;
+import DAO.Prodotto.ProdottoDAO;
 import DAO.Risposta.RispostaDAO;
+import DAO.Servizio.IServizioDAO;
+import DAO.Servizio.ServizioDAO;
 import Model.*;
 
 import java.time.LocalDate;
@@ -22,6 +26,8 @@ public class FeedbackBusiness {
 
     public int addNewFeedback(String commento, int valutazione, Utente u, IProdotto p, Servizio s){
         feedbackDAO = FeedbackDAO.getInstance();
+        IProdottoDAO prodottoDAO = ProdottoDAO.getInstance();
+        IServizioDAO servizioDAO = ServizioDAO.getInstance();
 
         Feedback f = new Feedback();
         f.setUtente(u);
@@ -38,10 +44,10 @@ public class FeedbackBusiness {
         if (st == 1){
             if (p != null && s == null){
                 float mediaValutazioni = feedbackDAO.findAverageScore(f.getProdotto().getIdProdotto(), true);
-                System.out.println(mediaValutazioni);
+                prodottoDAO.updateScore(mediaValutazioni, p);
             } else if (p == null && s != null){
                 float mediaValutazioni = feedbackDAO.findAverageScore(f.getServizio().getIdServizio(), false);
-                System.out.println(mediaValutazioni);
+                servizioDAO.updateScore(mediaValutazioni, s);
             }
         }
         return st;

@@ -1,7 +1,9 @@
 package View.Panel;
 
 import Business.ProdottoBusiness;
+import Model.Articolo;
 import Model.IProdotto;
+import Model.Lista;
 import View.AppFrame;
 import View.Listener.CatalogPanelListener;
 import View.TableModels.CatalogoTableModel;
@@ -9,18 +11,24 @@ import View.TableModels.CatalogoTableModel;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class CatalogPanel extends JPanel {
 
     private AppFrame appFrame;
+    private Lista l = null;
 
-    public CatalogPanel(AppFrame appFrame, boolean compositeMode){
-
+    public CatalogPanel(AppFrame appFrame, boolean compositeMode, Lista l){
+        this.l = l;
         this.appFrame = appFrame;
         setLayout(new BorderLayout());
-        ArrayList<IProdotto> prodottiCatalogo;
+        ArrayList<IProdotto> prodottiCatalogo = new ArrayList<>();
 
-        if (!compositeMode){
+        if (l != null){
+            for (Map.Entry<IProdotto, Map.Entry<String, Integer>> entry:l.getProdotti().entrySet()){
+                prodottiCatalogo.add(entry.getKey());
+            }
+        } else if (!compositeMode){
             prodottiCatalogo = ProdottoBusiness.getInstance().findAllNonCompositeProducts();
         } else {
             prodottiCatalogo = ProdottoBusiness.getInstance().findAllCompositeProducts();
@@ -41,7 +49,9 @@ public class CatalogPanel extends JPanel {
         JButton btnDelete = new JButton("Elimina Prodotto");
         JButton btnCategories = new JButton("Gestisci Categorie");
 
-        if (compositeMode){
+        if (l != null){
+            btnDelete.setActionCommand("btnDeleteFromList");
+        } else if (compositeMode){
             btnAdd.setActionCommand("btnAddComp");
             btnEdit.setActionCommand("btnEditComp");
             btnDelete.setActionCommand("btnDeleteComp");
@@ -53,17 +63,23 @@ public class CatalogPanel extends JPanel {
 
         btnCategories.setActionCommand("btnCategories");
 
-        CatalogPanelListener catalogPanelListener = new CatalogPanelListener(appFrame, tabellaProdotti);
+        CatalogPanelListener catalogPanelListener = new CatalogPanelListener(appFrame, tabellaProdotti, l);
         btnAdd.addActionListener(catalogPanelListener);
         btnEdit.addActionListener(catalogPanelListener);
         btnDelete.addActionListener(catalogPanelListener);
         btnCategories.addActionListener(catalogPanelListener);
 
-        operazionitabella.add(btnCategories);
-        operazionitabella.add(btnAdd);
-        operazionitabella.add(btnEdit);
+        if (l == null){
+            operazionitabella.add(btnCategories);
+            operazionitabella.add(btnAdd);
+            operazionitabella.add(btnEdit);
+        }
         operazionitabella.add(btnDelete);
 
         add(operazionitabella, BorderLayout.SOUTH);
+    }
+
+    public Lista getLista(){
+        return l;
     }
 }

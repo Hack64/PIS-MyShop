@@ -244,9 +244,63 @@ public class UtentiPuntoVenditaDAO implements IUtentiPuntoVenditaDAO {
     }
 
     @Override
-    public int add(Utente utente, PuntoVendita puntoVendita, int disattivato, int isManager) {
+    public boolean isUserRegisteredInShop(int idUtente, int idPuntoVendita) {
         executor = new DbOperationExecutor();
-        sql = "INSERT INTO UtentePuntoVendita VALUES ('" + puntoVendita.getIdPuntoVendita() + "','" + utente.getIdUtente() + "','" + disattivato + "','" + isManager + "');";
+        sql = "SELECT count(*) AS C FROM UtentePuntoVendita WHERE idUtente  = '" + idUtente + "' AND idPuntoVendita = '" + idPuntoVendita + "';";
+        dbOperation = new ReadDbOperation(sql);
+        rs = (ResultSet) executor.executeOperation(dbOperation);
+        boolean isRegistered = false;
+        try{
+            rs.next();
+            if (rs.getRow() == 1 && rs.getInt("C")==1){
+                isRegistered = true;
+            }
+        } catch (SQLException e) {
+            // handle any errors
+            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("VendorError: " + e.getErrorCode());
+        } catch (NullPointerException e) {
+            // handle any errors
+            System.out.println("Resultset: " + e.getMessage());
+        }
+        finally {
+            executor.closeOperation(dbOperation);
+        }
+        return isRegistered;
+    }
+
+    @Override
+    public boolean isUserPreferredShop(int idUtente, int idPuntoVendita) {
+        executor = new DbOperationExecutor();
+        sql = "SELECT preferito FROM UtentePuntoVendita WHERE idUtente  = '" + idUtente + "' AND idPuntoVendita = '" + idPuntoVendita + "';";
+        dbOperation = new ReadDbOperation(sql);
+        rs = (ResultSet) executor.executeOperation(dbOperation);
+        boolean isPreferred = false;
+        try{
+            rs.next();
+            if (rs.getRow() == 1 && rs.getInt("preferito") == 1){
+                isPreferred = true;
+            }
+        } catch (SQLException e) {
+            // handle any errors
+            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("VendorError: " + e.getErrorCode());
+        } catch (NullPointerException e) {
+            // handle any errors
+            System.out.println("Resultset: " + e.getMessage());
+        }
+        finally {
+            executor.closeOperation(dbOperation);
+        }
+        return isPreferred;
+    }
+
+    @Override
+    public int add(Utente utente, PuntoVendita puntoVendita, int disattivato, int isManager, int preferito) {
+        executor = new DbOperationExecutor();
+        sql = "INSERT INTO UtentePuntoVendita VALUES ('" + puntoVendita.getIdPuntoVendita() + "','" + utente.getIdUtente() + "','" + disattivato + "','" + isManager + "','" + preferito + "');";
         dbOperation = new WriteDbOperation(sql);
         int rowCount = (int) executor.executeOperation(dbOperation);
         executor.closeOperation(dbOperation);
@@ -264,9 +318,9 @@ public class UtentiPuntoVenditaDAO implements IUtentiPuntoVenditaDAO {
     }
 
     @Override
-    public int update(Utente utente, PuntoVendita puntoVendita, int disattivato, int isManager) {
+    public int update(Utente utente, PuntoVendita puntoVendita, int disattivato, int isManager, int preferito) {
         executor = new DbOperationExecutor();
-        sql = "UPDATE UtentePuntoVendita SET disattivato = '" + disattivato + "', isManager = '" + isManager + "' WHERE idPuntoVendita = '" + puntoVendita.getIdPuntoVendita() + "' AND idUtente = '" + utente.getIdUtente() +"';";
+        sql = "UPDATE UtentePuntoVendita SET disattivato = '" + disattivato + "', isManager = '" + isManager + "', preferito = '" + preferito + "' WHERE idPuntoVendita = '" + puntoVendita.getIdPuntoVendita() + "' AND idUtente = '" + utente.getIdUtente() +"';";
         dbOperation = new WriteDbOperation(sql);
         int rowCount = (int) executor.executeOperation(dbOperation);
         executor.closeOperation(dbOperation);
@@ -290,7 +344,7 @@ public class UtentiPuntoVenditaDAO implements IUtentiPuntoVenditaDAO {
             if (this.isUserShopManagerSomewhere(utente.getIdUtente())){
                 sql = "UPDATE UtentePuntoVendita SET idPuntoVendita = '" + puntoVendita.getIdPuntoVendita()  + "', isManager = '1' WHERE idUtente = '" + utente.getIdUtente() + "';";
             } else {
-                sql = "INSERT INTO UtentePuntoVendita VALUES ('" + puntoVendita.getIdPuntoVendita() + "','" + utente.getIdUtente() + "','0','1');";
+                sql = "INSERT INTO UtentePuntoVendita VALUES ('" + puntoVendita.getIdPuntoVendita() + "','" + utente.getIdUtente() + "','0','1','0');";
             }
             dbOperation = new WriteDbOperation(sql);
             rowCount = (int) executor.executeOperation(dbOperation);

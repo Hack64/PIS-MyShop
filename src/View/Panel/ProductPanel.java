@@ -1,10 +1,9 @@
 package View.Panel;
 
+import Business.MagazzinoBusiness;
+import Business.ProdottiMagazzinoBusiness;
 import Business.SessionManager;
-import Model.ICategoria;
-import Model.IProdotto;
-import Model.Servizio;
-import Model.Utente;
+import Model.*;
 import View.AppFrame;
 import View.Listener.ProductPanelListener;
 
@@ -24,6 +23,7 @@ public class ProductPanel extends JPanel {
         JLabel lblCostoProdotto = null;
         JLabel lblMediaValutazioni = null;
         JLabel lblCategorieProdotti = null;
+        JLabel lblQuantitaMagazzino = null;
 
         JButton btnAggiungi = null;
         JButton btnCommenti = null;
@@ -33,7 +33,7 @@ public class ProductPanel extends JPanel {
 
         JPanel imageSide = new JPanel(new GridLayout(3,1));
         JLabel label = new JLabel(img);
-        imageSide.setBorder(new EtchedBorder());
+        //imageSide.setBorder(new EtchedBorder());
         imageSide.add(label);
 
         JPanel productInfoPanel = new JPanel(new BorderLayout());
@@ -53,6 +53,9 @@ public class ProductPanel extends JPanel {
         //ProductDetails
         ProductPanelListener productPanelListener;
         if (servizio == null){
+            PuntoVendita p = (PuntoVendita) SessionManager.getInstance().getSession().get("currentShop");
+
+            Disponibilita d = ProdottiMagazzinoBusiness.getInstance().findByProductAndWarehouse(prodotto.getIdProdotto(), MagazzinoBusiness.getInstance().findWarehouseByShopID(p.getIdPuntoVendita()).getIdMagazzino());
             productPanelListener = new ProductPanelListener(appFrame, prodotto.getIdProdotto());
             ArrayList<String> categorie = new ArrayList<>();
             for (ICategoria c1:prodotto.getCategorie()){
@@ -62,6 +65,7 @@ public class ProductPanel extends JPanel {
             lblCostoProdotto = new JLabel("Costo:      €" + prodotto.getCosto());
             lblMediaValutazioni = new JLabel("Media Valutazioni:      " + prodotto.getMediaValutazione());
             lblCategorieProdotti = new JLabel("Categorie: " + categorie);
+            lblQuantitaMagazzino = new JLabel("Disponibili: " + d.getQta());
 
             btnCommenti = new JButton("Visualizza commenti");
             btnAggiungi = new JButton("Aggiungi a una lista");
@@ -74,6 +78,7 @@ public class ProductPanel extends JPanel {
             btnFeedback.setActionCommand("btnAddProductFeedback");
             btnFeedback.addActionListener(productPanelListener);
 
+            lblQuantitaMagazzino.setFont(new Font("Noto Sans", Font.PLAIN, 18));
 
             //ProductDescription
             txtAreaDescrizione = new JTextArea(prodotto.getDescrizione(), 7, 1);
@@ -114,12 +119,16 @@ public class ProductPanel extends JPanel {
         lblNomeProdotto.setFont(new Font("Noto Sans", Font.BOLD, 40));
         lblCostoProdotto.setFont(new Font("Noto Sans", Font.PLAIN, 20));
         lblMediaValutazioni.setFont(new Font("Noto Sans", Font.PLAIN, 20));
+        lblCategorieProdotti.setFont(new Font("Noto Sans", Font.PLAIN, 18));
         txtAreaDescrizione.setFont(new Font("Noto Sans", Font.PLAIN, 18));
 
         productDetailsPanel.add(lblNomeProdotto);
         productDetailsPanel.add(lblCostoProdotto);
         productDetailsPanel.add(lblMediaValutazioni);
         productDetailsPanel.add(lblCategorieProdotti);
+        if (prodotto != null){
+            productDetailsPanel.add(lblQuantitaMagazzino);
+        }
 
         c.gridx=0;
         c.gridy=0;

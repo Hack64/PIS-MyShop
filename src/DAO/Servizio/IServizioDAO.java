@@ -15,4 +15,5 @@ public interface IServizioDAO {
     int add(Servizio servizio);
     int removeById(int idServizio);
     int update(Servizio servizio);
+    int updateScore(float media, Servizio servizio);
 }

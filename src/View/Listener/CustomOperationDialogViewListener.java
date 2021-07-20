@@ -60,11 +60,11 @@ public class CustomOperationDialogViewListener implements ActionListener {
                     String esit = "Prodotto aggiunto con successo!";
                     JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
                     operationDialogView.dispose();
-                    appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame));
+                    appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame, null));
                 } else {
                     String esit = "Errore durante l'aggiunta del prodotto!";
                     JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
-                    appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame));
+                    appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame, null));
                 }
                 break;
             case BTN_ADD_COMP_PRODUCT:
@@ -86,11 +86,11 @@ public class CustomOperationDialogViewListener implements ActionListener {
                     String esit = "Prodotto composito aggiunto con successo!";
                     JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
                     operationDialogView.dispose();
-                    appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame));
+                    appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame, null));
                 } else {
                     String esit = "Errore durante l'aggiunta del prodotto composito!";
                     JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
-                    appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame));
+                    appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame, null));
                 }
                 break;
             case BTN_EDIT_PRODUCT:
@@ -103,11 +103,11 @@ public class CustomOperationDialogViewListener implements ActionListener {
                         String esit = "Prodotto modificato con successo!";
                         JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
                         operationDialogView.dispose();
-                        appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame));
+                        appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame, null));
                     } else {
                         String esit = "Errore durante l'aggiunta del prodotto!";
                         JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
-                        appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame));
+                        appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame, null));
                     }
                 }
                 break;
@@ -127,11 +127,11 @@ public class CustomOperationDialogViewListener implements ActionListener {
                             String esit = "Prodotto composito modificato con successo!";
                             JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
                             operationDialogView.dispose();
-                            appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame));
+                            appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame, null));
                     } else {
                         String esit = "Errore durante la modifica del prodotto!";
                         JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
-                        appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame));
+                        appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame, null));
                     }
                 }
                 break;
@@ -148,11 +148,11 @@ public class CustomOperationDialogViewListener implements ActionListener {
                     String esit = "Servizio aggiunto con successo!";
                     JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
                     operationDialogView.dispose();
-                    appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame));
+                    appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame, null));
                 } else {
                     String esit = "Errore durante l'aggiunta del servizio!";
                     JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
-                    appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame));
+                    appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame, null));
                 }
                 break;
             case BTN_EDIT_SERVICE:
@@ -166,11 +166,11 @@ public class CustomOperationDialogViewListener implements ActionListener {
                         String esit = "Servizio modificato con successo!";
                         JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
                         operationDialogView.dispose();
-                        appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame));
+                        appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame, null));
                     } else {
                         String esit = "Errore durante la modifica del servizio!";
                         JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
-                        appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame));
+                        appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame, null));
                     }
                 }
                 break;

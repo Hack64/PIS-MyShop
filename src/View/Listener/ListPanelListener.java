@@ -5,6 +5,7 @@ import Model.Lista;
 import View.AppFrame;
 import View.Dialog.ListOperationDialog;
 import View.Panel.ListsPanel;
+import View.Panel.MainCatalogPanel;
 import View.Panel.UsersPanel;
 
 import javax.swing.*;
@@ -20,6 +21,7 @@ public class ListPanelListener implements ActionListener {
     public final static String BTN_EDIT_LIST = "btnEdit";
     public final static String BTN_DELETE_LIST = "btnDelete";
     public final static String BTN_SET_PAID = "btnPay";
+    public final static String BTN_SHOW_PRODUCTS = "btnShowProducts";
 
     public ListPanelListener(AppFrame appFrame, JTable table){
         this.appFrame = appFrame;
@@ -83,6 +85,14 @@ public class ListPanelListener implements ActionListener {
                     JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
                 }
                 break;
+            case BTN_SHOW_PRODUCTS:
+                if (table.getSelectedRowCount() == 1){
+                    int row = table.getSelectedRow();
+                    int col = 0;
+                    int idLista = (Integer)table.getModel().getValueAt(row, col);
+                    Lista l = ListaBusiness.getInstance().find(idLista).getLista();
+                    appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame, l));
+                }
         }
 
     }

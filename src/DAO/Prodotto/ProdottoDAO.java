@@ -296,4 +296,14 @@ public class ProdottoDAO implements IProdottoDAO {
         return rowCount;
     }
 
+    @Override
+    public int updateScore(float media, IProdotto prodotto) {
+        executor = new DbOperationExecutor();
+        sql = "UPDATE Prodotto SET mediaValutazioni = '" + media + "' WHERE idProdotto = '" + prodotto.getIdProdotto() + "';";
+        dbOperation = new WriteDbOperation(sql);
+        int rowCount = (int) executor.executeOperation(dbOperation);
+        executor.closeOperation(dbOperation);
+        return rowCount;
+    }
+
 }
