@@ -1,5 +1,7 @@
 package Business;
 
+import Utils.IEmailSenderAPI;
+
 public abstract class Email {
     protected IEmailSenderAPI emailSenderAPI;
 

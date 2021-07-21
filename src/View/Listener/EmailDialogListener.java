@@ -1,7 +1,7 @@
 package View.Listener;
 
 import Business.ComunicazioneEmail;
-import Business.EmailSenderAPI;
+import Utils.EmailSenderAPI;
 import Business.SessionManager;
 import Business.UtenteBusiness;
 import Model.PuntoVendita;

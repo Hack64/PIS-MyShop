@@ -1,5 +1,7 @@
 package Business;
 
+import Utils.IEmailSenderAPI;
+
 public class ComunicazioneEmail extends Email{
 
     private String destinatario;

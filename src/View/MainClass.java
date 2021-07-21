@@ -1,5 +1,12 @@
 package View;
 
+import Business.Documento;
+import Business.DocumentoListaAcquisto;
+import Business.ListaBusiness;
+import Model.Lista;
+import Utils.PdfAPI;
+
+
 import javax.swing.*;
 import java.time.LocalDate;
 
@@ -30,6 +37,9 @@ public class MainClass {
 
         /*ComunicazioneEmail email = new ComunicazioneEmail("marco.rizzo.00@outlook.com","Test", "Mail di prova", new EmailSenderAPI());
         email.invia();*/
-        new AppFrame();
+        /*new AppFrame();*/
+        Lista l = ListaBusiness.getInstance().find(19).getLista();
+        Documento doc = new DocumentoListaAcquisto(l, new PdfAPI());
+        doc.invia();
     }
 }
