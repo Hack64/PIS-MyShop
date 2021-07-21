@@ -4,6 +4,7 @@ import Business.ListaBusiness;
 import View.AppFrame;
 import View.Dialog.ListOperationDialog;
 import View.Panel.ListsPanel;
+import View.Panel.MainListsPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -32,11 +33,11 @@ public class ListDialogListener implements ActionListener {
                     String esit = "Lista creata con successo!";
                     JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
                     listOperationDialog.dispose();
-                    appFrame.setCurrentMainPanel(new ListsPanel(appFrame, false, null));
+                    appFrame.setCurrentMainPanel(new MainListsPanel(appFrame));
                 } else {
                     String esit = "Errore durante la creazione della lsita!";
                     JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
-                    appFrame.setCurrentMainPanel(new ListsPanel(appFrame, false, null));
+                    appFrame.setCurrentMainPanel(new MainListsPanel(appFrame));
                 }
                 break;
             case BTN_EDIT_LIST:
@@ -45,11 +46,11 @@ public class ListDialogListener implements ActionListener {
                     String esit = "Lista modificata con successo!";
                     JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
                     listOperationDialog.dispose();
-                    appFrame.setCurrentMainPanel(new ListsPanel(appFrame, false, null));
+                    appFrame.setCurrentMainPanel(new MainListsPanel(appFrame));
                 } else {
                     String esit = "Errore durante la modifica della lsita!";
                     JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
-                    appFrame.setCurrentMainPanel(new ListsPanel(appFrame, false, null));
+                    appFrame.setCurrentMainPanel(new MainListsPanel(appFrame));
                 }
                 break;
         }

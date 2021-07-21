@@ -83,16 +83,20 @@ public class CatalogPanelListener  implements ActionListener {
                         int st = ListaBusiness.getInstance().deleteProductFromList(l, p);
                         if (st == 1){
                             JOptionPane.showMessageDialog(appFrame, "Prodotto eliminato dalla lista con successo", "Successo", JOptionPane.INFORMATION_MESSAGE);
+
                             PuntoVendita pv = (PuntoVendita)SessionManager.getInstance().getSession().get("currentShop");
                             Magazzino m = MagazzinoBusiness.getInstance().findWarehouseByShopID(pv.getIdPuntoVendita());
                             Disponibilita d = ProdottiMagazzinoBusiness.getInstance().findByProductAndWarehouse(p.getIdProdotto(), m.getIdMagazzino());
+
                             for (Map.Entry<IProdotto, Map.Entry<String, Integer>> entry : l.getProdotti().entrySet()){
                                 if (entry.getKey().getIdProdotto() == p.getIdProdotto()){
                                     d.setQta(d.getQta()+entry.getValue().getValue());
                                 }
                             }
                             ProdottiMagazzinoBusiness.getInstance().update(d);
-                            appFrame.setCurrentMainPanel(new CatalogPanel(appFrame, false, ListaBusiness.getInstance().find(l.getIdLista()).getLista()));
+                            l = ListaBusiness.getInstance().find(l.getIdLista()).getLista();
+                            System.out.println(l.getPrezzoTotale());
+                            appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame, ListaBusiness.getInstance().find(l.getIdLista()).getLista()));
                         } else {
                             JOptionPane.showMessageDialog(appFrame, "Errore durante la rimozione del prodotto dalla lista", "Errore", JOptionPane.ERROR_MESSAGE);
                         }

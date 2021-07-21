@@ -14,7 +14,6 @@ public class MainClass {
 
     public static void main(String[] args) {
 
-
         System.out.println(LocalDate.now());
 
         try {
@@ -37,9 +36,9 @@ public class MainClass {
 
         /*ComunicazioneEmail email = new ComunicazioneEmail("marco.rizzo.00@outlook.com","Test", "Mail di prova", new EmailSenderAPI());
         email.invia();*/
-        /*new AppFrame();*/
-        Lista l = ListaBusiness.getInstance().find(19).getLista();
+        new AppFrame();
+        /*Lista l = ListaBusiness.getInstance().find(19).getLista();
         Documento doc = new DocumentoListaAcquisto(l, new PdfAPI());
-        doc.invia();
+        doc.invia();*/
     }
 }

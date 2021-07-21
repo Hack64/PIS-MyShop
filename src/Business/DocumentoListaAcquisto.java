@@ -18,12 +18,12 @@ public class DocumentoListaAcquisto extends Documento{
     }
 
     @Override
-    public void invia() {
+    public int invia() {
 
         // 1. genera il pdf
         List<String> lines = new ArrayList<>();
         lines.add(lista.getNomeLista() + ",  " + lista.getDataCreazione() + ",  ID:  " + lista.getIdLista() );
-
+        lines.add("Prodotti: ");
         if (lista.getProdotti().isEmpty()){
             lines.add("Nessun prodotto in lista!");
         } else {
@@ -33,7 +33,7 @@ public class DocumentoListaAcquisto extends Documento{
         }
 
         lines.add("------------------------------------------------------------------------------------------------------");
-
+        lines.add("Servizi: ");
         if (lista.getServizi().isEmpty()){
             lines.add("Nessun servizio in lista!");
         } else {
@@ -61,6 +61,8 @@ public class DocumentoListaAcquisto extends Documento{
 
         // 2. lo invia...
         ListaAcquistoEmail email = new ListaAcquistoEmail(lista.getUtente().getEmail(), "Lista acquisto: " + lista.getNomeLista(), "Grazie per aver acquistato da myShop!", tempFile, new EmailSenderAPI());
-        email.invia();
+        int st = email.invia();
+
+        return st;
     }
 }

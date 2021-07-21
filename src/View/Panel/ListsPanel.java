@@ -14,15 +14,17 @@ import java.util.ArrayList;
 
 public class ListsPanel extends JPanel {
 
-    public ListsPanel(AppFrame appFrame, boolean systemView, Utente utente){
+    public ListsPanel(AppFrame appFrame, boolean systemView, Lista.Stato stato, Utente utente){
         setLayout(new BorderLayout());
 
         ArrayList<Lista> listeUtente;
 
         if (systemView) {
             listeUtente = ListaBusiness.getInstance().findAllListsByUserAndState(utente, Lista.Stato.NON_PAGATA);
+        } else if (stato.equals(Lista.Stato.NON_PAGATA)){
+            listeUtente = ListaBusiness.getInstance().findAllListsByUserAndState((Utente) SessionManager.getInstance().getSession().get("loggedUser"), Lista.Stato.NON_PAGATA);
         } else {
-            listeUtente = ListaBusiness.getInstance().findAllListsByUser((Utente) SessionManager.getInstance().getSession().get("loggedUser"));
+            listeUtente = ListaBusiness.getInstance().findAllListsByUserAndState((Utente) SessionManager.getInstance().getSession().get("loggedUser"), Lista.Stato.PAGATA);
         }
 
         JTable tabellaListe = new JTable(new ListaTableModel(listeUtente));
@@ -43,8 +45,12 @@ public class ListsPanel extends JPanel {
         btnDelete.setActionCommand("btnDelete");
         JButton btnShowProducts = new JButton("Visualizza prodotti");
         btnShowProducts.setActionCommand("btnShowProducts");
+        JButton btnGeneratePDF = new JButton("Genera PDF");
+        btnGeneratePDF.setActionCommand("btnGeneratePDF");
         JButton btnPay = new JButton("Imposta come pagata");
         btnPay.setActionCommand("btnPay");
+        JButton btnDuplicate = new JButton("Duplica Lista");
+        btnDuplicate.setActionCommand("btnDuplicate");
 
 
         ListPanelListener listPanelListener = new ListPanelListener(appFrame, tabellaListe);
@@ -53,15 +59,20 @@ public class ListsPanel extends JPanel {
         btnEdit.addActionListener(listPanelListener);
         btnPay.addActionListener(listPanelListener);
         btnShowProducts.addActionListener(listPanelListener);
+        btnGeneratePDF.addActionListener(listPanelListener);
+        btnDuplicate.addActionListener(listPanelListener);
 
-        if (!systemView){
+        if (systemView){
+            operazionitabella.add(btnPay);
+        } else if (stato.equals(Lista.Stato.NON_PAGATA)) {
             operazionitabella.add(btnAdd);
             operazionitabella.add(btnEdit);
             operazionitabella.add(btnDelete);
-        } else {
-            operazionitabella.add(btnPay);
+            operazionitabella.add(btnGeneratePDF);
         }
         operazionitabella.add(btnShowProducts);
+        operazionitabella.add(btnDuplicate);
+
 
         add(operazionitabella, BorderLayout.SOUTH);
     }

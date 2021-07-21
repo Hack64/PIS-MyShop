@@ -15,6 +15,7 @@ import Model.Responses.ListaResponse;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class ListaBusiness {
     private static ListaBusiness instance;
@@ -139,9 +140,16 @@ public class ListaBusiness {
     }
 
     public int deleteProductFromList(Lista l, IProdotto p){
+        IListaDAO listaDAO = ListaDAO.getInstance();
         IProdottiListaDAO prodottiListaDAO = ProdottiListaDAO.getInstance();
 
-        return prodottiListaDAO.removeByID(p.getIdProdotto(), l.getIdLista());
+        int qta = isProductAlreadyInList(l, p);
+        prodottiListaDAO.removeByID(p.getIdProdotto(), l.getIdLista());
+
+        Lista lista = listaDAO.findByID(l.getIdLista());
+        lista.setPrezzoTotale(lista.getPrezzoTotale() - (qta*p.getCosto()));
+
+        return listaDAO.update(lista);
     }
 
     public int isProductAlreadyInList(Lista l, IProdotto p){
@@ -150,5 +158,29 @@ public class ListaBusiness {
         return prodottiListaDAO.isProductAlreadyInList(p.getIdProdotto(), l.getIdLista());
     }
 
+    public int duplicateList(Lista l){
+        listaDAO = ListaDAO.getInstance();
+        IProdottiListaDAO prodottiListaDAO = ProdottiListaDAO.getInstance();
+        IServiziListaDAO serviziListaDAO = ServiziListaDAO.getInstance();
+        Lista duplicate = new Lista();
+        duplicate.setNomeLista(l.getNomeLista() + " - copia");
+        duplicate.setUtente(l.getUtente());
+        duplicate.setProdotti(l.getProdotti());
+        duplicate.setServizi(l.getServizi());
+        duplicate.setDataCreazione(LocalDate.now());
+        duplicate.setStato(Lista.Stato.NON_PAGATA);
+        duplicate.setPrezzoTotale(l.getPrezzoTotale());
+
+        int st = listaDAO.add(duplicate);
+        //TODO: trova un modo di prendere la lista e di gestire i prenotati
+        for (Map.Entry<IProdotto, Map.Entry<String, Integer>> entry : duplicate.getProdotti().entrySet()){
+            prodottiListaDAO.add(duplicate, entry.getKey(), entry.getValue().getKey(), entry.getValue().getValue());
+        }
+        for (Servizio s:duplicate.getServizi()){
+            serviziListaDAO.add(duplicate, s);
+        }
+
+        return st;
+    }
 
 }

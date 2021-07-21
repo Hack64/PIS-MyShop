@@ -32,7 +32,7 @@ public class SideMenuListener implements ActionListener {
                 break;
             case BTN_LISTS:
                 System.out.println("premuto lists");
-                appFrame.setCurrentMainPanel(new ListsPanel(appFrame, false, null));
+                appFrame.setCurrentMainPanel(new MainListsPanel(appFrame));
                 break;
             case BTN_CATALOG:
                 System.out.println("Premuto Gestisci Catalogo");

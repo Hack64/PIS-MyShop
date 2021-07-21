@@ -106,10 +106,24 @@ public class Lista {
     }
 
     public float getPrezzoTotale() {
-        return prezzoTotale;
+        return this.prezzoTotale; //non toccare o si rompe tutto
     }
 
     public void setPrezzoTotale(float prezzoTotale) {
         this.prezzoTotale = prezzoTotale;
     }
+
+    /*float prezzo = 0.0f;
+        if ((this.prodotti == null && this.servizi == null) || (this.prodotti.isEmpty() && this.servizi.isEmpty())){
+        return 0.0f;
+    }
+        for (Map.Entry<IProdotto, Map.Entry<String, Integer>> entry : this.prodotti.entrySet()){
+        prezzo += entry.getKey().getCosto()*entry.getValue().getValue();
+    }
+
+        for (Servizio s:this.servizi){
+        prezzo+=s.getCosto();
+    }
+
+        return prezzo;*/
 }

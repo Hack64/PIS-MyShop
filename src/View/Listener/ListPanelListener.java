@@ -1,14 +1,13 @@
 package View.Listener;
 
-import Business.ListaBusiness;
-import Business.MagazzinoBusiness;
-import Business.ProdottiMagazzinoBusiness;
-import Business.SessionManager;
+import Business.*;
 import Model.*;
+import Utils.PdfAPI;
 import View.AppFrame;
 import View.Dialog.ListOperationDialog;
 import View.Panel.ListsPanel;
 import View.Panel.MainCatalogPanel;
+import View.Panel.MainListsPanel;
 import View.Panel.UsersPanel;
 
 import javax.swing.*;
@@ -26,6 +25,8 @@ public class ListPanelListener implements ActionListener {
     public final static String BTN_DELETE_LIST = "btnDelete";
     public final static String BTN_SET_PAID = "btnPay";
     public final static String BTN_SHOW_PRODUCTS = "btnShowProducts";
+    public final static String BTN_GENERATE_PDF = "btnGeneratePDF";
+    public final static String BTN_DUPLICATE_LIST = "btnDuplicate";
 
     public ListPanelListener(AppFrame appFrame, JTable table){
         this.appFrame = appFrame;
@@ -65,7 +66,7 @@ public class ListPanelListener implements ActionListener {
                     if (i==1){
                         esit = "Lista eliminata con successo!";
                         JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
-                        appFrame.setCurrentMainPanel(new ListsPanel(appFrame, false, null));
+                        appFrame.setCurrentMainPanel(new MainListsPanel(appFrame));
                     } else{
                         esit = "Errore durante l'eliminazione";
                         JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
@@ -103,6 +104,41 @@ public class ListPanelListener implements ActionListener {
                     int idLista = (Integer)table.getModel().getValueAt(row, col);
                     Lista l = ListaBusiness.getInstance().find(idLista).getLista();
                     appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame, l));
+                }
+                break;
+            case BTN_GENERATE_PDF:
+                if (table.getSelectedRowCount() == 1){
+                    int row = table.getSelectedRow();
+                    int col = 0;
+                    int idLista = (Integer)table.getModel().getValueAt(row, col);
+                    Lista l = ListaBusiness.getInstance().find(idLista).getLista();
+                    Documento doc = new DocumentoListaAcquisto(l, new PdfAPI());
+                    int st = doc.invia();
+                    if (st == 0){
+                        JOptionPane.showMessageDialog(appFrame, "Lista generata con successo e inviata al vostro indirizzo e-mail!", "Successo", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(appFrame, "Errore durante la generazione del PDF", "Errore", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    esit = "Devi selezionare un elemento per generare il PDF!";
+                    JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
+                }
+                break;
+            case BTN_DUPLICATE_LIST:
+                if (table.getSelectedRowCount() == 1){
+                    int row = table.getSelectedRow();
+                    int col = 0;
+                    int idLista = (Integer)table.getModel().getValueAt(row, col);
+                    Lista l = ListaBusiness.getInstance().find(idLista).getLista();
+                    int st = ListaBusiness.getInstance().duplicateList(l);
+                    if (st == 1){
+                        JOptionPane.showMessageDialog(appFrame, "Lista duplicata con successo!", "Successo", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(appFrame, "Errore durante la duplicazione della lista!", "Errore", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    esit = "Devi selezionare un elemento per generare il PDF!";
+                    JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
                 }
         }
 

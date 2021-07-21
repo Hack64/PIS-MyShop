@@ -102,7 +102,7 @@ public class UsersPanelListener implements ActionListener {
                     int idUtente = (Integer)table.getModel().getValueAt(row, col);
                     Utente currentUser = (Utente)SessionManager.getInstance().getSession().get("loggedUser");
                     if (idUtente != currentUser.getIdUtente()) {
-                        appFrame.setCurrentMainPanel(new ListsPanel(appFrame, true, UtenteBusiness.getInstance().findByID(idUtente).getUtente()));
+                        appFrame.setCurrentMainPanel(new ListsPanel(appFrame, true, null, UtenteBusiness.getInstance().findByID(idUtente).getUtente()));
                     } else {
                         JOptionPane.showMessageDialog(appFrame, "Per visualizzare le tue liste, usa l'apposito tasto del menu laterale", "Errore", JOptionPane.ERROR_MESSAGE);
                     }

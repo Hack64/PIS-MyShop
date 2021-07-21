@@ -58,19 +58,27 @@ public class ProductPanelListener implements ActionListener {
                 appFrame.setCurrentMainPanel(new FeedbacksPanel(appFrame, servicesFeedbackList));
                 break;
             case BTN_ADD_PRODUCT_FEEDBACK:
-                ArrayList<Integer> idProdottiPagati = (ArrayList<Integer>) SessionManager.getInstance().getSession().get("paidProducts");
-                if (!idProdottiPagati.contains(idArticolo)){
-                    JOptionPane.showMessageDialog(appFrame, "Non puoi lasciare feedback se non hai acquistato l'articolo", "Errore", JOptionPane.ERROR_MESSAGE );
-                } else {
-                    new FeedbackDialog(appFrame, idArticolo, true);
+                if(SessionManager.getInstance().getSession().get("loggedUser") != null){
+                    ArrayList<Integer> idProdottiPagati = (ArrayList<Integer>) SessionManager.getInstance().getSession().get("paidProducts");
+                    if (!idProdottiPagati.contains(idArticolo)){
+                        JOptionPane.showMessageDialog(appFrame, "Non puoi lasciare feedback se non hai acquistato l'articolo", "Errore", JOptionPane.ERROR_MESSAGE );
+                    } else {
+                        new FeedbackDialog(appFrame, idArticolo, true);
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(appFrame, "Devi essere un utente registrato per lasciare un feedback!", "Errore", JOptionPane.ERROR_MESSAGE);
                 }
                 break;
             case BTN_ADD_SERVICE_FEEDBACK:
-                ArrayList<Integer> idServiziPagati = (ArrayList<Integer>) SessionManager.getInstance().getSession().get("paidServices");
-                if (!idServiziPagati.contains(idArticolo)){
-                    JOptionPane.showMessageDialog(appFrame, "Non puoi lasciare feedback se non hai acquistato l'articolo", "Errore", JOptionPane.ERROR_MESSAGE );
-                } else {
-                    new FeedbackDialog(appFrame, idArticolo, false);
+                if (SessionManager.getInstance().getSession().get("loggedUser") != null){
+                    ArrayList<Integer> idServiziPagati = (ArrayList<Integer>) SessionManager.getInstance().getSession().get("paidServices");
+                    if (!idServiziPagati.contains(idArticolo)){
+                        JOptionPane.showMessageDialog(appFrame, "Non puoi lasciare feedback se non hai acquistato l'articolo", "Errore", JOptionPane.ERROR_MESSAGE );
+                    } else {
+                        new FeedbackDialog(appFrame, idArticolo, false);
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(appFrame, "Devi essere un utente registrato per lasciare un feedback!", "Errore", JOptionPane.ERROR_MESSAGE);
                 }
                 break;
         }

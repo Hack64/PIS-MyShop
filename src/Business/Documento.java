@@ -10,5 +10,5 @@ public abstract class Documento {
         this.pdfAPI = pdfAPI;
     }
 
-    public abstract void invia();
+    public abstract int invia();
 }
