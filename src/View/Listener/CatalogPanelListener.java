@@ -101,7 +101,7 @@ public class CatalogPanelListener  implements ActionListener {
                         }
                     }
                 } else {
-                    esit = "Devi selezionare un elemento per modificarlo";
+                    esit = "Devi selezionare un elemento per eliminarlo dalla lista";
                     JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
                 }
                 break;

@@ -152,6 +152,18 @@ public class ListaBusiness {
         return listaDAO.update(lista);
     }
 
+    public int deleteServiceFromList(Lista l, Servizio s){
+        IListaDAO listaDAO = ListaDAO.getInstance();
+        IServiziListaDAO serviziListaDAO = ServiziListaDAO.getInstance();
+
+        serviziListaDAO.removeByID(s.getIdServizio(), l.getIdLista());
+
+        Lista lista = listaDAO.findByID(l.getIdLista());
+        lista.setPrezzoTotale(lista.getPrezzoTotale() - s.getCosto());
+
+        return listaDAO.update(lista);
+    }
+
     public int isProductAlreadyInList(Lista l, IProdotto p){
         IProdottiListaDAO prodottiListaDAO = ProdottiListaDAO.getInstance();
 

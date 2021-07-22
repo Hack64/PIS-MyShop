@@ -44,14 +44,14 @@ public class ServiziPanel extends JPanel {
 
         btnAdd.setActionCommand("btnAdd");
         btnEdit.setActionCommand("btnEdit");
-        if (l != null) {
+        if (l == null) {
             btnDelete.setActionCommand("btnDelete");
         } else {
             btnDelete.setActionCommand("btnDeleteFromList");
         }
         btnCategories.setActionCommand("btnCategories");
 
-        ServiziPanelListener serviziPanelListener = new ServiziPanelListener(appFrame, tabellaServizi);
+        ServiziPanelListener serviziPanelListener = new ServiziPanelListener(appFrame, tabellaServizi, l);
         btnAdd.addActionListener(serviziPanelListener);
         btnEdit.addActionListener(serviziPanelListener);
         btnDelete.addActionListener(serviziPanelListener);

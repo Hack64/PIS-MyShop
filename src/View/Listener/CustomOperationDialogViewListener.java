@@ -159,7 +159,7 @@ public class CustomOperationDialogViewListener implements ActionListener {
                     }
                 }
                 categoriesChooserDialog.dispose();
-                if (Integer.parseInt(operationDialogView.getTxtPrezzo()) >= 0 && operationDialogView.getScaffale() >=0 && operationDialogView.getCorsia() >= 0) {
+                if (Integer.parseInt(operationDialogView.getTxtPrezzo()) >= 0) {
                     int statusServ = ServizioBusiness.getInstance().addNew(operationDialogView.getTxtNome(), img, operationDialogView.getTxtDescrizione(), Float.parseFloat(operationDialogView.getTxtPrezzo()), FornitoreBusiness.getInstance().findByName((String) operationDialogView.getProduttore()).getFornitore(), categorieS);
                     if (statusServ == 2) {
                         String esit = "Servizio aggiunto con successo!";
@@ -181,7 +181,7 @@ public class CustomOperationDialogViewListener implements ActionListener {
                 if (img == null){
                     String esit = "Coglione imposta l'immagine";
                     JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
-                } else if (Integer.parseInt(operationDialogView.getTxtPrezzo()) >= 0 && operationDialogView.getScaffale() >=0 && operationDialogView.getCorsia() >= 0) {
+                } else if (Integer.parseInt(operationDialogView.getTxtPrezzo()) >= 0) {
                     int st = ServizioBusiness.getInstance().update(operationDialogView.getTxtNome(), img, operationDialogView.getTxtDescrizione(), Float.parseFloat(operationDialogView.getTxtPrezzo()), fo, operationDialogView.getID());
                     if (st == 1) {
                         String esit = "Servizio modificato con successo!";

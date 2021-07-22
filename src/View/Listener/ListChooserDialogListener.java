@@ -47,7 +47,7 @@ public class ListChooserDialogListener implements ActionListener {
                 break;
             case BTN_ADD_SERVICE:
                 st = ListaBusiness.getInstance().addServiceToList(listChooserDialog.getSelectedList().getLista(), ServizioBusiness.getInstance().find(listChooserDialog.getIdArticolo()).getServizio());
-                if (st == 1){
+                if (st == 2){
                     JOptionPane.showMessageDialog(appFrame, "Servizio aggiunto alla lista con successo!", "Successo", JOptionPane.INFORMATION_MESSAGE);
                     listChooserDialog.dispose();
                 } else{
