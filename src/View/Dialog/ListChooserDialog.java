@@ -36,6 +36,10 @@ public class ListChooserDialog extends JDialog {
 
         ArrayList<Lista> liste = ListaBusiness.getInstance().findAllListsByUserAndState((Utente) SessionManager.getInstance().getSession().get("loggedUser"), Lista.Stato.NON_PAGATA);
         ArrayList<String> liste_box = new ArrayList<>();
+
+        if (liste.isEmpty()){
+            JOptionPane.showMessageDialog(appFrame, "Devi creare almeno una lista per aggiungere articoli!", "Errore", JOptionPane.ERROR_MESSAGE);
+        }
         for (Lista l:liste){
             liste_box.add(l.getIdLista() + " - " + l.getNomeLista());
         }
@@ -43,7 +47,6 @@ public class ListChooserDialog extends JDialog {
 
         JButton btnOk = new JButton("Ok");
         JButton btnAnnulla = new JButton("Annulla");
-
 
         btnAnnulla.addActionListener(e-> dispose());
 
@@ -66,7 +69,11 @@ public class ListChooserDialog extends JDialog {
             btnOk.setActionCommand("btnOkService");
         }
         ListChooserDialogListener listChooserDialogListener = new ListChooserDialogListener(appFrame, this);
-        btnOk.addActionListener(listChooserDialogListener);
+        if (liste.isEmpty()){
+            btnOk.addActionListener(e->dispose());
+        } else {
+            btnOk.addActionListener(listChooserDialogListener);
+        }
         form.add(lblLista,c);
         c.gridx=1;
         form.add(boxListe,c);

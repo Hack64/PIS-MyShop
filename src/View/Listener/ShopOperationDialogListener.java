@@ -39,45 +39,55 @@ public class ShopOperationDialogListener implements ActionListener {
 
         switch (cmd){
             case BTN_ADD_SHOP:
-                ArrayList<IProdotto> prodotti = new ArrayList<>();
-                ArrayList<Servizio> servizi = new ArrayList<>();
-                for (String s:shopProductsChooserDialog.getSelectedProducts()){
-                    prodotti.add(ProdottoBusiness.getInstance().findByName(s).getProdotto());
-                }
-                for (String s:shopServicesChooserDialog.getSelectedServices()){
-                    servizi.add(ServizioBusiness.getInstance().findByName(s).getServizio());
-                }
-                int st = PuntoVenditaBusiness.getInstance().addNewShop(shopOperationDialog.getTxtShopVia(), shopOperationDialog.getTxtShopCAP(), shopOperationDialog.getTxtShopCitta(), shopOperationDialog.getTxtMagVia(), shopOperationDialog.getTxtMagCitta(), shopOperationDialog.getTxtMagCAP(), shopManagerChooserDialog.getSelectedUser(), prodotti, servizi);
-                if (st >= 2+(prodotti.size()*2)+servizi.size()) {
-                    String esit = "Punto Vendita e magazzino creato con successo!";
-                    JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
-                    shopOperationDialog.dispose();
-                    appFrame.setCurrentMainPanel(new ShopsPanel(appFrame));
-                } else {
-                    String esit = "Errore durante la creazione del punto vendita e/o del magazzino!!";
-                    JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
-                    appFrame.setCurrentMainPanel(new ShopsPanel(appFrame));
+                try {
+                    ArrayList<IProdotto> prodotti = new ArrayList<>();
+                    ArrayList<Servizio> servizi = new ArrayList<>();
+                    for (String s:shopProductsChooserDialog.getSelectedProducts()){
+                        prodotti.add(ProdottoBusiness.getInstance().findByName(s).getProdotto());
+                    }
+                    for (String s:shopServicesChooserDialog.getSelectedServices()){
+                        servizi.add(ServizioBusiness.getInstance().findByName(s).getServizio());
+                    }
+                    int st = PuntoVenditaBusiness.getInstance().addNewShop(shopOperationDialog.getTxtShopVia(), shopOperationDialog.getTxtShopCAP(), shopOperationDialog.getTxtShopCitta(), shopOperationDialog.getTxtMagVia(), shopOperationDialog.getTxtMagCitta(), shopOperationDialog.getTxtMagCAP(), shopManagerChooserDialog.getSelectedUser(), prodotti, servizi);
+                    if (st >= 2+(prodotti.size()*2)+servizi.size()) {
+                        String esit = "Punto Vendita e magazzino creato con successo!";
+                        JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
+                        shopOperationDialog.dispose();
+                        appFrame.setCurrentMainPanel(new ShopsPanel(appFrame));
+                    } else {
+                        String esit = "Errore durante la creazione del punto vendita e/o del magazzino!!";
+                        JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
+                        appFrame.setCurrentMainPanel(new ShopsPanel(appFrame));
+                    }
+                } catch (NullPointerException exc){
+                    exc.printStackTrace();
+                    JOptionPane.showMessageDialog(appFrame, "Tutti i campi sono obbligatori!", "Errore", JOptionPane.ERROR_MESSAGE);
                 }
                 break;
             case BTN_EDIT_SHOP:
-                ArrayList<IProdotto> prodottiM = new ArrayList<>();
-                ArrayList<Servizio> serviziM = new ArrayList<>();
-                for (String s:shopProductsChooserDialog.getSelectedProducts()){
-                    prodottiM.add(ProdottoBusiness.getInstance().findByName(s).getProdotto());
-                }
-                for (String s:shopServicesChooserDialog.getSelectedServices()){
-                    serviziM.add(ServizioBusiness.getInstance().findByName(s).getServizio());
-                }
-                int st_e = PuntoVenditaBusiness.getInstance().updateShopAndWarehouse(shopOperationDialog.getID(), shopOperationDialog.getTxtShopVia(), shopOperationDialog.getTxtShopCAP(), shopOperationDialog.getTxtShopCitta(), shopOperationDialog.getTxtMagVia(), shopOperationDialog.getTxtMagCitta(), shopOperationDialog.getTxtMagCAP(), shopManagerChooserDialog.getSelectedUser(), prodottiM, serviziM);
-                if (st_e >= 2+prodottiM.size()+serviziM.size()){
-                    String esit = "Punto vendita e magazzino modificati con successo!";
-                    JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
-                    shopOperationDialog.dispose();
-                    appFrame.setCurrentMainPanel(new ShopsPanel(appFrame));
-                } else {
-                    String esit = "Errore durante la modifica del punto vendita e/o del magazzino!";
-                    JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
-                    appFrame.setCurrentMainPanel(new ShopsPanel(appFrame));
+                try {
+                    ArrayList<IProdotto> prodottiM = new ArrayList<>();
+                    ArrayList<Servizio> serviziM = new ArrayList<>();
+                    for (String s:shopProductsChooserDialog.getSelectedProducts()){
+                        prodottiM.add(ProdottoBusiness.getInstance().findByName(s).getProdotto());
+                    }
+                    for (String s:shopServicesChooserDialog.getSelectedServices()){
+                        serviziM.add(ServizioBusiness.getInstance().findByName(s).getServizio());
+                    }
+                    int st_e = PuntoVenditaBusiness.getInstance().updateShopAndWarehouse(shopOperationDialog.getID(), shopOperationDialog.getTxtShopVia(), shopOperationDialog.getTxtShopCAP(), shopOperationDialog.getTxtShopCitta(), shopOperationDialog.getTxtMagVia(), shopOperationDialog.getTxtMagCitta(), shopOperationDialog.getTxtMagCAP(), shopManagerChooserDialog.getSelectedUser(), prodottiM, serviziM);
+                    if (st_e >= 2+prodottiM.size()+serviziM.size()){
+                        String esit = "Punto vendita e magazzino modificati con successo!";
+                        JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
+                        shopOperationDialog.dispose();
+                        appFrame.setCurrentMainPanel(new ShopsPanel(appFrame));
+                    } else {
+                        String esit = "Errore durante la modifica del punto vendita e/o del magazzino!";
+                        JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
+                        appFrame.setCurrentMainPanel(new ShopsPanel(appFrame));
+                    }
+                } catch (NullPointerException exc){
+                    exc.printStackTrace();
+                    JOptionPane.showMessageDialog(appFrame, "Tutti i campi sono obbligatori!", "Errore", JOptionPane.ERROR_MESSAGE);
                 }
                 break;
             case BTN_MANAGER:

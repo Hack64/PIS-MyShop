@@ -72,6 +72,10 @@ public class ProdottoBusiness {
 
     public int deleteByID(int id){
         prodottoDAO = ProdottoDAO.getInstance();
+        IProdotto p = prodottoDAO.findByID(id);
+        if (p != null){
+            p.getImmagine().delete();
+        }
 
         return prodottoDAO.removeById(id);
     }
@@ -89,17 +93,17 @@ public class ProdottoBusiness {
         /*MODIFICA QUALCOSA*/
         p.setNumeroCommenti(0);
         p.setMediaValutazione(0);
-        int rowCount = prodottoDAO.add(p);
+        int rowCount = prodottoDAO.add(p); //1
         IProdotto p2 = prodottoDAO.getByName(nome);
         if (rowCount==1) {
-            rowCount+=CategoriaBusiness.getInstance().addCategoriesToProduct(p2, categorie);
+            rowCount+=CategoriaBusiness.getInstance().addCategoriesToProduct(p2, categorie); //2
         }
         if (rowCount==2){
             Posizione posizione = new Posizione();
             posizione.setScaffale(scaffale);
             posizione.setCorsia(corsia);
             posizione.setProdotto(p2);
-            rowCount+=posizioneDAO.add(posizione);
+            rowCount+=posizioneDAO.add(posizione); //3
         }
         return rowCount;
     }
@@ -137,6 +141,11 @@ public class ProdottoBusiness {
     public int update(String nome, File immagine, String descrizione, float costo, int idProdotto, int scaffale, int corsia){
         prodottoDAO = ProdottoDAO.getInstance();
         posizioneDAO = PosizioneDAO.getInstance();
+        IProdotto p1 = prodottoDAO.findByID(idProdotto);
+        if (p1 != null && !immagine.getName().equals(p1.getImmagine().getName())){
+            p1.getImmagine().delete();
+        }
+
         ProdottoFactory prodottoFactory = (ProdottoFactory) FactoryProvider.getFactory(FactoryProvider.TipoFactory.PRODOTTO);
         Prodotto p = (Prodotto) prodottoFactory.crea();
         p.setIdProdotto(idProdotto);
@@ -163,6 +172,12 @@ public class ProdottoBusiness {
     public int updateComposite(String nome, File immagine, String descrizione, float costo, int idProdotto, ArrayList<IProdotto> sottoprodotti, int scaffale, int corsia){
         composizioneProdottoDAO = ComposizioneProdottoDAO.getInstance();
         prodottoDAO = ProdottoDAO.getInstance();
+
+
+        IProdotto p1 = prodottoDAO.findByID(idProdotto);
+        if (p1 != null && !immagine.getName().equals(p1.getImmagine().getName())){
+            p1.getImmagine().delete();
+        }
 
         ProdottoCompositoFactory prodottoCompositoFactory = (ProdottoCompositoFactory) FactoryProvider.getFactory(FactoryProvider.TipoFactory.PRODOTTO_COMPOSITO);
         ProdottoComposito pc = (ProdottoComposito) prodottoCompositoFactory.crea();
@@ -226,6 +241,10 @@ public class ProdottoBusiness {
         prodottoDAO = ProdottoDAO.getInstance();
 
         if (composizioneProdottoDAO.isCompositeProduct(idProdotto)){
+            IProdotto p = composizioneProdottoDAO.findByID(idProdotto);
+            if (p != null){
+                p.getImmagine().delete();
+            }
             return prodottoDAO.removeById(idProdotto);
         } else {
             return -1;

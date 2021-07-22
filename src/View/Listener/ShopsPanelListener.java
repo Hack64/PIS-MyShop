@@ -43,7 +43,6 @@ public class ShopsPanelListener implements ActionListener {
                 }
                 break;
             case BTN_DELETE_SHOP:
-
                 if (table.getSelectedRowCount()==1) {
                     int rowToDelete = table.getSelectedRow();
                     int colToDelete = 0;

@@ -42,7 +42,7 @@ public class ImprenditoreOperationDialogView extends JDialog {
     public void setUp(){
         ImprenditoreOperationDialogViewListener imprenditoreOperationDialogViewListener = new ImprenditoreOperationDialogViewListener(appFrame, this);
         setLayout(new GridBagLayout());
-        setSize(475,455);
+        setSize(320,300);
         GridBagConstraints c = new GridBagConstraints();
         c.insets = new Insets(5,2,5,2);
 

@@ -31,16 +31,20 @@ public class ImprenditoreOperationDialogViewListener implements ActionListener {
 
         switch(cmd){
             case BTN_ADD_PRODUCER:
-                int statusProd = ProduttoreBusiness.getInstance().addNewProducer(operationDialogView.getTxtNome(), operationDialogView.getTxtSito(), operationDialogView.getTxtCitta(), operationDialogView.getTxtNazione());
-                if (statusProd == 1){
-                    String esit = "Produttore aggiunto con successo!";
-                    JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
-                    operationDialogView.dispose();
-                    appFrame.setCurrentMainPanel(new ImprenditoriPanel(appFrame));
+                if (!operationDialogView.getTxtNome().isEmpty() && !operationDialogView.getTxtSito().isEmpty() && !operationDialogView.getTxtCitta().isEmpty() && !operationDialogView.getTxtNazione().isEmpty()) {
+                    int statusProd = ProduttoreBusiness.getInstance().addNewProducer(operationDialogView.getTxtNome(), operationDialogView.getTxtSito(), operationDialogView.getTxtCitta(), operationDialogView.getTxtNazione());
+                    if (statusProd == 1) {
+                        String esit = "Produttore aggiunto con successo!";
+                        JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
+                        operationDialogView.dispose();
+                        appFrame.setCurrentMainPanel(new ImprenditoriPanel(appFrame));
+                    } else {
+                        String esit = "Errore durante l'aggiunta del produttore!";
+                        JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
+                        appFrame.setCurrentMainPanel(new ImprenditoriPanel(appFrame));
+                    }
                 } else {
-                    String esit = "Errore durante l'aggiunta del produttore!";
-                    JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
-                    appFrame.setCurrentMainPanel(new ImprenditoriPanel(appFrame));
+                    JOptionPane.showMessageDialog(appFrame, "Tutti i campi sono obbligatori", "Errore", JOptionPane.ERROR_MESSAGE);
                 }
                 break;
             case BTN_EDIT_PRODUCER:
@@ -57,16 +61,20 @@ public class ImprenditoreOperationDialogViewListener implements ActionListener {
                 }
                 break;
             case BTN_ADD_SUPPLIER:
-                int statusFor = FornitoreBusiness.getInstance().addNewSupplier(operationDialogView.getTxtNome(), operationDialogView.getTxtSito(), operationDialogView.getTxtCitta(), operationDialogView.getTxtNazione());
-                if (statusFor == 1){
-                    String esit = "Fornitore aggiunto con successo!";
-                    JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
-                    operationDialogView.dispose();
-                    appFrame.setCurrentMainPanel(new ImprenditoriPanel(appFrame));
+                if (!operationDialogView.getTxtNome().isEmpty() && !operationDialogView.getTxtSito().isEmpty() && !operationDialogView.getTxtCitta().isEmpty() && !operationDialogView.getTxtNazione().isEmpty()) {
+                    int statusFor = FornitoreBusiness.getInstance().addNewSupplier(operationDialogView.getTxtNome(), operationDialogView.getTxtSito(), operationDialogView.getTxtCitta(), operationDialogView.getTxtNazione());
+                    if (statusFor == 1) {
+                        String esit = "Fornitore aggiunto con successo!";
+                        JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
+                        operationDialogView.dispose();
+                        appFrame.setCurrentMainPanel(new ImprenditoriPanel(appFrame));
+                    } else {
+                        String esit = "Errore durante l'aggiunta del fornitore!";
+                        JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
+                        appFrame.setCurrentMainPanel(new ImprenditoriPanel(appFrame));
+                    }
                 } else {
-                    String esit = "Errore durante l'aggiunta del fornitore!";
-                    JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
-                    appFrame.setCurrentMainPanel(new ImprenditoriPanel(appFrame));
+                    JOptionPane.showMessageDialog(appFrame, "Tutti i campi sono obbligatori", "Errore", JOptionPane.ERROR_MESSAGE);
                 }
                 break;
             case BTN_EDIT_SUPPLIER:

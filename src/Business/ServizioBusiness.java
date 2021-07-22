@@ -70,7 +70,11 @@ public class ServizioBusiness {
 
     public int deleteByID(int id){
         servizioDAO = ServizioDAO.getInstance();
-
+        Servizio s = servizioDAO.findByID(id);
+        if (s != null){
+            File img = s.getImmagine();
+            img.delete();
+        }
         return servizioDAO.removeById(id);
     }
 
@@ -97,6 +101,11 @@ public class ServizioBusiness {
 
     public int update(String nome, File immagine, String descrizione, float costo, Fornitore fornitore, int idServizio){
         servizioDAO = ServizioDAO.getInstance();
+        Servizio s1 = servizioDAO.findByID(idServizio);
+        if (s1 != null && !immagine.getName().equals(s1.getImmagine().getName())){
+            s1.getImmagine().delete();
+        }
+
         ServizioFactory servizioFactory = (ServizioFactory) FactoryProvider.getFactory(FactoryProvider.TipoFactory.SERVIZIO);
         Servizio s = (Servizio)servizioFactory.crea();
         s.setIdServizio(idServizio);
