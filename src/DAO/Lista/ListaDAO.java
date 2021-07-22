@@ -87,6 +87,46 @@ public class ListaDAO implements IListaDAO {
     }
 
     @Override
+    public Lista findByUserDateAndName(int idUtente, LocalDate data, String nome) {
+        executor = new DbOperationExecutor();
+        sql = "SELECT idLista, nome, dataCreazione, stato, prezzoTotale, idUtente FROM myshopdb.Lista WHERE idUtente = '" + idUtente + "' AND dataCreazione = '" + data.toString() + "' AND nome = '" + nome + "';";
+        dbOperation = new ReadDbOperation(sql);
+        rs = (ResultSet) executor.executeOperation(dbOperation);
+        plDAO = ProdottiListaDAO.getInstance();
+        slDAO = ServiziListaDAO.getInstance();
+        uDAO = UtenteDAO.getInstance();
+        int idU = -1;
+        int idL = -1;
+        try {
+            rs.next();
+            if (rs.getRow()==1) {
+                lista = new Lista();
+                lista.setIdLista(rs.getInt("idLista"));
+                lista.setNomeLista(rs.getString("nome"));
+                lista.setDataCreazione(LocalDate.parse(rs.getString("dataCreazione"))); //vedi se funziona
+                lista.setStato(Lista.Stato.valueOf(rs.getString("stato")));
+                lista.setPrezzoTotale(rs.getFloat("prezzoTotale"));
+                idU = rs.getInt("idUtente");
+                idL = rs.getInt("idLista");
+            }
+        } catch (SQLException e) {
+            // handle any errors
+            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("VendorError: " + e.getErrorCode());
+        } catch (NullPointerException e) {
+            // handle any errors
+            System.out.println("Resultset: " + e.getMessage());
+        } finally {
+            executor.closeOperation(dbOperation);
+        }
+        lista.setUtente(uDAO.findByID(idU));
+        lista.setProdotti(plDAO.findAllProductsByListID(idL));
+        lista.setServizi(slDAO.findAllServicesByListID(idL));
+        return lista;
+    }
+
+    @Override
     public ArrayList<Lista> findAll() {
         executor = new DbOperationExecutor();
         sql = "SELECT idLista, nome, dataCreazione, stato, prezzoTotale, idUtente FROM myshopdb.Lista;";

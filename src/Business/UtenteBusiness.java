@@ -246,4 +246,25 @@ public class UtenteBusiness {
         }
         return idServiziPagati;
     }
+
+    public boolean userExists(String email){
+        IUtenteDAO utenteDAO = UtenteDAO.getInstance();
+
+        return utenteDAO.userExists(email);
+    }
+
+    public int updateUserCredentials(String email, String password){
+        IUtenteDAO utenteDAO = UtenteDAO.getInstance();
+        String bCryptHash = BCrypt.withDefaults().hashToString(12, password.toCharArray());
+
+        return utenteDAO.updateCredentials(email, bCryptHash);
+    }
+
+    public boolean checkCredentials(String email, char[] password){
+        IUtenteDAO utenteDAO = UtenteDAO.getInstance();
+
+
+
+        return utenteDAO.checkCredentials(email, String.valueOf(password));
+    }
 }

@@ -11,6 +11,7 @@ public class SideMenuListener implements ActionListener {
     private AppFrame appFrame;
     public final static String BTN_BROWSE = "btnBrowse";
     public final static String BTN_LISTS = "btnLists";
+    public final static String BTN_USER_PROFILE = "btnUserProfile";
     public final static String BTN_USERS = "btnUsers";
     public final static String BTN_WAREHOUSES = "btnWarehouses";
     public final static String BTN_SHOPS = "btnShops";
@@ -33,6 +34,10 @@ public class SideMenuListener implements ActionListener {
             case BTN_LISTS:
                 System.out.println("premuto lists");
                 appFrame.setCurrentMainPanel(new MainListsPanel(appFrame));
+                break;
+            case BTN_USER_PROFILE:
+                System.out.println("premuto i tuoi dati");
+                appFrame.setCurrentMainPanel(new UserProfilePanel(appFrame));
                 break;
             case BTN_CATALOG:
                 System.out.println("Premuto Gestisci Catalogo");

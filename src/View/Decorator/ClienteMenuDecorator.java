@@ -15,7 +15,10 @@ public class ClienteMenuDecorator extends CustomMenuDecorator {
         pulsanti.addAll(this.menu.getPulsanti());
         JButton lists = new JButton("Le tue liste");
         lists.setActionCommand("btnLists");
+        JButton userProfile = new JButton("I tuoi dati");
+        userProfile.setActionCommand("btnUserProfile");
         pulsanti.add(lists);
+        pulsanti.add(userProfile);
         return pulsanti;
     }
 }

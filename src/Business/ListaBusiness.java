@@ -160,8 +160,6 @@ public class ListaBusiness {
 
     public int duplicateList(Lista l){
         listaDAO = ListaDAO.getInstance();
-        IProdottiListaDAO prodottiListaDAO = ProdottiListaDAO.getInstance();
-        IServiziListaDAO serviziListaDAO = ServiziListaDAO.getInstance();
         Lista duplicate = new Lista();
         duplicate.setNomeLista(l.getNomeLista() + " - copia");
         duplicate.setUtente(l.getUtente());
@@ -169,15 +167,23 @@ public class ListaBusiness {
         duplicate.setServizi(l.getServizi());
         duplicate.setDataCreazione(LocalDate.now());
         duplicate.setStato(Lista.Stato.NON_PAGATA);
-        duplicate.setPrezzoTotale(l.getPrezzoTotale());
 
         int st = listaDAO.add(duplicate);
+        duplicate = listaDAO.findByUserDateAndName(duplicate.getUtente().getIdUtente(), duplicate.getDataCreazione(), duplicate.getNomeLista());
         //TODO: trova un modo di prendere la lista e di gestire i prenotati
-        for (Map.Entry<IProdotto, Map.Entry<String, Integer>> entry : duplicate.getProdotti().entrySet()){
-            prodottiListaDAO.add(duplicate, entry.getKey(), entry.getValue().getKey(), entry.getValue().getValue());
+        for (Map.Entry<IProdotto, Map.Entry<String, Integer>> entry : l.getProdotti().entrySet()){
+            int old_qta = ListaBusiness.getInstance().isProductAlreadyInList(duplicate, entry.getKey());
+            int st2 = this.addProductToList(duplicate, entry.getKey(), entry.getValue().getValue());
+            if (st2 == 2){
+                PuntoVendita pv = (PuntoVendita) SessionManager.getInstance().getSession().get("currentShop");
+                Disponibilita d = ProdottiMagazzinoBusiness.getInstance().findByProductAndWarehouse(entry.getKey().getIdProdotto(), MagazzinoBusiness.getInstance().findWarehouseByShopID(pv.getIdPuntoVendita()).getIdMagazzino());
+                d.setQta(d.getQta() - entry.getValue().getValue() + old_qta);
+                ProdottiMagazzinoBusiness.getInstance().update(d);
+            }
         }
-        for (Servizio s:duplicate.getServizi()){
-            serviziListaDAO.add(duplicate, s);
+
+        for (Servizio s:l.getServizi()){
+            this.addServiceToList(duplicate, s);
         }
 
         return st;

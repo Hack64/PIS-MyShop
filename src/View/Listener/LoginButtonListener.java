@@ -3,6 +3,7 @@ package View.Listener;
 import Business.SessionManager;
 import View.AppFrame;
 import View.Dialog.LoginDialog;
+import View.Dialog.PasswordEditDialog;
 import View.Dialog.RegistrationDialog;
 import View.Panel.BrowsePanel;
 
@@ -18,6 +19,7 @@ public class LoginButtonListener implements ActionListener {
     public final static String BTN_LOGIN_FORM = "btnLoginForm";
     public final static String BTN_LOGOUT = "btnLogout";
     public final static String BTN_REGISTER = "btnRegisterForm";
+    public final static String BTN_EDIT_PASSWORD = "btnEditPassword";
 
     public LoginButtonListener(AppFrame appFrame){
         this.appFrame = appFrame;
@@ -41,6 +43,9 @@ public class LoginButtonListener implements ActionListener {
                 break;
             case BTN_REGISTER:
                 registrationDialog = new RegistrationDialog(appFrame);
+                break;
+            case BTN_EDIT_PASSWORD:
+                new PasswordEditDialog(appFrame);
                 break;
             default:
                 break;

@@ -38,7 +38,7 @@ public class ProductPanel extends JPanel {
         JPanel productInfoPanel = new JPanel(new BorderLayout());
         JPanel productDetailsPanel = new JPanel(new GridLayout(8,1));
         JPanel productDescriptionPanel = new JPanel(new GridLayout(1,1));
-        JPanel productButtonsPanel = new JPanel(new GridBagLayout());
+        JPanel productButtonsPanel = new JPanel(new FlowLayout());
 
         GridBagConstraints c = new GridBagConstraints();
 
@@ -64,7 +64,12 @@ public class ProductPanel extends JPanel {
             lblCostoProdotto = new JLabel("Costo:      €" + prodotto.getCosto());
             lblMediaValutazioni = new JLabel("Media Valutazioni: " + prodotto.getMediaValutazione() + " | Commenti: " + prodotto.getNumeroCommenti());
             lblCategorieProdotti = new JLabel("Categorie: " + categorie);
-            lblQuantitaMagazzino = new JLabel("Disponibili: " + d.getQta());
+            if (d.getQta()<=0){
+                lblQuantitaMagazzino = new JLabel("Non disponibile in magazzino, da prenotare");
+            } else {
+                lblQuantitaMagazzino = new JLabel("Disponibili: " + d.getQta());
+            }
+
 
             btnCommenti = new JButton("Visualizza commenti");
             btnAggiungi = new JButton("Aggiungi a una lista");
@@ -129,13 +134,9 @@ public class ProductPanel extends JPanel {
             productDetailsPanel.add(lblQuantitaMagazzino);
         }
 
-        c.gridx=0;
-        c.gridy=0;
-        productButtonsPanel.add(btnAggiungi,c);
-        c.gridx=1;
-        productButtonsPanel.add(btnCommenti,c);
-        c.gridx=2;
-        productButtonsPanel.add(btnFeedback, c);
+        productButtonsPanel.add(btnAggiungi);
+        productButtonsPanel.add(btnCommenti);
+        productButtonsPanel.add(btnFeedback);
 
         productDescriptionPanel.add(txtAreaDescrizione);
 

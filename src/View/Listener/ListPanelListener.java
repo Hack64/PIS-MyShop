@@ -103,6 +103,9 @@ public class ListPanelListener implements ActionListener {
                     int idLista = (Integer)table.getModel().getValueAt(row, col);
                     Lista l = ListaBusiness.getInstance().find(idLista).getLista();
                     appFrame.setCurrentMainPanel(new MainCatalogPanel(appFrame, l));
+                } else{
+                    esit = "Devi selezionare un elemento per visualizzare i prodotti!";
+                    JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
                 }
                 break;
             case BTN_GENERATE_PDF:
@@ -115,6 +118,7 @@ public class ListPanelListener implements ActionListener {
                     int st = doc.invia();
                     if (st == 0){
                         JOptionPane.showMessageDialog(appFrame, "Lista generata con successo e inviata al vostro indirizzo e-mail!", "Successo", JOptionPane.INFORMATION_MESSAGE);
+                        appFrame.setCurrentMainPanel(new MainListsPanel(appFrame));
                     } else {
                         JOptionPane.showMessageDialog(appFrame, "Errore durante la generazione del PDF", "Errore", JOptionPane.ERROR_MESSAGE);
                     }
@@ -132,11 +136,12 @@ public class ListPanelListener implements ActionListener {
                     int st = ListaBusiness.getInstance().duplicateList(l);
                     if (st == 1){
                         JOptionPane.showMessageDialog(appFrame, "Lista duplicata con successo!", "Successo", JOptionPane.INFORMATION_MESSAGE);
+                        appFrame.setCurrentMainPanel(new MainListsPanel(appFrame));
                     } else {
                         JOptionPane.showMessageDialog(appFrame, "Errore durante la duplicazione della lista!", "Errore", JOptionPane.ERROR_MESSAGE);
                     }
                 } else {
-                    esit = "Devi selezionare un elemento per generare il PDF!";
+                    esit = "Devi selezionare una lista per duplicarla!";
                     JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
                 }
         }

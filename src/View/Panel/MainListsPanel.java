@@ -13,8 +13,8 @@ public class MainListsPanel extends JPanel {
         JTabbedPane tabbedPane = new JTabbedPane();
         JPanel paidListsPanel = new ListsPanel(appFrame, false, Lista.Stato.PAGATA, null);
         JPanel nonPaidListsPanel = new ListsPanel(appFrame, false, Lista.Stato.NON_PAGATA, null);
-        tabbedPane.addTab("Pagate", null, paidListsPanel, "Gestisci le liste pagate");
         tabbedPane.addTab("Non Pagate", null, nonPaidListsPanel, "Gestisci le liste non pagate");
+        tabbedPane.addTab("Pagate", null, paidListsPanel, "Gestisci le liste pagate");
 
         add(tabbedPane, BorderLayout.CENTER);
     }

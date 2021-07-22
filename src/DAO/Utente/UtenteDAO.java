@@ -213,10 +213,10 @@ public class UtenteDAO implements IUtenteDAO {
     }
 
     @Override
-    public boolean userExists(String username) {
+    public boolean userExists(String email) {
         boolean userExists = false;
         executor = new DbOperationExecutor();
-        sql = "SELECT count(*) AS C FROM Utente WHERE Utente.email = '" + username + "';";
+        sql = "SELECT count(*) AS C FROM Utente WHERE Utente.email = '" + email + "';";
         dbOperation = new ReadDbOperation(sql);
         rs = (ResultSet) executor.executeOperation(dbOperation);
         try {
@@ -299,6 +299,16 @@ public class UtenteDAO implements IUtenteDAO {
     public int update(Utente utente) {
         executor = new DbOperationExecutor();
         sql = "UPDATE Utente SET nome = '" + utente.getNome() + "', cognome = '" + utente.getCognome() + "', residenza = '" + utente.getResidenza() + "', telefono = '" + utente.getTelefono() + "', professione = '" + utente.getProfessione() + "', eta = '" + utente.getEta() + "', tipo = '" + utente.getRuolo().toString() + "' WHERE Email = '" + utente.getEmail() + "';";
+        dbOperation = new WriteDbOperation(sql);
+        int rowCount = (int) executor.executeOperation(dbOperation);
+        executor.closeOperation(dbOperation);
+        return rowCount;
+    }
+
+    @Override
+    public int updateCredentials(String email, String password) {
+        executor = new DbOperationExecutor();
+        sql = "UPDATE Utente SET passwordHash = '" + password + "' WHERE Email = '" + email + "';";
         dbOperation = new WriteDbOperation(sql);
         int rowCount = (int) executor.executeOperation(dbOperation);
         executor.closeOperation(dbOperation);

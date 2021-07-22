@@ -2,10 +2,12 @@ package DAO.Lista;
 
 import Model.Lista;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public interface IListaDAO {
     Lista findByID(int idLista);
+    Lista findByUserDateAndName(int idUtente, LocalDate data, String nome);
     ArrayList<Lista> findAll();
     ArrayList<Lista> findAllByUserID(int idUtente);
     ArrayList<Lista> findAllByState(Lista.Stato stato);
