@@ -1,11 +1,11 @@
 package View.Listener;
 
 import Business.ComunicazioneEmail;
-import Utils.EmailSenderAPI;
 import Business.SessionManager;
 import Business.UtenteBusiness;
 import Model.PuntoVendita;
 import Model.Utente;
+import Utils.EmailSenderAPI;
 import View.AppFrame;
 import View.Dialog.EmailDialog;
 

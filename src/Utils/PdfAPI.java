@@ -10,7 +10,6 @@ import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Set;
 
 public class PdfAPI implements IPdfAPI{
     @Override

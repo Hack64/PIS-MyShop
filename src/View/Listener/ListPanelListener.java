@@ -5,7 +5,6 @@ import Model.*;
 import Utils.PdfAPI;
 import View.AppFrame;
 import View.Dialog.ListOperationDialog;
-import View.Panel.ListsPanel;
 import View.Panel.MainCatalogPanel;
 import View.Panel.MainListsPanel;
 import View.Panel.UsersPanel;

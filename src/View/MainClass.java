@@ -1,12 +1,5 @@
 package View;
 
-import Business.Documento;
-import Business.DocumentoListaAcquisto;
-import Business.ListaBusiness;
-import Model.Lista;
-import Utils.PdfAPI;
-
-
 import javax.swing.*;
 import java.time.LocalDate;
 

@@ -3,7 +3,6 @@ package View.Listener;
 import Business.ListaBusiness;
 import View.AppFrame;
 import View.Dialog.ListOperationDialog;
-import View.Panel.ListsPanel;
 import View.Panel.MainListsPanel;
 
 import javax.swing.*;

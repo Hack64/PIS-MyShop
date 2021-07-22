@@ -1,12 +1,16 @@
 package Business;
 
-import Model.*;
+import Model.IProdotto;
+import Model.Lista;
+import Model.Servizio;
 import Utils.EmailSenderAPI;
 import Utils.IPdfAPI;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class DocumentoListaAcquisto extends Documento{
 
