@@ -88,7 +88,7 @@ public class CustomOperationDialogViewListener implements ActionListener {
                 subProductChooserDialog.dispose();
                 if (Float.parseFloat(operationDialogView.getTxtPrezzo()) >= 0 && operationDialogView.getScaffale() >=0 && operationDialogView.getCorsia() >= 0) {
                     int statusCompProd = ProdottoBusiness.getInstance().addNewComp(operationDialogView.getTxtNome(), img, operationDialogView.getTxtDescrizione(), Float.parseFloat(operationDialogView.getTxtPrezzo()), ProduttoreBusiness.getInstance().findByName((String) operationDialogView.getProduttore()).getProduttore(), categorieComp, sottoprodotti, operationDialogView.getScaffale(), operationDialogView.getCorsia());
-                    if (statusCompProd == 3) {
+                    if (statusCompProd >= 2+sottoprodotti.size()+categorieComp.size()) {
                         String esit = "Prodotto composito aggiunto con successo!";
                         JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
                         operationDialogView.dispose();
@@ -109,7 +109,7 @@ public class CustomOperationDialogViewListener implements ActionListener {
                     JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
                 } else if (Float.parseFloat(operationDialogView.getTxtPrezzo()) >= 0 && operationDialogView.getScaffale() >=0 && operationDialogView.getCorsia() >= 0) {
                     int st = ProdottoBusiness.getInstance().update(operationDialogView.getTxtNome(), img, operationDialogView.getTxtDescrizione(), Float.parseFloat(operationDialogView.getTxtPrezzo()), operationDialogView.getID(), operationDialogView.getScaffale(), operationDialogView.getCorsia());
-                    if (st == 1) {
+                    if (st >= 1) {
                         String esit = "Prodotto modificato con successo!";
                         JOptionPane.showMessageDialog(appFrame, esit, "Successo", JOptionPane.INFORMATION_MESSAGE);
                         operationDialogView.dispose();

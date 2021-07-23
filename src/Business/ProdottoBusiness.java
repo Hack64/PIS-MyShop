@@ -110,6 +110,7 @@ public class ProdottoBusiness {
 
     public int addNewComp(String nome, File immagine, String descrizione, float costo, Produttore produttore, ArrayList<ICategoria> categorie, ArrayList<IProdotto> sottoProdotti, int scaffale, int corsia){
         prodottoDAO = ProdottoDAO.getInstance();
+        posizioneDAO = PosizioneDAO.getInstance();
         ProdottoCompositoFactory prodottoCompositoFactory = (ProdottoCompositoFactory) FactoryProvider.getFactory(FactoryProvider.TipoFactory.PRODOTTO_COMPOSITO);
         ProdottoComposito p = (ProdottoComposito) prodottoCompositoFactory.crea();
         p.setNome(nome);
@@ -249,5 +250,17 @@ public class ProdottoBusiness {
         } else {
             return -1;
         }
+    }
+
+    public boolean isCompositeProduct(IProdotto prodotto){
+        IComposizioneProdottoDAO composizioneProdottoDAO = ComposizioneProdottoDAO.getInstance();
+
+        return composizioneProdottoDAO.isCompositeProduct(prodotto.getIdProdotto());
+    }
+
+    public IProdotto findComposite(IProdotto prodotto){
+        IComposizioneProdottoDAO composizioneProdottoDAO = ComposizioneProdottoDAO.getInstance();
+
+        return composizioneProdottoDAO.findByID(prodotto.getIdProdotto());
     }
 }

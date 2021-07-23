@@ -25,9 +25,7 @@ public class Utente {
 
     private Ruoli ruolo;
 
-
-    public Utente(int idUtente, String email, String nome, String cognome, String passwordHash, String residenza, String telefono, String professione, LocalDate eta, String ruolo) {
-        this.idUtente = idUtente;
+    public Utente(String email, String nome, String cognome, String passwordHash, String residenza, String telefono, String professione, LocalDate eta, String ruolo) {
         this.email = email;
         this.nome = nome;
         this.cognome = cognome;

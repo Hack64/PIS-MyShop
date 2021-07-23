@@ -1,8 +1,10 @@
 package View.Listener;
 
-import Business.*;
-import Model.*;
+import Business.ListaBusiness;
+import Business.ServizioBusiness;
+import Model.Lista;
 import Model.Responses.ServizioResponse;
+import Model.Servizio;
 import View.AppFrame;
 import View.Dialog.CustomOperationDialogView;
 import View.Panel.MainCatalogPanel;
@@ -11,7 +13,6 @@ import View.Panel.ManageCategoriesPanel;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Map;
 
 public class ServiziPanelListener implements ActionListener {
 

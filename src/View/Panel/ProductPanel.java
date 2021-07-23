@@ -2,6 +2,7 @@ package View.Panel;
 
 import Business.MagazzinoBusiness;
 import Business.ProdottiMagazzinoBusiness;
+import Business.ProdottoBusiness;
 import Business.SessionManager;
 import Model.*;
 import View.AppFrame;
@@ -23,6 +24,7 @@ public class ProductPanel extends JPanel {
         JLabel lblMediaValutazioni = null;
         JLabel lblCategorieProdotti = null;
         JLabel lblQuantitaMagazzino = null;
+        JLabel lblSottoProdotti = null;
 
         JButton btnAggiungi = null;
         JButton btnCommenti = null;
@@ -52,18 +54,37 @@ public class ProductPanel extends JPanel {
         //ProductDetails
         ProductPanelListener productPanelListener;
         if (servizio == null){
+            if (ProdottoBusiness.getInstance().isCompositeProduct(prodotto)){
+                prodotto = ProdottoBusiness.getInstance().findComposite(prodotto);
+            }
             PuntoVendita p = (PuntoVendita) SessionManager.getInstance().getSession().get("currentShop");
-
             Disponibilita d = ProdottiMagazzinoBusiness.getInstance().findByProductAndWarehouse(prodotto.getIdProdotto(), MagazzinoBusiness.getInstance().findWarehouseByShopID(p.getIdPuntoVendita()).getIdMagazzino());
             productPanelListener = new ProductPanelListener(appFrame, prodotto.getIdProdotto());
+
             ArrayList<String> categorie = new ArrayList<>();
+            ArrayList<String> sottoprodotti = new ArrayList<>();
+            ICategoria cTemp;
+
             for (ICategoria c1:prodotto.getCategorie()){
                 categorie.add(c1.getNome());
+                cTemp = c1;
+                while(null != cTemp && null != cTemp.getCategoriaPadre() && !"null".equals(cTemp.getCategoriaPadre().getNome())){
+                    categorie.add(cTemp.getCategoriaPadre().getNome());
+                    cTemp = cTemp.getCategoriaPadre();
+                }
             }
+            if (prodotto.getSottoprodotti() != null){
+                for (IProdotto pr:prodotto.getSottoprodotti()){
+                    sottoprodotti.add(pr.getNome());
+                }
+            }
+
             lblNomeProdotto = new JLabel(prodotto.getNome());
             lblCostoProdotto = new JLabel("Costo:      €" + prodotto.getCosto());
             lblMediaValutazioni = new JLabel("Media Valutazioni: " + prodotto.getMediaValutazione() + " | Commenti: " + prodotto.getNumeroCommenti());
             lblCategorieProdotti = new JLabel("Categorie: " + categorie);
+            lblSottoProdotti = new JLabel("Sottoprodotti: " + sottoprodotti);
+
             if (d.getQta()<=0){
                 lblQuantitaMagazzino = new JLabel("Non disponibile in magazzino, da prenotare");
             } else {
@@ -83,10 +104,13 @@ public class ProductPanel extends JPanel {
             btnFeedback.addActionListener(productPanelListener);
 
             lblQuantitaMagazzino.setFont(new Font("Noto Sans", Font.PLAIN, 18));
+            lblSottoProdotti.setFont(new Font("Noto Sans", Font.PLAIN, 18));
 
             //ProductDescription
             txtAreaDescrizione = new JTextArea(prodotto.getDescrizione(), 7, 1);
-        }else if(prodotto == null){
+
+        } else if(prodotto == null) {
+
             productPanelListener = new ProductPanelListener(appFrame, servizio.getIdServizio());
             ArrayList<String> categorie = new ArrayList<>();
             for (ICategoria c1:servizio.getCategorie()){
@@ -131,6 +155,7 @@ public class ProductPanel extends JPanel {
         productDetailsPanel.add(lblMediaValutazioni);
         productDetailsPanel.add(lblCategorieProdotti);
         if (prodotto != null){
+            productDetailsPanel.add(lblSottoProdotti);
             productDetailsPanel.add(lblQuantitaMagazzino);
         }
 

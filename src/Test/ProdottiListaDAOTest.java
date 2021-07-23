@@ -1,5 +1,6 @@
 package Test;
 
+import DAO.ProdottiLista.IProdottiListaDAO;
 import DAO.ProdottiLista.ProdottiListaDAO;
 import DAO.Prodotto.ProdottoDAO;
 import DbInterface.DbUser;
@@ -22,7 +23,9 @@ public class ProdottiListaDAOTest {
 
     @Before
     public void setUp() throws Exception {
+        IProdottiListaDAO prodottiListaDAO = ProdottiListaDAO.getInstance();
 
+        prodottiListaDAO.add(null,null,null,0);
     }
 
     @After

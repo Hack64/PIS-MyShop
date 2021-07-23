@@ -11,6 +11,7 @@ import View.Dialog.RegistrationDialog;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class RegistrationListener implements ActionListener {
 
@@ -49,7 +50,15 @@ public class RegistrationListener implements ActionListener {
                 String reason = res.getMessage();
                 System.out.println("Registrazione ok!");
                 JOptionPane.showMessageDialog(appFrame, reason, "Registrazione avvenuta", JOptionPane.INFORMATION_MESSAGE);
+                u = UtenteBusiness.getInstance().findByEmail(u.getEmail()).getUtente();
+
+                ArrayList<Integer> idProdottiPagati = UtenteBusiness.getInstance().getPaidProducts(u);
+                ArrayList<Integer> idServiziPagati = UtenteBusiness.getInstance().getPaidServices(u);
+
                 SessionManager.getInstance().getSession().put("loggedUser", u);
+                SessionManager.getInstance().getSession().put("paidProducts", idProdottiPagati);
+                SessionManager.getInstance().getSession().put("paidServices", idServiziPagati);
+
                 registrationDialog.setVisible(false);
                 appFrame.getHeader().refresh();
                 appFrame.getSideMenu().refresh();
@@ -77,6 +86,7 @@ public class RegistrationListener implements ActionListener {
                 System.out.println("Registrazione ok!");
                 JOptionPane.showMessageDialog(appFrame, reason, "Registrazione avvenuta", JOptionPane.INFORMATION_MESSAGE);
                 registrationDialog.dispose();
+
                 appFrame.getHeader().refresh();
                 appFrame.getSideMenu().refresh();
             }

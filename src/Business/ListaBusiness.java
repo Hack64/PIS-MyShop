@@ -156,7 +156,7 @@ public class ListaBusiness {
         IListaDAO listaDAO = ListaDAO.getInstance();
         IServiziListaDAO serviziListaDAO = ServiziListaDAO.getInstance();
 
-        serviziListaDAO.removeByID(s.getIdServizio(), l.getIdLista());
+        serviziListaDAO.removeByID(l.getIdLista(), s.getIdServizio());
 
         Lista lista = listaDAO.findByID(l.getIdLista());
         lista.setPrezzoTotale(lista.getPrezzoTotale() - s.getCosto());

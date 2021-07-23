@@ -36,7 +36,11 @@ public class CategoriaDAO implements ICategoriaDAO {
     @Override
     public ICategoria findByID(int idCategoria) {
         if (idCategoria == 0){
-            return new Categoria(-1,"null", null);
+            Categoria c = new Categoria();
+            c.setIdCategoria(-1);
+            c.setNome("null");
+            c.setCategoriaPadre(null);
+            return c;
         }
         executor = new DbOperationExecutor();
         sql = "SELECT idCategoria, nome, idCategoriaPadre FROM myshopdb.Categoria WHERE myshopdb.Categoria.idCategoria = '" + idCategoria + "';";
@@ -169,7 +173,6 @@ public class CategoriaDAO implements ICategoriaDAO {
         int rowCount;
         if (categoria.getCategoriaPadre() == null) {
             sql = "INSERT INTO Categoria (nome) VALUES ('" + categoria.getNome() + "');";
-
         } else {
             sql = "INSERT INTO Categoria (nome, idCategoriaPadre) VALUES ('" + categoria.getNome() + "','" + categoria.getCategoriaPadre().getIdCategoria() + "');";
         }

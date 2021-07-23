@@ -9,6 +9,10 @@ public class Prodotto extends Articolo implements IProdotto {
     private Produttore produttore;
     private int idProduttore;
 
+    public Prodotto(){
+        super();
+    }
+
     public int getIdProduttore() {
         return idProduttore;
     }

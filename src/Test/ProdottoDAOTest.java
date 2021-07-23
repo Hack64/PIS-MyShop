@@ -2,6 +2,7 @@ package Test;
 
 import DAO.Categoria.CategoriaDAO;
 import DAO.Feedback.FeedbackDAO;
+import DAO.Prodotto.IProdottoDAO;
 import DAO.Prodotto.ProdottoDAO;
 import DAO.Produttore.ProduttoreDAO;
 import DbInterface.DbUser;
@@ -22,7 +23,9 @@ public class ProdottoDAOTest {
 
     @Before
     public void setUp() throws Exception {
+        IProdottoDAO prodottoDAO = ProdottoDAO.getInstance();
 
+        prodottoDAO.add(new Prodotto());
     }
 
     @After

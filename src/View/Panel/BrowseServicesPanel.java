@@ -19,7 +19,7 @@ public class BrowseServicesPanel extends JPanel{
         JScrollPane scrollPane;
         PuntoVendita p = (PuntoVendita)SessionManager.getInstance().getSession().get("currentShop");
         ArrayList<Servizio> servizi = ServizioBusiness.getInstance().findAllServicesByShopID(p.getIdPuntoVendita());
-        panel.setLayout(new GridLayout(0,5, 4, 4));
+        panel.setLayout(new GridLayout(0,4, 4, 4));
         GridPanelListener gpl = new GridPanelListener(appFrame, true);
         for (Servizio s:servizi) {
             panel.add(new GridImagePanel(s.getImmagine(), s.getNome(), s.getIdServizio() , gpl, appFrame));

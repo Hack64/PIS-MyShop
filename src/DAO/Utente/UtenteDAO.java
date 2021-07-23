@@ -286,7 +286,7 @@ public class UtenteDAO implements IUtenteDAO {
     }
 
     @Override
-    public int removeById(String email) {
+    public int removeByEmail(String email) {
         executor = new DbOperationExecutor();
         sql = "DELETE FROM Utente WHERE email = '"+ email + "';";
         dbOperation = new WriteDbOperation(sql);

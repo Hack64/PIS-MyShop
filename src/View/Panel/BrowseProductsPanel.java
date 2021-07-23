@@ -19,7 +19,7 @@ public class BrowseProductsPanel extends JPanel {
         JScrollPane scrollPane;
         PuntoVendita p = (PuntoVendita) SessionManager.getInstance().getSession().get("currentShop");
         ArrayList<IProdotto> prodotti = ProdottoBusiness.getInstance().findAllProductsByShop(p);
-        panel.setLayout(new GridLayout(0,5, 4, 4));
+        panel.setLayout(new GridLayout(0,4, 4, 4));
         GridPanelListener gpl = new GridPanelListener(appFrame, false);
         for (IProdotto pr:prodotti) {
             panel.add(new GridImagePanel(pr.getImmagine(), pr.getNome(), pr.getIdProdotto(), gpl, appFrame));

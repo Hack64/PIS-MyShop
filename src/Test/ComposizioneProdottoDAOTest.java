@@ -1,6 +1,9 @@
 package Test;
 
+import Business.FactoryProvider;
+import Business.ProdottoCompositoFactory;
 import DAO.ComposizioneProdotto.ComposizioneProdottoDAO;
+import DAO.ComposizioneProdotto.IComposizioneProdottoDAO;
 import DAO.Prodotto.ProdottoDAO;
 import DbInterface.DbUser;
 import Model.IProdotto;
@@ -16,11 +19,16 @@ public class ComposizioneProdottoDAOTest {
 
     @Before
     public void setUp() throws Exception {
-
+        IComposizioneProdottoDAO composizioneProdottoDAO = ComposizioneProdottoDAO.getInstance();
+        ProdottoCompositoFactory pcf = (ProdottoCompositoFactory) FactoryProvider.getFactory(FactoryProvider.TipoFactory.PRODOTTO_COMPOSITO);
+        ProdottoComposito pc = (ProdottoComposito) pcf.crea();
+        pc.setNome("TestComposito");
+        //pc.set
     }
 
     @After
     public void tearDown() throws Exception {
+        //IComposizioneProdottoDAO composizioneProdottoDAO ComposizioneProdottoDAO
 
     }
 

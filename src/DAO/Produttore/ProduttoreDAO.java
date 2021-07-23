@@ -75,11 +75,10 @@ public class ProduttoreDAO implements IProduttoreDAO {
     @Override
     public Produttore getByName(String nomeProduttore) {
         executor = new DbOperationExecutor();
-        sql = "SELECT idProduttore, nome, sito, citta, nazione FROM myshopdb.Produttore WHERE myshopdb.Produttore.nome = '" + nomeProduttore + "';";
+        sql = "SELECT idProduttore, nome, sito, citta, nazione FROM myshopdb.Produttore WHERE Produttore.nome = '" + nomeProduttore + "';";
         dbOperation = new ReadDbOperation(sql);
         rs = (ResultSet) executor.executeOperation(dbOperation);
         pDAO = ProdottoDAO.getInstance();
-
         try {
             rs.next();
             if (rs.getRow()==1){
@@ -111,7 +110,7 @@ public class ProduttoreDAO implements IProduttoreDAO {
     public boolean producerExists(String nomeProduttore) {
         boolean producerExists = false;
         executor = new DbOperationExecutor();
-        sql = "SELECT count(*) AS C FROM Utente WHERE Produttore.nome = '" + nomeProduttore + "';";
+        sql = "SELECT count(*) AS C FROM Produttore WHERE Produttore.nome = '" + nomeProduttore + "';";
         dbOperation = new ReadDbOperation(sql);
         rs = (ResultSet) executor.executeOperation(dbOperation);
         try {

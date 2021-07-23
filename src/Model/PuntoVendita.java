@@ -16,6 +16,28 @@ public class PuntoVendita {
     private Utente manager;
     //private Magazzino magazzino;
 
+
+    public PuntoVendita(ArrayList<Servizio> catalogoServiziPuntoVendita, ArrayList<IProdotto> catalogoProdottiPuntoVendita, Map<Utente, String> clienti, int idPuntoVendita, String via, String cap, String citta, Utente manager) {
+        this.catalogoServiziPuntoVendita = catalogoServiziPuntoVendita;
+        this.catalogoProdottiPuntoVendita = catalogoProdottiPuntoVendita;
+        this.clienti = clienti;
+        this.idPuntoVendita = idPuntoVendita;
+        this.via = via;
+        this.cap = cap;
+        this.citta = citta;
+        this.manager = manager;
+    }
+
+    public PuntoVendita(String via, String cap, String citta) {
+        this.via = via;
+        this.cap = cap;
+        this.citta = citta;
+    }
+
+    public PuntoVendita(){
+
+    }
+
     public Utente getManager() {
         return manager;
     }

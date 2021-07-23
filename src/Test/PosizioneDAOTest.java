@@ -1,9 +1,11 @@
 package Test;
 
-
+import DAO.Posizione.IPosizioneDAO;
+import DAO.Posizione.PosizioneDAO;
 import DAO.Utente.IUtenteDAO;
 import DAO.Utente.UtenteDAO;
 import DbInterface.DbUser;
+import Model.Posizione;
 import Model.Utente;
 import org.junit.After;
 import org.junit.Assert;
@@ -12,20 +14,21 @@ import org.junit.Test;
 
 import java.time.LocalDate;
 
-public class UtenteDAOTest {
+public class PosizioneDAOTest {
     DbUser dbUser = DbUser.getInstance();
 
     @Before
     public void setUp() throws Exception {
-        IUtenteDAO utenteDAO = UtenteDAO.getInstance();
+        IPosizioneDAO posizioneDAO = PosizioneDAO.getInstance();
 
-        utenteDAO.add(new Utente("marco@rizzo.com", "Marco", "Rizzo", "1234", "Ruffano", "1234567890", "Studente", LocalDate.parse("2000-04-03"), "ute"));
+        posizioneDAO.add(new Posizione(10,10));
     }
 
     @After
     public void tearDown() throws Exception {
-        IUtenteDAO utenteDAO = UtenteDAO.getInstance();
-        utenteDAO.removeByEmail("marco@rizzo.com");
+        IPosizioneDAO posizioneDAO = PosizioneDAO.getInstance();
+
+        //posizioneDAO.removeByID();
     }
 
     @Test

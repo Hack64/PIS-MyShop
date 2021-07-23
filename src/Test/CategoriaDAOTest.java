@@ -1,60 +1,46 @@
 package Test;
 
 import DAO.Categoria.CategoriaDAO;
+import DAO.Categoria.ICategoriaDAO;
 import DbInterface.DbUser;
+import Model.Categoria;
 import Model.ICategoria;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.ArrayList;
 
 public class CategoriaDAOTest {
     DbUser dbUser = DbUser.getInstance();
 
     @Before
     public void setUp() throws Exception {
-
+        ICategoriaDAO categoriaDAO = CategoriaDAO.getInstance();
+        categoriaDAO.add(new Categoria(0,"Sanitari", null));
     }
 
     @After
     public void tearDown() throws Exception {
-
+        ICategoriaDAO categoriaDAO = CategoriaDAO.getInstance();
+        ICategoria categoria = categoriaDAO.findByName("WC");
+        categoriaDAO.removeByID(categoria.getIdCategoria());
     }
 
     @Test
-    public void findAllSubcategoriesByCategoryIDTest() {
-        CategoriaDAO cDAO = CategoriaDAO.getInstance();
-        ArrayList<ICategoria> sottocategorie = (ArrayList<ICategoria>) cDAO.findAllSubcategoriesByCategoryID(6);
-
-        ICategoria c = sottocategorie.get(0);
-        System.out.println(c.getNome());
-        System.out.println(c.getIdCategoria());
-        System.out.println(c.getCategoriaPadre().getIdCategoria());
-        c = sottocategorie.get(1);
-        System.out.println(c.getNome());
-        System.out.println(c.getIdCategoria());
-        System.out.println(c.getCategoriaPadre().getIdCategoria());
+    public void findByNameTest() {
+        ICategoriaDAO categoriaDAO = CategoriaDAO.getInstance();
+        ICategoria c = categoriaDAO.findByName("Sanitari");
+        Assert.assertEquals("Sanitari", c.getNome());
     }
 
     @Test
-    public void findByIDTest() {
-        CategoriaDAO cDAO = CategoriaDAO.getInstance();
-
-        ICategoria c = cDAO.findByID(1);
-
-        System.out.println(c.getNome());
-        System.out.println(c.getCategoriaPadre().getIdCategoria());
-        System.out.println(c.getCategoriaPadre().getNome());
+    public void updateTest(){
+        ICategoriaDAO categoriaDAO = CategoriaDAO.getInstance();
+        Categoria categoria = (Categoria) categoriaDAO.findByName("Sanitari");
+        categoria.setNome("WC");
+        categoriaDAO.update(categoria);
+        categoria = (Categoria) categoriaDAO.findByID(categoria.getIdCategoria());
+        Assert.assertEquals("WC", categoria.getNome());
     }
 
-    @Test
-    public void findAllTest() {
-        CategoriaDAO cDAO = CategoriaDAO.getInstance();
-        ArrayList<ICategoria> categorie = cDAO.findAll();
-
-        for(ICategoria c:categorie){
-            System.out.println(c.getNome());
-        }
-    }
 }

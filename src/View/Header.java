@@ -77,10 +77,11 @@ public class Header extends JPanel {
         if (!this.isVisible()){
             this.setVisible(true);
         }
-
-        if (lblNegozio == null){
-            lblNegozio = new JLabel("Sei nel punto vendita di " + p.getVia() + ", " + p.getCitta());
-            infoPanel.add(lblNegozio);
+        if (p != null){
+            if (lblNegozio == null){
+                lblNegozio = new JLabel("Sei nel punto vendita di " + p.getVia() + ", " + p.getCitta());
+                infoPanel.add(lblNegozio);
+            }
         }
 
         // 2. se u è null -> chiama setLoggedOutStatus()

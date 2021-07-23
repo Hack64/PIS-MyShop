@@ -104,7 +104,7 @@ public class FornitoreDAO implements IFornitoreDAO {
     public boolean supplierExists(String nomeFornitore) {
         boolean supplierExists = false;
         executor = new DbOperationExecutor();
-        sql = "SELECT count(*) AS C FROM Utente WHERE Fornitore.nome = '" + nomeFornitore + "';";
+        sql = "SELECT count(*) AS C FROM Fornitore WHERE Fornitore.nome = '" + nomeFornitore + "';";
         dbOperation = new ReadDbOperation(sql);
         rs = (ResultSet) executor.executeOperation(dbOperation);
         try {
