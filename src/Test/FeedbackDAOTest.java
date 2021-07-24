@@ -3,28 +3,42 @@ package Test;
 import DAO.Feedback.FeedbackDAO;
 import DAO.Feedback.IFeedbackDAO;
 import DbInterface.DbUser;
+import Model.Feedback;
 import Model.Utente;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 
 import java.time.LocalDate;
 
 public class FeedbackDAOTest {
 
-    DbUser dbUser = DbUser.getInstance();
+    private DbUser dbUser = DbUser.getInstance();
+    private Feedback f;
 
     @Before
     public void setUp() throws Exception {
         IFeedbackDAO feedbackDAO = FeedbackDAO.getInstance();
-        Utente u = new Utente("marco@rizzo.com", "Marco", "Rizzo", "1234", "Ruffano", "1234567890", "Studente", LocalDate.parse("2000-04-03"), "ute");
-        //feedbackDAO.add(new Feedback(0, LocalDate.now(), "Ottimo", 4, u, );
+        f = feedbackDAO.findByID(21);
     }
 
     @After
     public void tearDown() throws Exception {
-        IFeedbackDAO feedbackDAO = FeedbackDAO.getInstance();
-        //Feedback feedback = feedbackDAO.
-        //feedbackDAO.removeByID();
+    }
+
+    @Test
+    public void findAverageScoreTest(){
+        FeedbackDAO feedbackDAO = FeedbackDAO.getInstance();
+        float score = feedbackDAO.findAverageScore(65, true);
+        Assert.assertEquals(4.0f, score, 0.01);
+    }
+
+    @Test
+    public void findNumberOfFeedbacksTest(){
+        FeedbackDAO feedbackDAO = FeedbackDAO.getInstance();
+        int number = feedbackDAO.findNumberOfFeedbacks(70, true);
+        Assert.assertEquals(1,number);
     }
 
 

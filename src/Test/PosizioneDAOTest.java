@@ -17,41 +17,21 @@ import java.time.LocalDate;
 public class PosizioneDAOTest {
     DbUser dbUser = DbUser.getInstance();
 
-    @Before
-    public void setUp() throws Exception {
+
+    @Test
+    public void findByIDTest() {
         IPosizioneDAO posizioneDAO = PosizioneDAO.getInstance();
-
-        posizioneDAO.add(new Posizione(10,10));
+        Posizione p = posizioneDAO.findByID(9);
+        Assert.assertEquals(1, p.getCorsia());
+        Assert.assertEquals(3, p.getScaffale());
     }
 
-    @After
-    public void tearDown() throws Exception {
+    @Test
+    public void findByProductIDTest(){
         IPosizioneDAO posizioneDAO = PosizioneDAO.getInstance();
-
-        //posizioneDAO.removeByID();
-    }
-
-    @Test
-    public void findByEmailTest() {
-        IUtenteDAO utenteDAO = UtenteDAO.getInstance();
-        Utente utente = utenteDAO.findByEmail("marco@rizzo.com");
-        Assert.assertEquals("Marco", utente.getNome());
-    }
-
-    @Test
-    public void userExitsDAO(){
-        IUtenteDAO utenteDAO = UtenteDAO.getInstance();
-        boolean exists = utenteDAO.userExists("marco@rizzo.com");
-        Assert.assertTrue(exists);
-    }
-
-    @Test
-    public void updateTest(){
-        IUtenteDAO utenteDAO = UtenteDAO.getInstance();
-        Utente utente = new Utente("marco@rizzo.com", "Marco", "Rizzo", "1234", "Ruffano", "1234567890", "Studente", LocalDate.parse("2000-05-30"), "ute");
-        utenteDAO.update(utente);
-        utente = utenteDAO.findByEmail("marco@rizzo.com");
-        Assert.assertEquals(LocalDate.parse("2000-05-30"), utente.getEta());
+        Posizione p = posizioneDAO.findByProductID(68);
+        Assert.assertEquals(1, p.getCorsia());
+        Assert.assertEquals(4, p.getScaffale());
     }
 
 }

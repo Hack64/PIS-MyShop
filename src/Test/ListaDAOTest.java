@@ -24,8 +24,8 @@ public class ListaDAOTest {
         IListaDAO listaDAO = ListaDAO.getInstance();
         IUtenteDAO utenteDAO = UtenteDAO.getInstance();
 
-        utenteDAO.add(new Utente("marco@rizzo.com", "Marco", "Rizzo", "1234", "Ruffano", "1234567890", "Studente", LocalDate.parse("2000-04-03"), "ute"));
-        u = utenteDAO.findByEmail("marco@rizzo.com");
+        utenteDAO.add(new Utente("marco@rizzo.it", "Marco", "Rizzo", "1234", "Ruffano", "123456789012", "Studente", LocalDate.parse("2000-04-03"), "ute"));
+        u = utenteDAO.findByEmail("marco@rizzo.it");
 
         listaDAO.add(new Lista(0, "Test Lista", LocalDate.now(), null, null, Lista.Stato.NON_PAGATA, 100.0f,  u));
     }
@@ -37,7 +37,7 @@ public class ListaDAOTest {
 
         Lista l = listaDAO.findByUserDateAndName(u.getIdUtente(), LocalDate.now(), "Test Lista");
         listaDAO.removeById(l.getIdLista());
-        utenteDAO.removeByEmail("marco@rizzo.com");
+        utenteDAO.removeByEmail("marco@rizzo.it");
     }
 
     @Test

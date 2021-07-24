@@ -13,6 +13,8 @@ import org.junit.Test;
 public class CategoriaDAOTest {
     DbUser dbUser = DbUser.getInstance();
 
+    boolean updated = false;
+
     @Before
     public void setUp() throws Exception {
         ICategoriaDAO categoriaDAO = CategoriaDAO.getInstance();
@@ -21,9 +23,15 @@ public class CategoriaDAOTest {
 
     @After
     public void tearDown() throws Exception {
-        ICategoriaDAO categoriaDAO = CategoriaDAO.getInstance();
-        ICategoria categoria = categoriaDAO.findByName("WC");
-        categoriaDAO.removeByID(categoria.getIdCategoria());
+        if (updated){
+            ICategoriaDAO categoriaDAO = CategoriaDAO.getInstance();
+            ICategoria categoria = categoriaDAO.findByName("WC");
+            categoriaDAO.removeByID(categoria.getIdCategoria());
+        } else {
+            ICategoriaDAO categoriaDAO = CategoriaDAO.getInstance();
+            ICategoria categoria = categoriaDAO.findByName("Sanitari");
+            categoriaDAO.removeByID(categoria.getIdCategoria());
+        }
     }
 
     @Test
@@ -35,11 +43,13 @@ public class CategoriaDAOTest {
 
     @Test
     public void updateTest(){
+
         ICategoriaDAO categoriaDAO = CategoriaDAO.getInstance();
         Categoria categoria = (Categoria) categoriaDAO.findByName("Sanitari");
         categoria.setNome("WC");
         categoriaDAO.update(categoria);
         categoria = (Categoria) categoriaDAO.findByID(categoria.getIdCategoria());
+        updated = true;
         Assert.assertEquals("WC", categoria.getNome());
     }
 

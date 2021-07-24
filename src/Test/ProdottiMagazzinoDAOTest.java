@@ -1,9 +1,11 @@
 package Test;
 
+import DAO.ProdottiMagazzino.IProdottiMagazzinoDAO;
 import DAO.ProdottiMagazzino.ProdottiMagazzinoDAO;
 import DbInterface.DbUser;
 import Model.Disponibilita;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,29 +14,12 @@ import java.util.ArrayList;
 public class ProdottiMagazzinoDAOTest {
     DbUser dbUser = DbUser.getInstance();
 
-    @Before
-    public void setUp() throws Exception {
-
-    }
-
-    @After
-    public void tearDown() throws Exception {
-
-    }
-
     @Test
-    public void getCategoriesByProductIDTest() {
-        ProdottiMagazzinoDAO prodottiMagazzinoDAO = ProdottiMagazzinoDAO.getInstance();
-
-        ArrayList<Disponibilita> disponibilitas = prodottiMagazzinoDAO.findAllProductsByWarehouseID(12);
-
-        for (Disponibilita d:disponibilitas){
-            System.out.println(d.getProdotto().getNome());
-            System.out.println(d.getQta());
-            System.out.println(d.getPosizione().getCorsia());
-            System.out.println(d.getPosizione().getScaffale());
-        }
-
+    public void findByProductAndWarehouseIDTest(){
+        IProdottiMagazzinoDAO prodottiMagazzinoDAO = ProdottiMagazzinoDAO.getInstance();
+        Disponibilita d = prodottiMagazzinoDAO.findByProductAndWarehouseID(67, 20);
+        Assert.assertEquals(10, d.getQta());
+        Assert.assertEquals("Lampadario spirale", d.getProdotto().getNome());
     }
 
 }

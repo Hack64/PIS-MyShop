@@ -35,7 +35,7 @@ public class CategoriaDAO implements ICategoriaDAO {
 
     @Override
     public ICategoria findByID(int idCategoria) {
-        if (idCategoria == 0){
+        if (idCategoria == 0 || idCategoria == -1){
             Categoria c = new Categoria();
             c.setIdCategoria(-1);
             c.setNome("null");
@@ -72,6 +72,13 @@ public class CategoriaDAO implements ICategoriaDAO {
 
     @Override
     public ICategoria findByName(String nome) {
+        /*if (nome.equals("null")){
+            Categoria c = new Categoria();
+            c.setIdCategoria(-1);
+            c.setNome("null");
+            c.setCategoriaPadre(null);
+            return c;
+        }*/
         executor = new DbOperationExecutor();
         sql = "SELECT idCategoria, nome, idCategoriaPadre FROM myshopdb.Categoria WHERE myshopdb.Categoria.nome = '" + nome + "';";
         dbOperation = new ReadDbOperation(sql);

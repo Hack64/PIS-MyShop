@@ -11,6 +11,7 @@ import Model.IProdotto;
 import Model.Prodotto;
 import Model.Produttore;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,112 +23,51 @@ public class ProdottoDAOTest {
     DbUser dbUser = DbUser.getInstance();
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp(){
         IProdottoDAO prodottoDAO = ProdottoDAO.getInstance();
-
-        prodottoDAO.add(new Prodotto());
-    }
-
-    @After
-    public void tearDown() throws Exception {
-
-    }
-
-    @Test
-    public void getCategoriesByProductIDTest() {
-        ProdottoDAO pDAO = ProdottoDAO.getInstance();
-
-        IProdotto prodotto;
-        prodotto = pDAO.findByID(7);
-
-    }
-
-    @Test
-    public void addTest() {
-        ProdottoDAO prodottoDAO = ProdottoDAO.getInstance();
         Prodotto p = new Prodotto();
-        Produttore prd = new Produttore();
-        prd.setIdProduttore(1);
-        p.setNome("Lavello8");
-        p.setImmagine(new File("./img/Lavello.jpg"));
-        p.setDescrizione("un bellissimo lavello");
-        p.setNumeroCommenti(0);
-        p.setCosto(502300000);
-        p.setMediaValutazione((float)3.4);
-        p.setProduttore(prd);
+        p.setNome("Lavastoviglie");
+        p.setImmagine(new File("/tmp/test.png"));
+        p.setDescrizione("Test");
+        p.setCosto(250.0f);
+        p.setNumeroCommenti(19);
+        p.setMediaValutazione(4.5f);
+        p.setIdProdotto(0);
+        p.setProduttore(ProduttoreDAO.getInstance().findByID(23));
+        p.setCategorie(null);
 
         prodottoDAO.add(p);
     }
-
-    @Test
-    public void getByNameTest() {
-        ProdottoDAO prodottoDAO = ProdottoDAO.getInstance();
-        IProdotto p;
-        p = prodottoDAO.getByName("Scopa");
-
-        System.out.println(p.getIdProdotto());
-        System.out.println(p.getNome());
-        System.out.println(p.getImmagine().getPath());
-        ArrayList<String> categorie = new ArrayList<>();
-        for (ICategoria c:p.getCategorie()){
-            categorie.add(c.getNome());
-        }
-        String categorieConcat = String.join(" , ", categorie);
-        System.out.println(categorieConcat);
+    
+    @After
+    public void TearDown(){
+        IProdottoDAO prodottoDAO = ProdottoDAO.getInstance();
+        IProdotto p = prodottoDAO.getByName("Lavastoviglie");
+        prodottoDAO.removeById(p.getIdProdotto());
     }
 
     @Test
-    public void findAllByProducerTest(){
-        ProdottoDAO prodottoDAO = ProdottoDAO.getInstance();
-
-        Produttore p = new Produttore();
-        p.setIdProduttore(1);
-
-        ArrayList<IProdotto> prodotti;
-        prodotti = prodottoDAO.findAllByProducer(p);
-
-        for (IProdotto prodotto : prodotti){
-            System.out.println(prodotto.getNome());
-            for (ICategoria c:prodotto.getCategorie()){
-                System.out.println(c.getNome());
-            }
-        }
-
-
+    public void getByNameTest(){
+        IProdottoDAO prodottoDAO = ProdottoDAO.getInstance();
+        IProdotto p = prodottoDAO.getByName("Lavastoviglie");
+        Assert.assertEquals(250.0f, p.getCosto(), 0.01);
     }
 
     @Test
-    public void findAllTest(){
-        ProdottoDAO prodottoDAO = ProdottoDAO.getInstance();
-        ProduttoreDAO produttoreDAO = ProduttoreDAO.getInstance();
-        CategoriaDAO categoriaDAO = CategoriaDAO.getInstance();
-        FeedbackDAO feedbackDAO = FeedbackDAO.getInstance();
-
-        ArrayList<IProdotto> prodotti = prodottoDAO.findAll();
-
-
-        for (IProdotto prodotto : prodotti){
-            System.out.println(prodotto.getNome());
-            for (ICategoria c:prodotto.getCategorie()){
-                System.out.println(c.getNome());
-            }
-        }
-
-        Scanner in = new Scanner(System.in);
-        in.nextLine();
-
+    public void productExistTest(){
+        IProdottoDAO prodottoDAO = ProdottoDAO.getInstance();
+        boolean exist = prodottoDAO.productExists("Lavastoviglie");
+        Assert.assertTrue(exist);
     }
+
     @Test
-    public void findByIDTest(){
-        ProdottoDAO prodottoDAO = ProdottoDAO.getInstance();
-        IProdotto prodotto = prodottoDAO.findByID(1);
-        System.out.println(prodotto.getNome());
-        for (ICategoria c:prodotto.getCategorie()){
-            System.out.println(c.getNome());
-        }
-
-        Scanner in = new Scanner(System.in);
-        in.nextLine();
-
+    public void updateTest(){
+        IProdottoDAO prodottoDAO = ProdottoDAO.getInstance();
+        Prodotto p = (Prodotto)prodottoDAO.getByName("Lavastoviglie");
+        p.setNumeroCommenti(10);
+        prodottoDAO.update(p);
+        p = (Prodotto)prodottoDAO.getByName("Lavastoviglie");
+        Assert.assertEquals(10, p.getNumeroCommenti());
     }
+    
 }

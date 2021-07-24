@@ -93,6 +93,7 @@ public class ServizioDAO implements IServizioDAO {
         dbOperation = new ReadDbOperation(sql);
         rs = (ResultSet) executor.executeOperation(dbOperation);
         fDAO = FornitoreDAO.getInstance();
+        scDAO = ServizioCategoriaDAO.getInstance();
         int idFornitore = -1;
         try {
             rs.next();

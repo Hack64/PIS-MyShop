@@ -25,6 +25,7 @@ public class ProductPanel extends JPanel {
         JLabel lblCategorieProdotti = null;
         JLabel lblQuantitaMagazzino = null;
         JLabel lblSottoProdotti = null;
+        JLabel lblImprenditore = null;
 
         JButton btnAggiungi = null;
         JButton btnCommenti = null;
@@ -47,13 +48,11 @@ public class ProductPanel extends JPanel {
         c.insets = new Insets(5,10,5,10);
 
         productInfoPanel.setBorder(new EmptyBorder(10,10,10,10));
-        /*productDetailsPanel.setBorder(new LineBorder(Color.RED));
-        productButtonsPanel.setBorder(new LineBorder(Color.BLUE));
-        productDescriptionPanel.setBorder(new LineBorder(Color.GREEN));*/
 
         //ProductDetails
         ProductPanelListener productPanelListener;
         if (servizio == null){
+
             if (ProdottoBusiness.getInstance().isCompositeProduct(prodotto)){
                 prodotto = ProdottoBusiness.getInstance().findComposite(prodotto);
             }
@@ -73,6 +72,7 @@ public class ProductPanel extends JPanel {
                     cTemp = cTemp.getCategoriaPadre();
                 }
             }
+
             if (prodotto.getSottoprodotti() != null){
                 for (IProdotto pr:prodotto.getSottoprodotti()){
                     sottoprodotti.add(pr.getNome());
@@ -84,13 +84,13 @@ public class ProductPanel extends JPanel {
             lblMediaValutazioni = new JLabel("Media Valutazioni: " + prodotto.getMediaValutazione() + " | Commenti: " + prodotto.getNumeroCommenti());
             lblCategorieProdotti = new JLabel("Categorie: " + categorie);
             lblSottoProdotti = new JLabel("Sottoprodotti: " + sottoprodotti);
+            lblImprenditore = new JLabel("Produttore: " + prodotto.getProduttore().getNome() );
 
             if (d.getQta()<=0){
                 lblQuantitaMagazzino = new JLabel("Non disponibile in magazzino, da prenotare");
             } else {
                 lblQuantitaMagazzino = new JLabel("Disponibili: " + d.getQta());
             }
-
 
             btnCommenti = new JButton("Visualizza commenti");
             btnAggiungi = new JButton("Aggiungi a una lista");
@@ -120,6 +120,7 @@ public class ProductPanel extends JPanel {
             lblCostoProdotto = new JLabel("Costo:      €" + servizio.getCosto());
             lblMediaValutazioni = new JLabel("Media Valutazioni: " + servizio.getMediaValutazione() + " | Commenti: " + servizio.getNumeroCommenti());
             lblCategorieProdotti = new JLabel("Categorie: " + categorie);
+            lblImprenditore = new JLabel("Fornitore: " + servizio.getFornitore().getNome() );
 
             btnCommenti = new JButton("Visualizza commenti");
             btnAggiungi = new JButton("Aggiungi a una lista");
@@ -148,6 +149,7 @@ public class ProductPanel extends JPanel {
         lblCostoProdotto.setFont(new Font("Noto Sans", Font.PLAIN, 20));
         lblMediaValutazioni.setFont(new Font("Noto Sans", Font.PLAIN, 20));
         lblCategorieProdotti.setFont(new Font("Noto Sans", Font.PLAIN, 18));
+        lblImprenditore.setFont(new Font("Noto Sans", Font.PLAIN, 18));
         txtAreaDescrizione.setFont(new Font("Noto Sans", Font.PLAIN, 18));
 
         productDetailsPanel.add(lblNomeProdotto);
@@ -158,6 +160,7 @@ public class ProductPanel extends JPanel {
             productDetailsPanel.add(lblSottoProdotti);
             productDetailsPanel.add(lblQuantitaMagazzino);
         }
+        productDetailsPanel.add(lblImprenditore);
 
         productButtonsPanel.add(btnAggiungi);
         productButtonsPanel.add(btnCommenti);

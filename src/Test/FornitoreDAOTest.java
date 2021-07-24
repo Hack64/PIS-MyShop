@@ -15,7 +15,6 @@ public class FornitoreDAOTest {
     @Before
     public void setUp() throws Exception {
         IFornitoreDAO fornitoreDAO = FornitoreDAO.getInstance();
-
         fornitoreDAO.add(new Fornitore("Luca", "luca@sito.com", "Torrepaduli", "Italia", null));
     }
 

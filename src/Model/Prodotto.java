@@ -7,18 +7,9 @@ public class Prodotto extends Articolo implements IProdotto {
     private int idProdotto;
     private ArrayList<ICategoria> categorie = new ArrayList<>();
     private Produttore produttore;
-    private int idProduttore;
 
     public Prodotto(){
         super();
-    }
-
-    public int getIdProduttore() {
-        return idProduttore;
-    }
-
-    public void setIdProduttore(int idProduttore) {
-        this.idProduttore = idProduttore;
     }
 
     public void setIdProdotto(int idProdotto) {
