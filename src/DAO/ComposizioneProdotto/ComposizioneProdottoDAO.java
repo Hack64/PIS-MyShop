@@ -66,12 +66,12 @@ public class ComposizioneProdottoDAO implements IComposizioneProdottoDAO {
             prodottoComposito.setMediaValutazione(prodotto.getMediaValutazione());
             return prodottoComposito;
         } catch (SQLException e) {
-            // handle any errors
+
             System.out.println("SQLException: " + e.getMessage());
             System.out.println("SQLState: " + e.getSQLState());
             System.out.println("VendorError: " + e.getErrorCode());
         } catch (NullPointerException e) {
-            // handle any errors
+
             System.out.println("Resultset: " + e.getMessage());
         } finally {
             executor.closeOperation(dbOperation);
@@ -95,12 +95,12 @@ public class ComposizioneProdottoDAO implements IComposizioneProdottoDAO {
             }
             return prodottiCompositi;
         } catch (SQLException e) {
-            // handle any errors
+
             System.out.println("SQLException: " + e.getMessage());
             System.out.println("SQLState: " + e.getSQLState());
             System.out.println("VendorError: " + e.getErrorCode());
         } catch (NullPointerException e) {
-            // handle any errors
+
             System.out.println("Resultset: " + e.getMessage());
         } finally {
             executor.closeOperation(dbOperation);
@@ -122,18 +122,14 @@ public class ComposizioneProdottoDAO implements IComposizioneProdottoDAO {
                 pc = this.findByID(rs.getInt("composto"));
                 prodottiCompositi.add(pc);
             }
-            System.out.println(ids);
-            for (Integer id:ids){
-
-            } /* PERCHÈ QUESTO FUNZIONA???????*/
             return prodottiCompositi;
         } catch (SQLException e) {
-            // handle any errors
+
             System.out.println("SQLException: " + e.getMessage());
             System.out.println("SQLState: " + e.getSQLState());
             System.out.println("VendorError: " + e.getErrorCode());
         } catch (NullPointerException e) {
-            // handle any errors
+
             System.out.println("Resultset: " + e.getMessage());
         } finally {
             executor.closeOperation(dbOperation);
@@ -156,12 +152,12 @@ public class ComposizioneProdottoDAO implements IComposizioneProdottoDAO {
             }
             return isComposite;
         } catch (SQLException e) {
-            // handle any errors
+
             System.out.println("SQLException: " + e.getMessage());
             System.out.println("SQLState: " + e.getSQLState());
             System.out.println("VendorError: " + e.getErrorCode());
         } catch (NullPointerException e) {
-            // handle any errors
+
             System.out.println("Resultset: " + e.getMessage());
         } finally {
             executor.closeOperation(dbOperation);

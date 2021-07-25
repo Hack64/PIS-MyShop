@@ -50,12 +50,12 @@ public class ServizioCategoriaDAO implements IServizioCategoriaDAO {
             }
             return serviziCategoria;
         } catch (SQLException e) {
-            // handle any errors
+
             System.out.println("SQLException: " + e.getMessage());
             System.out.println("SQLState: " + e.getSQLState());
             System.out.println("VendorError: " + e.getErrorCode());
         } catch (NullPointerException e) {
-            // handle any errors
+
             System.out.println("Resultset: " + e.getMessage());
         } finally {
             executor.closeOperation(dbOperation);
@@ -82,12 +82,12 @@ public class ServizioCategoriaDAO implements IServizioCategoriaDAO {
             }
             return categorieServizio;
         } catch (SQLException e) {
-            // handle any errors
+
             System.out.println("SQLException: " + e.getMessage());
             System.out.println("SQLState: " + e.getSQLState());
             System.out.println("VendorError: " + e.getErrorCode());
         } catch (NullPointerException e) {
-            // handle any errors
+
             System.out.println("Resultset: " + e.getMessage());
         } finally {
             executor.closeOperation(dbOperation);

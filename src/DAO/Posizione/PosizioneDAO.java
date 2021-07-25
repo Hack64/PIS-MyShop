@@ -49,12 +49,12 @@ public class PosizioneDAO implements IPosizioneDAO {
                 idProdotto = rs.getInt("idProdotto");
             }
         } catch (SQLException e) {
-            // handle any errors
+
             System.out.println("SQLException: " + e.getMessage());
             System.out.println("SQLState: " + e.getSQLState());
             System.out.println("VendorError: " + e.getErrorCode());
         } catch (NullPointerException e) {
-            // handle any errors
+
             System.out.println("Resultset: " + e.getMessage());
         } finally {
             executor.closeOperation(dbOperation);
@@ -79,12 +79,12 @@ public class PosizioneDAO implements IPosizioneDAO {
                 posizione.setScaffale(rs.getInt("scaffale"));
             }
         } catch (SQLException e) {
-            // handle any errors
+
             System.out.println("SQLException: " + e.getMessage());
             System.out.println("SQLState: " + e.getSQLState());
             System.out.println("VendorError: " + e.getErrorCode());
         } catch (NullPointerException e) {
-            // handle any errors
+
             System.out.println("Resultset: " + e.getMessage());
         } finally {
             executor.closeOperation(dbOperation);

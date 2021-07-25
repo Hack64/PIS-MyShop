@@ -51,16 +51,15 @@ public class FornitoreDAO implements IFornitoreDAO {
                 fornitore.setSito(rs.getString("sito"));
                 fornitore.setCitta(rs.getString("citta"));
                 fornitore.setNazione(rs.getString("nazione"));
-                //fornitore.setServiziFornitore(sDAO.findAllBySupplier(fornitore));
                 return fornitore;
             }
         } catch (SQLException e) {
-            // handle any errors
+
             System.out.println("SQLException: " + e.getMessage());
             System.out.println("SQLState: " + e.getSQLState());
             System.out.println("VendorError: " + e.getErrorCode());
         } catch (NullPointerException e) {
-            // handle any errors
+
             System.out.println("Resultset: " + e.getMessage());
         } finally {
             executor.closeOperation(dbOperation);
@@ -83,16 +82,15 @@ public class FornitoreDAO implements IFornitoreDAO {
                 fornitore.setSito(rs.getString("sito"));
                 fornitore.setCitta(rs.getString("citta"));
                 fornitore.setNazione(rs.getString("nazione"));
-                //fornitore.setServiziFornitore(sDAO.findAllBySupplier(fornitore));
                 return fornitore;
             }
         } catch (SQLException e) {
-            // handle any errors
+
             System.out.println("SQLException: " + e.getMessage());
             System.out.println("SQLState: " + e.getSQLState());
             System.out.println("VendorError: " + e.getErrorCode());
         } catch (NullPointerException e) {
-            // handle any errors
+
             System.out.println("Resultset: " + e.getMessage());
         } finally {
             executor.closeOperation(dbOperation);
@@ -112,12 +110,12 @@ public class FornitoreDAO implements IFornitoreDAO {
             if(rs.getRow()==1 && rs.getInt("C")==1)
                 supplierExists = true;
         } catch (SQLException e) {
-            // handle any errors
+
             System.out.println("SQLException: " + e.getMessage());
             System.out.println("SQLState: " + e.getSQLState());
             System.out.println("VendorError: " + e.getErrorCode());
         } catch (NullPointerException e) {
-            // handle any errors
+
             System.out.println("Resultset: " + e.getMessage());
         } finally {
             executor.closeOperation(dbOperation);
@@ -140,18 +138,17 @@ public class FornitoreDAO implements IFornitoreDAO {
                 fornitore.setSito(rs.getString("sito"));
                 fornitore.setCitta(rs.getString("citta"));
                 fornitore.setNazione(rs.getString("nazione"));
-                //fornitore.setServiziFornitore(sDAO.findAllBySupplier(fornitore));
 
                 produttori.add(fornitore);
             }
             return produttori;
         } catch (SQLException e) {
-            // handle any errors
+
             System.out.println("SQLException: " + e.getMessage());
             System.out.println("SQLState: " + e.getSQLState());
             System.out.println("VendorError: " + e.getErrorCode());
         } catch (NullPointerException e) {
-            // handle any errors
+
             System.out.println("Resultset: " + e.getMessage());
         } finally {
             executor.closeOperation(dbOperation);

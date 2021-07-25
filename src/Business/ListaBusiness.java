@@ -182,7 +182,6 @@ public class ListaBusiness {
 
         int st = listaDAO.add(duplicate);
         duplicate = listaDAO.findByUserDateAndName(duplicate.getUtente().getIdUtente(), duplicate.getDataCreazione(), duplicate.getNomeLista());
-        //TODO: trova un modo di prendere la lista e di gestire i prenotati
         for (Map.Entry<IProdotto, Map.Entry<String, Integer>> entry : l.getProdotti().entrySet()){
             int old_qta = ListaBusiness.getInstance().isProductAlreadyInList(duplicate, entry.getKey());
             int st2 = this.addProductToList(duplicate, entry.getKey(), entry.getValue().getValue());

@@ -1,17 +1,11 @@
 package Test;
 
-import DAO.Utente.IUtenteDAO;
-import DAO.Utente.UtenteDAO;
 import DAO.UtentiPuntoVendita.IUtentiPuntoVenditaDAO;
 import DAO.UtentiPuntoVendita.UtentiPuntoVenditaDAO;
 import Model.PuntoVendita;
 import Model.Utente;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
-
-import java.time.LocalDate;
 
 public class UtentiPuntoVenditaDAOTest {
 

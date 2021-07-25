@@ -4,18 +4,13 @@ import DAO.Magazzino.IMagazzinoDAO;
 import DAO.Magazzino.MagazzinoDAO;
 import DAO.PuntoVendita.IPuntoVenditaDAO;
 import DAO.PuntoVendita.PuntoVenditaDAO;
-import DAO.Utente.IUtenteDAO;
-import DAO.Utente.UtenteDAO;
 import DbInterface.DbUser;
 import Model.Magazzino;
 import Model.PuntoVendita;
-import Model.Utente;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.time.LocalDate;
 
 public class MagazzinoDAOTest {
     DbUser dbUser = DbUser.getInstance();

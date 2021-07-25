@@ -6,14 +6,12 @@ public abstract class Imprenditore {
     protected String sito;
     protected String citta;
     protected String nazione;
-    //protected List<Articolo> articoliImprenditore = new ArrayList<>();
 
     public Imprenditore(String nome, String sito, String citta, String nazione) {
         this.nome = nome;
         this.sito = sito;
         this.citta = citta;
         this.nazione = nazione;
-        //this.articoliImprenditore = articoliImprenditore;
     }
 
     public Imprenditore () {
@@ -22,8 +20,6 @@ public abstract class Imprenditore {
         this.citta = "";
         this.nazione = "";
     }
-
-    public abstract void addArticoloLista(Articolo art);
 
     public String getNome() {
         return nome;

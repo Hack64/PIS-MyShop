@@ -32,7 +32,7 @@ public class DocumentoListaAcquisto extends Documento{
             lines.add("Nessun prodotto in lista!");
         } else {
             for (Map.Entry<IProdotto, Map.Entry<String, Integer>> entry : lista.getProdotti().entrySet()) {
-                lines.add(entry.getKey().getNome() + "                                                     € " + entry.getKey().getCosto() + " x " + entry.getValue().getValue() + "");
+                lines.add(entry.getKey().getNome() + "                        € " + entry.getKey().getCosto() + " x " + entry.getValue().getValue() + "; Prenotato: " + entry.getValue().getKey());
             }
         }
 

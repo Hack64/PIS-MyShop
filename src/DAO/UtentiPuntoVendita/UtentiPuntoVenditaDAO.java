@@ -51,12 +51,12 @@ public class UtentiPuntoVenditaDAO implements IUtentiPuntoVenditaDAO {
                 idUtenti.put(rs.getInt("idUtente"), rs.getString("disattivato"));
             }
         } catch (SQLException e) {
-            // handle any errors
+
             System.out.println("SQLException: " + e.getMessage());
             System.out.println("SQLState: " + e.getSQLState());
             System.out.println("VendorError: " + e.getErrorCode());
         } catch (NullPointerException e) {
-            // handle any errors
+
             System.out.println("Resultset: " + e.getMessage());
         }
         finally {
@@ -83,12 +83,12 @@ public class UtentiPuntoVenditaDAO implements IUtentiPuntoVenditaDAO {
             }
             return puntiVenditaUtente;
         } catch (SQLException e) {
-            // handle any errors
+
             System.out.println("SQLException: " + e.getMessage());
             System.out.println("SQLState: " + e.getSQLState());
             System.out.println("VendorError: " + e.getErrorCode());
         } catch (NullPointerException e) {
-            // handle any errors
+
             System.out.println("Resultset: " + e.getMessage());
         }
         finally {
@@ -112,12 +112,12 @@ public class UtentiPuntoVenditaDAO implements IUtentiPuntoVenditaDAO {
                 return shopManager;
             }
         } catch (SQLException e) {
-            // handle any errors
+
             System.out.println("SQLException: " + e.getMessage());
             System.out.println("SQLState: " + e.getSQLState());
             System.out.println("VendorError: " + e.getErrorCode());
         } catch (NullPointerException e) {
-            // handle any errors
+
             System.out.println("Resultset: " + e.getMessage());
         }
         finally {
@@ -141,12 +141,12 @@ public class UtentiPuntoVenditaDAO implements IUtentiPuntoVenditaDAO {
                 idPuntoVendita=rs.getInt("idPuntoVendita");
             }
         } catch (SQLException e) {
-            // handle any errors
+
             System.out.println("SQLException: " + e.getMessage());
             System.out.println("SQLState: " + e.getSQLState());
             System.out.println("VendorError: " + e.getErrorCode());
         } catch (NullPointerException e) {
-            // handle any errors
+
             System.out.println("Resultset: " + e.getMessage());
         }
         finally {
@@ -172,12 +172,12 @@ public class UtentiPuntoVenditaDAO implements IUtentiPuntoVenditaDAO {
                 }
             }
         } catch (SQLException e) {
-            // handle any errors
+
             System.out.println("SQLException: " + e.getMessage());
             System.out.println("SQLState: " + e.getSQLState());
             System.out.println("VendorError: " + e.getErrorCode());
         } catch (NullPointerException e) {
-            // handle any errors
+
             System.out.println("Resultset: " + e.getMessage());
         }
         finally {
@@ -201,12 +201,12 @@ public class UtentiPuntoVenditaDAO implements IUtentiPuntoVenditaDAO {
                 }
             }
         } catch (SQLException e) {
-            // handle any errors
+
             System.out.println("SQLException: " + e.getMessage());
             System.out.println("SQLState: " + e.getSQLState());
             System.out.println("VendorError: " + e.getErrorCode());
         } catch (NullPointerException e) {
-            // handle any errors
+
             System.out.println("Resultset: " + e.getMessage());
         }
         finally {
@@ -229,12 +229,12 @@ public class UtentiPuntoVenditaDAO implements IUtentiPuntoVenditaDAO {
                 }
             }
         } catch (SQLException e) {
-            // handle any errors
+
             System.out.println("SQLException: " + e.getMessage());
             System.out.println("SQLState: " + e.getSQLState());
             System.out.println("VendorError: " + e.getErrorCode());
         } catch (NullPointerException e) {
-            // handle any errors
+
             System.out.println("Resultset: " + e.getMessage());
         }
         finally {
@@ -256,12 +256,12 @@ public class UtentiPuntoVenditaDAO implements IUtentiPuntoVenditaDAO {
                 isRegistered = true;
             }
         } catch (SQLException e) {
-            // handle any errors
+
             System.out.println("SQLException: " + e.getMessage());
             System.out.println("SQLState: " + e.getSQLState());
             System.out.println("VendorError: " + e.getErrorCode());
         } catch (NullPointerException e) {
-            // handle any errors
+
             System.out.println("Resultset: " + e.getMessage());
         }
         finally {
@@ -283,12 +283,12 @@ public class UtentiPuntoVenditaDAO implements IUtentiPuntoVenditaDAO {
                 isPreferred = true;
             }
         } catch (SQLException e) {
-            // handle any errors
+
             System.out.println("SQLException: " + e.getMessage());
             System.out.println("SQLState: " + e.getSQLState());
             System.out.println("VendorError: " + e.getErrorCode());
         } catch (NullPointerException e) {
-            // handle any errors
+
             System.out.println("Resultset: " + e.getMessage());
         }
         finally {

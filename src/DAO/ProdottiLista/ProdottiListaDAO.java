@@ -57,12 +57,12 @@ public class ProdottiListaDAO implements IProdottiListaDAO {
             }
             return prodottiLista;
         } catch (SQLException e) {
-            // handle any errors
+
             System.out.println("SQLException: " + e.getMessage());
             System.out.println("SQLState: " + e.getSQLState());
             System.out.println("VendorError: " + e.getErrorCode());
         } catch (NullPointerException e) {
-            // handle any errors
+
             System.out.println("Resultset: " + e.getMessage());
         } finally {
             executor.closeOperation(dbOperation);
@@ -86,12 +86,12 @@ public class ProdottiListaDAO implements IProdottiListaDAO {
             }
             return prodottiLista;
         } catch (SQLException e) {
-            // handle any errors
+
             System.out.println("SQLException: " + e.getMessage());
             System.out.println("SQLState: " + e.getSQLState());
             System.out.println("VendorError: " + e.getErrorCode());
         } catch (NullPointerException e) {
-            // handle any errors
+
             System.out.println("Resultset: " + e.getMessage());
         } finally {
             executor.closeOperation(dbOperation);
@@ -115,12 +115,12 @@ public class ProdottiListaDAO implements IProdottiListaDAO {
             }
             return listeProdotto;
         } catch (SQLException e) {
-            // handle any errors
+
             System.out.println("SQLException: " + e.getMessage());
             System.out.println("SQLState: " + e.getSQLState());
             System.out.println("VendorError: " + e.getErrorCode());
         } catch (NullPointerException e) {
-            // handle any errors
+
             System.out.println("Resultset: " + e.getMessage());
         } finally {
             executor.closeOperation(dbOperation);
@@ -140,12 +140,12 @@ public class ProdottiListaDAO implements IProdottiListaDAO {
                 return rs.getInt("quantita");
             }
         } catch (SQLException e) {
-            // handle any errors
+
             System.out.println("SQLException: " + e.getMessage());
             System.out.println("SQLState: " + e.getSQLState());
             System.out.println("VendorError: " + e.getErrorCode());
         } catch (NullPointerException e) {
-            // handle any errors
+
             System.out.println("Resultset: " + e.getMessage());
         } finally {
             executor.closeOperation(dbOperation);

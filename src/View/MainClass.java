@@ -27,11 +27,6 @@ public class MainClass {
             // handle exception
         }
 
-        /*ComunicazioneEmail email = new ComunicazioneEmail("marco.rizzo.00@outlook.com","Test", "Mail di prova", new EmailSenderAPI());
-        email.invia();*/
         new AppFrame();
-        /*Lista l = ListaBusiness.getInstance().find(19).getLista();
-        Documento doc = new DocumentoListaAcquisto(l, new PdfAPI());
-        doc.invia();*/
     }
 }

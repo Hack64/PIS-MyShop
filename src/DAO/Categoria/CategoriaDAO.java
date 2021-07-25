@@ -56,12 +56,12 @@ public class CategoriaDAO implements ICategoriaDAO {
                 idPadre = rs.getInt("idCategoriaPadre");
             }
         } catch (SQLException e) {
-            // handle any errors
+
             System.out.println("SQLException: " + e.getMessage());
             System.out.println("SQLState: " + e.getSQLState());
             System.out.println("VendorError: " + e.getErrorCode());
         } catch (NullPointerException e) {
-            // handle any errors
+
             System.out.println("Resultset: " + e.getMessage());
         } finally {
             executor.closeOperation(dbOperation);
@@ -72,13 +72,6 @@ public class CategoriaDAO implements ICategoriaDAO {
 
     @Override
     public ICategoria findByName(String nome) {
-        /*if (nome.equals("null")){
-            Categoria c = new Categoria();
-            c.setIdCategoria(-1);
-            c.setNome("null");
-            c.setCategoriaPadre(null);
-            return c;
-        }*/
         executor = new DbOperationExecutor();
         sql = "SELECT idCategoria, nome, idCategoriaPadre FROM myshopdb.Categoria WHERE myshopdb.Categoria.nome = '" + nome + "';";
         dbOperation = new ReadDbOperation(sql);
@@ -94,12 +87,12 @@ public class CategoriaDAO implements ICategoriaDAO {
                 idPadre = rs.getInt("idCategoriaPadre");
             }
         } catch (SQLException e) {
-            // handle any errors
+
             System.out.println("SQLException: " + e.getMessage());
             System.out.println("SQLState: " + e.getSQLState());
             System.out.println("VendorError: " + e.getErrorCode());
         } catch (NullPointerException e) {
-            // handle any errors
+
             System.out.println("Resultset: " + e.getMessage());
         } finally {
             executor.closeOperation(dbOperation);
@@ -126,12 +119,12 @@ public class CategoriaDAO implements ICategoriaDAO {
             }
             return categorie;
         } catch (SQLException e) {
-            // handle any errors
+
             System.out.println("SQLException: " + e.getMessage());
             System.out.println("SQLState: " + e.getSQLState());
             System.out.println("VendorError: " + e.getErrorCode());
         } catch (NullPointerException e) {
-            // handle any errors
+
             System.out.println("Resultset: " + e.getMessage());
         } finally {
             executor.closeOperation(dbOperation);
@@ -160,12 +153,12 @@ public class CategoriaDAO implements ICategoriaDAO {
                     findAllSubcategoriesByCategoryID(idCategoriaPadre);
                 }
             } catch (SQLException e) {
-                // handle any errors
+
                 System.out.println("SQLException: " + e.getMessage());
                 System.out.println("SQLState: " + e.getSQLState());
                 System.out.println("VendorError: " + e.getErrorCode());
             } catch (NullPointerException e) {
-                // handle any errors
+
                 System.out.println("Resultset: " + e.getMessage());
             } finally {
                 executor.closeOperation(dbOperation);

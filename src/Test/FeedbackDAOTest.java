@@ -4,13 +4,10 @@ import DAO.Feedback.FeedbackDAO;
 import DAO.Feedback.IFeedbackDAO;
 import DbInterface.DbUser;
 import Model.Feedback;
-import Model.Utente;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.time.LocalDate;
 
 public class FeedbackDAOTest {
 

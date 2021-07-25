@@ -22,7 +22,6 @@ public class ProduttoreDAO implements IProduttoreDAO {
     private String sql;
 
     private IProdottoDAO pDAO;
-    //private ProdottoCompositoDAO pCompDAO = ProdottoCompositoDAO.getInstance();
     private Produttore produttore;
 
     private ProduttoreDAO(){
@@ -55,16 +54,15 @@ public class ProduttoreDAO implements IProduttoreDAO {
                 produttore.setSito(rs.getString("sito"));
                 produttore.setCitta(rs.getString("citta"));
                 produttore.setNazione(rs.getString("nazione"));
-                //produttore.setProdottiProduttore(pDAO.findAllByProducer(produttore));
                 return produttore;
             }
         } catch (SQLException e) {
-            // handle any errors
+
             System.out.println("SQLException: " + e.getMessage());
             System.out.println("SQLState: " + e.getSQLState());
             System.out.println("VendorError: " + e.getErrorCode());
         } catch (NullPointerException e) {
-            // handle any errors
+
             System.out.println("Resultset: " + e.getMessage());
         } finally {
             executor.closeOperation(dbOperation);
@@ -88,17 +86,16 @@ public class ProduttoreDAO implements IProduttoreDAO {
                 produttore.setSito(rs.getString("sito"));
                 produttore.setCitta(rs.getString("citta"));
                 produttore.setNazione(rs.getString("nazione"));
-                //produttore.setProdottiProduttore(pDAO.findAllByProducer(produttore));
 
                 return produttore;
             }
         } catch (SQLException e) {
-            // handle any errors
+
             System.out.println("SQLException: " + e.getMessage());
             System.out.println("SQLState: " + e.getSQLState());
             System.out.println("VendorError: " + e.getErrorCode());
         } catch (NullPointerException e) {
-            // handle any errors
+
             System.out.println("Resultset: " + e.getMessage());
         } finally {
             executor.closeOperation(dbOperation);
@@ -118,12 +115,12 @@ public class ProduttoreDAO implements IProduttoreDAO {
             if(rs.getRow()==1 && rs.getInt("C")==1)
                 producerExists = true;
         } catch (SQLException e) {
-            // handle any errors
+
             System.out.println("SQLException: " + e.getMessage());
             System.out.println("SQLState: " + e.getSQLState());
             System.out.println("VendorError: " + e.getErrorCode());
         } catch (NullPointerException e) {
-            // handle any errors
+
             System.out.println("Resultset: " + e.getMessage());
         } finally {
             executor.closeOperation(dbOperation);
@@ -147,18 +144,17 @@ public class ProduttoreDAO implements IProduttoreDAO {
                 produttore.setSito(rs.getString("sito"));
                 produttore.setCitta(rs.getString("citta"));
                 produttore.setNazione(rs.getString("nazione"));
-                //produttore.setProdottiProduttore(pDAO.findAllByProducer(produttore));
 
                 produttori.add(produttore);
             }
             return produttori;
         } catch (SQLException e) {
-            // handle any errors
+
             System.out.println("SQLException: " + e.getMessage());
             System.out.println("SQLState: " + e.getSQLState());
             System.out.println("VendorError: " + e.getErrorCode());
         } catch (NullPointerException e) {
-            // handle any errors
+
             System.out.println("Resultset: " + e.getMessage());
         } finally {
             executor.closeOperation(dbOperation);

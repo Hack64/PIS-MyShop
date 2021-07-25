@@ -51,16 +51,16 @@ public class MagazzinoDAO implements IMagazzinoDAO {
                 magazzino = new Magazzino();
                 magazzino.setIdMagazzino(rs.getInt("idMagazzino"));
                 magazzino.setVia(rs.getString("via"));
-                magazzino.setCap(rs.getString("CAP")); //vedi se funziona
+                magazzino.setCap(rs.getString("CAP"));
                 magazzino.setCitta(rs.getString("citta"));
             }
         } catch (SQLException e) {
-            // handle any errors
+
             System.out.println("SQLException: " + e.getMessage());
             System.out.println("SQLState: " + e.getSQLState());
             System.out.println("VendorError: " + e.getErrorCode());
         } catch (NullPointerException e) {
-            // handle any errors
+
             System.out.println("Resultset: " + e.getMessage());
         } finally {
             executor.closeOperation(dbOperation);
@@ -86,12 +86,12 @@ public class MagazzinoDAO implements IMagazzinoDAO {
                 magazzino.setCitta(rs.getString("citta"));
             }
         } catch (SQLException e) {
-            // handle any errors
+
             System.out.println("SQLException: " + e.getMessage());
             System.out.println("SQLState: " + e.getSQLState());
             System.out.println("VendorError: " + e.getErrorCode());
         } catch (NullPointerException e) {
-            // handle any errors
+
             System.out.println("Resultset: " + e.getMessage());
         } finally {
             executor.closeOperation(dbOperation);
@@ -121,12 +121,12 @@ public class MagazzinoDAO implements IMagazzinoDAO {
             }
             return magazzini;
         } catch (SQLException e) {
-            // handle any errors
+
             System.out.println("SQLException: " + e.getMessage());
             System.out.println("SQLState: " + e.getSQLState());
             System.out.println("VendorError: " + e.getErrorCode());
         } catch (NullPointerException e) {
-            // handle any errors
+
             System.out.println("Resultset: " + e.getMessage());
         } finally {
             executor.closeOperation(dbOperation);

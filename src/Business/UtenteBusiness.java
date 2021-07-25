@@ -196,8 +196,6 @@ public class UtenteBusiness {
         return res;
     }
 
-
-    //TODO: è il caso di unire questi metodi?
     public int disableUser(Utente u, PuntoVendita pv) {
         IUtentiPuntoVenditaDAO utentiPuntoVenditaDAO = UtentiPuntoVenditaDAO.getInstance();
         int preferito;

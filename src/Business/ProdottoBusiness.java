@@ -90,7 +90,6 @@ public class ProdottoBusiness {
         p.setDescrizione(descrizione);
         p.setCosto(costo);
         p.setProduttore(produttore);
-        /*MODIFICA QUALCOSA*/
         p.setNumeroCommenti(0);
         p.setMediaValutazione(0);
         int rowCount = prodottoDAO.add(p); //1
@@ -118,7 +117,6 @@ public class ProdottoBusiness {
         p.setDescrizione(descrizione);
         p.setCosto(costo);
         p.setProduttore(produttore);
-        /*MODIFICA QUALCOSA*/
         p.setNumeroCommenti(0);
         p.setMediaValutazione(0);
         p.setSottoprodotti(sottoProdotti);
@@ -154,7 +152,6 @@ public class ProdottoBusiness {
         p.setImmagine(immagine);
         p.setDescrizione(descrizione);
         p.setCosto(costo);
-        /*MODIFICA QUALCOSA*/
         p.setNumeroCommenti(0);
         p.setMediaValutazione(0);
 
@@ -187,7 +184,6 @@ public class ProdottoBusiness {
         pc.setImmagine(immagine);
         pc.setDescrizione(descrizione);
         pc.setCosto(costo);
-        /*MODIFICA QUALCOSA*/
         pc.setNumeroCommenti(0);
         pc.setMediaValutazione(0);
         pc.setSottoprodotti(sottoprodotti);

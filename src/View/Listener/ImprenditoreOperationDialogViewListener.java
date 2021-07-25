@@ -78,7 +78,6 @@ public class ImprenditoreOperationDialogViewListener implements ActionListener {
                 }
                 break;
             case BTN_EDIT_SUPPLIER:
-                //TODO: caccia sti int
                 int stEditSupplier = FornitoreBusiness.getInstance().update(operationDialogView.getID(), operationDialogView.getTxtNome(), operationDialogView.getTxtSito(), operationDialogView.getTxtCitta(), operationDialogView.getTxtNazione());
                 if (stEditSupplier == 1) {
                     String esit = "Fornitore modificato con successo!";

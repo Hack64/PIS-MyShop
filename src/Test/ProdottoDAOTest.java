@@ -1,23 +1,17 @@
 package Test;
 
-import DAO.Categoria.CategoriaDAO;
-import DAO.Feedback.FeedbackDAO;
 import DAO.Prodotto.IProdottoDAO;
 import DAO.Prodotto.ProdottoDAO;
 import DAO.Produttore.ProduttoreDAO;
 import DbInterface.DbUser;
-import Model.ICategoria;
 import Model.IProdotto;
 import Model.Prodotto;
-import Model.Produttore;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Scanner;
 
 public class ProdottoDAOTest {
     DbUser dbUser = DbUser.getInstance();

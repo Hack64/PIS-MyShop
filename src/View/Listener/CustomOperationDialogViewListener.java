@@ -69,7 +69,7 @@ public class CustomOperationDialogViewListener implements ActionListener {
                     }
                 } else {
                     JOptionPane.showMessageDialog(appFrame, "Il prezzo non può essere negativo", "Errore", JOptionPane.ERROR_MESSAGE);
-                    //TODO: clear fields
+
                 }
                 break;
             case BTN_ADD_COMP_PRODUCT:
@@ -100,7 +100,7 @@ public class CustomOperationDialogViewListener implements ActionListener {
                     }
                 } else {
                     JOptionPane.showMessageDialog(appFrame, "Il prezzo non può essere negativo", "Errore", JOptionPane.ERROR_MESSAGE);
-                    //TODO: clear fields
+
                 }
                 break;
             case BTN_EDIT_PRODUCT:
@@ -121,7 +121,6 @@ public class CustomOperationDialogViewListener implements ActionListener {
                     }
                 } else {
                     JOptionPane.showMessageDialog(appFrame, "Il prezzo non può essere negativo", "Errore", JOptionPane.ERROR_MESSAGE);
-                    //TODO: clear fields
                 }
                 break;
             case BTN_EDIT_COMP_PRODUCT:
@@ -148,7 +147,6 @@ public class CustomOperationDialogViewListener implements ActionListener {
                     }
                 } else {
                     JOptionPane.showMessageDialog(appFrame, "Il prezzo non può essere negativo", "Errore", JOptionPane.ERROR_MESSAGE);
-                    //TODO: clear fields
                 }
                 break;
             case BTN_ADD_SERVICE:
@@ -173,13 +171,12 @@ public class CustomOperationDialogViewListener implements ActionListener {
                     }
                 } else {
                     JOptionPane.showMessageDialog(appFrame, "Il prezzo non può essere negativo", "Errore", JOptionPane.ERROR_MESSAGE);
-                    //TODO: clear fields
                 }
                 break;
             case BTN_EDIT_SERVICE:
                 Fornitore fo = FornitoreBusiness.getInstance().findByName((String) operationDialogView.getProduttore()).getFornitore();
                 if (img == null){
-                    String esit = "Coglione imposta l'immagine";
+                    String esit = "Imposta l'immagine!";
                     JOptionPane.showMessageDialog(appFrame, esit, "Errore", JOptionPane.ERROR_MESSAGE);
                 } else if (Float.parseFloat(operationDialogView.getTxtPrezzo()) >= 0) {
                     int st = ServizioBusiness.getInstance().update(operationDialogView.getTxtNome(), img, operationDialogView.getTxtDescrizione(), Float.parseFloat(operationDialogView.getTxtPrezzo()), fo, operationDialogView.getID());
@@ -195,7 +192,6 @@ public class CustomOperationDialogViewListener implements ActionListener {
                     }
                 } else {
                     JOptionPane.showMessageDialog(appFrame, "Il prezzo non può essere negativo", "Errore", JOptionPane.ERROR_MESSAGE);
-                    //TODO: clear fields
                 }
                 break;
             case BTN_IMG_CHOOSER:

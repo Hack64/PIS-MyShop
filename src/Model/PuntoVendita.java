@@ -14,8 +14,6 @@ public class PuntoVendita {
     private String cap;
     private String citta;
     private Utente manager;
-    //private Magazzino magazzino;
-
 
     public PuntoVendita(ArrayList<Servizio> catalogoServiziPuntoVendita, ArrayList<IProdotto> catalogoProdottiPuntoVendita, Map<Utente, String> clienti, int idPuntoVendita, String via, String cap, String citta, Utente manager) {
         this.catalogoServiziPuntoVendita = catalogoServiziPuntoVendita;
@@ -102,11 +100,4 @@ public class PuntoVendita {
         this.citta = citta;
     }
 
-    /*public Magazzino getMagazzino() {
-        return magazzino;
-    }
-
-    public void setMagazzino(Magazzino magazzino) {
-        this.magazzino = magazzino;
-    }*/
 }

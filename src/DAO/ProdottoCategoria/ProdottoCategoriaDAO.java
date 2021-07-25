@@ -52,12 +52,12 @@ public class ProdottoCategoriaDAO implements IProdottoCategoriaDAO {
             }
             return prodottiCategoria;
         } catch (SQLException e) {
-            // handle any errors
+
             System.out.println("SQLException: " + e.getMessage());
             System.out.println("SQLState: " + e.getSQLState());
             System.out.println("VendorError: " + e.getErrorCode());
         } catch (NullPointerException e) {
-            // handle any errors
+
             System.out.println("Resultset: " + e.getMessage());
         } finally {
             executor.closeOperation(dbOperation);
@@ -79,12 +79,12 @@ public class ProdottoCategoriaDAO implements IProdottoCategoriaDAO {
                 idCategorie.put(rs.getInt("idCategoria"), rs.getInt("idCategoriaPadre"));
             }
         } catch (SQLException e) {
-            // handle any errors
+
             System.out.println("SQLException: " + e.getMessage());
             System.out.println("SQLState: " + e.getSQLState());
             System.out.println("VendorError: " + e.getErrorCode());
         } catch (NullPointerException e) {
-            // handle any errors
+
             System.out.println("Resultset: " + e.getMessage());
         } finally {
             executor.closeOperation(dbOperation);

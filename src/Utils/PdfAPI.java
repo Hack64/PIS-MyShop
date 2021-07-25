@@ -27,7 +27,7 @@ public class PdfAPI implements IPdfAPI{
                 contents.setFont(font, 20);
                 contents.newLineAtOffset(40, 800);
                 contents.showText(lines.get(0));
-                contents.setFont(font, 15);
+                contents.setFont(font, 14);
                 contents.newLineAtOffset(0, -75);
                 for (String s:lines.subList(1,lines.size()-1)){
                     contents.showText(s);

@@ -38,10 +38,7 @@ public class WelcomePanel extends JPanel {
             add(btnOk, c);
         } else {
             new ShopOperationDialog(appFrame, false ,null ,null);
-            //appFrame.setCurrentMainPanel(new WelcomePanel(appFrame));
-            //TODO: testa
         }
-
     }
 
     public String getSelectedPuntoVendita() {

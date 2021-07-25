@@ -51,21 +51,17 @@ public class UtenteDAO implements IUtenteDAO {
                 utente.setResidenza(rs.getString("residenza"));
                 utente.setTelefono(rs.getString("telefono"));
                 utente.setProfessione(rs.getString("professione"));
-                /*LocalDate l = LocalDate.parse(rs.getString("eta"));
-                LocalDate now = LocalDate.now(); //gets localDate
-                Period diff = Period.between(l, now);
-                utente.setEta(diff.getYears());*/
                 utente.setEta(LocalDate.parse(rs.getString("eta")));
                 utente.setRuolo(Utente.Ruoli.valueOf(rs.getString("tipo")));
                 return utente;
             }
         } catch (SQLException e) {
-            // handle any errors
+
             System.out.println("SQLException: " + e.getMessage());
             System.out.println("SQLState: " + e.getSQLState());
             System.out.println("VendorError: " + e.getErrorCode());
         } catch (NullPointerException e) {
-            // handle any errors
+
             System.out.println("Resultset: " + e.getMessage());
         } finally {
             executor.closeOperation(dbOperation);
@@ -96,12 +92,12 @@ public class UtenteDAO implements IUtenteDAO {
                 return utente;
             }
         } catch (SQLException e) {
-            // handle any errors
+
             System.out.println("SQLException: " + e.getMessage());
             System.out.println("SQLState: " + e.getSQLState());
             System.out.println("VendorError: " + e.getErrorCode());
         } catch (NullPointerException e) {
-            // handle any errors
+
             System.out.println("Resultset: " + e.getMessage());
         } finally {
             executor.closeOperation(dbOperation);
@@ -132,12 +128,12 @@ public class UtenteDAO implements IUtenteDAO {
                 return utente;
             }
         } catch (SQLException e) {
-            // handle any errors
+
             System.out.println("SQLException: " + e.getMessage());
             System.out.println("SQLState: " + e.getSQLState());
             System.out.println("VendorError: " + e.getErrorCode());
         } catch (NullPointerException e) {
-            // handle any errors
+
             System.out.println("Resultset: " + e.getMessage());
         } finally {
             executor.closeOperation(dbOperation);
@@ -199,12 +195,12 @@ public class UtenteDAO implements IUtenteDAO {
                 }
             }
         } catch (SQLException e) {
-            // handle any errors
+
             System.out.println("SQLException: " + e.getMessage());
             System.out.println("SQLState: " + e.getSQLState());
             System.out.println("VendorError: " + e.getErrorCode());
         } catch (NullPointerException e) {
-            // handle any errors
+
             System.out.println("Resultset: " + e.getMessage());
         } finally {
             executor.closeOperation(dbOperation);
@@ -224,12 +220,12 @@ public class UtenteDAO implements IUtenteDAO {
             if(rs.getRow()==1 && rs.getInt("C")==1)
                 userExists = true;
         } catch (SQLException e) {
-            // handle any errors
+
             System.out.println("SQLException: " + e.getMessage());
             System.out.println("SQLState: " + e.getSQLState());
             System.out.println("VendorError: " + e.getErrorCode());
         } catch (NullPointerException e) {
-            // handle any errors
+
             System.out.println("Resultset: " + e.getMessage());
         } finally {
             executor.closeOperation(dbOperation);

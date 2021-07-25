@@ -49,12 +49,11 @@ public class ProdottiPuntoVenditaDAO implements IProdottiPuntoVenditaDAO {
             }
             return prodottiPuntoVendita;
         } catch (SQLException e) {
-            // handle any errors
             System.out.println("SQLException: " + e.getMessage());
             System.out.println("SQLState: " + e.getSQLState());
             System.out.println("VendorError: " + e.getErrorCode());
         } catch (NullPointerException e) {
-            // handle any errors
+
             System.out.println("Resultset: " + e.getMessage());
         } finally {
             executor.closeOperation(dbOperation);
@@ -76,12 +75,12 @@ public class ProdottiPuntoVenditaDAO implements IProdottiPuntoVenditaDAO {
             }
             return puntiVenditaProdotto;
         } catch (SQLException e) {
-            // handle any errors
+
             System.out.println("SQLException: " + e.getMessage());
             System.out.println("SQLState: " + e.getSQLState());
             System.out.println("VendorError: " + e.getErrorCode());
         } catch (NullPointerException e) {
-            // handle any errors
+
             System.out.println("Resultset: " + e.getMessage());
         } finally {
             executor.closeOperation(dbOperation);

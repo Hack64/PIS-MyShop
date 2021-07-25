@@ -35,6 +35,8 @@ public class ListChooserDialogListener implements ActionListener {
                 st = ListaBusiness.getInstance().addProductToList(listChooserDialog.getSelectedList().getLista(), prodotto, listChooserDialog.getQuantita());
                 if (st == 2){
                     //TODO: prova a spostarlo in listaBusiness
+
+                    //Prendo la quantità in magazzino, sottraggo la nuova quantità presa dallo spinner e aggiungo la vecchia quantità presente in lista precedentemente.
                     PuntoVendita pv = (PuntoVendita) SessionManager.getInstance().getSession().get("currentShop");
                     Disponibilita d = ProdottiMagazzinoBusiness.getInstance().findByProductAndWarehouse(prodotto.getIdProdotto(), MagazzinoBusiness.getInstance().findWarehouseByShopID(pv.getIdPuntoVendita()).getIdMagazzino());
                     d.setQta(d.getQta() - listChooserDialog.getQuantita() + old_qta);

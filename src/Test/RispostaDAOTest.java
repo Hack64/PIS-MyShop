@@ -1,22 +1,16 @@
 package Test;
 
 import DAO.Feedback.FeedbackDAO;
-import DAO.Fornitore.FornitoreDAO;
 import DAO.Risposta.IRispostaDAO;
 import DAO.Risposta.RispostaDAO;
-import DAO.Servizio.IServizioDAO;
-import DAO.Servizio.ServizioDAO;
 import DAO.Utente.UtenteDAO;
 import DbInterface.DbUser;
-import Model.Feedback;
 import Model.Risposta;
-import Model.Servizio;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.File;
 import java.time.LocalDate;
 
 public class RispostaDAOTest {

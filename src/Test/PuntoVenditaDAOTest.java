@@ -1,11 +1,8 @@
 package Test;
 
-import DAO.Produttore.IProduttoreDAO;
-import DAO.Produttore.ProduttoreDAO;
 import DAO.PuntoVendita.IPuntoVenditaDAO;
 import DAO.PuntoVendita.PuntoVenditaDAO;
 import DbInterface.DbUser;
-import Model.Produttore;
 import Model.PuntoVendita;
 import org.junit.After;
 import org.junit.Assert;

@@ -2,17 +2,10 @@ package Test;
 
 import DAO.Posizione.IPosizioneDAO;
 import DAO.Posizione.PosizioneDAO;
-import DAO.Utente.IUtenteDAO;
-import DAO.Utente.UtenteDAO;
 import DbInterface.DbUser;
 import Model.Posizione;
-import Model.Utente;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
-
-import java.time.LocalDate;
 
 public class PosizioneDAOTest {
     DbUser dbUser = DbUser.getInstance();

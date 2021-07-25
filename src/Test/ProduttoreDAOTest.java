@@ -2,17 +2,12 @@ package Test;
 
 import DAO.Produttore.IProduttoreDAO;
 import DAO.Produttore.ProduttoreDAO;
-import DAO.Utente.IUtenteDAO;
-import DAO.Utente.UtenteDAO;
 import DbInterface.DbUser;
 import Model.Produttore;
-import Model.Utente;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.time.LocalDate;
 
 public class ProduttoreDAOTest {
     DbUser dbUser = DbUser.getInstance();

@@ -70,7 +70,6 @@ public class PuntoVenditaBusiness {
         if (!utentiPuntoVenditaDAO.isUserShopManagerSomewhere(manager.getIdUtente())){
             st+=utentiPuntoVenditaDAO.add(manager, p, 0, 1, 0); //3
         } else {
-            //TODO: trova un modo di capire quando il manager è già assignato e di dirlo all'utente
             st+=utentiPuntoVenditaDAO.updateManager(manager, p, true);
         }
         for (IProdotto pr:prodotti){
