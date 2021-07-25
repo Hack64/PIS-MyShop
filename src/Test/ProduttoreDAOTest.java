@@ -16,7 +16,7 @@ public class ProduttoreDAOTest {
     public void setUp() throws Exception {
         IProduttoreDAO produttoreDAO = ProduttoreDAO.getInstance();
 
-        produttoreDAO.add(new Produttore("Marco", "marco@rizzo.it","Lecce", "Italia", null));
+        produttoreDAO.add(new Produttore("Marco", "marco@rizzo.it","Lecce", "Italia"));
     }
 
     @After
@@ -38,7 +38,7 @@ public class ProduttoreDAOTest {
     public void updateTest(){
         IProduttoreDAO produttoreDAO = ProduttoreDAO.getInstance();
         Produttore p_orig = produttoreDAO.getByName("Marco");
-        Produttore p1 = new Produttore("Marco", "marco@rizzo.it","Ruffano", "Italia", null);
+        Produttore p1 = new Produttore("Marco", "marco@rizzo.it","Ruffano", "Italia");
         p1.setIdProduttore(p_orig.getIdProduttore());
         produttoreDAO.update(p1);
         p1 = produttoreDAO.findByID(p1.getIdProduttore());
